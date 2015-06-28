@@ -1,0 +1,217 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{textcomp}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-759 Differential Geometry}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Monday, September 26, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED square
+\newcommand{\inv}{^{-1}}                % inverse
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\sminus}{\backslash}        % set difference
+\renewcommand{\dim}{\operatorname{dim}} % dimension of a vector space
+\renewcommand{\det}{\operatorname{det}} % determinant of a matrix
+\newcommand{\sgn}{\operatorname{sign}}  % determinant of a matrix
+\newcommand{\rnk}{\operatorname{rank}}  % rank of a matrix
+\newcommand{\tr}{\operatorname{trace}}  % trace of a matrix
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\M}{\mathcal{M}}            % manifold M
+\newcommand{\D}{\mathcal{D}}            % \smooth real functions on a manifold
+\newcommand{\B}{\mathcal{B}}            % basis of a topology
+\newcommand{\pow}{\mathcal{P}}          % power set
+\newcommand{\e}{\varepsilon}            % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname\footnote{\myandrew} \\
+Due: \duedate
+
+I would be willing to present a solution to problem 5 or the first part of
+problem 1 (showing the Lie algebra associated with $SL(n)$ is $sl(n)$.
+
+\begin{question}{Problem 1}
+Let $I$ denote the $n \times n$ identity matrix. We first show that
+$T_ISL(n) = sl(n)$. Suppose $\gamma : (-\e,\e) \to SL(n)$ is differentiable,
+with $\gamma(0) = I$. We showed in class that,
+\[\tr(\gamma'(0))
+    = \left( \frac{d}{dt}\det( \gamma(t) \right)\bigg|_{t = 0}
+    = \left( \frac{d}{dt} 1 \right)\bigg|_{t = 0}
+    = 0,\]
+and hence, by definition of the tangent space, $T_ISL(n) \subseteq sl(n)$.
+
+Suppose $A \in sl(n)$. Since $\det(I) = 1$ and the function
+$t \mapsto \det(I + tA)$ is continuous, $\exists \e > 0$ such that
+$\det(I + tA) \neq 0$, $\forall t \in (-\e,\e)$. Thus, we define
+$\gamma : (-\e,\e) \to SL(n)$ for all $t \in (-\e,\e)$.
+\[\gamma(t) = \frac{I + tA}{\det(I + tA)}.\]
+Clearly the image of $\gamma$ indeed lies in $SL(n)$, and $\gamma(0) = I$.
+Noting first that
+\[\left( \frac{d}{dt} \det(I + tA) \right)\bigg|_{t = 0}
+    = \tr\left( \frac{d}{dt} I + tA \right) \bigg|_{t = 0}
+    = \tr(A)
+    = 0,\]
+we calculate
+\[\gamma'(0)
+    = \frac{\det(I + tA)A - (I + tA)\frac{d}{dt}\det(I + tA)}
+           {(\det(I + tA))^2}\bigg|_{t = 0}
+    = \frac{1\cdot A - 0\cdot I}{1^2}
+    = A,
+\]
+and hence $A \in T_ISL(n)$. \qed
+
+We now show $T_ISO(n) = so(n)$. Suppose $\gamma : (-\e,\e) \to SO(n)$ is
+differentiable, with $\gamma(0) = I$. Then,
+\[0
+    = \left( \frac{d}{dt} I \right)\bigg|_{t = 0}
+    = \left( \frac{d}{dt} \gamma(t)\gamma^T(t) \right)\bigg|_{t = 0}
+    = \left( \gamma'(t)\gamma^T(t) + \gamma(t)(\gamma^T)'(t) \right)\bigg|_{t = 0}
+    = \gamma'(0) + (\gamma^T)'(0).
+\]
+Thus, $(\gamma'(0))^T = -\gamma'(0)$, and so $T_ISO(n) \subseteq so(n)$.
+
+I didn't have time to finish this problem.
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+Since that vector spaces over a field are isomorphic if and only if they have
+the same dimension, it suffices to show that the three spaces have the same
+dimension. First, note
+\[\dim((V \otimes W)^*)
+    = \dim(V \otimes W)
+    = \dim(V)\dim(W)
+    = \dim(V^*)\dim(W^*)
+    = \dim(V^* \otimes W^*).
+\]
+Since this problem isn't being graded, I didn't finish writing a thorough
+solution, but it is easy to show that a bilinear function
+$f \in L_2(V \otimes W)$ is defined by its values on each pair $(v,w)$ for $v
+\in \B_V, w \in \B_W$, where $\B_V$ and $\B_W$ are bases of $V$ and $W$,
+respectively. It follows that $\dim(L_2(V,W)) = \dim(V)\dim(W)$. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+I wasn't able to finish this problem.
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(i)]
+\item
+Suppose $S_1$ and $S_2$ are $(0,s_1)$ and $(0,s_2)$ tensors, respectively. If
+$p \in \M$, $v_1,\dots,v_{s_1 + s_2} \in T_p\M$,
+\begin{align*}
+\Phi^*(S_1 \otimes S_2)|_p (v_1,\dots,v_{s_1 + s_2})
+ &  = (S_1 \otimes S_2)|_{\Phi(p)} (D\Phi v_1,\dots,D\Phi v_{s_1 + s_2})    \\
+ &  = S_1|_{\Phi(p)}(D\Phi v_1,\dots,D\Phi v_{s_1})
+        S_2|_{\Phi(p)}(D\Phi v_{s_1 + 1},\dots,D\Phi v_{s_2})               \\
+ &  = \Phi^*S_1|_{\Phi(p)} (v_1,\dots,v_{s_2})
+        \Phi^*S_2|_{\Phi(p)} (v_{s_1 + 1},\dots,v_{s_1 + s_2})              \\
+ &  = (\Phi^*(S_1) \otimes \Phi^*(S_2))_p (v_1,\dots,v_{s_1 + s_2}).
+\end{align*}
+It follows that $\Phi^*(S_1 \otimes S_2) = \Phi^*(S_1) \otimes \Phi^*(S_2)$.
+\qed
+
+\item Suppose $\omega_1$ and $\omega_2$ are $k$- and $l$-forms on $\M$,
+respectively. If $p \in \M$, $v_1,\dots,v_{s_1 + s_2} \in T_p\M$,
+\begin{align*}
+\Phi^*(\omega_1 \wedge \omega_2)|_p (v_1,\dots,v_{s_1 + s_2})
+ &  = (S_1 \wedge S_2)|_{\Phi(p)} (D\Phi v_1,\dots,D\Phi v_{s_1 + s_2})    \\
+ &  = S_1|_{\Phi(p)}(D\Phi v_1,\dots,D\Phi v_{s_1})
+        S_2|_{\Phi(p)}(D\Phi v_{s_1 + 1},\dots,D\Phi v_{s_2})               \\
+ &  = \Phi^*S_1|_{p} (v_1,\dots,v_{s_2})
+        \Phi^*S_2|_{p} (v_{s_1 + 1},\dots,v_{s_1 + s_2})              \\
+ &  = (\Phi^*(S_1) \wedge \Phi^*(S_2))_p (v_1,\dots,v_{s_1 + s_2}).
+\end{align*}
+It follows that $\Phi^*(S_1 \wedge S_2) = \Phi^*(S_1) \wedge \Phi^*(S_2)$.
+\qed
+
+\newpage
+\item If $\omega$ is a $0$-form, $p \in \M, v \in T_p\M$, then
+\[\Phi^*(d\omega)|_p(v)
+    = d\omega|_{\Phi(p)}(D\Phi v)
+    = d\omega|_{\Phi(p)}(D\Phi v)
+    = D\Phi v [\omega]
+    = v [\omega \circ \Phi]
+    = (d\Phi^*\omega) (v)
+\]
+Suppose that, for some $n \in \N$, $\forall k \leq n$, for all $k$-forms
+$\omega$, $\Phi^*(d\omega) = d\Phi^*(\omega)$, and let $\omega$ be an
+$(n + 1)$-form. Then, $\omega = \omega_1 \wedge \omega_2$, for some $k_1$- and
+$k_2$-forms $\omega_1$ and $\omega_2$, respectively, with $k_1,k_2 \leq n$.
+Thus, by part (ii) and since the pullback is clearly linear by its definition,
+\begin{align*}
+\Phi^*(d\omega)
+   = \Phi^*(d(\omega_1 \wedge \omega_2))
+ & = \Phi^*(d\omega_1 \wedge \omega_2 + (-1)^{k_1}\omega_1 \wedge d\omega_2)\\
+ & = \Phi^*(d\omega_1) \wedge \Phi^*(\omega_2)
+        + (-1)^{k_1}\Phi^*(\omega_1) \wedge \Phi^*(d\omega_2) \\
+ & = d\Phi^*(d\omega_1) \wedge \Phi^*(\omega_2)
+        + (-1)^{k_1}\Phi^*(\omega_1) \wedge d\Phi^*(\omega_2) \\
+ & = d\left(\Phi^*(\omega_1) \wedge \Phi^*(\omega_2)\right) \\
+ & = d\Phi^*(\omega_1 \wedge \omega_2)
+   = d\Phi^*\omega
+\end{align*}
+
+By induction on $n$, the exterior derivative and pullback commute for all
+$n$-forms. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+Since $\omega$ is a $1$-form, $\forall p \in S^2$, $\omega|_p \in (T_pS^2)^*$.
+Thus, we can choose a dual vector $v \in T_pS^2$ with the property that $v = 0$
+implies $\omega|_p = 0$. In particular, since $\omega$ is smooth, we can choose
+$v_p$ such that the map $p \mapsto (p,v_p)$ is smooth. Since this map defines a
+vector field on $S^2$ and one cannot ``comb a coconut'', $\exists p \in S^2$
+with $v_p = 0$, and hence $\omega|_p = 0$.
+
+Recall now that $SO(3)$ is the group of rotations in $\R^3$, and hence,
+$\forall q \in S^2$, $\exists \phi_q \in SO(3)$ such that $\phi(q) = p$. Then,
+for any $v \in T_qS^2$,
+\[\omega|_q(v) = \phi^*\omega|_q(v) = \omega|_{\Phi(q)}(D\phi v) = 0,\]
+and hence $\omega = 0$. \qed
+\end{question}
+\end{document}

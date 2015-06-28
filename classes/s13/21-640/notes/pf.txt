@@ -1,0 +1,23 @@
+Week 3
+    p. 10
+        Second to last paragraph should read 'Open Mapping Theorem',
+        rather than Banach-Steinhaus
+
+Week 12
+    p. 7
+        F should map (x,y) rather than x + y to x + y
+
+Week 13
+    p. 5
+        Proof of norm incomplete?
+
+Week 14
+    p. 1
+        Theorem 14.1
+           - typo - line 1, topological has an extra 'v'
+
+           - A (probably minor) exception to Theorem 14.1 - What if tau includes the
+            singleton {0} (by translation invariance, tau would be the discrete
+            topology)? I this should be possible on a TVS. Then, however,
+            the singleton {{0}} would be a local base of balanced and convex, but
+            not absorbing, sets.

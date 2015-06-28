@@ -1,0 +1,178 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage[]{graphicx}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-423 Digital Signal Processing for CS}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{After Spring Break}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\E}{\mathcal{E}v} % even part of a signal
+\renewcommand{\O}{\mathcal{O}d} % odd part of a signal
+\newcommand{\F}{\mathcal{F}} % Fourier transform
+\newcommand{\lcm}{\operatorname{lcm}} % least common mutiple
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Midterm \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\section{Signals}
+\begin{enumerate}[a.]
+\item In all senses of boundedness, $a^nu[n]$ is bounded if and only if
+$|a| \in [0,1)$, in which case $1$ bounds the signal, $\frac{1}{1 - a}$ bounds
+the signal's integral, and $\frac{1}{1 - a^2}$ bounds the integral of the
+signal's energy.
+
+\item Since, $\forall t \in \R$, $u(t) + u(-t) = 1$,
+\[\E(x(t))
+ = \frac12(\cos(2\pi t)u(t) + \cos(2\pi t)u(-t))
+ = \frac12 \cos(2\pi t),\]
+so $\E(x(t))$ is periodic with period $1$.
+\[\O(x(t))
+ = \frac12(\cos(2\pi t)u(t) - \cos(2\pi t)u(-t))
+ = \cos(2\pi t)\left( u(t) - \frac12\right),\]
+so $\O(x(t))$ is not periodic (although it is periodic with period $1$ if
+restricted to $t < 0$ or $t \geq 0$).
+\end{enumerate}
+
+%TODO
+\section{Systems}
+For boundedness, I wasn't sure which definition to use, so I answered in terms
+of $1$-, $2$-, and $\infty$-norms, corresponding to the integral, square
+integral (energy), and suprememum, respectively, of the input and output.
+\begin{enumerate}[a.]
+\item The system is memoryless and causal ($y(t)$ depends only on $x(t)$),
+non-linear (if $x_1(0) = x_2(0) = 0$, then
+$e^{x_1(0) + x_2(0)} = 1 < 2 = e^{x_1(0)} + e^{x_2(0)}$), time-invariant,
+unstable in $1$- and $2$-norms, and stable in the $\infty$-norm.
+
+\item The system is causal but not memoryless ($y[n]$ depends on $x[n]$ and
+$x[n - 1]$), non-linear (if $x_1[0] = x_2[1] = 0, x_1[1] = x_2[0] = 1$, then
+$(x_1[1] + x_2[1])(x_1[0] + x_2[0]) = 1 > 0 = x_1[1]x_1[0] + x_2[1]x_2[0]$),
+time-invariant, and stable in all three norms.
+
+\item The system is neither causal nor memoryless ($y(-2)$ depends on $x(-1)$
+and $y(2)$ depends on $x(1)$), but is linear (each coordinate is a linear
+combination of coordinates of the input), not time-invariant, and stable with
+repsect to all three norms.
+
+\item The system is neither causal nor memoryless ($y[1]$ depends on $x[2]$ and
+$y[-1]$ depends on $x[-2]$), but is linear, not time-invariant, and stable with
+respect to all three norms.
+
+\item The system is memoryless but not causal, linear, not time-invariant, and
+stable with respect to all three norms.
+\end{enumerate}
+
+\newpage
+\section{Discrete Time Fourier Analysis}
+
+{\bf Problem III}
+\begin{enumerate}[a.]
+\item The period of the cosine term is $10$. The period of the sine term is
+$20$. Since the summed signal repeats precisely when both
+the sine term and the cosine term repeat, the period is $\lcm(10,20) = 20$.
+
+\item Since $\cos(0.4 n)$ is not periodic, it has no Fourier series.
+\end{enumerate}
+
+{\bf Problem V}
+\begin{enumerate}[a.]
+\item $b$ must divide $a$.
+
+\item Define, $\forall n \in \N$,
+\[y[n] = \left\{
+\begin{array}{cl}
+    x\left[ \frac{an}{b} \right]    : \mbox{ if } n = k\frac{b}{a}, k \in \N \\
+    0                                 \mbox{ else }.
+\end{array}
+\right.
+\]
+
+\item Let $I$ denote the unit pulse train of minimum period $N \in \N$ such
+that $N\frac{a}{b} \in \N$. Then, since $y = x \cdot I$, by the Convolution
+Theorem, $Y = X * \mathcal{I}$, where $\mathcal{I}$ denotes the Fourier
+transform of $I$ (which is itself an impulse train).
+\end{enumerate}
+
+
+{\bf Problem VI}
+\begin{enumerate}[a.]
+\item 
+\[\F\{x[-n]\}
+    = \sum_{n = -\infty}^\infty x[-n] e^{i\Omega n}
+    = \sum_{n = -\infty}^\infty x[n] e^{i(-\Omega) n}
+    = X(-\Omega). \mqed
+\]
+\item
+\[ -x(t)
+    = x^*(t)
+    = \left( \F\inv \left\{ X(\Omega) \right\} \right)^*)
+    = \int_{-\infty}^\infty X^*(\Omega) e^{-j\Omega t}
+    = \int_{-\infty}^\infty X^*(-\Omega) e^{j\Omega t}
+    = \F\inv \left\{ X^*(-\Omega) \right\}.
+\]
+Thus, by linearity of the Fourier Transform, since $x$ 
+\[\F\left\{ x^*(t) \right\} = X^*(-\Omega) = -X(-\Omega). \mqed\]
+\item By part a., if $x$ is symmetric, then
+\[X(-\Omega)
+    = \F\{x[-n]\}
+    = \F\{x[n]\}
+    = X(\Omega),
+\]
+and so $X$ is also symmetric. Also, as shown in part b. (without needing
+$x$ imaginary)
+\[X(-\Omega)
+    = X(\Omega)
+    = \F\left\{ x[n] \right\}
+    = \F\left\{ x^*[n] \right\}
+    = X^*(-\Omega),
+\]
+and so $X$ is real. \qed
+\end{enumerate}
+\end{document}

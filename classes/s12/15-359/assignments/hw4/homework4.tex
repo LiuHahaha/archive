@@ -1,0 +1,212 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{4}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{Friday, February 17, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Assignment \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+
+\begin{question}{Problem 2: Shipping error}
+Let $G$ be the event that you are shipped a working server, and let $B$ be the
+event that you are shipped a faulty server. Then, if $T$ is a random variable
+denoting the time in days until the server crashes,
+$(T | G) \sim$ Geometric$\left(\frac{1}{100}\right)$, and
+$(T | B) \sim$ Geometric$\left(\frac{5}{100}\right)$.
+Thus, as shown in class,
+\[E[T^2 | G] = \frac{2 - \frac{1}{100}}{\left(\frac{1}{100}\right)^2} = 19900,
+\; E[T | G] = \frac{1}{1/100} = 100,\]
+\[E[T^2 | B] = \frac{2 - \frac{5}{100}}{\left(\frac{5}{100}\right)^2} = 780,
+\; E[T | B] = \frac{1}{1/20} = 20.\]
+Then, since $E[T^2] = E[T^2 | G]P(G) + E[T^2 | B]P(B)$ and
+$E[T] = E[T | G]P(G) + E[T | B]P(B)$,
+Var$(T) = E[T^2] - E[T]^2 = $\fbox{$\frac{73340}{9}.$}
+\end{question}
+
+\begin{question}{Problem 3: Skew and skewer}
+For purposes of this question, abbreviate Skewer as $S$.
+Note that, for all random variables $X$,
+\[S(X) = E[(X - E[X])^3] = E[X^3] - 3E[X^2]E[X] + 2E[X]^3.\]
+Let $X$ and $Y$ be independent random variables, noting that this implies that
+$E[X]E[Y] = E[XY]$.
+Thus,
+\allowdisplaybreaks
+\begin{eqnarray*}
+S(X + Y)
+ & = & E[(X + Y)^3] - 3E[X^2]E[X] + 2E[X]^3   \\
+ & = & E[X^3] + 3E[X^2Y] + 3E[XY^2] + E[Y^3]  \\
+ & - & 3(E[X^2]E[X] - 2E[XY]E[X] + E[XY^2])   \\
+ & - & 3(E[X^2Y] - 2E[XY][EY] + E[Y^2]E[Y])   \\
+ & + & 2E[X + Y]^3                            \\
+ & = & E[X^3] + E[Y^3]                        \\
+ & - & 3(E[X^2]E[X] - 2E[XY]E[X])             \\
+ & - & 3( - 2E[XY][EY] + E[Y^2]E[Y])          \\
+ & + & 2E[X + Y]^3                            \\
+ & = & E[X^3] - 3E[X^2]E[X] + 2E[X]^3         \\
+ & + & E[Y^3] - 3E[Y^2]E[Y] + 2E[Y]^3         \\
+ & = & S(X) + S(Y)
+\end{eqnarray*}
+Thus, $S(X + Y) = S(X) + S(Y)$. \qquad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 4: Tails}
+Let $X$ be a non-negative, discrete, integer-valued random variable. \\ Let
+$S = \{(i,j) \in \mathbb{N} \times \mathbb{N} | 1 \leq j \leq i\}$. Then,
+\begin{eqnarray*}
+\sum_{j = 1}^{\infty} j P(X \geq j)
+ & = & \sum_{j = 1}^{\infty} j\sum_{i = j}^{\infty} P(X = i) \\
+ & = & \sum_{j = 1}^{\infty} \sum_{i = j}^{\infty} jP(X = i) \\
+ & = & \sum_{(i,j) \in S} jP(X = i) \\
+ & = & \sum_{i = 1}^{\infty} \sum_{j = 1}^i jP(X = i) \\
+ & = & \frac{\sum_{i = 1}^{\infty} (i + i^2) P(X = i)}{2} \\
+ & = & \mbox{\fbox{$\displaystyle \frac{E[X^2] + E[X]}{2}$}}
+\end{eqnarray*}
+\end{question}
+
+\begin{question}{Problem 5: Coffee-theorem revisited}
+Let $W$ be the event that the student starts off working, let $C$ be the event
+that the student starts off at the coffee shop, and let $X$ be a random
+variable denoting the time at which the student returns home. Note that, as
+computed in the solution to Problem 6 on Assignment 2, $E[X | W] = 9$ and
+$E[X | C] = 12$. Furthermore, conditioning on what the student does at the end
+of any given hour, $P(X = i | W) = \frac{2}{3}P(X = i - 1 | C)$,
+and
+$P(X = i | C) = \frac{2}{3}P(X = i - 1 | C) + \frac{1}{3}P(X = i - 1 | W)$.
+Thus, by definition of expected value, since
+$\sum_{i = 1}^{\infty} P(X = i | C) = \sum_{i = 1}^{\infty} P(X = i | W) = 1$,
+\allowdisplaybreaks
+\begin{eqnarray*}
+E[X^2 | C]
+ & = & \sum_{i = 2}^{\infty} i^2 P(X = i | C) \\
+ & = & \frac{1}{3}\left(\sum_{i = 2}^{\infty} i^2 2P(X = i - 1 | C)
+                                                  + P(X = i - 1 | W)\right) \\
+ & = & \frac{1}{3}\left(\sum_{i = 1}^{\infty} (i + 1)^2 2P(X = i | C)
+                                                      + P(X = i | W)\right) \\
+ & = & \frac{1}{3}\left(2(E[X^2 | C] + 2E[X | C] + 1)
+                                      + (E[X^2 | W] + 2E[X | W] + 1)\right) \\
+ & = & \frac{1}{3}\left(2(E[X^2 | C] + 48 + 1)
+                                             + (E[X^2 | W] + 18 + 1)\right) \\
+ & = & \frac{1}{3}\left(2E[X^2 | C] + E[X^2 | W] + 69\right),
+\end{eqnarray*}
+giving $E[X^2 | C] = E[X^2 | W] + 69$. A similar derivation gives
+$3E[X^2 | W] = 51 + 2E[X^2 | C]$. Solving this system of two linear equations
+in two variables gives $E[X^2 | W] = 189$, $E[X^2 | C] = 258$. Thus, since the
+quantity $\sigma^2$ in question is the variance of $X$ given $W$,
+$\sigma^2 = E[X^2 | W] - E[X | W]^2 = 189 - 81 = $ \fbox{$108$.}
+\end{question}
+
+\begin{question}{Problem 6: Counterexamples}
+\begin{enumerate}[A.]
+\item Let $X$ be a random variable such that $\forall$ positive integers $i$,
+$P(X = i) = \frac{6}{(\pi i)^2}$. Then, \[\sum_{i = 1}^{\infty} P(X = i)
+ = \frac{6}{\pi^2} \sum_{i = 1}^{\infty} \frac{1}{i^2} = 1,\]
+but
+\[E[X] = \sum_{i = 1}^{\infty} i \cdot P(X = i)
+ = \frac{6}{\pi^2} \sum_{i = 1}^{\infty} \frac{1}{i} = \infty.
+\qquad \blacksquare\]
+
+\item Let $X, Y: \{0,1\} \rightarrow [0,1]$ be random variables with the joint
+distribution below: \\
+\begin{center}
+\begin{tabular}{| c | c | c |}
+\hline
+$P(X = i, Y = j)$  &  $i = 0$  &  $i = 1$ \\
+\hline
+$j = 0$            &  $1/6$    &  $1/2$   \\
+\hline
+$j = 1$            &  $1/12$   &  $1/4$   \\
+\hline
+\end{tabular}
+\end{center}
+Clearly, $X$ and $Y$ are not independent. However,
+$E[XY] = \frac{1}{4}
+ = \left(\frac{1}{12} + \frac{1}{4}\right)
+   \left(\frac{1}{2}  + \frac{1}{4}\right)
+ = E[X]E[Y]$.
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 7: Some Chebyshev on the side}
+\begin{enumerate}[A.]
+\item Suppose that, for some $a, b \in \mathbb{R}$, a random variable
+$X$ takes values $a$ and $b$ so that, for some $p \in [0,1]$, $P(X = a) = p$
+and $P(X = b) = 1 - p$. Then, for $k = \frac{1}{\sqrt{1 - p}}$,
+$\frac{1}{1 + k^2} = p$, so that, for $\mu = E[X]$, $\sigma^2 = $ Var$(X)$,
+$P(X - \mu \geq k \sigma) = P(X \leq \mu) = p = \frac{1}{1 + k^2}$, so that
+equality holds in the one-sided Chebyshev Inequality. \qquad $\blacksquare$
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 8: See what I mean}
+Let $X_1, X_2, \ldots$ be an infinite sequence of independent, identically
+distributed random variables with finite mean $\mu$ and finite variance
+$\sigma^2$. $\forall n \in \mathbb{N}$, let
+\[S_n = \frac{X_1 + X_2 + \ldots + X_n}{n},\] and let $\epsilon > 0$. Since
+$X_1, X_2, \ldots$ are independent, and expectation is linear,
+$\forall n \in \mathbb{N}$,
+\begin{eqnarray*}
+\mbox{Var}\left(S_n\right)
+ & = & E\left[\left(\frac{X_1 + X_2 + \ldots + X_n}{n}\right)^2\right]
+   -   E\left[\frac{X_1 + X_2 + \ldots + X_n}{n}\right]^2 \\
+ & = & E\left[\frac{\left(X_1 + X_2 + \ldots + X_n\right)^2}{n^2}\right]
+   -   E\left[\frac{X_1 + X_2 + \ldots + X_n}{n}\right]^2 \\
+ & = & \frac{1}{n^2}\left(
+       E\left[\left(X_1 + X_2 + \ldots + X_n\right)^2\right]
+   -   E\left[X_1 + X_2 + \ldots + X_n\right]^2\right) \\
+ & = & \mbox{Var}\left(\frac{X_1 + X_2 + \ldots + X_n}{n}\right) \\
+ & = & \frac{1}{n^2}\left( \mbox{Var}(X_1) + \mbox{Var}(X_2) + \ldots
+   + \mbox{Var}(X_n)\right) \\
+ & = & \frac{1}{n^2}n\sigma^2 = \frac{\sigma^2}{n}.
+\end{eqnarray*}
+Also, by Linearity of Expectation, $E[S_n] = \mu$. Thus, by Chebyshev's
+Inequality, $\forall \epsilon_2 > 0$, for
+\[n = \left(\frac{\epsilon \sigma}{\epsilon_2}\right)^2 + 1, \; 
+k = \frac{\epsilon\sqrt{n}}{\sigma},\]
+\begin{eqnarray*}
+P(|S_n - \mu| > \epsilon)
+ & \leq & P(|S_n - \mu| \geq \epsilon) \\
+ & =    & P(|S_n - \mu| \geq k \frac{\sigma}{\sqrt{n}}) \\
+ & \leq & \frac{1}{k} = \frac{\sigma}{\epsilon\sqrt{n}} < \epsilon_2.
+\end{eqnarray*}
+Thus, $\lim_{n \rightarrow \infty} P(|S_n - \mu| > \epsilon) = 0$. \qquad
+$\blacksquare$
+\end{question}
+\end{document}

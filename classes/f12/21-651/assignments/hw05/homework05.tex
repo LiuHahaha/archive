@@ -1,0 +1,244 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Monday, November 5, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\epi}[1]{\operatorname{epi} #1 } % epigraph of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+The following characterization of lower semi-continuity is used in the proofs
+of problems 4. and 6.
+
+{\bf Lemma 1:}
+$f : X \rightarrow \R$ is lower semi-continuous if and only if,
+$\forall x_0 \in X$, $\forall \epsilon > 0$, $\forall x$ is some neighborhood
+$U$ of $x_0$ in $X$, $f(x) \geq f(x_0) - \epsilon$.
+
+{\bf Proof of Lemma 1:} $(\Rightarrow)$ Suppose that $f$ is lower
+semi-continuous, and let $x_0 \in X, \epsilon > 0$. Let
+$U = (f(x_0) - \epsilon, \infty)$, so that, since $f$ is lower
+semi-continuous, $V := f\inv(U)$ is open. Then, $V$ is a neighborhood of $x_0$
+in $X$ such that $f(V) \subseteq (f(x_0) - \epsilon, \infty)$, so that,
+$\forall x \in V$, $f(x) \geq f(x_0) - \epsilon$. \qed
+
+$(\Leftarrow)$ Suppose that, $\forall x_0 \in X, \epsilon > 0$, there is a
+neighborhood $W$ of $x_0$ in $X$ such that, $\forall x \in W$,
+$f(x) \geq f(x_0) - \epsilon$.
+Let $a \in \R$, and, for $V := (a,\infty)$, let
+$x_0 \in U := f\inv(V)$. Since, $V$ is open, for some $\epsilon > 0$,
+$(f(x_0) - \epsilon, \infty) \subseteq (a,\infty)$. Thus, there is a
+neighborhood $W$ of $x_0$ in $X$ such that, $\forall x \in W$,
+$f(x) \geq f(x_0) - \epsilon > a$, so that $f(W) \subseteq (a,\infty)$, and
+thus $W \subseteq U$. Since every point in $U$ is contained in a neighborhood
+in $U$, $U$ is open, so that $f$ is lower semi-continuous. \qed
+
+\begin{question}{Problem 1}
+Let $I := C(X,[0,1])$, and let $e$ be the function on $X$ defined by
+\[e(x) (f) := f(x), \forall f \in I\]
+($e$ is, in some sense, a restriction of the evaluation function used in
+Stone-Cech compatification). Note that, since, $\forall x \in X$,
+$e(x) : I \rightarrow [0,1]$, $e(X) \subseteq [0,1]^I$. $e$ is a
+homeomorphism between $X$ and $e(X)$. Since $(X,\tau)$ is Tikhonov,
+the proof is identical to the proof that the evaluation function used in
+Stone-Cech compactification is homeomorphism (as used in the proof of
+Theorem 142). \qed
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(i)]
+\item $(\Rightarrow)$ Suppose, $f : X \rightarrow [0,1]$ is continuous, with
+$f = 0$ on $C$, and $f > 0$ on $X \sminus C$. $\forall i \in \N$, define
+$U_i := f\inv([0,1/i))$. Since, $\forall i \in \N$, $(-1,1/i)$ is open in the
+standard topology on $\R$, $[0,1/i)$ is open in the topology induced on
+$[0,1]$, so that, since $f$ is continuous, $U_i \in \tau$. Then,
+\[
+\bigcap_{i = 1}^{\infty} U_i
+ = \{x \in X : \forall i \in \N, f(x) \in [0,1/i)\}
+ = f\inv(\{0\})
+ = C,
+\]
+so that $C$ is a $G_{\delta}$ set. \qed
+
+$(\Leftarrow)$ Suppose $C$ is a $G_{\delta}$, so that
+$C = \bigcap_{i = 1}^{\infty} U_i$ for $U_i \in \tau$. Note that,
+$\forall i \in \N$, $X \sminus U_i$ is closed and disjoint from $C$, so that,
+since $(X,\tau)$ is normal, by Urysohn's Lemma, there exists a continuous
+function $f_i : X \rightarrow [0,1]$ with $f_i = 0$ on $C$ and $f_i = 1$ on
+$X \sminus U_i$.
+
+Define $f : X \rightarrow [0,1]$ by
+$f(x) = \sum_{i = 1}^{\infty} \frac{f_i(x)}{2^i}$. (Note that, since,
+$\forall x \in X, i \in \N$, $f_i(x) \in [0,1]$,
+\[0
+ \leq f(x)
+ =    \sum_{i = 1}^{\infty} \frac{f_i(x)}{2^i}
+ \leq \sum_{i = 1}^{\infty} \frac{1}     {2^i}
+ \leq 1,\]
+so that $f$ has range in $[0,1]$.) If $x \in C$, then, $\forall i \in \N$,
+$f_i(x) = 0$, so that $f(x) = 0$. If $x \in X \sminus C$, then, since
+$C = \bigcap_{i = 1}^{\infty} U_i$, for some $i \in \N$,
+$x \in X \sminus U_i$. Thus, $f_i(x)/2^i > 0$, so that
+$f(x) \geq f_i(x)/2^i > 0$. Finally, since $f$ is the limit of the uniformly
+convergent sequence $\{\sum_{i = 1}^n \frac{f_i}{2^i}\}_{n = 1}^{\infty}$ of
+continuous functions, $f$ is continuous, so $f$ has the desired properties.
+\qed
+
+\item $(\Rightarrow)$ Suppose $\exists f : X \rightarrow [0,1]$ continuous
+such that $f = 1$ on $C_1$, $f = 0$ on $C_2$, and $0 < f < 1$ on
+$X \sminus (C_1 \cup C_2)$. If follows from the result of part (i) that $C_2$
+is a $G_{\delta}$ set. Since $g : = (1 - f) : X \rightarrow [0,1]$ is
+continuous with $g = 0$ on $C_1$ and $g > 0$ on $X \sminus C_1$, by the result
+of part (i), $C_1$ is a $G_{\delta}$ set. \qed
+
+$(\Leftarrow)$ Suppose, on the other hand, that $C_1,C_2$ are $G_{\delta}$
+sets. By the result of part (i), $\exists f_1,f_2 : X \rightarrow [0,1]$ with
+$f_1\inv(\{0\}) = C_1$ and $f_2\inv(\{0\}) = C_2$. Let
+$f : X \rightarrow [0,1]$ be defined by
+\[f(x) = \frac{f_1(x)}{f_1(x) + f_2(x)}, \forall x \in X.\]
+Then, $f(x) = 0$ if $x \in C_1$, $f(x) = 1$ if $x \in C_2$, and
+$0 < f(x) < 1$ if $x \in X \sminus (C_1 \cup C_2)$ (noting that $f$ is
+everywhere well-defined because $C_1 \cap C_2 = \emptyset$), and $f$ is
+continuous, as the quotient of continuous functions with a nonzero
+denominator. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+Suppose, for sake of contradiction, that there exist two distinct such
+extensions $g_1,g_2 : \overline{E} \rightarrow Z$. Then,
+$\exists x \in \overline{E}$ with $g_1(x)$ distinct from $g_2(x)$.
+Then, since $Z$ is Hausdorff, $\exists U_1,U_2 \in \tau_Z$ such
+that $g_1(x) \in U_1, g_2(x) \in U_2$ and $U_1 \cap U_2 = \emptyset$. Since
+$g_1$ and $g_2$ are continuous,
+$V_1 := g_1\inv(U_1)$, $V_2 := g_2\inv(U_2) \in \tau_Y$, so
+$V_1 \cap V_2 \in \tau_Y$. Thus, $V_1 \cap V_2$ is a neighborhood of $x$,
+so that, since $x \in \overline{E}$, $\exists y \in V_1 \cap V_2 \cap E$.
+Then, $g_1(y) = f(y) = g_2(y)$, contradicting the fact that
+$U_1 \cap U_2 = \emptyset$. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+Suppose $f$ is lower semi-continuous, suppose that some convergent
+sequence $x_n \rightarrow a$ in $X$ as $n \rightarrow \infty$, and let
+$\epsilon > 0$. Since $f$ is lower semi-continuous, there is a neighborhood
+$U$ of $a$ such that, $\forall x \in U$, $f(x) \geq f(a) - \epsilon$. Since
+$x_n \rightarrow a$ as $n \rightarrow \infty$, $\exists n_0 \in \N$ such that,
+$\forall n \in \N$ with $n \geq n_0$, $x_n \in U$, so that
+$\inf_{n\geq n_0}f(x_n) \geq f(a)$. Since this is the case every
+$\epsilon > 0$, $\liminf_{n\rightarrow \infty}f(x_n) \geq f(a)$, and thus,
+$f$ is sequentially lower semi-continuous at every $a \in X$. \qed
+
+Let $\tau_{coco}$ be the co-countable topology on $\R$, and let $f$ be the
+identity function on $\R$ (mapping into the standard topology). It is easy to
+see that a function is sequentially continuous if and only if it is both upper
+and lower semi-continuous (since a sequence $x_n \rightarrow a$ as
+$n \rightarrow \infty$ if and only if
+$\liminf_{n \rightarrow \infty} x_n = a = \limsup_{n \rightarrow \infty} x_n$.
+Since $f$ is
+sequentially continuous (as sequences converge in $\tau_{coco}$ only if they
+are eventually constant), $f$ is sequentially lower and upper semi-continuous.
+However, since $f$ is not continuous ($(0,1)$ is not the complement of a
+countable set), either $f$ or $-f$ must not be lower semi-continuous (in
+particular, $f$ is not lower semi-continuous).
+\end{question}
+
+\begin{question}{Problem 5}
+Suppose, for sake of contradiction, that $f$ is sequentially lower
+semi-continuous but not lower semi-continuous. Since $f$ is not lower
+semi-continuous, for some $a \in \R$, $S := f\inv(a,\infty)$ is not open, so
+that some $x \in S$ is not an interior point of $S$. Let
+$\B = \{B_i : i \in \N\}$ be a local base of $X$ at $a$, with
+$B_{i + 1} \subseteq B_i$ (we can construct such a decreasing local base of
+$X$ at $a$ by taking a countable base $\{C_i : i \in \N\}$ and replacing each
+$C_i$ with $B_i := \bigcap_{j = 1}^i C_i$, which is a finite intersection of
+open sets and is thus open). Since $x$ is not an interior point of $S$,
+$\forall n \in \N$, $\exists x_n \in B_n \sminus U$, so that
+$x_n \rightarrow x$ as $n \rightarrow \infty$. However, since no $f(x_n)$ is
+in $(a,\infty)$, $f(x_n) \leq a < f(x)$, so that
+$\liminf_{n \rightarrow \infty} f(x_n) \leq a < f(x)$, contradicting the fact
+that $f$ is sequentially lower semi-continuous. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+Let $\tau_S$ denote the standard topology on $\R$, and let
+$U := (X \times \R) \sminus (\epi{f})$. It suffices, then, to show that $f$ is
+lower semi-continuous if and only if $U$ is open in the product topology
+$\tau \times \tau_S$ on $X \times \R$.
+
+$(\Rightarrow)$ Suppose $f$ is lower semi-continuous, and suppose
+$(x_0,y_0) \in U$. Let $\epsilon > 0$, so that, by lower semi-continuity of
+$f$, $\exists U_1 \in \tau$ with $x \in U_1$ such that, $\forall x \in U_1$,
+$f(x) \geq f(x_0) - \epsilon$. Thus, for $U_2 := (-\infty,f(x_0) - \epsilon)$,
+$U_1 \times U_2 \subseteq U$. Furthermore, since $U_1 \in \tau$ and
+$U_2 \in \tau_S$, $U_1 \times U_2 \in \tau \times \tau_S$. Since,
+$\forall (x,y) \in U$, $(x,y)$ has a neighborhood contained in $U$, $U$ is open. \qed
+
+$(\Leftarrow)$ Suppose $U \in \tau \times \tau_S$, let $x_0 \in X$, and let
+$\epsilon > 0$. Since $X \times \R$ is the product of finitely many
+topological spaces, $\{U_1 \times U_2 : U_1 \in \tau, U_2 \in \tau_S\}$ gives
+a base for $\tau \times \tau_S$. Thus, since
+$(x_0,f(x_0) - \epsilon) \in U$, $\exists U_1 \in \tau, U_2 \in \tau_S$ such
+that $(x_0,f(x_0) - \epsilon) \in U_1 \times U_2 \subseteq U$. Then, by
+definition of $U$, $\forall x \in U_1$, $f(x) \geq f(x_0) - \epsilon$.
+Therefore, $f$ is lower semi-continuous at all $x_0 \in X$. \qed
+\end{question}
+\end{document}

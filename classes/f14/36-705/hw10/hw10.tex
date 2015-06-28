@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{10}
+\newcommand{\duedate}{Thursday, December 4, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item Since $R(g) = \E[|Y - g(X)|] = \E[\E[|Y - g(X)|\;|\;X]]$, it suffices to
+show that, for any $X$, $\E[|Y - g(X)|\;|\;X] \geq \E[|Y - m(X)|\;|\;X]$. If
+$m(X) \geq g(X)$, then
+\begin{align*}
+ &  \E[|Y - g(X)|\;|\;X] - \E[|Y - m(x)|\;|\;X]    \\
+ &  \geq \int_{-\infty}^{m(X)} |g(X) - m(X)| p(y|X) \, dy
+    - \int_{m(X)}^{\infty} |g(X) - m(X)| p(y|X) \, dy
+    = 0.
+\end{align*}
+where the equality is by definition of $m$. The case $g(X) \leq m(X)$ is
+identical up to signs. \qed
+
+\item For $i \in \{n + 1,\dots,2n\}$, let $Z_i := (Y_i - \hat g(X_i))^2$, and
+let $Z_i' = Z_i | \mathcal{D}_1$. Then, for all $n \in \N$,
+$\ol{Z'} = \ol Z | \mathcal{D}_1 = \hat R | \mathcal{D}_1$. Also, by the
+triangle inequality, $|Z'| \leq (|Y| + |\hat g(X)|)^2 \leq (B + C)^2$, and so
+all moments of $Z'$ exist. Since $R = \E[Z']$, by the Weak Law of Large
+Numbers,
+\[(\hat R - R) | \mathcal{D}_1 = \left( \ol{Z'} - \E[Z'] \right) \to 0\]
+in probability. \qed
+
+\item Let $\alpha := \E[Y | X = 1] - \E[Y | X = 0]$. Then,
+\begin{align*}
+\E[2X_iY_i]
+ &  = \E[2X_iY_i | X_i = 0]\pr[X_i = 0] + \E[2X_iY_i | X_i = 1]\pr[X_i = 1] \\
+ &  = 0 \cdot \frac12 + 2\E[Y_i | X_i = 1] \cdot \frac12
+    = \E[Y_i | X_i = 1],
+\end{align*}
+and, similarly, $\E[2(1 - X_i)Y_i] = \E[Y_i | X = 0]$. Thus, by the Weak Law of
+Large Numbers, (assuming the necessary moments of $Y$ are finite),
+$\hat\alpha$ is a consistent estimator of $\alpha$.
+
+Note that, given $X$, $Y = Y(X)$, and, since $X$ is randomly assigned,
+$\E[Y(1) | X = 1] = \E[Y(1)]$ and $\E[Y(0) | X = 0] = \E[Y(0)]$. Hence,
+\begin{align*}
+\alpha
+ &  = \E[Y | X = 1] - \E[Y | X = 0] \\
+ &  = \E[Y(1) | X = 1] - \E[Y(0) | X = 0]
+    = \E[Y(1)] - \E[Y(0)]
+    = \theta. \qed
+\end{align*}
+
+\end{enumerate}
+\end{document}

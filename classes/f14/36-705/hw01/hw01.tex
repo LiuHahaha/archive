@@ -1,0 +1,342 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Thursday, September 4, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\F}{\mathcal{F}} %
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{question}{Chapter 1, problem 3}
+\vspace{-5mm}
+\begin{enumerate}[(a)]
+\item For all $n \in \N$,
+\[B_n
+    = A_n \cup \bigcup_{i = n + 1}^\infty A_i
+    \supseteq \bigcup_{i = n + 1}^\infty A_i
+    = B_{n + 1},
+\]
+and
+\[C_n
+    = A_n \cap \bigcap_{i = n + 1}^\infty A_i
+    \subseteq \bigcap_{i = n + 1}^\infty A_i
+    = C_{n + 1}. \qed
+\]
+
+\item ($\Leftarrow$) If $\omega$ belongs to an infinite number of events
+$A_1,A_2,\dots$, then, for all $n \in \N$, there exists $n' > n$ such that
+$\omega \in A_{n'} \subseteq B_n$, and thus
+$\omega \in \bigcap_{i = 1}^\infty B_n$.
+
+($\Rightarrow$) Otherwise, for
+$n := \max \{n \in \N : \omega \in A_n\} \in \N$ (with $n = 0$ if
+$\{n \in \N : \omega \in A_n\} = \emptyset$),
+$\omega \notin B_{n + 1} \supseteq \bigcap_{i = 1}^\infty B_i$. \qed
+
+\item ($\Leftarrow$) If $\omega$ belongs to all but finitely many of
+$A_1,A_2,\dots$, then, for $n := \max \{n \in \N : \omega \notin A_n\}$ (or
+$n = 0$ if $\{n \in \N : \omega \notin A_n\} = \emptyset$),
+$\omega \in C_{n + 1} \subseteq \bigcup_{i = 1}^\infty C_{i}$.
+
+($\Rightarrow$) Otherwise, $\forall n \in \N$, there exists $n' > n$ such that
+$\omega \notin A_{n'} \supseteq C_n$, so
+$\omega \notin \bigcup_{i = 1}^\infty C_n$. \qed
+\end{enumerate}
+\vspace{-5mm}
+\end{question}
+
+\begin{question}{Chapter 1, problem 8}
+By countable subadditivity, since each $\P(A_i^c) = 1 - \P(A_i) = 0$,
+\[1 \geq \P \left( \bigcup_{i = 1}^\infty A_i \right)
+    = \P \left( \left( \bigcup_{i = 1}^\infty A_i^c \right)^c \right)
+    = 1 - \P \left( \bigcup_{i = 1}^\infty A_i^c \right)
+    \geq 1 - \sum_{i = 1}^\infty \P(A_i^c)
+    = 1 - \sum_{i = 1}^\infty 0
+    = 1. \qed \]
+\vspace{-5mm}
+\end{question}
+
+\begin{question}{Chapter 1, problem 14}
+If $\P(A) = 0$, then, for any event $B$,
+$0 \leq \P(A \cap B) \leq \P(A) = 0$, and so $\P(A \cap B) = 0 = \P(A)\P(B)$.
+If $\P(A) = 1$, then, for any event $B$, since $\P(A^c) = 0$, using
+subadditivity,
+\[\P(B) \geq \P(A \cap B) = 1 - \P(A^c \cup B^c) \geq 1 - \P(B^c) = \P(B) = \P(A)\P(B).\]
+Hence, in either case, $A$ is independent of any event.
+
+If $A$ is independent of itself, then $\P(A) = \P(A \cap A) = \P(A)\P(A)$, and
+so $\P(A) \in \{0,1\}$. \qed
+\end{question}
+
+\newpage
+\begin{question}{Chapter 2, problem 1}
+Note that, since $F_X$ is right-continuous, it suffices to show
+$\P(X = x) = F_X(x) - F_X(x^-)$, or, equivalently,
+$F_X(x^-) = F_X(x) - \P(X = x) = \P(X < x)$, by finite additivity.
+
+Defining events $A_n := \{X \leq x - 1/n\}$, it is clear that
+$A_n \uparrow \{X < x\}$, and hence
+\[F_X(x^-) = \lim_{y \uparrow x} \P(X \leq y) = \lim_{n \to \infty} \P(A_n) =
+\P(X < x)\]
+by continuity of measure. \qed
+\end{question}
+
+\begin{question}{Chapter 2, problem 4}
+\begin{enumerate}[(a)]
+\item
+\[F_X(x)
+    = \int_{-\infty}^x f_X(y) \, dy
+    = \left\{
+        \begin{array}{ll}
+            0                       & \mbox{ if } x \leq 0     \\
+            x/4                     & \mbox{ if } 0 < x \leq 1 \\
+            1/4                     & \mbox{ if } 1 < x \leq 3 \\
+            1/4 + \frac38(x - 3)    & \mbox{ if } 3 < x \leq 5 \\
+            1                       & \mbox{ otherwise}
+        \end{array}
+    \right..
+\]
+
+\item $\forall y \in \R$,
+\[F_Y(y)
+    = \P(Y < y)
+    = \P(1/X < y)
+    = \P(X > 1/y)
+    = 1 - F_X(1/y)
+\]
+Hence,
+\[f_Y(y)
+    = \frac{d}{dy} F_Y(y)
+    = \frac{d}{dy} 1 - F_X(1/y)
+    = f_X(1/y)y^{-2}
+    = \left\{
+        \begin{array}{ll}
+            \frac38y^{-2}   & \mbox{ if } 1/5 < y < 1/3 \\
+            \frac14y^{-2}   & \mbox{ if } 1 < y \\
+            0               & \mbox{ otherwise}
+        \end{array}
+    \right..
+\]
+\end{enumerate}
+\end{question}
+
+\begin{question}{Chapter 2, problem 7}
+Since $X$ and $Y$ are independent, for $z \in (0,1)$, 
+\[\P(Z > z)
+    = \P(X > z, Y > z)
+    = \P(X > z)\P(Y > z)
+    = (1 - z)^2
+    = 1 - 2z + z^2
+,\]
+and hence,
+\[f_Z(z)
+    = \frac{d}{dz} (1 - \P(Z > z))
+    = \frac{d}{dz} 2z - z^2
+    = 2 - 2z
+.\]
+Clearly, for $z \in \R\sminus(0,1), f_Z(z) = 0$.
+\end{question}
+
+\newpage
+\begin{question}{Chapter 2, problem 20}
+As the sum of two random variables, the PDF of $X - Y = X + (-Y)$ is the
+convolution of the PDF's of $X$ and $-Y$:
+\[f_{X - Y}(z)
+    = \int_{-\infty}^\infty f_X(x) f_{-Y}(z - x) \, dx
+    = \int_{\max\{0,z\}}^{\min\{1,z + 1\}} 1 \, dx
+    = 1 - |z|.
+\]
+If $z \leq 1$, then
+\[\P\left( X/Y < z \right)
+    = \P(X < zY)
+    = \int_0^1 \P(X < zy) f_Y(y) \, dy
+    = \int_0^1 zy \, dy
+    = z/2.
+\]
+If $1 < z$, then
+\[\P\left( X/Y < z \right)
+    = \P(X < zY)
+    = \int_0^{1/z} \P(X < zy) f_Y(y) \, dy + \int_{1/z}^1 f_Y(y) \, dy
+    = 1 - 1/z + 1/(2z) = 1 - 1/(2z).
+\]
+Hence,
+\[f_{X/Y}(z)
+    = \left\{
+        \begin{array}{ll}
+            1/2         & \mbox{ if } 0 < z \leq 1 \\
+            1/(2z^2)    & \mbox{ if } 1 < z \\
+            0           & \mbox{ otherwise }
+        \end{array}
+    \right..
+\]
+\end{question}
+
+\begin{question}{Chapter 3, problem 16}
+\begin{align*}
+\E[r(X)s(Y) | X]
+    = \int r(X) s(y) f_{X,Y|X}(X,y) \, dy
+ &  = \int r(X) s(y) f_{X,Y|X}(X,y) \, dy   \\
+ &  = \int r(X) s(y) f_{Y|X}(X,y) \, dy \\
+ &  = r(X) \int s(y) f_{Y|X}(X,y) \, dy
+    = r(X) \E[s(Y) | X],
+\end{align*}
+using the linearity of the integral.
+
+If $s$ is the constant function with $s(y) = 1$ for all $y$, we have
+$\E[r(X) | X] = r(X) \E[1 | X] = r(X)$. \qed
+\end{question}
+
+\begin{question}{Chapter 3, problem 17}
+Let $m := \E[Y]$ and let $b(X) := \E[Y | X]$. By the Rule of Iterated
+Expectations and the identity $\E[r(X)s(Y,X) | X] = r(X)\E[s(Y,X) | X]$ (whose
+proof is identical to that in the previous problem),
+\[\E[(Y - b(X))^2]
+    = \E[(Y - \E[Y | X])^2]
+    = \E[(\E[\E[Y | X]] - \E[Y | X])^2]
+    = \Var\E[Y | X],
+\]
+\begin{align*}
+\E[(b(X) - m)^2]
+    = \E[(\E[Y | X] - \E[Y])^2]
+ &  = \E\left[\left( \int y f_{Y | X}(X,y) - \right)^2\right]   \\
+ &  = \E\left[ \int (y - \E[Y | X])^2 f_{Y | X}(X, y) \, dy \right]
+    = \E\Var[Y | X],
+\end{align*}
+and
+\begin{align*}
+\E[(Y - b(X))(b(X) - m)]
+ &  = \E\left[ \E[(Y - b(X))(b(X) - m) | X] \right] \\
+ &  = \E\left[ (b(X) - m) \E[(Y - b(X)) | X] \right]    \\
+ &  = \E\left[ (b(X) - m)
+            \left( \E[Y | X] - \E\left[\E[Y | X] | X\right]\right)\right]   \\
+ &  = \E\left[ (b(X) - m) \left( \E[Y | X] - \E[Y | X] \right)\right]
+    = 0.
+\end{align*}
+Hence,
+\begin{align*}
+\Var[Y]
+    = \E[(Y - m)^2]
+ &  = \E[(Y - b(X) + b(X) - m)^2]   \\
+ &  = \E[(Y - b(X))^2 + 2(Y - b(X))(b(X) - m) + (b(X) - m)^2]   \\
+ &  = \Var\E[Y | X] + \E\Var[Y | X]. \qed
+\end{align*}
+\end{question}
+
+\begin{question}{Chapter 3, problem 23}
+If $X \sim \mbox{Poisson}(\lambda)$, then
+\begin{align*}
+m_X(t)
+    = \E[e^{tX}]
+    = \sum_{x = 0}^\infty e^{tx} \frac{\lambda^xe^{-\lambda}}{x!}
+    = e^{-\lambda} \sum_{x = 0}^\infty \frac{(e^t\lambda)^x}{x!}
+    = e^{-\lambda} e^{e^t\lambda}
+    = e^{\lambda(e^t - 1)},
+\end{align*}
+where we used the Taylor expansion of the exponential.
+
+If $X \sim \mathcal{N}(\mu,\sigma)$, then
+\begin{align*}
+m_X(t)
+    = \E[e^{tX}]
+ &  = \int_{-\infty}^\infty \frac{e^{tx}}{\sqrt{2\pi}\sigma}
+                    \exp\left( -\frac{(x - \mu)^2}{2\sigma^2} \right) \, dx \\
+ &  = \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}\sigma}
+                \exp\left( tx - \frac{(x - \mu)^2}{2\sigma^2} \right) \, dx \\
+ &  = \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}\sigma}
+                    \exp\left( \frac{-(x - (\sigma^2t - \mu))^2}{2\sigma^2}
+                              + \frac{\sigma^2t^2}{2} + \mu t \right) \, dx \\
+ &  = \exp\left( \mu t + \frac{\sigma^2t^2}{2} \right)
+        \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}\sigma}
+        \exp\left( \frac{-(x - (\sigma^2t - \mu))^2}{2\sigma^2} \right) \, dx
+    = \exp\left( \mu t + \frac{\sigma^2t^2}{2} \right),
+\end{align*}
+where we used the fact that the integral of the PDF of
+$\mathcal{N}((\sigma^2t - \mu),\sigma^2)$ is $1$.
+
+If $X \sim \mbox{Gamma}(\alpha,\beta)$, then, when $t < 1/\beta$,
+\begin{align*}
+m_X(t)
+    = \E[e^{tX}]
+    = \int_{-\infty}^\infty
+    \frac{e^{tx}x^{\alpha - 1}e^{-x/\beta}}
+                                 {\Gamma(\alpha)\beta^\alpha}
+    = \left( \frac{1}{1 - \beta t} \right)^\alpha
+        \int_0^\infty 
+    \frac{x^{\alpha - 1}e^{-\frac{x}{\beta/(1 - \beta t)}}}
+                                 {\Gamma(\alpha)(\beta/(1 - \beta t))^\alpha}
+    = \left( \frac{1}{1 - \beta t} \right)^\alpha.
+\end{align*}
+where we used the fact that the integral of the PDF of
+$\mbox{Gamma}(\alpha,\beta/(1 - \beta t))$ is $1$.
+\end{question}
+\end{document}

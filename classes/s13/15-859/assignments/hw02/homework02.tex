@@ -1,0 +1,346 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{wasysym}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{Shashank Singh}
+\newcommand{\andrew}{sss1@andrew.cmu.edu}
+\newcommand{\class}{15-859 Information Theory and Applications in TCS}
+\newcommand{\hwnum}{2}
+\newcommand{\duedate}{Thursday, February 28, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}} % inverse
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\dom}{\operatorname{Dom}} % domain operator
+\newcommand{\rank}{\operatorname{rank}} % rank operator
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\ul}{\underline}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+
+% probability related macros
+\newcommand{\pr}[1]{\mathsf{Pr}\left( #1 \right)} % probability of event #1
+% expected value of #1 over #2
+\newcommand{\E}[2]{\operatornamewithlimits{\mathbb{E}}_{#2}\left[ #1 \right]}
+% Bernoulli distribution of parameter p
+\newcommand{\Bern}[1]{\operatorname{Bernoulli}\left( #1 \right)}
+\newcommand{\giv}{\, | \,} % \pr{A \giv B} probability of A given B
+\newcommand{\jtA}{A_{\epsilon,\Delta}^n} % length-n jointly typical sequences
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Problem Set \hwnum} \\
+\class \\
+Name: \name \\
+Email: \andrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item
+\begin{enumerate}[i.]
+\item $p[\hat X \neq X]$ is minimized when $g(Y) = Y$, in which
+case $p[\hat X \neq X] = p[Y \neq X] = $ \fbox{$1 - \frac{1}{2^{n/2}}$.}
+
+$H(X \giv Y) = n/2$ and, for $\X = \dom X$, $\log_2|\X| = n$, so, the weak
+Fano's Inequality gives
+\[p[\hat X \neq X]
+    \geq \frac{H(X \giv Y) - 1}{\log_2(|\X|)}
+ = \mbox{\fbox{$\displaystyle \frac{n - 2}{2n}
+$.}}\]
+
+\item Note that $p[X = Y] = \alpha + (1 - \alpha)\frac{1}{2^n}$, since $X = Y$
+whenever $X = 0$. $p[\hat X \neq X]$ is minimized when $g(Y) = Y$, in which
+case
+$p[\hat X \neq X] = p[Y \neq X]
+ = $ \fbox{$(1 - \alpha)\left(1 - \frac{1}{2^n}\right)$.}
+
+Let $Z$ be an indicator random variable with $Z = 0$ if $Y$ was sampled from
+the first distribution ($Y = X$) and $Z = 1$ otherwise ($Y = 0$). Then,
+\begin{align*}
+H(X \giv Y)
+ & = H(X \giv Y, Z) + H(Z) \\
+ & = \alpha H(X \giv Y, Z = 0) + (1 - \alpha)H(X \giv Y, Z = 0) + h(\alpha) \\
+ & = \alpha \cdot 0 + (1 - \alpha)n + h(\alpha)
+   = (1 - \alpha)n + h(\alpha)
+\end{align*}
+(where $h$ denotes the binary entropy function) and, for $\X = \dom(X)$,
+$\log_2(|\X|) = n$, using the weakened form of Fano's Inequality,
+\[p[\hat X \neq X]
+    \geq \frac{H(X \giv Y) - 1}{\log_2(|\X|)}
+ = \mbox{\fbox{$\displaystyle \frac{(1 - \alpha)n + h(\alpha) - 1}{n}
+$.}}\]
+\end{enumerate}
+
+\item
+Define $E = \Delta (X,Y)$, the Hamming distance of $X$ and $Y$.
+By definition of $\theta_i$,
+$H(E) = \sum_{i = 1}^n \theta_i \log_2\left( \frac{1}{\theta_i} \right)$.
+For $i \in \{1,\dots,n\}$, $H(X \giv Y,E = i)$ is maximized when $X$ is
+distributed uniformly among the ${n \choose i}$ strings $Z \in \{0,1\}^n$
+with $\Delta (Y,Z) = i$, so $H(X \giv Y,E = i) \leq \log_2 {n \choose i}$.
+Since $E$ is a function of $X$ and $Y$, $H(E \giv X,Y) = 0$. Thus, as in the
+proof of Fano's Inequality,
+\begin{align*}
+  H(X \giv Y)
+      \leq H(E) + H(X \giv E,Y)
+    & = \sum_{i = 1}^n \theta_i \log_2 \left( \frac{1}{\theta_i}\right)
+      + \sum_{i = 1}^n \theta_i \cdot H(X \giv Y,E = i) \\
+    & \leq \sum_{i = 1}^n \theta_i \log_2 \left( \frac{1}{\theta_i}\right)
+      + \sum_{i = 1}^n \theta_i \log_2 {n \choose i} \\
+    & \leq \sum_{i = 1}^n \theta_i \left(
+        \log_2 \left( \frac{1}{\theta_i}\right) + \log_2 {n \choose i}
+      \right) \\
+    & \leq \sum_{i = 1}^n \theta_i \log_2
+        \left( {n \choose i} \frac{1}{\theta_i}\right). \mqed
+\end{align*}
+
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item
+Since $p(0) = p(1) = \frac12$,
+\begin{align*}
+ I(B; Y)
+ & = \sum_{b \in \{0,1\}} \sum_{y \in \Y}
+                        p(b,y) \log_2\left( \frac{p(b,y)}{p(b)p(y)} \right) \\
+ & = \sum_{b \in \{0,1\}} \sum_{y \in \Y}
+            p(y \giv b)p(b) \log_2\left( \frac{p(y \giv b)}{p(y)} \right) \\
+ & = \sum_{b \in \{0,1\}} \sum_{y \in \Y}
+            p(y \giv b)p(b) \log_2\left( \frac{p(y \giv b)}
+                                {p(y \giv 1)p(1) + p(y \giv 0)p(0)} \right) \\
+ & = \frac12 \sum_{b \in \{0,1\}} \sum_{y \in \Y}
+            p(y \giv b)\log_2\left( \frac{2p(y \giv b)}
+                                {p(y \giv 1) + p(y \giv 0)} \right). \mqed
+\end{align*}
+
+\item If, for some $y \in \Y$, $p(y \giv 0) > p(y \giv 1)$, then the
+probability of an error in decoding $y$ is
+\[p(\mbox{error} \giv y)
+ = p(1 \giv y)
+ = \frac{p(y \giv 1)p(1)}{p(y)}
+ \leq \frac{p(y \giv 1)}{p(y)}
+ = \frac{\sqrt{p(y \giv 1)^2}}{p(y)}
+ \leq \frac{\sqrt{p(y \giv 1)p(y \giv 0)}}{p(y)}
+.\]
+Similarly, if $p(y \giv 0) \leq p(y \giv 1)$,
+$\displaystyle
+p(\mbox{error} \giv y) \leq \frac{\sqrt{p(y \giv 1)p(y \giv 0)}}{p(y)}$. Thus,
+\[p(\mbox{error})
+ = \sum_{y \in \Y} p(\mbox{error} \giv y) p(y)
+ \leq \sum_{y \in \Y} \frac{\sqrt{p(y \giv 1)p(y \giv 0)}}{p(y)} p(y)
+ = \sum_{y \in \Y} \sqrt{p(y \giv 1)p(y \giv 0)}. \mqed
+\]
+\item Let $\rho : C \times C \rightarrow \N$ denote the Hamming metric.
+$\rho(\ul c, \ul c_0) > 0$ if and only if $\ul c \neq \ul c_0$, so that
+\[
+  p(\ul c \neq \ul c_0)
+ = \sum_{\ul d \in C} p(\ul c = \ul d)
+ = \sum_{j = 1}^n d_j \cdot p(\rho(\ul c,\ul c_0) = j)
+ = \sum_{j = 1}^n d_j \cdot Z(W)^j,
+\]
+since the bits are assumed to be independent. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+For notational convenience, we define
+$\beta := 2^{-n(I(\ul X;\ul Y) + 3\epsilon}$.
+\begin{enumerate}[(a)]
+\item Since we have already shown that
+$p\left[ (\ul X, \ul Y) \in A_{\epsilon}^n \right] \rightarrow 1$ as
+$n \rightarrow \infty$ and the joint probability of two events whose
+probabilities approach $1$ also approaches $1$ as $n \rightarrow \infty$, it
+suffices to show that
+\[p\left[ \left| \Delta(\ul X, \ul Y)  - \E{\Delta(\ul X, \ul
+Y)}{} \right| < \epsilon \right] \rightarrow 1\] as $n \rightarrow \infty$.
+Since $\Delta(\ul X, \ul Y)$ is an average over $n$ draws from the joint
+distribution of $(\ul X, \ul Y)$, this is immediate from the Law of Large
+Numbers. \qed
+
+\item By definition of $\jtA$ and the Triangle Inequality,
+\begin{align*}
+-\log_2\left( \frac{p(\ul x)p(\ul y)}{p(\ul x, \ul y)} \right)
+ & = \log_2 p(\ul x, \ul y) - \log_2 p(\ul x) - \log_2 p(\ul y) \\
+ & \leq n(H(\ul X, \ul Y) - H(\ul Y) - H(\ul Y) + 3\epsilon)
+   = n(I(\ul X; \ul Y) + 3\epsilon),
+\end{align*}
+so that $\displaystyle \frac{p(\ul x)p(\ul y)}{p(\ul x, \ul y)} \geq \beta$.
+Then, by definition of Conditional Probability,
+\[p(\ul y)
+ = p(\ul y \giv \ul x)\frac{p(\ul x)p(\ul y)}{p(\ul x, \ul y)}
+ \geq p(\ul y \giv \ul x) \beta. \mqed\]
+
+\item By definition of $\jtA$ and the fact that
+$\E{\Delta(\ul X, \ul Y)}{} \leq D$,
+\[
+\E{\Delta(\ul X, g(f(\ul X))) \giv (\ul X, g(f(\ul X))) \in \jtA}{}
+ \leq \E{\Delta(\ul X, \ul Y)}{} + \epsilon
+ \leq D + \epsilon.
+\]
+Then, conditioning on whether $g(f(\ul X)) \in \jtA$ gives
+\begin{align*}
+\E{\Delta(\ul X, g(f(\ul X)))}{}
+ & = \E{\Delta(\ul X, g(f(\ul X))) \giv (\ul X, g(f(\ul X))) \in \jtA}{} (1 - p_0) \\
+ & + \E{\Delta(\ul X, g(f(\ul X))) \giv (\ul X, g(f(\ul X))) \notin \jtA}{}p_0 \\
+ & \leq \E{\Delta(\ul X, g(f(\ul X))) \giv (\ul X, g(f(\ul X))) \in \jtA}{}
+   + d_{max} p_0 \\
+ & \leq D + \epsilon + d_{max} p_0. \mqed
+\end{align*}
+
+\item $\forall \ul x \in \X$, $(\ul x, f(\ul x)) \notin \jtA$ if and only if
+none of the $2^{nR}$ values $y$ in the code book $\mathcal{C}$ satisfies
+$(\ul x, \ul y) \in \jtA$, which occurs with probability
+\[
+  p\left[(\ul X, f(\ul X)) \in \jtA \giv \ul X = \ul x \right]
+ = \left[1 -
+        p\left[ A(\ul x, \ul y) = 1 \right] \right]^{2^{nR}}
+ = \left[1 - \sum_{\ul y} p(\ul y) A(\ul x, \ul y) \right]^{2^{nR}}.
+\]
+Thus, conditioning on the value of $\ul X$,
+\[
+  p_0
+ = \sum_{\ul x} p(\ul x)
+                    p\left[(\ul X, \ul Y) \in \jtA \giv \ul X = \ul x \right]
+ = \sum_{\ul x} p(\ul x)
+            \left[ 1 - \sum_{\ul y} p(\ul y) A(\ul x, \ul y) \right]^{2^{nR}}.
+    \mqed
+\]
+
+\item By definition of $A$ and the inequality derived in part (b), $\forall
+\ul x \in \X$,
+\[\sum_{\underline y} p(\ul y) A(\ul x, \ul y)
+ = \sum_{\underline y : (\ul x, \ul y) \in \jtA} p(\ul y)
+ \geq \sum_{\underline y : (\ul x, \ul y) \in \jtA} \beta p(\ul y \giv \ul x)
+ = \beta \sum_{\underline y} p(\ul y \giv \ul x) \cdot A(\ul x, \ul y).
+\]
+It then follows immediately from the result of part (d) that
+\[p_0
+ \leq \sum_{\ul x} p(\ul x)
+     \left(
+        1 - \beta \sum_{\underline y} p(\ul y \giv \ul x) \cdot A(\ul x,\ul y)
+    \right)^{2^{nR}}. \mqed
+\]
+
+\item 
+By part (e) and the given inequality, 
+\begin{align*}
+p_0
+ & \leq \sum_{\ul x} p(\ul x) 
+    \left(1 - \sum_{\underline y} p(\ul y \giv \ul x) \cdot A(\ul x,\ul y)
+     + e^{-\beta \cdot 2^{nR}}\right) \\
+ & \leq \sum_{\ul x} p(\ul x)
+    \left(1 - \sum_{\underline y} p(\ul y \giv \ul x) \cdot A(\ul x,\ul y)
+     + e^{-2^{n(I(X;Y) + 3\epsilon - R)}}\right).
+\end{align*}
+
+Since $R > I(X;Y) + 3\epsilon$, $e^{-2^{n(R - I(X;Y) + 3\epsilon)}}
+\rightarrow 0$ as $n \rightarrow \infty$. 
+$\sum_{\underline y} p(\ul y \giv \ul x) \cdot A(\ul x,\ul y)$ is the
+probabilty that $\exists y \in \mathcal{C}$ with $(\ul x, \ul y) \in \jtA$,
+which approaches $1$ for all $x \in \X$. Thus, the upper bound on $p_0$
+approaches $0$ as $n \rightarrow \infty$, so that, for sufficiently large $n$,
+$p_0 \leq \epsilon$. \qed
+
+\item
+By part (f), $\forall \epsilon > 0$, by choosing an appropriate conditional
+distribution for $y$ given $x$, we can have $R \in (R^*, R^* + 3\epsilon)$, and
+expected distortion at most $D + \epsilon + d_{max} \epsilon$, so that, for
+sufficiently long messages, $R \rightarrow R^*$ and distortion approaches $D$.
+\qed
+
+\item
+For a single bit, $p(X \neq Y) = D$, so that
+\[I(X;Y) = H(X) - H(X \giv Y) = H(X) - H(X \neq Y) = h(p) - h(D).\]
+Thus, the uniform distribution achieves rate $h(p) - h(D)$, so that the optimal
+rate $R^* \leq h(p) - h(D)$. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item
+I didn't quite understand this question. Doesn't the existence of linear,
+capacity-achieving codes (such as Arikan's construction) immediately prove the
+result for all channels?
+
+\item
+\begin{enumerate}[i.]
+\item
+This can be shown by induction on $m$, by repeatedly choosing random binary
+vectors of dimension $k$ and computing the probability distribution of the
+dimension of their span (since $\rank (M) = k$ if and only if $M$ has
+$k$ linearly independent rows). \qed
+
+\item Erasing $|J|$ bits from $Gx$ is equivalent to removing the corresponding
+$|J|$ rows from $G$ (creating a matrix $H \in \{0,1\}^{(n - |J|) \times k}$).
+Then, a decoding error occurs precisely when $\rank(H) < k$, which, by part i.,
+occurs with probability $2^{k - (n - |J|)} = 2^{k - n + |J|}$. \qed
+
+\item Since $k = Rn$ and $|J| = \alpha n$, by the result
+of part ii.,
+\[
+ \E{P_{\mbox{err}}(G)}{G \in \{0,1\}^{n \times k}}
+ \leq 2^{k - n + |J|}
+ = 2^{Rn - n + \alpha n}
+ = 2^{(R - (1 - \alpha))n} \rightarrow 0
+\]
+exponentially as $n \rightarrow \infty$, since $R - (1 - \alpha) < 0$. \qed
+
+\item By part iii., $\forall \e > 0$, for sufficiently large $k$, length-$k$
+messages can be sent at rate $R < 1 - \alpha$ according to a random linear code
+with expected probability of a decoding failure
+\[
+ \E{P_{\mbox{err}}(G)}{G \in \{0,1\}^{n \times k}} < \e
+\]
+(where $n = k/R$). It follows that $\exists G \in \{0,1\}^{n \times k}$ with
+$P_{\mbox{err}}(G) < \e$, so that a message encoded by $G$ can be decoded
+correctly with probability $1 - \e$. \qed
+\end{enumerate}
+
+\end{enumerate}
+\end{question}
+\end{document}

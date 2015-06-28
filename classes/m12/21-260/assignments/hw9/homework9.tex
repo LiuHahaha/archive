@@ -1,0 +1,197 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{8}
+\newcommand{\duedate}{Tuesday, July 31, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Section 6.4, Problem 16ab}
+\begin{enumerate}[(a)]
+\item Figure 1 below shows the graph of $g(t)$.
+\vspace{1.5in}
+
+\item
+As shown in Section 2 of Chapter 6, for $Y(s) = \mathcal{L}\{u(t)\}$,
+since
+$\mathcal{L}\{ku_{3/2}(t) - ku_{5/2}(t)\}
+= \frac{k}{s}\left(e^{-\frac32s} - e^{-\frac52s}\right)$,
+\[Y(t) = k\left(\frac{e^{-\frac32s} - e^{-\frac52s}}{s\left(s^2 + \frac14s + 1\right)}\right)\]
+
+Partial fraction decomposition shows that
+\begin{eqnarray*}
+Y(t)
+ & = & k\left(\frac{1}{s} - \frac{s + 1/4}{s^2 + \frac14s + 1}\right)\left(e^{-\frac32s} - e^{-\frac52s}\right) \\
+ & = & k\left(\frac{1}{s} - \frac{s + 1/8}{s^2 + \frac14s + 1} - \frac18\frac{1}{s^2 + \frac14s + 1}\right)\left(e^{-\frac32s} - e^{-\frac52s}\right) \\
+ & = & k\left(\frac{1}{s} - \frac{s + 1/8}{(s + 1/8)^2+63/64} - \frac{64}{504}\frac{63/64}{(s + 1/8)^2+63/64}\right)\left(e^{-\frac32s} - e^{-\frac52s}\right)
+\end{eqnarray*}
+Thus, Table 6.2.1 shows that
+\begin{eqnarray*}
+y(t)
+ & = & ku_{3/2}(t)\left(1 - e^{-\frac18t}\cos\left(\frac{63}{64}\left(t - \frac32\right)\right) - \frac{64}{504}e^{-\frac18t}\sin\left(\frac{63}{64}\left(t - \frac32\right)\right)\right) \\
+ & - & ku_{5/2}(t)\left(1 - e^{-\frac18t}\cos\left(\frac{63}{64}\left(t - \frac52\right)\right) - \frac{64}{504}e^{-\frac18t}\sin\left(\frac{63}{64}\left(t - \frac52\right)\right)\right).
+\end{eqnarray*}
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Section 6.5, Problem 6a}
+\begin{enumerate}[(a)]
+\item
+As shown in Section 2 of Chapter 6, for $Y(s) = \mathcal{L}\{y(t)\}$,
+since $\mathcal{L}\{\delta(t - 4\pi)\} = e^{-4\pi s}$,
+\[Y(s)
+ = \frac{s/2 + e^{-4\pi s}}{s^2 + 4}
+ = \frac12\frac{s}{s^2 + 4} + \frac12e^{-4\pi s}\frac{2}{s^2 + 4}.
+\]
+Table 6.2.1 shows that
+\[\frac{s}{s^2 + 4} = \mathcal{L}\{\cos(2t)\}
+    \quad \mbox{ and that } \quad
+  e^{-4\pi s}\frac{s}{s^2 + 4} = \mathcal{L}\{u_{4\pi}(t) \sin(2(t - 4\pi))\}
+.\]
+Thus, by linearity of the inverse Laplace transform,
+\[y(t)
+ = \mathcal{L}\inv\{Y(s)\}
+ = \mbox{
+    \fbox{
+        $\displaystyle
+            \frac12\left(
+                \cos(2t)
+              + u_{4\pi}(t)\sin(2(t - 4\pi))
+            \right)
+        $.
+    }
+   }
+\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 6.5, Problem 16abc}
+\begin{enumerate}[(a)]
+\item
+As shown in Section 2 of Chapter 6, for $Y_k(s) = \mathcal{L}\{\phi(t,k)\}$,
+since
+$\mathcal{L}\{f_k(t)\}
+ = \frac{1}{2ks}\left(e^{-(4 - k)s} - e^{-(4 + k)s}\right)$,
+\[Y_k(s)
+ = \frac{1}{2ks}
+   \left(
+    e^{-(4 - k)s} - e^{-(4 + k)s}
+   \right)
+   \left(
+    \frac{1}{s^2 + 1}
+    \right).
+\]
+
+Table 6.2.1 shows that $\frac{1}{s} = \mathcal{L}\{1\}$ and that
+$\frac{s}{s^2 + 1} = \mathcal{L}\{\cos(t)\}$. Thus, by linearity of the
+inverse Laplace transform,
+\[\phi(t,k)
+ = \mathcal{L}\inv\{Y(s)\}
+ = \mbox{\fbox{$\displaystyle \frac{1}{2k}
+   \left(
+     u_{4 - k}(t)(1 - \cos(4 - k - t))
+   - u_{4 + k}(t)(1 - \cos(4 + k - t))
+   \right)$.}}
+\]
+
+\item
+\[\lim_{k \rightarrow 0} \left(\phi(t,k)\right)
+ = \mbox{\fbox{$u_4(t)\sin(t - 4)$.}}
+\]
+
+\item
+As shown in Section 2 of Chapter 6, for $Y(s) = \mathcal{L}\{\phi_0(t)\}$,
+since
+$\mathcal{L}\{\delta(t - 4)\} = e^{-4s}$,
+\[Y(s)
+ = \frac{e^{-4s}}{s^2 + 1}.
+\]
+Table 6.2.1 shows that
+\[\phi_0(t)
+ = \mathcal{L}\inv\{Y(s)\}
+ = \mbox{\fbox{$u_4(t)\sin(t - 4)$,}}
+\]
+so that $\phi_0(t) = \lim_{k \rightarrow 0}\left(\phi(t,k)\right)$.
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 6.6, Problem 16}
+As shown in Section 2 of Chapter 6, for $Y(s) = \mathcal{L}\{y(t)\}$,
+\[Y(s)
+ = \frac{s + \mathcal{L}\{1 - u_{\pi}(t)\}}{s^2 + s + \frac54}
+ = \frac{s + \mathcal{L}\{1 - u_{\pi}(t)\}}{\left(s + \frac12\right)^2 + 1}.
+\]
+By linearity of the inverse Laplace transform, then,
+\[y(t)
+ = \mathcal{L}\inv\{Y(s)\}
+ = \mathcal{L}\inv\left\{\frac{s + \frac12}{\left(s + \frac12\right)^2 + 1}\right\}
+ - \frac12\mathcal{L}\inv\left\{\frac{1}{\left(s + \frac12\right)^2 + 1}\right\}
+ + \mathcal{L}\inv\left\{\frac{\mathcal{L}\{1 - u_{\pi}(t)\}}{\left(s + \frac12\right)^2 + 1}\right\}.
+\]
+Table 6.2.1 shows that
+$\frac{s + \frac12}{\left(s + \frac12\right)^2 + 1}
+ = \mathcal{L}\{e^{-\frac12 t}\cos(t)\}$
+and that
+$\frac{1}{\left(s + \frac12\right)^2 + 1}
+ = \mathcal{L}\{e^{-\frac12 t}\sin(t)\}$.
+Thus, by Theorem 6.6.1,
+\[y(t)
+ = \mbox{\fbox{$\displaystyle e^{-\frac12 t}\cos(t)
+ - \frac12e^{-\frac12 t}\sin(t)
+ + (1 - u_{\pi}(t))*e^{-\frac12 t}\sin(t)$,}}
+\]
+where $*$ denotes convolution.
+\end{question}
+\end{document}

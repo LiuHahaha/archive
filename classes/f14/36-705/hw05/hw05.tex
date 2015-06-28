@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Thursday, October 9, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item Define \fbox{$\hat\theta := (1 + X)/3$.} Then, for all
+$\theta \in \{1/3,2/3\}$, the risk of $\hat\theta$ is
+$R(\theta,\hat\theta) = 1/3$. If any estimator maps $0$ to a values besides
+$1/3$ or $1$ to a value besides $2/3$, then the risk for the corresponding
+value of $\theta$ is at least $2/3$, and hence $\hat\theta$ is minimax optimal.
+\qed
+
+\item Since $X_1,\dots,X_n \sim $Gamma$(\alpha,\beta)$,
+$\E[X_i] = \alpha\beta$ and
+$\E[X_i^2] = \Var[X_i^2] + \E^2[X_i] = \alpha\beta^2 + \alpha^2\beta^2$.
+Solving this system of equations gives
+\[\alpha = \frac{\E^2[X_i]}{\E[X_i^2] - E^2[X_i]}
+    \quad \mbox{ and } \quad
+    \beta = \frac{\E[X_i^2] - E^2[X_i]}{\E[X_i]}.
+\]
+Hence, the method of moment estimators for $\alpha$ and $\beta$ are
+\[\mbox{\fbox{$\displaystyle
+    \hat\alpha = \frac{\ol X^2}{\ol{X^2} - \ol X^2}
+    \quad \mbox{ and } \quad
+    \hat\beta = \frac{\ol{X^2} - \ol X^2}{\ol X}$.}}
+\]
+
+\item Since $\E[X_i] = \lambda$, the method of moments estimator is
+\fbox{$\hat \lambda_{MOM} = \ol X$.} The log-likelihood of $\lambda$ is
+\begin{align*}
+\ell(\lambda)
+    = \log L(\lambda)
+ &  = \log \prod_{i = 1}^n e^{-\lambda} \frac{\lambda^{X_i}}{X_i!}      \\
+ &  = \sum_{i = 1}^n -\lambda + X_i \log(\lambda) - \log(X_i!)          \\
+ &  = -n\lambda + n \ol X \log(\lambda) - \sum_{i = 1}^n \log(X_i!),    \\
+\end{align*}
+and hence
+\[\ell'(\lambda)
+    = -n + n \ol X/\lambda,
+\]
+so that $\ell'(\hat\lambda_{MLE}) = 0$ implies the maximum likelihood estimator
+of $\lambda$ is \fbox{$\hat \lambda_{MLE} = \ol X$.} Also, the Fisher
+information is
+\[I(\lambda)
+    = -\E\left[ \ell''(\lambda) \right]
+    = \E\left[ \frac{d}{d\lambda} (n - n \ol X/\lambda) \right]
+    = \E\left[ n \ol X/\lambda^2 \right]
+    = n \lambda/\lambda^2
+    = \mbox{\fbox{$n/\lambda$.}}
+\] 
+
+
+\item Problem removed.
+
+\item Note that
+\[\hat\beta
+    = \frac{\sum_{i = 1}^n Y_iX_i}{\sum_{i = 1}^n X_i^2}
+    = \frac{\beta\sum_{i = 1}^n X_i^2 + \sum_{i = 1}^n \e_iX_i}
+                    {\sum_{i = 1}^n X_i^2}
+    = \beta + \frac{\sum_{i = 1}^n \e_i X_i}{\sum_{i = 1}^n X_i^2},
+\]
+and hence it suffices to show
+$\frac{\sum_{i = 1}^n \e_i X_i}{\sum_{i = 1}^n X_i^2} \to 0$ in probability.
+To see this, it suffices to observe that
+\[\frac{\sum_{i = 1}^n \e_i X_i}{\sum_{i = 1}^n X_i^2}
+    = \frac{\frac1n\sum_{i = 1}^n \e_i X_i}{\frac1n\sum_{i = 1}^n X_i^2},
+\]
+the numerator of which is approaches $\E[\e_iX_i] = \E[\e_i]\E[X_i] = 0$ and
+the denominator of which approaches $\E[X_i^2] = \Var[X_i] + \E^2[X_i]$ (noting
+that the function $(x_1,x_2) \mapsto x_1/x_2$ is continuous for $x_2 \neq 0$.
+I didn't have time to finish this, but, presumably,
+$\sqrt(\hat\beta - \beta) \to \mathcal{N}(0,\sigma_2^2)$ in distribution, for
+some $\sigma_2 > 0$, and this can be shown using the multivariate delta method
+with $g(x_1,x_2) = x_1/x_2$ and the sequences $\{\e_iX_i\}_{i = 1}^\infty$ and
+$\{X_i^2\}_{i = 1}^\infty$.
+\end{enumerate}
+
+\end{document}

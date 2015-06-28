@@ -1,0 +1,291 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-470 Calculus of Variations}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Friday, March 28, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+\renewcommand{\Re}{\operatorname{Re}}   % real part of a complex number
+\newcommand{\tT}{\widetilde{T}}         % for P3
+\newcommand{\A}{\mathcal{A}}            % for P3
+\renewcommand{\S}{\mathscr{S}}          % constraint set
+\newcommand{\X}{\mathscr{X}}            % entire linear space
+\newcommand{\Y}{\mathscr{Y}}            % domain of objective functional
+\newcommand{\V}{\mathscr{V}}            % set of admissible variations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Midterm} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+The $1^{st}$ Euler-Lagrange Equation gives,
+\[0 = \frac{d}{dx} e^{x^2}e^{y'(x)}, \quad \forall x \in [0,1]
+    \quad \Rightarrow \quad
+    c_1 = e^{x^2}e^{y'(x)}, \quad \forall x \in [0,1]
+\]
+for some $c_1 \in \R$. Solving for $y'(x)$ and integrating gives,
+$\forall x \in [0,1]$,
+\[y'(x) = \log c_1 - x^2
+    \quad \Rightarrow \quad
+    y(x) = x\log c_1 - \frac{x^3}{3} + c_2,
+\]
+for some $c_2 \in \R$. Since $y(0) = 0$, $c_2 = 0$, and so, since $y(1) = 1$,
+$\log c_1 = 4/3$. Hence,
+\[y(x) = \frac{1}{3} \left( 4x - x^3 \right), \quad \forall x \in [0,1].\]
+Since the exponential function is convex, it is clear that $J$ is convex. Hence
+this $y$ minimizes $J$ on $\Y$ and $J$ is unbounded above on $\Y$.
+\end{question}
+
+\begin{question}{Problem 2}
+The $1^{st}$ Euler-Lagrange Equation gives,
+\[2 = \frac{d}{dx} \left( -2x^2y'(x) \right), \quad \forall x \in [1,2]
+    \quad \Rightarrow \quad
+    x + c_1 = -x^2y'(x), \quad \forall x \in [1,2]
+\]
+for some $c_1 \in \R$. Solving for $y'(x)$ and integrating gives,
+$\forall x \in [1,2]$,
+\[y'(x) = - \left( x^{-1} + c_1x^{-2}\right)
+    \quad \Rightarrow \quad
+    y(x) = c_1x^{-1} - \ln x + c_2,
+\]
+for some $c_2 \in \R$. The constraint $y(1) = 0$ implies $c_1 + c_2 = 0$. The
+natural boundary condition is
+\[-2x^2y'(x) \bigg|_{x = 2} = 0
+    \quad \Rightarrow \quad
+    0 = y'(2) = \frac{c_1}{2} - \ln 2 + c_2
+    \quad \Rightarrow \quad
+    c_1 = - \ln 4, c_2 = \ln 4,
+\]
+so that
+\[y(x) = \frac{- \ln 4}{x} - \ln x + \ln 4, \quad \forall x \in [1,2].\]
+Since, $\forall x \in [1,2]$, the function $(y,z) \mapsto 2y - x^2z^2$ is
+concave, $J$ is concave. Hence this $y$ maximizes $J$ on $\Y$ and $J$ is
+unbounded below on $\Y$.
+\end{question}
+
+\begin{question}{Problem 3}
+Define $G : C^1[0,1] \to \R$ by $G(y) = \int_0^1 xy(x) \, dx$. For any
+$\lambda \in \R$, the $1^{st}$ Euler-Lagrange Equation for $J - \lambda G$
+gives
+\[-\lambda x = \frac{d}{dx} 2y'(x)
+    \quad \Rightarrow \quad
+  -\frac{\lambda}{4}x^2 + c_1 = y'(x),
+\]
+for some $c_1 \in \R$. Integrating gives
+\[y(x) = -\frac{\lambda}{12}x^3 + c_1x + c_2, \quad \forall x \in [0,1],\]
+for some $c_2 \in \R$.
+The boundary conditions $y(0) = 0$ and $y(1) = 1$ imply $c_2 = 0$ and hence
+$12 = -\lambda + 12c_1$. The constraint $G(y) = 1$ implies
+\[60
+    = 60\int_0^1 xy(x) \, dx
+    = \int_0^1 -5\lambda x^4 + 60c_1x^2 \, dx
+    = -\lambda x^5 + 20c_1x^3 \bigg|_{x = 0}^{x = 1}
+    = -\lambda + 20c_1.
+\]
+Hence, $c_1 = 6$ and $\lambda = 60$, so that
+\[y(x) = - 5x^3 + 6x, \quad \forall x \in [0,1].\]
+For all $y \in \Y$, $(J - \lambda G)(y) = \int_0^1 y'(x)^2 - 60xy(x) \, dx$.
+Since, $\forall x \in [0,1]$, the function $(y,z) \mapsto z^2 - 60xy$ is
+convex, $J - \lambda G$ is convex. Hence, this $y$ minimizes $J$ on $\Y$.
+\end{question}
+
+\begin{question}{Problem 4}
+$J$ is unbounded above on $\Y$, since, for $n \in \N$, if
+$y_n \in \Y$ is defined by $y_n(x) = \sin(2nx), \forall x \in [0,\pi/2]$,
+\vspace{-5mm}
+\begin{align*}
+J(y_n)
+ &  = \int_0^{\pi/2} 2n \cos^2(2nx) - \sin^2(2nx) + 2e^x\sin(2nx) \, dx \\
+ &  \geq \int_0^{\pi/2} 2n \cos^2(2nx) - \sin^2(2nx) - 2e^{\pi/2} \, dx
+    =  (2n - 1)\frac{\pi}{4} - \pi e^{\pi/2}
+    \to +\infty
+\end{align*}
+as $n \to \infty$. The $1^{st}$ Euler-Lagrange Equation gives,
+\vspace{-2mm}
+\[-2y(x) + 2e^x = \frac{d}{dx} 2y'(x),\]
+and so $y'$ is continuously differentiable, with $y''(x) = e^x - y(x)$. This
+ODE's general solution is
+\[y(x) = c_1\cos(x) + c_2\sin(x) + \frac{e^x}{2}.\]
+The boundary conditions $y(0) = y\left( \frac{\pi}{2} \right) = 0$ imply
+$c_1 = -1/2$ and $c_2 = -e^{\pi/2}/2$, and so
+\vspace{-2mm}
+\[y(x) = \frac{1}{2} \left( e^x - \cos(x) - e^{\pi/2}\sin(x) \right).\]
+I believe, but was not able to show, that $y$ minimizes $J$ on $\Y$.
+\end{question}
+
+\begin{question}{Problem 5}
+Let $\V := \{v \in C^1[a,b] : \alpha v(a) + \beta v(b) = 0\}$. If $y$ minimizes
+$J$ on $\Y$, then
+\begin{equation}
+0
+    = \delta J(y;v)
+    = \int_a^b f_{,2}(x,y(x),y'(x))v(x) + f_{,3}(x,y(x),y'(x))v'(x) \, dx
+\label{eq:5.1}
+\end{equation}
+Since $\{v \in C^1[a,b] : v(a) = v(b) = 0\} \subseteq \V$, Lemma 3.4 gives that
+the function $x \mapsto f_{,3}(x,y(x),y'(x))$ is continuously differentiable
+and we have the $1^{st}$ Euler-Lagrange Equation:
+\[\frac{d}{dx} f_{,3}(x,y(x),y'(x)) = f_{,2}(x,y(x),y'(x))
+    \quad \forall x \in [a,b].\]
+Noting that the case $\alpha = 0$ or $\beta = 0$ is already covered by Lemma
+3.5, we assume $\alpha, \beta \neq 0$. Integrating Equation (\ref{eq:5.1}) by
+parts, we have, for
+\begin{align*}
+0
+ &  = f_{,3}(x,y(x),y'(x))v(x)\bigg|_{x = a}^{x = b}
+    + \int_a^b \left( f_{,2}(x,y(x),y'(x))
+    - \frac{d}{dx} f_{,3}(x,y(x),y'(x)) \right) v(x) \, dx  \\
+ &  = f_{,3}(a,y(a),y'(a))v(a) - f_{,3}(b,y(b),y'(b))v(b)
+\end{align*}
+Choosing
+\[v(x) = -\left( \frac{\alpha}{\beta} + 1 \right) \frac{x - a}{b - a} + 1,\]
+$v \in \V$ and, since $v(a) = 1, v(b) = -\frac{\alpha}{\beta}$, giving the
+additional constraint
+\[f_{,3}(a,y(a),y'(a)) = \frac{\alpha}{\beta}f_{,3}(b,y(b),y'(b)).\]
+\end{question}
+
+\begin{question}{Problem 6}
+{\bf Claim:} $g$ must be an affine function. That is, $\exists c_1,c_2 \in \R$
+such that $g(x) = c_1x + c_2, \forall x \in [0,1]$.
+
+\emph{Proof:}
+First note that every affine function satisfies the given condition, since
+\begin{equation}
+\int_0^1(c_1x + c_2)v'(x) \, dx
+    = -c_1\int_0^1 v(x) \, dx + c_2(v(1) - v(0))
+    = 0,
+\label{eq:affine}
+\end{equation}
+integrating the first term by parts and using the conditions on $v$. Put
+\[
+A   := \int_0^1 g(x) \, dx, \quad
+B   := \int_0^1 \int_0^x g(t) \, dt \, dx, \quad
+c_1 := 6A - 12B, \quad
+c_2 := 6B - 2A,
+\]
+and define $v \in C^1[0,1]$ by
+\[v(x) := \int_0^x g(t) - c_1t - c_2 \, dt, \quad \forall x \in [0,1].\]
+Trivially, $v(0) = 0$. Also,
+\[
+v(1)
+    = \int_0^1 g(t) - c_1t - c_2 \, dt
+    = A - \frac{c_1}{2} - c_2
+    = 0
+\]
+and
+\[
+\int_0^1 v(x) \, dx
+    = \int_0^1 \int_0^x g(t) - c_1t - c_2 \, dt \, dx
+    = B - \int_0^1 \frac{c_1}{2}x^2 - c_2x \, dx
+    = B - \frac{c_1}{6} - \frac{c_2}{2}
+    = 0.
+\]
+Hence, $v \in \V$. Then, by Equation (\ref{eq:affine}),
+\[0
+    = \int_0^1 g(x)v'(x) \, dx
+    = \int_0^1 (g(x) - c_1x - c_2)v'(x) \, dx
+    = \int_0^1 (g(x) - c_1x - c_2)^2 \, dx,
+\]
+and so it follows that $g(x) = c_1x + c_2$ for all $x \in [0,1]$.
+\end{question}
+
+\begin{question}{Problem 7}
+Put
+\[\V := \left\{ v \in C^1[a,b] :
+                             v(b) = v(a) - \int_a^b v(x) \, dx = 0 \right\}.\]
+Then, if $y$ minimizes $J$ on $\Y$, defining $F \in C^1[a,b]$ by
+$F(x) = \int_a^x f_{,2}(t,y(t),y'(t)) \, dt, \forall x \in [a,b]$,
+\begin{align*}
+0
+    = \delta J(y;v)
+ &  = \int_a^b f_{,2}(x,y(x),y'(x))v(x) + f_{,3}(x,y(x),y'(x))v'(x) \, dx   \\
+ &  = \int_a^b \left( f_{,3}(x,y(x),y'(x)) - F(x) \right)v'(x) \, dx,
+\end{align*}
+using integration by parts and $F(a) = v(b) = 0$. Since
+\[\left\{v \in C^1[a,b] : v(a) = v(b) = \int_a^b v(x) \, dx = 0\right\}
+    \subseteq \V,\]
+by the result of Problem 6, for some $c_1,c_2 \in \R$,
+\[f_{,3}(x,y(x),y'(x)) - F(x) = c_1x + c_2, \quad \forall x \in [a,b].\]
+Hence, the function $x \mapsto f_{,3}(x,y(x),y'(x))$ is in $C^1[a,b]$ and
+differentiating gives
+\[\frac{d}{dx} f_{,3}(x,y(x),y'(x)) = f_{,2}(t,y(t),y'(t))
+    + c_1, \quad \forall x \in [a,b].\]
+\end{question}
+%
+%%TODO
+%\begin{question}{Problem 8}
+%Suppose, for sake of contradiction, that $y \in \Y$ minimizes $J$ on $\Y$.
+%The $1^{st}$ Euler-Lagrange Equation gives
+%\[2y(x) = -\frac{d}{dx} e^{-y'(x)}.\]
+%Since the function $z \mapsto e^{z}$ has an analytic inverse, it follows that
+%$y' \in C^2[0,1]$, and hence
+%\[2y(x) = y''(x) e^{-y'(x)}.\]
+%Suppose that, for some $x \in (0,1)$, $x$ maxmimizes $y(x)$ on $[0,1]$. Then,
+%\end{question}
+\end{document}

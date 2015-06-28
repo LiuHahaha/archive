@@ -1,0 +1,96 @@
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\def\prox{\mathrm{prox}}
+
+\section{Binary sequences revisited [25 points]}
+
+The binary sequence denoising problem \eqref{eq:logreg} in Problem 3
+is not an easy one to solve directly. The typical plan of attack is 
+the one explored in Problem 3, which solves the dual problem using 
+an interior point method. This is appealing because it can be efficient
+(the inner Newton iterations are quite efficient, due to the structure
+of the Hessian), but it is perhaps not the simplest approach. 
+
+What happens if we were to try to solve \eqref{eq:logreg} directly
+using generalized gradient descent? To do this, we would need
+to be able to evaluate the prox function
+\begin{equation}
+\label{eq:prox}
+\prox_s(\beta) = \argmin_{x\in\R^n} \;
+\frac{1}{2s} \|\beta-x\|_2^2 
++ \lambda \sum_{t=1}^{n-1} |x_t-x_{t+1}|.
+\end{equation}
+Evaluating such a prox function is difficult because the above problem does 
+not have an explicit (closed-form) solution; transparently, we would have 
+to apply another iterative optimization technique to approximate its solution.
+Fortunately, your instructors and TAs are smart people---actually, it's just
+that they know other smart people---and are providing you with code to evaluate
+the prox function in \eqref{eq:prox} exactly.  This code is an implementation
+of a beautiful algorithm by Nicholas Johnson (see ``A dynamic programming
+algorithm for the fused lasso and $L_0$-segmentation'', published in JCGS
+in 2013). 
+
+(a) [8 points] Implement generalized gradient descent to solve problem
+\eqref{eq:logreg}, using the prox function given to you in C++ code,
+linked from the course website as ``prox\_R.cpp'' and
+``prox\_matlab.cpp'' for use in R and Matlab, respectively.  Use
+backtracking to determine the step size at each iteration, and stop
+when the difference in criterion value across iterations is less than
+a user-specified tolerance level. Hence (aside from $z,\lambda$) your
+function should take as inputs: an initial step size $s^{(0)}$ before
+backtracking, a backtracking update parameter $\gamma$, and a
+tolerance level $\epsilon$.  
+
+(Hint: R users, compile this code using by running 
+{\tt R CMD SHLIB prox\_R.cpp} from the command line. This will give  
+you the file ``prox\_R.so''. Then use the provided code ``prox.R'' to 
+access the prox function from R.
+
+Matlab users: compile the code by running {\tt mex prox\_matlab.cpp}
+inside the Matlab command window. Then use the provided code ``prox.m"
+to access the prox function from Matlab.) 
+
+(b) [6 points] Run your generalized gradient descent implementation
+on the binary sequences data, provided in ``binseq.txt''. Run generalized
+gradient descent over 80 values of $\lambda$ between 0.001 and 200, equally 
+spaced on the log scale. 
+(Note: in R, these are given by
+%
+{\tt lams = exp(seq(log(0.001), log(200), length=80))}, and in Matlab,
+%
+{\tt lams = exp(linspace( log(0.001), log(200), 80));.})
+Starting from the largest $\lambda$ value to the smallest, run generalized
+gradient using both warm starts (starting from the previously computed
+solution), and using cold starts (starting from $\beta=0$).
+For the rest of the parameter values, use 
+$s^{(0)}=1,\gamma=0.8,\epsilon=1e-6$.
+
+For each strategy (warm/cold starts), record the total number of prox evaluations 
+performed by the algorithm at each value of $\lambda$. Remember that the prox 
+evaluation is more or less the fundamental unit of computation for generalized 
+gradient descent. Plot the number of prox operations taken by the algorithm as a 
+function of $\lambda$, overlaying the curves for both warm and cold starts. Do you
+see a difference? And more broadly, what do the curves portray about the 
+difficulty of solving the problem \eqref{eq:logreg} as a function of $\lambda$? 
+
+(c) [6 points] Do the same as in (b), but using your barrier method implementation
+from Problem 3. (For the parameters $\tau^{(0)},\mu,\ldots$, use the same values as 
+in Problem 3.)
+
+Now, for the barrier method, you will record the number of
+Newton iterations (i.e., linear system solves) at each $\lambda$ value, this
+being its fundamental unit of computation. Also, you will solve the problems
+starting at the smallest value of $\lambda$ and working your way up to the
+largest (note that in the other direction, the warm starts would not be feasible).
+Produce the same plot and address the same questions as in (b). 
+
+(d) [5 points] Make comparisons between the two algorithms (barrier method and 
+generalized gradient). We are leaving this open-ended on purpose; you can make both
+high-level qualitative, and quantative comparisons; e.g., you might find it useful
+to look at the criterion values produced by solutions from each method, as a function
+of $\lambda$. 
+
+(Bonus) [5 points] Using whatever algorithm you find more efficient/accurate, devise
+a principled method for selecting an appropriate value of $\lambda$ for the binary 
+sequence data (it can't involve looking at the solutions by eye!). What value of 
+$\lambda$ does your method choose? Plot the corresponding underlying probabilities.
+

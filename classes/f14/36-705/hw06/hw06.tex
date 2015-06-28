@@ -1,0 +1,188 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{6}
+\newcommand{\duedate}{Thursday, October 16, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item We showed on a previous assignment that the MLE for $\lambda$ is
+$\hat\lambda_{MLE} = \ol X$. Hence, since $\P(X_i = 0) = e^{-\lambda}$, the MLE
+for $\theta$ is \fbox{$\hat \theta_{MLE} = e^{-\ol X}$.}
+\item Note that
+\[I(\lambda)
+    = -\E\left[ \frac{\partial^2}{\partial\lambda^2} \log L(\lambda) \right]
+    = \E\left[ \frac{\partial^2}{\partial\lambda^2} \lambda - x\log\lambda + \log X! \right]
+    = \E\left[ \frac{\partial}{\partial\lambda} 1 - x/\lambda \right]
+    = 1/\lambda.
+\]
+Hence, since the asymptotic variance of the MLE is
+\[v(\lambda)
+    = \frac{\left( \frac{\partial}{\partial \lambda} e^{-\lambda} \right)^2}
+           {I(\lambda)}
+    = \lambda e^{-2\lambda}
+\]
+by asymptotic normality of the MLE,
+\fbox{$\sqrt{n}(\hat\theta_{MLE} - \theta)
+    \to \mathcal{N}(0,\lambda e^{-2\lambda})$.}
+\item It follows immediately from asymptotic normality that $\hat\theta_{MLE}$
+is consistent. \qed
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Since $\E[X_i] = \theta/2$, the method of moments estimator is
+\fbox{$\hat\theta_{MOM} = 2\ol X$.} The maximum likelihood estimator is
+\fbox{$\hat\theta_{MLE} = X_{(n)}$.}
+\item Since $\ol X$ is a consistent estimator for $\E[X_i] = \theta/2$,
+$2\ol X$ is a consistent estimator for $2\E[X_i] = \theta$. For $\e > 0$,
+\[\P[|X_{(n)} - \theta| > \e]
+    = \P[X_{(n)} < \theta - \e]
+    = \P^n[X_i < \theta - \e]
+    = \left( \frac{\e}{\theta} \right)^n
+    \to 0
+\]
+as $n \to \infty$. Hence, $\hat\theta_{MLE}$ is consistent. \qed
+
+\item Since $\Var[X_i] = \theta^2/12$, by the Central Limit Theorem,
+$\sqrt{n}(\ol X - \theta/2) \to \mathcal{N}(0,\theta^2/12)$. Hence,
+\[\sqrt{n}(\hat\theta_{MOM} - \theta)
+    = \sqrt{n}(2\ol X - \theta)
+    \to \mbox{\fbox{$\mathcal{N}(0,\theta^2/3)$}}\]
+in distribution.
+For $t > 0$,
+\begin{align*}
+\P[n(\theta - \hat\theta_{MLE}) < t]
+    = \P[X_{(n)} > \theta - t/n]
+ &  = 1 - \P[X_{(n)} \leq \theta - t/n] \\
+ &  = 1 - \left( \frac{\theta - t/n}{\theta} \right)^n
+    \to 1 - e^{-t/\theta}
+\end{align*}
+as $n \to \infty$. Hence,
+\fbox{$n(\theta - \hat\theta_{MLE}) \to \exp(1/\theta)$} in distribution.
+
+\item By the previous part and the Gaussian tail inequality, for
+$\sigma = \theta/\sqrt{3}$,
+\[\lim_{n \to \infty}
+    \P\left[\sqrt{n}|(\hat\theta_{MOM} - \theta)| > \e\right]
+    \leq \frac{2\sigma e^{-\e^2/(2\sigma^2)}}{\e}
+    \to 0
+\]
+as $\e \to \infty$, and hence, $\hat\theta_{MOM} - \theta \in O_P(n^{-1/2})$.
+Also by the previous part,
+\[\lim_{n \to \infty}
+    \P\left[ n|\theta - \hat\theta_{MLE}| > \e\right]
+    = e^{-\e/\theta}
+    \to 0
+\]
+as $\e \to \infty$, and hence $\hat\theta_{MLE} - \theta \in O_P(n^{-1})$. \qed
+\end{enumerate}
+
+\item The MLE is $\hat\theta_{MLE} = \ol X$ and
+$\mathsf{se}\left( \hat\theta_{MLE} \right) = 1/\sqrt{n}$. Hence, we reject if
+and and only if the Wald test statistic
+\fbox{$\displaystyle W = \sqrt{n} \left( \ol X - \mu_0 \right)$,} satisfies
+$|W| > z_{\alpha/2}$.
+
+\item
+\begin{enumerate}
+\item For $\hat\sigma = \sqrt{n\inv \sum_{i = 1}^n (X_i - \ol X)^2}$, the Wald
+test statistic is
+\[\mbox{\fbox{$\displaystyle W = \frac{\ol X - \mu_0}{\hat\sigma/n}$,}}\]
+and we reject if and and only if $|W| > z_{\alpha/2}$.
+\item Note that, for any $\mu', \sigma \in \R$ the likelihood
+\[L(\mu')
+    \propto \prod_{i = 1}^n \exp\left( - \frac{(X_i - \mu')^2}{2\sigma^2} \right)
+    = \exp\left( - \frac{\sum_{i = 1}^n (X_i - \mu')^2}{2\sigma^2} \right).
+\]
+Since the MLE of $\mu$ is $\ol X$ and the MLE of $\sigma$ is
+$\hat\sigma = \sqrt{n\inv \sum_{i = 1}^n (X_i - \ol X)^2}$, the LRT statistic is
+\[L
+    = -2 \log \frac{L(\mu_0)}{L(\ol X)}
+    = \frac{1}{\hat\sigma^2} \sum_{i = 1}^n (X_i - \mu_0)^2 - (X_i - \ol X)^2
+    = \mbox{\fbox{$\displaystyle \frac{n}{\hat\sigma^2} (\mu_0 - \ol X)^2$,}}
+\]
+and we reject if and only if $L > \chi^2_{1,\alpha}$.
+\item For $\hat\sigma = \sqrt{n\inv \sum_{i = 1}^n (X_i - \ol X)^2}$, the Wald
+test statistic is
+\[W = \frac{\hat\sigma^2 - \sigma_0^2}{\mathsf{se}(\hat\sigma^2)},\]
+where $\mathsf{se}(\hat\sigma^2) = ??$ and and we reject if and and only if
+$|W| > z_{\alpha/2}$.
+\item For $\hat\mu = \ol X$ and any $\sigma \in \R$, the likelihood
+\[L(\sigma^2)
+    \propto (\sigma^2)^{-n/2}
+        \exp\left( -\frac{1}{2\sigma^2} \sum_{i = 1}^n (X_i - \ol X)^2 \right).
+    \propto (\sigma^2)^{-n/2}
+        \exp\left( -\frac{n\hat\sigma^2}{2\sigma^2} \right).
+\]
+where $\hat\sigma^2 = n\inv \sum_{i = 1}^n (X_i - \ol X)^2$ is the MLE for
+$\sigma$. Hence, the LRT statistic is
+\[\mbox{\fbox{$\displaystyle L
+    = -2 \log \frac{L(\sigma_0^2)}{L(\hat\sigma^2)}
+    = n\left( \log(\sigma_0^2/\hat\sigma^2)
+    + \frac{\hat\sigma^2}{\sigma_0^2} - 1 \right)$,}}
+\]
+and we reject if and only if $L > \chi^2_{1,\alpha}$.
+\end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,321 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{10-601 Machine Learning}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, September 14, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{1 Probability Review}
+\begin{enumerate}[(a)]
+\item {\bf Equation of the Reverend} \\
+By definition of conditional probability,
+for any events $A$ and $B$,
+\[
+P(A | B) = \frac{P(A \cap B)}{P(B)},
+ \quad \mbox{ and } \quad
+P(B | A) = \frac{P(A \cap B)}{P(A)}.
+\]
+Multiplying by $P(A)$ in the second equation gives
+$P(B | A)P(A) = P(A \cap B)$.
+Thus, substituting into the first equation,
+\[P(A | B) = \frac{P(B | A)P(A)}{P(B)}. \mqed\]
+
+\item {\bf Contingencies}
+\begin{enumerate}[1.]
+\item
+\[P(A = \diamondsuit)
+ = \frac{12 + 3}{12 + 3 + 97 + 5}
+ = \mbox{\fbox{$\displaystyle \frac{15}{117}$.}}
+\]
+
+\item
+\[P(A = \diamondsuit \mbox{ AND } B = \qedsymbol)
+ = \frac{3}{12 + 3 + 97 + 5}
+ = \mbox{\fbox{$\displaystyle \frac{3}{117}$.}}
+\]
+ 
+\item
+\[P(A = \diamondsuit \mbox{ OR } B = \qedsymbol)
+ = \frac{12 + 3 + 5}{12 + 3 + 97 + 5}
+ = \mbox{\fbox{$\displaystyle \frac{20}{117}$.}}
+\]
+ 
+\item
+\[P(A = \diamondsuit | B = \qedsymbol)
+ = \frac{P(A = \diamondsuit \mbox{ AND } B = \qedsymbol)}{P(B = \qedsymbol)}
+ = \frac{\frac{3}{117}}{\frac{3 + 5}{117}}
+ = \mbox{\fbox{$\displaystyle \frac{3}{8}$.}}
+\]
+
+\item By the Law of Total Probability,
+\begin{align*}
+P(A = \diamondsuit)
+ & = P(A = \diamondsuit | B = \triangle) P(B = \triangle)
+   + P(A = \diamondsuit | B = \qedsymbol)P(B = \qedsymbol) \\
+ & = P(A = \diamondsuit | B = \triangle)  \cdot \frac{12 + 97}{117}
+   + P(A = \diamondsuit | B = \qedsymbol) \cdot \frac{3 + 5}{117} \\
+ & = \frac{12}{12 + 97} \cdot \frac{12 + 97}{117}
+   + \frac{3}{3 + 5} \cdot \frac{3 + 5}{117}
+   = \mbox{\fbox{$\displaystyle \frac{15}{117}$.}}
+\end{align*}
+\end{enumerate}
+
+\item {\bf Chain Rule} \\
+\begin{align*}
+P(X,Y,Z)
+ & = P(X,Y | Z) \cdot P(Z) \\
+ & = P(X | Y,Z) \cdot P(Y | Z) \cdot P(Z) 
+\end{align*}
+
+\item {\bf Total Probability and Independence}
+\begin{enumerate}[1.]
+\item
+\begin{align*}
+P(X = 1)
+ & = P(X = 1 | Y = 0)\cdot P(Y = 0)
+   + P(X = 1 | Y = 1)\cdot P(Y = 1) \\
+ & = P(X = 1 | Y = 0)\cdot P(Y = 0) \\
+ & + P(X = 1 | Y = 1,Z = 1)\cdot P(Z = 1 | Y = 1)\cdot P(Y = 1) \\
+ & + P(X = 1 | Y = 1,Z = 0)\cdot P(Z = 0 | Y = 1)\cdot P(Y = 1) \\
+ & = P(X = 1 | Y = 0)\cdot P(Y = 0) \\
+ & + P(X = 1 | Y = 1,Z = 1)\cdot P(Z = 1)\cdot P(Y = 1) \\
+ & + P(X = 1 | Y = 1,Z = 0)\cdot P(Z = 0)\cdot P(Y = 1) & \mbox{since $Z \perp Y$} \\
+ & = (0.2)(0.1) + (0.6)(0.8)(0.9) + (0.1)(0.2)(0.9) = \mbox{\fbox{$0.47$.}}
+\end{align*}
+
+\item
+\[E[Y]
+ = 0 \cdot P(Y = 0) + 1 \cdot P(Y = 1)
+ = P(Y = 1)
+ = \mbox{\fbox{$0.9$.}}
+\]
+
+\item
+\[E[Y]
+ = 115 \cdot P(Y = 115) + 20 \cdot P(Y = 20)
+ = 115 \cdot 0.9 + 20 \cdot 0.1
+ = \mbox{\fbox{$105.5$.}}
+\]
+
+\end{enumerate}
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Decision Trees}
+\begin{enumerate}[(a)]
+\item {\bf Train a Decision Tree} \\
+\begin{align*}
+H(Y | C) =
+ & -\left(
+            P(Y = No,  C = 1^{st})\log(P(C = 1^{st} | Y = No )) \right.  \\
+ &        + P(Y = Yes, C = 1^{st})\log(P(C = 1^{st} | Y = Yes))         \\
+ &        + P(Y = No,  C = Lower) \log(P(C = Lower  | Y = No ))         \\
+ & \left. + P(Y = Yes, C = Lower) \log(P(C = Lower  | Y = Yes)) \right) \\
+ & = -\left( \frac{122}{2201} \log\left(\frac{122}{1490}\right)
+          +  \frac{203}{2201} \log\left(\frac{203}{711}\right)
+          +  \frac{1368}{2201}\log\left(\frac{1368}{1490}\right)
+          +  \frac{508}{2201} \log\left(\frac{508}{711}\right)\right)   \\
+ & = 0.555.
+\end{align*}
+\begin{align*}
+H(Y | G) =
+ & -\left(
+            P(Y = No,  G = Male)   \log(P(G = Male | Y = No )) \right.  \\
+ &        + P(Y = Yes, G = Male)   \log(P(G = Male | Y = Yes))         \\
+ &        + P(Y = No,  G = Female) \log(P(G = Female  | Y = No ))         \\
+ & \left. + P(Y = Yes, G = Female) \log(P(G = Female  | Y = Yes)) \right) \\
+ & = -\left( \frac{1364}{2201} \log\left(\frac{1364}{1490}\right)
+          +  \frac{367}{2201}  \log\left(\frac{367}{711}\right)
+          +  \frac{126}{2201}  \log\left(\frac{126}{1490}\right)
+          +  \frac{344}{2201}  \log\left(\frac{344}{711}\right)\right)   \\
+ & = 0.606.
+\end{align*}
+\begin{align*}
+H(Y | A) =
+ & -\left(
+            P(Y = No,  A = Child) \log(P(A = Child  | Y = No )) \right.  \\
+ &        + P(Y = Yes, A = Child) \log(P(A = Child  | Y = Yes))         \\
+ &        + P(Y = No,  A = Adult) \log(P(A = Adult  | Y = No ))         \\
+ & \left. + P(Y = Yes, A = Adult) \log(P(A = Adult  | Y = Yes)) \right) \\
+ & = -\left( \frac{52}{2201}  \log\left(\frac{52}{1490}\right)
+          +  \frac{57}{2201}  \log\left(\frac{57}{711}\right)
+          +  \frac{1438}{2201}\log\left(\frac{1438}{1490}\right)
+          +  \frac{654}{2201} \log\left(\frac{654}{711}\right)\right)   \\
+ & = 0.278.
+\end{align*}
+Since it has the greatest conditional entropy, $G$ is the best feature to
+place at the root of the decision tree. The decision stump predicts $Y = No$
+if $G = Male$ and $Y = Yes$ if $F = Female$.
+
+\item {\bf Evaluation} \\
+\begin{enumerate}[1.]
+\item The decision stump correctly predicts $Y$ for $1708$ of the $2201$ samples.
+Thus, it has accuracy $\frac{1708}{2201} = \mbox{\fbox{$0.776$.}}$.
+
+\item We add up the total number of correct predictions for each combination
+of $C$,$G$, and $A$ to get $1713$ correct predictions, for an accuracy of $\frac{1713}{2201} = \mbox{\fbox{$0.778$.}}$
+\end{enumerate}
+
+\item {\bf Decision Trees and Equivalent Boolean Expressions} \\
+In the following tree, a left edge indicates a feature being false ($0$),
+whereas a right child indicates a feature being true ($1$).
+\vspace{1.5in}
+
+\item {\bf Model Complexity and Data Size} \\
+Note that the boolean expression $x_1 \vee (\neg x_1 \wedge x_2 \wedge x_6)$
+is equivalent to the boolean expression $x_1 \vee (x_2 \wedge x_6)$,
+to which we simplify it.
+\begin{enumerate}[1.]
+\item $P(Y = 1 | x_1 \vee (x_2 \wedge x_6))
+ = P(Y = 1 | f(x) = 1)
+ = \mbox{\fbox{$\theta$.}}$
+
+\item $P(Y = 1 | \neg(x_1 \vee (x_2 \wedge x_6)))
+ = P(Y = 1 | f(x) = 0)
+ = \mbox{\fbox{$1 - \theta$.}}$
+
+\item No; $P(Y = 1 | X_2 = 1) = \frac34 \neq \frac58 = P(Y = 1)$.
+
+\item Yes; since $Y$ is a function of $f(x)$ and whether or not $y = f(x)$,
+each of which is independent of $X_4$ so that $Y \perp X_4$, and thus
+$P(Y = 1 | X_4 = 1) = P(Y = 1)$.
+
+\item Since the classifier is identical to $f$, the probability that it
+correctly predicts $Y$ is $P(Y = f(x)) = \theta$.
+
+\item Since the classifier is identical to $f$, the probability that it
+correctly predicts $Y$ is $P(Y = f(x)) = \theta$.
+
+\item In order to perfectly learn $f$, the decision tree must take into
+account the values of $x_1$, $x_2$, and $x_6$, so that it must have height $3$
+(not counting the leaves).
+\end{enumerate}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Maximum Lilelihood and MAP Estimation}
+\begin{enumerate}[(a)]
+\item {\bf Maximum Likelihood Estimation} \\
+\begin{enumerate}[1.]
+\item $P(X_1\ldots X_n | \theta) = \theta^m(1 - \theta)^{1 - m}$, where
+$m = \sum_{i = 1}^n X_i$.
+
+\item
+See attached plot.
+The following code was used to generate the plot (up to formatting):
+\begin{verbatim}
+>> theta = 0:0.01:1;
+>> p = (theta.^6).*((1 - theta).^3);
+>> plot(theta,p);
+\end{verbatim}
+
+\item
+The following code was used to determine the maxizing value of $\theta$:
+\begin{verbatim}
+>> [~,i] = max(p);
+>> theta(i)
+
+ans =
+
+    0.667
+\end{verbatim}
+
+Thus, $\theta^{MLE}$ agrees with the closed-form maximum likelihood estimator:
+\[\frac{\sum_{i = 1}^n X_i}{n} = \frac69 \approx 0.667.\]
+
+\item
+See attached plot.
+The following code was used to generate the plot (up to formatting):
+\begin{verbatim}
+>> theta = 0:0.01:1;
+>> p = (theta.^2).*((1 - theta).^1);
+>> plot(theta,p);
+\end{verbatim}
+See attached plot.
+The following code was used to generate the plot (up to formatting):
+\begin{verbatim}
+>> theta = 0:0.01:1;
+>> p = (theta.^40).*((1 - theta).^20);
+>> plot(theta,p);
+\end{verbatim}
+
+\item The likelihood curves become narrower as the data set becomes larger.
+The maximum likelihood ($P(X_1\ldots X_n | \theta^{MLE})$) becomes smaller as
+the data set becomes larger. The maximum likelihood estimate ($\theta^{MLE}$)
+remains constant at $\frac23$.
+\end{enumerate}
+
+\item {\bf MAP Estimation} \\
+\begin{enumerate}[1.]
+\item
+See attached plot.
+The following code was used to generate the plot (up to formatting):
+\begin{verbatim}
+>> theta = 0:0.01:1;
+>> p = 30.*(theta.^2).*((1 - theta).^2);
+>> plot(theta,p);
+\end{verbatim}
+
+\item
+See attached plot.
+The following code was used to generate the plot (up to formatting):
+\begin{verbatim}
+>> theta = 0:0.01:1;
+>> p = 30.*(theta.^8).*((1 - theta).^5);
+>> plot(theta,p);
+\end{verbatim}
+$\theta^{MAP} = \frac{8}{13} \neq \theta^{MLE}$.
+
+\item Yes; pick $Beta(\theta;5,3)$. Then, the posterior distribution will be
+identical to the likelihood distribution for $6$ heads and $3$ tails, since we
+``hallucinate'' an additional $5 - 1 = 4$ heads and $3 - 1 = 2$ tails, for a
+total of $2 + 4 = 6$ heads and $1 + 2 = 3$ tails.
+\end{enumerate}
+
+\end{enumerate}
+\end{question}
+\end{document}

@@ -1,0 +1,335 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{wasysym}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{Shashank Singh}
+\newcommand{\andrew}{sss1@andrew.cmu.edu}
+\newcommand{\class}{15-859 Information Theory and Applications in TCS}
+\newcommand{\hwnum}{4}
+\newcommand{\duedate}{Wednesday, May 1, 2013}
+\newcommand{\collaborators}{Albert Gu}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}} % inverse
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\dom}{\operatorname{Dom}} % domain operator
+\newcommand{\rank}{\operatorname{rank}} % rank operator
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\ul}{\underline}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\renewcommand{\L}{\mathcal{L}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\newcommand{\supp}{\operatorname{supp}} % support of a function
+
+% probability related macros
+\newcommand{\pr}{\operatornamewithlimits{\mathsf{Pr}}} % probability
+\newcommand{\E}{\operatornamewithlimits{\mathbb{E}}} % expected value
+% Bernoulli distribution of parameter p
+\newcommand{\Bern}[1]{\operatorname{Bernoulli}\left( #1 \right)}
+\newcommand{\giv}{\, | \,} % \pr{A \giv B} probability of A given B
+\newcommand{\jtA}{A_{\epsilon,\Delta}^n} % length-n jointly typical sequences
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Problem Set \hwnum} \\
+\class \\
+Name: \name \\
+Email: \andrew \\
+Due: \duedate \\
+Collaborators: \collaborators
+
+\begin{question}{Problem 1}
+Since each $j \in [n]$ is in at least $k$ of the sets $T_1,\dots,T_m$, for
+$i \in [m]$, $\pr(j \in T_i) \geq k/m$. Thus, by Shearer's Lemma, if $X$ and
+$i$ are chosen uniformly at random from $S$ and $[m]$, respectively,
+\[\frac{k}{m} \log_2 |S|
+    = \frac{k}{m} H(X)
+    \leq \E_i \left[ H(X_{T_i}) \right]
+    \leq \E_i \left[ \log_2 n_i \right]
+    \leq \frac{1}{m} \sum_{i \in [m]} \log_2 n_i
+\]
+(since $X_{T_i}$ is distributed over the $n_i$ values in $T_i$). Multiplying by
+$m$ gives
+\[|S|^k
+    = 2^{k \log_2 |S|}
+    \leq 2^{\sum_{i \in [m]} \log_2 n_i}
+    = \prod_{i \in [m]} n_i. \mqed
+\]
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item Let $E_S := \{(x,y) \in E : x,y \in S\}$. For any
+$X \in \{0,1\}^m, i \in [m], b \in \{0,1\}$, define
+\[X^{-i} := (X_1,\dots,X_{i - 1},X_{i + 1},\dots,X_m) \in \{0,1\}^{m - 1}\] and
+\[X^{-i}(b) := (X_1,\dots,X_{i - 1},b,X_{i + 1},\dots,X_m) \in \{0,1\}^m.\]
+
+If $X$ is chosen uniformly at random from $S$, then, since
+$X \in \{X^{-i}(0),X^{-i}(1)\}$, $H(X_i \giv X^{-i}) = 1$ if and only if
+the edge $(X^{-i}(0),X^{-i}(1)) \in E_S$, and $H(X_i \giv X^{-i}) = 0$
+otherwise. Thus,
+\[|E_S| = \frac12 \sum_{Y \in S} \sum_{i = 1}^m H(X_i \giv X^{-i} = Y^{-i}).\]
+
+(the sum counts each edge twice - once for each endpoint). Then, by the Chain
+Rule and the fact that conditioning cannot increase entropy,
+\begin{align*}
+|E_S|
+ & =    \frac12 \sum_{Y \in S} \sum_{i = 1}^m H(X_i \giv X^{-i} = Y^{-i})   \\
+ & \leq \frac12 \sum_{Y \in S} \sum_{i = 1}^m
+                    H(X_i \giv X_1 = Y_1,\dots,X_{i - 1} = Y_{i - 1})       \\
+ & =    \frac12 \sum_{Y \in S} H(X)
+   =    \frac12 |S|H(X)
+   =    \frac12 |S|\log_2|S|. \mqed
+\end{align*}
+
+\item It doesn't seem like the bound can be tightened. Consider, for instance,
+when $S$ is an embedding of the $\frac{m}{2}$-dimensional hypercube into $H$
+(so $|S| = 2^{m/2}$). Then, since an $n$-dimensional hypercube has
+$n2^{n - 1}$ edges, the bound
+\[\frac{|S|\log_2|S|}{2} = \frac{m}{2}2^{m/2 - 1}\]
+on the number of edges with both endpoints in $S$ is tight. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+We showed in lecture that, for random variables $X \sim P$ and
+$Y \subseteq V(G)$ independent with $X \in Y$,
+\[H(G,P) = \min_{(X,Y)} I(X;Y).\]
+Thus, it suffices to give a distribution for $Y$ with
+\[I(X ; Y) \leq \log_2 \chi(G).\]
+Pick a $\chi(G)$-coloring of $G$, and distribute $Y$ so as to be the set of
+vertices with the same color as $X$ (clearly, $Y$ is independent and
+$X \in Y$). Then, since $|\supp(Y)| \leq \chi(G)$,
+\[I(X ; Y) \leq H(Y) \leq \log_2 |\supp(Y)| \leq \log_2 \chi(G). \mqed\]
+\vspace{-0.2in}
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item Suppose $(X,Y)$ is distributed so as to minimize $I(x;Y)$ with
+$X \sim P$, $X \in Y \in I(G)$. For all $S \in I(G)$,
+$\alpha_S := \pr(Y = S)$, and note that each $\alpha_S \geq 0$ and
+$\sum_{I \in I(G)} \alpha_S = 1$. Then,
+\[(a_1,\dots,a_n) := \sum_{S \in I(G)} \alpha_S \cdot \chi(S) \in VP(G),\]
+and each
+$\displaystyle a_i
+    = \sum_{i \in S \in I(G)} \alpha_S
+    = \sum_{i \in S \in I(G)} \pr(Y = S)$.
+By Jensen's Inequality and concavity of $\log_2$,
+\begin{align*}
+I(X;Y)
+    & = \sum_{i \in [n]} \sum_{i \in S \in I(G)}
+            \pr(X = i)\pr(Y = S \giv X = i) \log_2
+                \left( \frac{\pr(Y = S \giv X = i)}{\pr(Y = S)} \right)     \\
+    & = -\sum_{i \in [n]} p_i
+            \sum_{i \in S \in I(G)} \pr(Y = S \giv X = i)
+            \log_2 \left( \frac{\alpha_S}{\pr(Y = S \giv X = i)} \right)    \\
+    & \geq -\sum_{i \in [n]} p_i
+            \log_2 \left( \sum_{i \in S \in I(G)} \pr(Y = S \giv X = i)
+            \cdot \frac{\alpha_S}{\pr(Y = S \giv X = i)} \right)            \\
+    & = -\sum_{i \in [n]} p_i
+                \log_2 \left( \sum_{i \in S \in I(G)} \alpha_S \right)
+      = -\sum_{i \in [n]} p_i \log_2 a_i
+      = \sum_{i \in [n]} p_i \log_2 \left( \frac{1}{a_i} \right),
+\end{align*}
+and the desired result follows. \qed
+
+\item Suppose
+\[(a_1,\dots,a_n) = \sum_{S \in I(G)} \alpha_S \cdot \chi(S) \in VP(G),\]
+minimizes $\sum_{i \in [n]} p_i \log_2 \left( \frac{1}{a_i} \right)$ (with each
+$\alpha_S \geq 0$ and $\sum_{S \in I(G)} \alpha_S = 1$). Define the
+distribution of $(X,Y)$ by $X \sim P$ and
+\[\pr(Y = S \giv X = i) = \frac{\alpha_S}{a_i}\]
+(it can be checked that this distribution is well-defined, and
+$\displaystyle\pr(Y = S) = \sum_{i \in [n]}p_i \alpha_S/a_i$). Then,
+\begin{align*}
+I(X;Y)
+    & = \sum_{i \in [n]} p_i \sum_{i \in S \in I(G)} \pr(Y = S \giv X = i)
+            \log_2 \left( \frac{\pr(Y = S \giv X = i)}{\pr(Y = S)} \right)  \\
+    & = -\sum_{i \in [n]} p_i \sum_{i \in S \in I(G)} \frac{\alpha_S}{a_i}
+            \log_2 \left( \frac{\sum_{j \in [n]} p_j \alpha_S/a_j}
+                                            {\alpha_S/a_i} \right)  \\
+    & = -\sum_{i \in [n]} p_i
+            \log_2 \left( a_i\sum_{j \in [n]} p_j/a_j \right)
+    & \left( \sum_{S \in I(G)} \frac{\alpha_S}{a_i} = 1 \right) \\
+    & \leq -\sum_{i \in [n]} p_i \log_2 \left( a_i \sum_{j \in [n]} p_j \right)
+      = \sum_{i \in [n]} p_i \log_2 \left( \frac{1}{a_i} \right),
+\end{align*}
+where the inequality occurs because each $a_j \leq 1$. The desired result
+follows. \qed
+
+\item
+Note that $\chi$ is monotone in the sense that, if $S \subseteq T \in I(G)$,
+then $(\chi(S))_i \leq (\chi(T))_i, \forall i \in [n]$.
+
+Consider any family $\{\alpha_S\}_{S \in I(G)}$ with each $\alpha_S \geq 0$ and
+$\sum_{S \in I(G)} \alpha_S = 1$, if $\alpha_S > 0$ for
+some $S \in I(G)$. Then, choosing $T \in I(G)$ maximal with
+$S \subseteq T$ (it is easy to construct such a $T$ from $S$), and defining,
+for each $R \in I(G)$,
+\[\beta_R
+    = \left\{
+        \begin{array}{cl}
+            \alpha_T + \alpha_S & : \mbox{ if } R = T   \\
+            0                   & : \mbox{ if } R = S   \\
+            \alpha_R            & : \mbox{ else }       \\
+        \end{array}
+    \right.,
+\]
+it is clear that each $\beta_R \geq 0$, $\sum_{R \in I(G)} \beta_R = 1$, and,
+moreover, by monotonicity of $\chi$,
+\[\left( \sum_{R \in I(G)} \alpha_R \cdot \chi(R) \right)_i
+    \leq
+    \left( \sum_{R \in I(G)} \beta_R \cdot \chi(R) \right)_i,
+    \forall i \in [n],
+\]
+so that all components are maximized by $\alpha_S$ supported on maximal
+independent sets. Therefore, since $\log_2$ is non-decreasing, the sum
+\[\sum_{i \in [n]} p_i \log_2 \left( \frac{1}{a_i} \right)\]
+is non-increasing in each $a_i$ and minimized by $\alpha_S$ supported
+on maximal independent sets. \qed
+\end{enumerate}
+\end{question}
+
+%TODO
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item Let $\e > 0$, and let $\Pi$ be a protocol with error at most $\e$. $\Pi$
+partitions $X \times Y$ into rectangles; let $\L$ be the set of such rectangles
+$R$ with $\mu(R) \geq \rho$, and let $\S$ be the remaining set of ``small''
+rectangles. Let $E := \{(x,y) \in X \times Y : \Pi(x,y) \neq f(x,y)\}$. If
+$R \in \L$, then
+\[\mu(E \cap R)
+    \geq \min \{\mu(f\inv(0) \cap R), \mu(f\inv(1) \cap R)\}
+    \geq \alpha \mu(f\inv(0) \cap R)),
+\]
+since $\alpha \in (0,1)$ and $R$ is large. Thus, since the rectangles are
+disjoint,
+\begin{align*}
+\e
+      \geq \mu(E)
+    & \geq \sum_{R \in \L} \mu(R \cap E)
+      \geq \sum_{R \in \L} \alpha\mu \left( f\inv(0) \cap R \right)
+      = \alpha \mu \left( f\inv(0) \cap \bigcup_{R \in \L} R \right)      \\
+    & = \alpha \mu \left( f\inv(0) \right)
+      - \alpha \mu \left( f\inv(0) \cap \bigcup_{R \in \S} R \right),
+\end{align*}
+and so
+\[\rho|S|
+    \geq \sum_{R \in \S} \mu(R)
+    = \mu \left( \bigcup_{R \in \S} R \right)
+    \geq \mu \left( f\inv(0) \cap \bigcup_{R \in \S} R \right)
+    \geq \mu \left( f\inv(0) \right) - \frac{\e}{\alpha}
+.\]
+Recalling that the number of rectangles is at most $2^{R(f)}$, we have
+\[\rho2^{R(f)}
+    \geq \rho|S|
+    \geq \mu \left( f\inv(0) \right) - \frac{\e}{\alpha}
+,\]
+giving the desired result when $\e = 1/3$. \qed
+
+\item Let $\mu$ be the uniform distribution over $\{0,1\}^{2n}$. Note that, if
+$x \in \{0,1\}^n$ is non-zero, then $IP(x,y) \neq 0$ for exactly half of the
+$y \in \{0,1\}^n$. Therefore, if
+$\rho := \frac{8}{2^n}$ and $R$ is a rectangle with
+$\mu(R) \geq \rho$, since $R$ has elements corresponding to least $7$ non-zero
+input $x$ values,
+\[\mu(f\inv(1) \cap R) \geq \frac{\frac12 \cdot 7 \cdot 2^n}{2^{2n}}
+    \quad \mbox{ and } \quad
+\mu(f\inv(0) \cap R) \leq \frac{2^n + \frac12 \cdot 7 \cdot 2^n}{2^{2n}}
+,\]
+and so
+\[\frac{\mu(f\inv(1) \cap R)}{\mu(f\inv(0) \cap R)}
+    \geq \frac{\frac72}{1 + \frac72}
+    = 7/9
+    =: \alpha
+.\]
+Therefore, noting that $f\inv(0) \geq \frac12$, by the result of part (a),
+\[2^{R(IP)}
+    > \frac{1}{2^{3 - n}} \left( \frac12 - \frac{1}{3\cdot7/9} \right)
+    = 2^{n - 3} \cdot \frac{1}{14}
+    = 2^{n - 3 - \log_2 14}
+\]
+and so $R(IP) \in n - O(1)$. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6}
+As in the proof for the original Indexing Problem, we distribute
+$X = (X_1,\dots,X_n)$ and $i$ uniformly on $\{0,1\}^n$ and $[n]$, respectively,
+and note
+\[CC(\Pi)
+    \geq I(X_1,\dots,X_n \giv M
+    = H(X_1,\dots,X_n) - H(X_1,\dots,X_n \giv M)
+    = n - H(X_1,\dots,X_n \giv M)
+.\]
+By the Chain Rule,
+\[H(X_1,\dots,X_n \giv M) = \sum_{i = 1}^n H(X_i \giv M, X_1,\dots,X_{i - 1})
+.\]
+By the error guarantee of the protocol, if $P_e^{m,i}$ is the probability Bob
+makes an error, \[\E_{m,i}\left[ P_e^{m,i} \right] \leq \frac13.\]
+By Fano's Inequality, since Bob's estimate of $X_i$ is a function of $M$ and
+$X_1,\dots,X_{i - 1}$,
+$h(P_e^{m,i}) \geq H(X_i \giv M = m,X_1,\dots,)$.
+Therefore,
+\begin{align*}
+\sum_{i = 1}^n H(X_i \giv M,X_1,\dots,X_{i - 1})
+ &  = n\E_i \left[ H(X_i \giv M,X_1,\dots,X_{i - 1}) \right]              \\
+ &  = n\E_i\left[\E_m\left[H(X_i \giv M = m,X_1,\dots,X_i)\right]\right]  \\
+ &  \leq n\E_{m,i} \left[ h(P_e^{m,i}) \right].
+\end{align*}
+
+Thus, by concavity of $h$,
+\[\sum_{i = 1}^n H(X_i \giv M, X_1,\dots,X_{i - 1})
+    \leq n \E[h(P_e^{m,i})]
+    \leq n h(\E[P_e^{m,i}])
+    \leq n h\left( \frac13 \right)
+,\]
+and hence
+\[CC(\Pi)
+    \geq n -\sum_{i = 1} H(X_i \giv M,X_1,\dots,X_{i - 1})
+    \geq n \left( 1 - h\left( \frac13 \right) \right)
+    \in \Omega(n)
+.\mqed\]
+\end{question}
+\end{document}

@@ -1,0 +1,275 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Thursday, September 18, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\pr}{\mathbb{P}} % probability
+\newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+Define $c_n := \sup_{i \in [n]} b_i - a_i$
+\footnote{$[n]$ denotes $\{1,\dots,n\}$.}
+and $g : A_n := \prod_{i = 1}^n [a_i, b_i] \to \R$ by
+$g(x_1,\dots,x_n) = \frac{1}{n} \sum_{i = 1}^n x_i$. Then,
+\[\sup_{(x_1,\dots,x_n) \in A_n, x_i' \in [a_i,b_i]}
+                            |g(x_1,\dots,x_n) - g(x_1,\dots,x_i',\dots,x_n)|
+    = \sup_{x_i,x_i' \in [a_i,b_i]} |x_i - x_i'|/n
+    \leq c_n/n,
+\]
+$\forall i \in [n]$. Hence, by McDiarmid's Inequality,
+\begin{align*}
+\Pr \left( \frac{1}{n} \sum_{i = 1}^n X_i
+                            - \frac{1}{n} \sum_{i = 1}^n \mu_i > t \right)
+ &  = \Pr \left( g(X_1,\dots,X_n) - \E g(X_1,\dots,X_k) > t \right) \\
+ &  \leq \exp \left( -\frac{2t^2}{\sum_{i = 1}^n (c_n/n)^2} \right)
+    = \exp \left( -\frac{2nt^2}{c_n^2} \right). \qed
+\end{align*}
+ 
+\item For all $t \geq 0$,
+$t = \E[t - (X - \mu)] \leq \E[(t - (X - \mu))1_{\{X - \mu < t\}}$,
+where $1_{\{X - \mu < t\}}$ is the indicator function for the event
+$\{X - \mu < t\}$. Squaring and applying Jensen's Inequality followed by
+the Cauchy-Schwarz Inequality,
+\[t^2
+    \leq \E[(t - (X - \mu))^21_{\{X - \mu < t\}}]
+    \leq \E[(t - (X - \mu))^2]\E[1_{\{X - \mu < t\}}]
+    = (t^2 + \Var[X])\pr(X - \mu < t),
+\]
+so that
+\[\pr(X - \mu \geq t)
+    = 1 - \pr(X - \mu < t)
+    \leq 1 - \frac{t^2}{t^2 + \sigma^2}
+    = \frac{\sigma^2}{t^2 + \sigma^2}. \qed
+\]
+
+\item Define $f : \R \to \R$ by $f(t) := e^{c^2t^2/2}, \forall t \in \R$, and
+note that
+\[f'(0) = c^2te^{c^2t^2/2} \big|_{t = 0} = 0
+    \quad \mbox{ and } \quad
+    f''(0) = c^2e^{c^2t^2/2} + c^4t^2e^{c^2t^2/2} \big|_{t = 0} = c^2.
+\]
+Hence, $\forall t \in \R$,
+\[1 + t\E[X] + o(t)
+    = \E[e^{tX}]
+    \leq f(t)
+    = 1 + o(t).
+\]
+Rewriting this gives
+$t\E[X] \leq o(t)$, which implies $\E[X] = 0$. Hence, $\forall t \in \R$,
+\[1 + \frac{t^2\Var[X]}{2} + o(t^2)
+    = 1 + \frac{t^2\E[X^2]}{2} + o(t^2)
+    = \E[e^{tX}]
+    \leq f(t)
+    = 1 + \frac{c^2t^2}{2} + o(t^2).
+\]
+Rewriting this gives $t^2 (\Var[X] - c^2) \leq o(t^2)$, which implies
+$\Var[X] \leq c^2$. \qed
+
+\newpage
+\item For all $t \neq 0$,
+\[\E[e^{tX}]
+    = \int_0^1 e^{tx} \, dx
+    = e^{tx}/t \bigg|_{x = 0}^{x = 1}
+    = \frac{e^t - 1}{t}.
+\]
+Hence,
+\[\E[e^{t(X - 1/2)}]
+    = \frac{e^t - 1}{t}e^{-t/2}
+    = \frac{2}{t} \sinh(t/2)
+    = \frac{2}{t} \sum_{i = 0}^\infty \frac{(t/2)^{2i + 1}}{(2i + 1)!}
+    = \sum_{i = 0}^\infty \frac{(t/2)^{2i}}{(2i + 1)!}.
+\]
+For $c := 1/\sqrt2$, since
+\[e^{c^2t^2/2}
+    = e^{(t/2)^2}
+    = \sum_{i = 0}^\infty \frac{(t/2)^{2i}}{i!}
+\]
+we see by comparing the series term by term that
+\[\E[e^{t(X - 1/2)}] \leq e^{c^2t^2/2}. \qed\]
+ 
+\item Since, as shown above, for $\sigma := 1/\sqrt2$,
+$\E[e^{t(X_i - 1/2)}] \leq e^{t^2\sigma^2/2}$, the result from class gives
+\[\E[Y]
+    = 1/2 + \E[Y - 1/2]
+    \leq 1/2 + \sqrt{\log n}.
+\]
+Since $Y \leq y$ if and only if each $X_i \leq y$ and the $X_i$'s are
+independent,
+\[\E[Y]
+    = \int_0^1 1 - \pr[Y \leq y] \, dy
+    = \int_0^1 1 - \pr[X_1 \leq y]^n \, dy
+    = \int_0^1 1 - y^n \, dy
+    = 1 - \frac{1}{n + 1}
+    = \frac{n}{n + 1}.
+\]
+Since $Y \in [0,1]$, the bound is trivial for $n \geq 3$, but the exact
+value is informative for all $n$.
+ 
+\item Suppose there exists $c > 0$ such that $\E[e^{tX}] \leq e^{c^2t^2/2}$ for
+all $t \in \R$. Then, $\forall t \geq 0$, by Markov's Inequality, since the
+function $x \mapsto e^{tx/c^2}$ is nondecreasing,
+\[\P(X \geq t)
+    = \P(e^{tX/c^2} \geq e^{t^2/c^2})
+    \leq \E[e^{tX/c^2}]e^{-t^2/c^2}
+    \leq e^{t^2/(2c^2)}e^{-t^2/c^2}
+    = e^{-at^2},
+\]
+where $a = 1/(2c^2) > 0$. The same steps show $\P(-X \geq t) \leq e^{-at^2}$,
+and the desired result follows by a union bound. \qed
+ 
+\item
+\begin{enumerate}
+\item If $\sigma < c$, for $t \leq 3(c^2 - \sigma^2)/c$,
+$\sigma^2 + ct/3 \leq c^2$, and so
+\[2\exp\left( -\frac{nt^2}{2\sigma^2 + 2ct/3} \right)
+    \leq 2\exp\left( -\frac{nt^2}{2c^2} \right).
+\]
+Hence, Bernstein's Inequality is tighter than Hoeffding's Inequality in this
+case. \qed
+
+\item By Hoeffding's Inequality, for all $\e \in (0,1]$, for
+$C = \sqrt{-2c^2 \log(\e/2)}$,
+\[
+\P\left( |\overline X_n - \mu| > C/\sqrt{n} \right)
+    \leq 2\exp\left( -\frac{C^2}{2c^2} \right)
+    = \e,
+\]
+and hence $\overline X_n - \mu \in O_P(n^{-1/2})$. On the other hand, by
+Bernstein's Inequality, for all $\e \in (0,1]$, for $C$ sufficiently large that
+$C^2 \geq -\log(\e/2)(2 + 2Cc/3)$,
+\[
+\P\left( |\overline X_n - \mu| > C/n \right)
+    \leq 2\exp\left( -\frac{C^2/n}{2/n^2 + 2c(C/n)/3} \right) 
+    \leq 2\exp\left( -\frac{C^2}{2 + 2cC/3} \right) 
+    \leq \e,
+\]
+and hence $\overline X_n - \mu \in O_P(n^{-1})$. \qed
+\end{enumerate}
+ 
+\item
+\begin{enumerate}
+\item The statement is true. Let $\e > 0$. Suppose there exist $C_X$ and $C_Y$
+such that $\pr(|X_n/a_n| > C_X) \leq \e/2$ and
+$\pr(|Y_n/b_n| > C_Y) \leq \e/2$, for all $n \in \N$. Since
+$|X_nY_n/(a_nb_n)| > C_XC_Y$ only if either $|X_n/a_n| > C_X$ or
+$|Y_n/b_n| > C_Y$,
+\[\pr(|X_nY_n/(a_nb_n)| > C_XC_Y)
+    \leq \pr(|X_n/a_n| > C_X) + \pr(|Y_n/b_n| > C_Y)
+    \leq \e. \qed
+\]
+
+\item The statement is true. Let $\e > 0$. Suppose there exist $C_X$ and $C_Y$
+such that $\pr(|X_n/a_n| > C_X) \leq \e/2$ and
+$\pr(|Y_n/b_n| > C_Y) \leq \e/2$, for all $n \in \N$. Since
+$\max\{a_n,b_n\} \geq (a_n + b_n)/2$ and $|X_n/a_n| + |Y_n/b_n| > C_X + C_Y$
+only if either $|X_n/a_n| > C_X$ or $|Y_n/b_n| > C_Y$,
+\begin{align*}
+\pr\left(\left| \frac{X_n + Y_n}{\max\{a_n,b_n\}} \right| > 2(C_X + C_Y) \right)
+ &  \leq \pr\left(\left|\frac{X_n}{a_n + b_n}\right|
+                + \left| \frac{Y_n}{a_n + b_n} \right| > C_X + C_Y \right)  \\
+ &  \leq \pr(|X_n/a_n| + |Y_n/b_n| > C_X + C_Y) \\
+ &  \leq \pr(|X_n/a_n| > C_X) + \pr(|Y_n/b_n| > C_Y)
+    \leq \e. \qed
+\end{align*}
+
+\item The statement is false. For all $n \in \N$, let $X_n = Y_n = 1$ be
+degenerate random variables, let $a_n = 1$, and let $b_n = n$. Then, 
+$X_n \in o_P(a_n)$ and $Y_n \in O_P(b_n)$, but
+\[X_nY_n = 1 \notin o_P(1). \qed\]
+
+\item The statement is true. Let $\e > 0$. Suppose $\pr(|X_n| > \e/2) \to 0$
+and $\pr(|Y_n| > \e/2) \to 0$ as $n \to \infty$. Then, since
+$\frac{|X_n|}{a_n + b_n} + \frac{|Y_n|}{a_n + b_n} > \e$ only if either
+$\frac{|X_n|}{a_n + b_n} > \e/2$ or $\frac{|Y_n|}{a_n + b_n} > \e/2$,
+\begin{align*}
+\pr\left( \frac{|X_n + Y_n|}{a_n + b_n} > \e \right)
+ &  \leq \pr\left( \frac{|X_n|}{a_n + b_n}
+                    + \frac{|Y_n|}{a_n + b_n} > \e \right) \\
+ &  \leq \pr\left( |X_n|/a_n + |Y_n|/b_n > \e \right) \\
+ &  \leq \pr\left( |X_n|/a_n > \e/2 \right)
+    + \pr\left( |Y_n|/b_n > \e/2 \right)
+    \to 0. \qed
+\end{align*}
+
+\item The statement is false. For all $n \in \N$, let $X_n = Y_n = 1$ be
+degenerate random variables, let $a_n = n$, and let $b_n = n^2$. Then,
+$X_n \in o_P(a_n)$ and $Y_n \in O_P(b_n)$, but
+\[X_n/Y_n = 1 \notin o_P(1/n) = o_P(a_n/b_n). \qed\]
+
+\end{enumerate}
+ 
+\end{enumerate}
+
+\end{document}

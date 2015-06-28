@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{7}
+\newcommand{\duedate}{Friday, July 27, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Section 3.5, Problem 12}
+Taking inspiration from the given hint, we suppose that a solution to the
+given \diffeq is of the form $Y(t) = Ae^{2t} + Be^{-2t}$, for
+some $A,B \in \mathbb{R}$. Then,
+\[Y^{\prime} = 2Ae^{2t} - 2Be^{-2t} \quad \mbox{ and } \quad
+Y^{\prime\prime} = 4Ae^{2t} + 4Be^{-2t},\]
+so that plugging $Y$ into the \diffeq gives
+$(1 + 2 + 4)A = \frac12$ and $(1 - 2 + 4)B = \frac12$.
+Thus,
+\[Y(t) = \mbox{\fbox{$\displaystyle \frac{1}{14}e^{2t} + \frac16e^{-t}$.}}\]
+The characteristic equation of the homogeneous equation corresponding to the
+given \diffeq is $r^2 - r - 2 = 0$, whose roots are $r \in \{1,2\}$.
+Thus, the solutions to the given \diffeq are of the form 
+\[y
+ = \mbox{\fbox{$c_1e^t + c_2e^{2t} + Y(t)$,}} \quad c_1,c_2 \in \mathbb{R}.\]
+\end{question}
+
+\begin{question}{Section 3.5, Problem 16}
+Suppose that some particular solution of the given \diffeq is of the form
+\[Y(t) = (A_1t + A_0)e^{2t}.\]
+Then, $Y^{\prime} = A_1e^{2t} + 2Y(t)$ and
+$Y^{\prime\prime} = 2A_1e^{2t} + 2Y^{\prime}(t)$.
+Thus, plugging this solution into the given \diffeq and simplifying gives
+$(2A_1 - 3A_0)e^{2t} - 3A_1te^{2t} = 3te^{2t}$,
+so that $-3A_1 = 3$ and $2A_1 - 3A_0 = 0$, and thus $A_1 = -1$ and
+$A_0 = -\frac23$.
+
+The characteristic equation of the homogeneous equation associated with the
+given \diffeq is $r^2 - 2r - 3 = 0$, whose roots are $r \in \{-1,3\}$.
+Therefore, the general solution of the given equation is of the form
+\[y
+ = \mbox{\fbox{$c_1e^{-t} + c_2e^{3t} + Y(t)$,}} \quad c_1,c_2 \in \mathbb{R},\]
+\[Y(t)
+ = \mbox{\fbox{$\displaystyle -\left(t + \frac23\right)e^{2t}$.}}\]
+Solving for $c_1$ and $c_2$ using the givens $y(0) = 1$ and
+$y^{\prime}(0) = 0$ gives \fbox{$c_1 = \frac23$} and \fbox{$c_2 = 1$.}
+\end{question}
+
+\begin{question}{Section 3.6, Problem 16}
+Since, for $y = y_1$,
+\[(1 - t)y^{\prime\prime} + ty^{\prime} - y
+ = (1 - t)e^t + te^t - e^t
+ = (1 - t)e^t - (1 - t)e^t
+ = 0,
+\]
+and,
+for $y = y_2$,
+\[(1 - t)y^{\prime\prime} + ty^{\prime} - y
+ = (1 - t)\cdot0 + t\cdot1 - t
+ = t - t
+ = 0,
+\]
+$y_1$ and $y_2$ indeed satisfy the homogeneous \diffeq corresponding to the
+given differential equation. Furthermore, since the Wronskian of $y_1$ and
+$y_2$ is $(1 - t)e^t$, which is $0$ only when $t = 1$, $\{y_1,y_2\}$ is a
+fundamental set of solutions of this corresponding homogeneous \diffeq on the
+interval $t \in (0,1)$.
+
+Thus, by Theorem 3.6.1, a particular solution of the given \diffeq is, for
+$t_0 = 0$,
+\begin{eqnarray*}
+Y(t)
+ & := & -e^t \int_{t_0}^t \frac{2s(s - 1)^2e^{-s}}   {(1 - s)e^s} \, ds
+    +   t    \int_{t_0}^t \frac{2e^s(s - 1)^2e^{-s}} {(1 - s)e^s} \, ds \\
+ &  = & -e^t \int_{t_0}^t 2s(1 - s)e^{-2s}                        \, ds
+    +   t    \int_{t_0}^t 2(1 - s)e^{-s}                          \, ds \\
+ &  = & -e^t \left( s^2e^{-2s} \right) \big|_{s = t_0}^{s = t}
+    +   t    \left( 2se^{-s}   \right) \big|_{s = t_0}^{s = t}         \\
+ &  = & -t^2e^{-t} + 2t^2e^{-t} = \mbox{\fbox{$t^2e^{-t}$.}}
+\end{eqnarray*}
+Thus, the general solution to the given \diffeq is of the form
+\[y = \mbox{\fbox{$c_1e^t + c_2t + Y(t)$,}} \quad c_1,c_2 \in \mathbb{R}.\]
+\end{question}
+
+\begin{question}{Section 3.7, Problem 18}
+As derived in the context of the mass-on-a-spring system, a system obeying the
+\diffeq
+\[ay^{\prime\prime} + by^{\prime} + cy = 0\]
+(where $a,b,c \in \mathbb{R}$) is critically damped when $b = 2\sqrt{ac}$.
+Thus, since the given series circuit obeys the differential equation
+\[LQ^{\prime\prime} + RQ^{\prime} + \frac{1}{C}Q = 0,\]
+the circuit is critically damped when
+\[R
+ = 2\sqrt{\frac{L}{C}}
+ = 2\sqrt{\frac{0.2 \, H}{0.8 \times 10^{-6} \, F}}
+ = \mbox{\fbox{$1000 \, \Omega$.}}
+\]
+\end{question}
+
+\newpage
+\begin{question}{Section 3.8, Problem 12}
+This system obeys the \diffeq
+\[mu^{\prime\prime} + \gamma^{\prime} + ku = 3\cos(3t)N - 2\sin(3t)N,\]
+where $m = 2 \, kg$, $\gamma = 1 \, kg/s$, and $k = 3N/m$.
+Suppose that a particular solution of this system is of the form
+\[Y(t) = A\cos(3t) + B\sin(3t), \quad A,B \in \mathbb{R}.\]
+Then, plugging $Y$ into the given \diffeq gives $-15A + 3B = 3$ and
+$-3A - 15B = 2$, so that $A = -17/78$ and $B = -7/78$, and thus
+\[Y(t)
+ = \mbox{
+    \fbox{
+        $\displaystyle
+              -\frac{17}{78}\cos(3t)
+            + -\frac{7}{78}\sin(3t)
+        $
+    .}
+   }
+\]
+
+The characteristic equation of the homogeneous \diffeq associated with the
+given \diffeq is $2r^2 + r + 3 = 0$, whose roots are
+$r = -\frac14(1\pm\sqrt{23}i)$,
+Thus, the general solution the given \diffeq are of the form
+\[y
+ = 
+   c_1e^{-\frac14t}\cos(\sqrt{23}t)
+ + c_2e^{-\frac14t}\sin(\sqrt{23}t)
+ + Y(t),
+\]
+for some $c_1,c_2 \in \mathbb{R}$.
+
+Since the real parts of both roots of the above characteristic equation are
+negative, both solutions to the homogeneous equation are transient, and the
+steady state response of the system is identical to the particular solution
+$Y$ of the given nonhomogeneous equation.
+\end{question}
+\end{document}

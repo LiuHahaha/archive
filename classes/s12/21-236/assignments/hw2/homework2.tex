@@ -1,0 +1,269 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Monday, February 6, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Let $\mathbf{x} \in \mathbf{R}^N$. Let $d = f(\mathbf{X}) + 1$, and let
+$D = \overline{B(\mathbf{x}, d)} \cap C$. Since $D$ is the intersection of
+two closed sets, $D$ is closed, and, since $\overline{B(\mathbf{x}, d)}$ is
+bounded, $D$ is bounded, so that $D$ is compact. Let
+$g: D \rightarrow \mathbb{R}$ such that, $\forall \mathbf{y} \in D$,
+$g(\mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|$. Since $g$ is a continuous
+function on a compact set, by the Weierstrass Theorem,
+$g$ attains a minimum on $D$; in particular,
+$\exists \mathbf{y}_{\mathbf{x}} \in D$ such that
+$g(\mathbf{y}_{\mathbf{x}}) = \min g(D)$. By definition of infimum, since
+$g(\mathbf{y}_{\mathbf{x}})$ is a lower bound of
+$\{\|\mathbf{x} - \mathbf{y}\| : \mathbf{y} \in C\}$. Since
+$\mathbf{y}_{\mathbf{x}} \in C$,
+$f(\mathbf{x}) = \|\mathbf{x} - \mathbf{y}_{\mathbf{x}}\|$.
+\qquad $\blacksquare$
+
+\item Let $\mathbf{y} \in C$. Since $\mathbf{z}$ is in the line segment with endpoints
+$\mathbf{x}$ and $\mathbf{y}_{\mathbf{x}}$,
+\[\|\mathbf{y}_{\mathbf{x}} - \mathbf{z}\|
+ = \|\mathbf{y}_{\mathbf{x}} - \mathbf{x}\| - \|\mathbf{x} - \mathbf{z}\|.\]
+By choice of $\mathbf{y}_{\mathbf{x}}$ as
+$\inf\{\|\mathbf{x} - \mathbf{y} : \mathbf{y} \in C\|\}$,
+\[\|\mathbf{y}_{\mathbf{x}} - \mathbf{x}\| \leq \|\mathbf{y} - \mathbf{x}\|.\]
+Thus, by the Reverse Triangle Inequality,
+\[\|\mathbf{y}_{\mathbf{x}} - \mathbf{z}\|
+ \leq \|\mathbf{y} - \mathbf{x}\| - \|\mathbf{x} - \mathbf{z}\|
+ \leq \|\mathbf{y} - \mathbf{z}\|.\] Therefore, since
+$\|\mathbf{y}_{\mathbf{x}} - \mathbf{z}\|$ is a lower bound of
+$\{\|\mathbf{z} - \mathbf{y}\| : \mathbf{y} \in C\}$ and
+$\mathbf{y}_{\mathbf{x}} \in C$, by definition of infimum,
+$f(\mathbf{z}) = \|\mathbf{y}_{\mathbf{x}}\|$.
+\qquad $\blacksquare$
+
+\item Let $\mathbf{x}_1, \mathbf{x}_2 \in \mathbb{R}^N$. As shown in part (a),
+$\exists \mathbf{y}_1, \mathbf{y}_2 \in C$ such that
+$f(\mathbf{x}_1) = \|\mathbf{x}_1 - \mathbf{y}_1\|,
+f(\mathbf{x}_2) = \|\mathbf{x}_2 - \mathbf{y}_2\|$. By the Reverse Triangle
+Inequality, and the choice of $\mathbf{y}_1$,
+\[\|\mathbf{x}_1 - \mathbf{x}_2\| \geq
+\|\mathbf{x}_1 - \mathbf{y}_2\| - \|\mathbf{y}_2 - \mathbf{x}_2\|
+ \geq \|\mathbf{x}_1 - \mathbf{y}_1\| - \|\mathbf{y}_2 - \mathbf{x}_2\|
+ = f(\mathbf{x}_1) - f(\mathbf{x}_2).\]
+An identical proof shows that $\|\mathbf{x}_1 - \mathbf{x}_2\| \geq
+f(\mathbf{x}_2) - f(\mathbf{x}_1)$, so that
+$\|\mathbf{x}_1 - \mathbf{x}_2\| \geq |f(\mathbf{x}_1) - f(\mathbf{x}_2)|$,
+so that $f$ is Lipschitz continuous with Lipschitz constant at most $1$.
+If $f$ is differentiable at some $\mathbf{x} \in \mathbb{R}^N$, then
+\[||\nabla f(\mathbf{x})|| \leq \lim_{\mathbf{y} \rightarrow \mathbf{x}}
+\frac{|f(\mathbf{x}) - f(\mathbf{y})|}{\|\mathbf{x} - \mathbf{y}\|} \leq 1.
+\qquad \blacksquare\]
+
+\item Suppose $f$ is differentiable in $\mathbb{R}^N \backslash C$.
+Since, $\forall$ directions $\mathbf{v} \in \mathbb{R}^N$,
+$\forall \mathbf{x} \in \mathbb{R}^N$,
+$\left|\frac{\partial f}{\partial \mathbf{v}} (\mathbf{x})\right|
+ = \|\nabla f (\mathbf{x})\| \|\mathbf{v}\|$, it follows from the equality case
+of the Cauchy-Schwarz Inequality that the gradient of $f$ is in the direction
+in which the directional derivative of $f$ is maximised.
+For $\mathbf{v} = \mathbf{y}_{\mathbf{x}} - \mathbf{x}$, by the Reverse
+Triangle Inequality
+\[\frac{\partial f}{\partial \mathbf{v}} (\mathbf{x})
+ = \lim_{t \rightarrow 0} \left(\frac{f(\mathbf{x} + t\mathbf{v}) - f(\mathbf{v})}{t}\right)
+ \leq \lim_{t \rightarrow 0} \left(\frac{\|t\mathbf{v}\|}{t}\right) = \|\mathbf{v}\| = 1.\]
+Since, as shown in part (c), $\| \nabla f (\mathbf{x}) \| \leq 1$,
+$\|\nabla f(\mathbf{x})\| = 1$. \qquad $\blacksquare$
+
+\item Let $\mathbf{x} \in \mathbb{R}^N \backslash C$, and let
+$\mathbf{y},\mathbf{z} \in C$ such that
+$f(\mathbf{x}) = \|\mathbf{x} - \mathbf{y}\| = \|\mathbf{x} - \mathbf{z}\|$.
+Suppose, for sake of contradiction, that $f$ were differentiable at
+$\mathbf{x}$. Then, the gradient of $f$ is well-defined, and, furthermore, as
+shown in the solution to part (d) above, \[\nabla f(\mathbf{x})
+ = \frac{\mathbf{y} - \mathbf{x}}{\|\mathbf{y} - \mathbf{x}\|}
+ = \frac{\mathbf{z} - \mathbf{x}}{\|\mathbf{z} - \mathbf{x}\|}.\]
+Then,
+$(\mathbf{y} - \mathbf{x})$ and $(\mathbf{z} - \mathbf{x})$ must be
+parallel, so that there must exists a line segment containing $\mathbf{y}$,
+$\mathbf{z}$, and $\mathbf{x}$. Since
+ $\|\mathbf{y} - \mathbf{x}\| = \|\mathbf{z} - \mathbf{x}\|$,
+$\mathbf{y} = \mathbf{z}$, contradicting the given that $\mathbf{y}$ and
+$\mathbf{z}$ are distinct.
+
+\item Let $N = 1$, let $C = \{-1, 1\} \subseteq \mathbb{R}^N$. Then, by the
+result of part (e), $f$ is not differentiable at $0$. \qquad $\blacksquare$
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+Let $E \subseteq \mathbb{R}^N$. Then, $E$ has property (a) if and only if $E$
+has property (b).
+
+Since, if $U$ and $V$ are disjoint sets, then $E \cap U \cap V = \emptyset$,
+if $E$ has property (a), then $E$ has property (b).
+
+Suppose, on the other hand, that $E$ has propety (b), so that there exist two
+open sets  $U$ and $V$ such that
+\[E \subseteq U \cup V, \; E \cap U \neq \emptyset \neq E \cap V, \mbox{ and }
+E \cap U \cap V = \emptyset.\]
+Let $U^{\prime} = U \cap E$, and let $V^{\prime} = V \cap E$. Since
+$E \subseteq U \cup V$, $E \subseteq U^{\prime} \cup V^{\prime}$.
+Let $f: \mathbb{R}^N \rightarrow [0,\infty)$ be the distance function from
+$V^{\prime}$, as defined in problem 1. Since $U$ is open, $\forall
+\mathbf{x} \in U^{\prime}$, $\exists r_{\mathbf{x}} > 0$ such that
+$B(\mathbf{x},r_{\mathbf{x}}) \subseteq U$. Suppose, for sake of
+contradiction, that, for some $\mathbf{x}_0 \in U^{\prime}$, $f(x) = 0$. Then,
+$\exists \mathbf{y} \in V_{\prime}$ such that $\|\mathbf{y} - \mathbf{x}\|
+ < r_{\mathbf{x}}$. However, this would imply that
+$\mathbf{y} \in U \cap V_{\prime} = U \cap E \cap V$, contradicting the given.
+Thus, $\forall \mathbf{x} \in U_{\prime}$, $f(\mathbf{x}) > 0$. A similar
+proof by contradiction shows that, letting
+$g: \mathbb{R}^N \rightarrow [0,\infty)$ be the distance function from
+$U^{\prime}$, $\forall \mathbf{y} \in V_{\prime}$, $g(\mathbf{y}) > 0$. Let
+$U^* = \cup_{\mathbf{x} \in U^{\prime}} B(\mathbf{x}, f(\mathbf{x}/4)$, and let
+$V^* = \cup_{\mathbf{y} \in V^{\prime}} B(\mathbf{y}, g(\mathbf{y}/4)$. By
+construction, $U^* \cap V^* = \emptyset$. Since a union of open sets is open,
+$U^*$ and $V^*$ are open. Since $U^{\prime} \subseteq U^*$ and
+$V^{\prime} \subseteq V^*$, $E \subseteq U^* \cup V^*$. Thus, $E$ has property
+(a). \qquad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Let $\epsilon > 0$, and let $\epsilon_2 = \frac{\epsilon}{b - a}$. Since
+$g$ is continuous, $\exists \delta > 0$ such that,
+$\forall f,h \in C^1([a,b])$ with
+$\|(x,f(x),f^{\prime}) - (x,h(x),h^{\prime}(x))\| < \delta$,
+$|g(x,f(x),f^{\prime}(x)) - g(x,f(x),f^{\prime}(x)| < \epsilon_2$.
+
+Thus, $\forall f, h \in C^1([a,b])$ with
+$\|(x,f(x),f^{\prime}) - (x,h(x),h^{\prime}(x))\| < \delta$, by the Triangle
+Inequality,
+\begin{eqnarray*}
+|G(f) - G(h)|
+ & = & \left|\int_a^b g(x,f(x),f^{\prime}) - g(x,h(x),h^{\prime}(x)\right| \; dx \\
+ & \leq & \int_a^b \left|g(x,f(x),f^{\prime}) - g(x,h(x),h^{\prime}(x)\right| \; dx \\
+ & < & \int \epsilon_2 dx = \epsilon_2(b - a) = \epsilon.
+\end{eqnarray*}
+Thus, $G$ is continuous. \qquad $\blacksquare$
+
+\item
+
+\item Suppose $f_0$ is such that \[\min_{f \in X} G(f) = G(f_0).\]
+Let $v \in C^1([a,b])$ with $v(a) = v(b) = 0$. Consider the function
+$h : \mathbb{R} \rightarrow \mathbb{R}$ such that, $\forall t \in \mathbb{R}$,
+$h(t) = G(f + tv)$. Clearly, $h$ must have a local minimum at $t = 0$, since
+$G$ has a local minimum at $f$. By Theorem 282 (in the notes for Real Analysis
+I), $\frac{\partial G}{\partial v} (f) = \frac{dh}{dt} (0) = 0$.
+\qquad $\blacksquare$
+
+\item Let $h \in C([a,b])$ such that, $\forall v \in C^1([a,b])$ with
+$v(a) = v(b) = 0$, \[\int_a^b h(x) v(x) \; dx = 0.\] Suppose, for sake of
+contradiction, that $h \neq 0$. Without loss of generality, for some
+$x_0 \in [a,b]$, $h(x_0) > 0$ (otherwise, we take $(-h)$). Since $h$ is
+continuous, for some $\delta > 0$, letting
+$c = \max \{x_0 - \delta, a\}, d = \min \{x_0 + \delta, b\}$.
+$\forall x \in [c,d]$, $|f(x) - f(x_0)| < f(x_0)$, so that $f(x) > 0$.
+Let $w = d - c$.
+Define $v: [a,b] \rightarrow \mathbb{R}$ piecewise as follows:
+
+\[
+   f(x) = \left\{
+     \begin{array}{lcr}
+       0 & : & x \in [a,c] \cup [d,b] \\
+       (w(x - c))^2  & : & x \in (c,c + \frac{w}{4}] \\
+       \frac{1}{2} - (w(x - (c + 1)))^2  &
+                         : & x \in (c + \frac{w}{4},c + \frac{3w}{4}] \\
+       (w(x - (c + 2)))^2  & : & x \in (c + \frac{3w}{4}, d)
+       
+     \end{array}
+   \right.
+\]
+Then, $v \in C^2([a,b])$, $\forall x \in (c,d), v(x) > 0$, and,
+$\forall x \in [a,c] \cup [d,b]$, $v(x) = 0$. Thus,
+$\forall x \in (c,d), h(x)v(x) > 0$, and,
+$\forall x \in [a,c] \cup [d,b]$, $h(x)v(x) = 0$. Then, however,
+\[\int_a^b h(x)v(x) \; dx > 0,\] which is a contradiction.
+Therefore, $h = 0$. \qquad $\blacksquare$
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item $\min_{f \in X} G(f) =$ \fbox{$L^2 (b - a)$.} In particular, $G$ is minimized by
+$f_0 := \left(x \mapsto L \frac{x - a}{b - a}\right)$. For suppose $f \in X$.
+Then, letting $F = f - f_0$,
+\[G(f) = G(F + f_0) = \int_a^b \left((F + f_0)^{\prime}\right)^2
+ = \int_a^b \left(F^{\prime}\right)^2
+ + 2F^{\prime}f_0^{\prime}
+ + \left(f_0^{\prime}\right)^2.\]
+
+By the Fundamental Theorem of Calculus, since $f_0^{\prime}(x)$ is a constant
+with respect to $x$ and $f(a) = f_0(a) = 0$ and $f(b) = f_0(b) = L$, so that
+$F(a) = F(b) = 0$,
+\[\int_a^b 2F^{\prime}(x)f_0^{\prime}(x) \; dx
+ = 2f_0^{\prime}(x)\int_a^b F^{\prime}(x) \; dx
+ = 2f_0^{\prime}(x) \left(F(b) - F(a)\right)
+ = 2f_0^{\prime}(x) (0) = 0.\]
+Thus, since $f_0^{\prime}(x)$ is a constant with respect to $x$,
+\[G(f) = \int_a^b \left(F^{\prime}\right)^2 + C,\] for some constant, so that
+$G$ is minimized when $F = 0$, and thus $f = f_0$. \qquad $\blacksquare$
+
+\item $\forall f \in C^1([a,b])$ and $\forall$ directions $v \in C^1([a,b])$ with $v(0) = v(1) = 0$,
+integrating by parts gives \[G(f) = \int_0^1 \left(f^{\prime}(x)\right)^2 - x^2f^{\prime}(x) \; dx.\]
+By the result of Exercise 3, part (c), if $f$ minimizes $G$, then
+\[
+\int_0^1 \left(2f^{\prime}(x)- x^2\right) v^{\prime}(x) \; dx
+ = \int_0^1\frac{\partial}{\partial f^{\prime}} \left(\left(f^{\prime}(x)\right)^2 - x^2f^{\prime}(x)\right) \; dx
+ = \frac{\partial G}{\partial v} (f)
+ = 0.\]
+Since $v(0) = v(1) = 0$, integrating by parts again shows that
+\[\int_0^1 \left(f^{\prime \prime} - 2x\right) v(x) \; dx = 0,\] so that, by
+the result of Exercise 3, part (d), $f^{\prime \prime} (x) = 2x$.
+
+Integrating with respect to $x$ shows that, for $f \in C^1([a,b])$ such that,
+$\forall x \in [a,b]$, $f(x) =$ \fbox{$\frac{1}{3}\left(x^3 - x\right)$,} $f$ is the unique
+function satisfying the constraints $f^{\prime \prime} (x) = 2x$ and
+$f(0) = f(1) = 0$. Thus, $G$ is minimized at $f$. \qquad $\blacksquare$
+\end{enumerate}
+\end{question}
+\end{document}

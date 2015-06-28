@@ -1,0 +1,192 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-740 Introduction to Functional Analysis II}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, September 20, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+I wasn't able to finish this problem.
+\end{question}
+
+\begin{question}{Problem 2}
+If $M$ is a finite-dimensional subspace of $X$, consider a Hamel basis
+$(x_i : i \in I)$ for $X$ with a subset $(x_i : i \in J)$ ($J \subseteq I$)
+that is a Hamel basis for $M$. Then, $\forall i \in J$,
+$\exists \alpha_i : M \to \K$ such that, $\forall x \in M$,
+\[x = \sum_{i \in J} \alpha_i(x) x_i.\]
+
+Since $\alpha_i$ is linear and $M$ is finite dimensional, $\alpha_i$ is
+continuous and, by Hahn-Banach, can be extended to some $\beta_i \in X^*$.
+Define \[N := \bigcap_{i \in J} \Nul(\beta_i).\]
+Since each $\beta_i$ is a continuous linear functional, each $\Nul(\beta_i)$ is
+closed, and so $N$ is closed. By construction of $\beta_i$'s,
+$\forall$ nonzero $x \in M$, $\exists i \in J$ with
+$\beta_i(x) = \alpha_i(x) \neq 0$, and hence $N \cap M = \{0\}$.
+
+Finally, from the definition of a Hamel basis that, $\forall x \in X$,
+\[x \in \Nul(\beta_i) + \sp(x_i : i \in J) = N + M,\]
+and so $X = M + N$. Thus, $M$ is complemented. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+Let $X = \ell^2$, and let $M := cl(\sp\{e^{2i} : i \in \N\})$, where $e^i$ is
+the unit vector with $e^i_i = 1$, and let
+$N := cl(\sp\{e^{2i} + \frac{1}{i}e^{2i + 1} : i \in \N\})$. Note that both $M$
+and $N$ are clearly closed subspaces.
+
+Since $x \in N$ has zero in all odd indices (i.e., $x \in M$) only if it has
+zero in all even indices (i.e., $x = 0$), $N \cap M = \{0\}$. Also,
+$\forall i \in \N$,
+\[e^{2i + 1} = i\left(e^{2i} + \frac{1}{i}e^{2i + 1}\right) - ie^{2i},\]
+and thus $\{e^i : i \in \N\} \subseteq M + N$. Since $(e^i : i \in \N)$ is a
+Schauder basis of $\ell^2$, it follows that $M + N$ is dense in $X$.
+
+Define $x \in \ell^2$ by $x_i = \frac{1}{i}, \forall i \in \N$. If $x = m + n$
+for some $m \in M, n \in \N$, then each $n_{2i + 1} = \frac{1}{2i + 1}$, and so
+$n_{2i} = 1$. But then $\sum_{i = 0}^\infty n_i^2 = \infty$, and so
+$n \notin \ell^2$. Thus, $M + N \neq \ell^2$, as desired. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+Since $A$ is normal, $\Nul(A) = \Nul(A^*) = \Ran(A)^\perp$.
+Thus, $\Ran(A)^\perp = \{0\}$ if and only only if $A$ is injective.
+
+It suffices, now, to show that a linear manifold $M$ is dense in $X$ if
+and only if $M^\perp = \{0\}$ (we may have shown this at some point, but I
+didn't see it in the notes). If $M^\perp = \{0\}$, by Proposition
+10.7, \[X = ^\perp\{0\} = ^\perp(M^\perp) = cl(M),\]
+and so $M$ is dense. If $M$ is dense in $X$ and $x \in M^\perp$, then there is
+a sequence $\{x_n\}_{n = 1}^\infty$ with $x_n \to x$ as $n \to \infty$. By
+Cauchy-Schwarz,
+\[\|x\|^2
+    = ( x, x       ) 
+    = ( x, x       )  - ( x_n, x )
+    = ( x - x_n, x ) 
+    \leq \|x - x_n\|\|x\| \to 0
+\]
+as $n \to \infty$, and so $x = 0$. \qed
+\end{question}
+
+\begin{question}{Problem 5}
+($\Rightarrow$) Suppose that $A$ is compact, and let $\{x_n\}_{n = 1}^\infty$
+be a sequence in $X$ with $x_n \wto 0$ (weakly). Since $A$ is compact,
+$Ax_n \to 0$ (strongly) as $n \to \infty$ (Theorem 11.10).
+Also, since $\{x_n\}$ is weakly convergent, $\|x_n\|$ is bounded by some
+$B \in \R$ (Theorem 7.15(i)). Thus, by Cauchy-Schwartz,
+\[0 \leq |(Ax_n,x_n)|^2 \leq \|Ax_n\|\|x_n\| \leq \|Ax_n\|B \to 0\]
+as $n \to \infty$. Note that this direction does not require $\K = \C$.
+
+($\Leftarrow$) Suppose a sequence $\{x_n\}_{n = 1}^\infty$ in $X$ is bounded.
+By Alaoglu's Theorem (since $X$ is a Hilbert space), $\{x_n\}_{n = 1}^\infty$
+has a weakly convergent subsequence $\{x_{n_k}\}_{k = 1}^\infty$. Suppose
+$x_{n_k} \wto 0$ as $k \to \infty$. Then, $(Ax_{n_k},x_{n_k}) \to 0$,
+\end{question}
+
+\begin{question}{Problem 6}
+Define the map $\exp : \L(X,X) \to \L(X,X)$ by
+\[\exp(A) = \sum_{n = 0}^\infty \frac{(iA)^n}{n!}.\]
+
+Since
+\[\|\exp(A)\| \leq \sum_{n = 0}^\infty \frac{\|iA\|^n}{n!} = e^{\|iA\|},\]
+$\exp$ does indeed map bounded operators to bounded operators.
+
+{\bf Lemma 1:} If $A,B \in \L(X,X)$ commute, then
+$\exp(A)\exp(B) = \exp(A + B)$.
+
+{\bf Proof:}
+\begin{align*}
+\exp(A)\exp(B)
+ & = \left( \sum_{n = 0}^\infty \frac{(iA)^n}{n!} \right)
+     \left( \sum_{m = 0}^\infty \frac{(iB)^m}{m!} \right)   \\
+ & = \sum_{n = 0}^\infty \frac{n!}{n!} \sum_{m = 0}^n
+            \left( \frac{(iA)^{n - m}(iB)^m }{m!(n - m)!} \right)   \\
+ & = \sum_{n = 0}^\infty \frac{i^n}{n!} \sum_{m = 0}^n
+            \left( \binom{n}{m} A^{n - m}B^m \right)  \\
+ & = \sum_{n = 0}^\infty \frac{(i(A + B))^n}{n!} = \exp(A + B).
+\end{align*}
+where the last line follows from the Binomial Theorem, since $A$ and $B$
+commute. \quad $\square$
+
+Now observe that, since the adjoint operator is conjugate-linear and $A = A^*$,
+\[U^*
+    = \sum_{n = 0}^\infty \frac{\left( (iA)^* \right)^n}{n!}
+    = \sum_{n = 0}^\infty \frac{\left( -iA^* \right)^n}{n!}
+    = \sum_{n = 0}^\infty \frac{\left( i(-A) \right)^n}{n!}
+= \exp(-A).\]
+Thus, by the above lemma (clearly, $A$ and $-A$ commute),
+\[UU^* = \exp(A)\exp(-A) = \exp(0) = \exp(-A)\exp(A) = U^*U.\]
+It suffices now, by Propositions 1.15 and 1.17, to observe that, since
+$(i 0)^n$ is nonzero only if $n = 0$,
+\[\exp(0) = I. \qed\]
+\end{question}
+\end{document}

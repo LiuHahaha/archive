@@ -1,0 +1,177 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{3}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{Friday, February 3, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Assignment \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+
+\begin{question}{Problem 2: The randomized quicksort jumped over the lazy
+                                                                   bubblesort}
+Let $(b_1,b_2,\ldots,b_n)$ be result of sorting $\mathbf{a}$. For
+$i,j \in \{1,2,\ldots,n\}$ with $i < j$, let $X_{i,j}$ be an indicator random
+variable which is $1$ if and only if $b_i$ and $b_j$ are compared when
+$\mathbf{a}$ is quicksorted, and $0$ otherwise. Then $X_{i,j} = 1$ if and only
+if either $b_i$ or $b_j$ is chosen as a pivot before any of
+$b_{i + 1},b_{i + 2},\ldots,b_{j - 1}$, so that
+\[E[X_{i,j}] = P(X = 1) = \frac{2}{j - i + 1},\]
+and thus, by Linearity of Expectation,
+\[E[X] = E\left[\sum_{i = 1}^n \sum_{j = i + 1}^n X_{i,j}\right]
+       = \sum_{i = 1}^n \sum_{j = i + 1}^n E[X_{i,j}].\]
+This summation can be re-written in terms of $k = j - i$ as
+\[E[x] = \sum_{k = 2}^n \sum_{l = 0}^{n - k + 1} \frac{2}{k}
+ = \sum_{k - 2}^n (n - k + 1) \frac{2}{k} \leq n\sum_{k - 2}^n \frac{2}{k}
+ \leq nH_n \in O(n \log n),\]
+where $H_n$ denotes the $n^{th}$ harmonic number. \qquad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 3: This is how graduate students spend their free
+                                                                         time}
+For $i \in \{1,2,\ldots,n\}$, let $X_i$ be an indicator random variable which
+is $1$ if and only if the $i^{th}$ bin overflows and $0$ otherwise. For
+\[k = \frac{10 \log n}{ \log \log n} + 1,\] $E[X_i]$ is bounded above by the
+is bounded above by the number of ways of choosing $k$ balls times the
+probability that each of those $k$ balls is thrown into the $i^{th}$ bin, so
+that
+\[E[X_i] \leq {n \choose k} \frac{1}{n^k} = \frac{n!}{(n - k)!k!n^k}
+ \leq \frac{n^k}{k! n^k} = \frac{1}{k!} \leq \frac{1}{k^{k/2}}.\]
+Note that, since $\frac{\log \log \log n}{\log \log n}$ is bounded above by
+$\frac{1}{2}$,
+\[k^{k/2} = \left(\frac{10 \log n}{\log \log n}\right)^{\frac{5 \log n}
+                                                                {\log \log n}}
+ = n^{5\frac{\log \log n - \log \log \log n}{\log \log n}}
+\geq n^{5(1 - 0.5)} = n^{5/2}.\]
+Therefore, $E[X_i] \leq n^{-5/2}$, so that, by Linearity of Expectation,
+\[E[X] = E\left[\sum_{i = 1}^n X_i\right] = \sum_{i = 1}^n E[X_i]
+\leq n^{-3/2} \leq \frac{1}{n}. \qquad \blacksquare\]
+
+The probability that no bin overflows is $1$ minus the probability that at
+least one bin overflows. If this were greater than $\frac{1}{n}$, then
+\[E[X] = \sum_{k = 1}^n k \cdot P(\mbox{$k$ bins overflow})
+> 1 \cdot P(\mbox{$1$ bin overflows)} \geq \frac{1}{n},\]
+contradicting the calculated upper bound of $E[X]$. Thus, the probability that
+no bin overflows is at least $1 - \frac{1}{n}$.
+\qquad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 5: Unsorting algorithm}
+Call a deck of cards ``randomly permuted'' if and only if the deck has an
+equal likelihood of being in any permutation. We proceed by induction on the
+number of cards below the $n^{th}$ card in the deck, (noting that each
+move either moves the $n^{th}$ card up one position in the deck, or does not
+change the position of the $n^{th}$ card), showing that the cards below the
+$n^{th}$ card are always randomly permuted. When there are $0$ no cards below
+the $n^{th}$ card, the cards are vacuously randomly permuted. When there is
+$1$ card below the $n^{th}$ card, that card is randomly permuted, since there
+is only $1$ permutation of $1$ element. Suppose that, for some $k < n - 1$,
+when there are $k$ cards below the $n^{th}$ card, those $k$ cards are randomly
+permuted, so that, for any card $c$ and any position $p$ below the $n^{th}$
+card, the probability that $c$ is in position $p$ is $\frac{1}{k}$. Then,
+for each position $p$ below the $n^{th}$ card, the probability that the
+$(k + 1)^{st}$ card is inserted into position $p$ is $\frac{1}{k}$. Therefore,
+there, for any card $c$ below the $n^{th}$ card (after the insertion of the
+$(k + 1)^{st}$ card), the probability that $c$ is in position $p$ is
+$frac{1}{k}$, so that the cards below the $n^{th}$ card are still randomly
+permuted. Thus, when the $n^{th}$ card is the top card of the deck, the
+$(n - 1)$ cards below that card are randomly permuted, so that inserting the
+$n^{th}$ card into the deck produces a randomly permuted deck. \qquad
+$\blacksquare$
+
+Call each repetition of steps $1$ and $2$ of the algorithm a ``move,'' and use
+this as the unit by which to measure the algorithm's runtime. Let $X$ be a
+random variable denoting the number of moves performed in unsorting a deck of
+$n$ cards, and, for $i \in \{1,2,\ldots,n - 1\}$, let $X_i$ be a random
+variable denoting the number of moves required to bring the $n^{th}$ card from
+position $(i + 1)$ in the deck to position $i$ in the deck. Thus,
+$X = 1 + \sum_{i = 1}^{n - 1} X_i$, so that, by Linearity of Expectation,
+\[E[X] = E\left[1 + \sum_{i = 1}^{n -1} X_i\right]
+                          = 1 + \sum_{i = 1}^{n -1} E[X_i].\]
+$X_i = k$ means that $k - 1$ cards were inserted in the $i$
+positions above the $n^{th}$ card (out of $n$ possible positions), and then
+one card was inserted below the $n^{th}$ card, so that
+$X_i \sim$ Geometric$\left(\frac{n - i}{n}\right)$.
+Therefore, $\forall i \in \{1,2,\ldots,n - 1\}$, $E[X_i] = \frac{n}{n - i}$.
+Thus,\[E[X] = 1 + \sum_{i = 1}^{n - 1} \frac{n}{n - i}
+         = 1 + n\sum_{i = 1}^{n - 1} \frac{1}{n} = 1 + nH_{n - 1} \in O(n \log n),\]
+where $H_k$ denotes the $k^{th}$ harmonic number. \qquad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 6: Break up the monotony (extra credit)}
+For notational convenience, $\forall k \in \mathbb{N},
+\forall h: \{0,1\}^k \rightarrow \mathbb{R}$, we abbreviate
+$E[h(x_1,x_2,\ldots,x_k)]$ as $E[h]$. For $n = 0$, since $f$ and $g$ are
+constants, $E[fg] = fg = E[f]E[g]$. Suppose, as an inductive hypothesis, that,
+for some $n \in \mathbb{N}$, $\forall$ monotonic
+$h_1,h_2 :\{0,1\}^{n - 1} \rightarrow \mathbb{R}$,
+$E[h_1h_2] \geq E[h_1]E[h_2]$.
+
+Let $f_0,f_1,g_0,g_1 : \{0,1\}^{n - 1} \rightarrow \mathbb{R}$ such that,
+$\forall (x_1,x_2,\ldots,x_{n - 1}) \in \{0,1\}^{n - 1}$,
+\begin{eqnarray*}
+f_0(x_1,x_2,\ldots,x_{n - 1}) & = & f(x_1,x_2,\ldots,x_{n - 1}, 0), \\
+f_1(x_1,x_2,\ldots,x_{n - 1}) & = & f(x_1,x_2,\ldots,x_{n - 1}, 1), \\
+g_0(x_1,x_2,\ldots,x_{n - 1}) & = & g(x_1,x_2,\ldots,x_{n - 1}, 0), \\
+g_1(x_1,x_2,\ldots,x_{n - 1}) & = & g(x_1,x_2,\ldots,x_{n - 1}, 1).
+\end{eqnarray*}
+Since $f$ and $g$ are monotonic $f_1 \geq f_0$ and $g_1 \geq g_0$, so that
+$E[f_1] \geq E[f_0]$ and $E[g_1] \geq E[g_0]$. Therefore,
+$\left(E[f_1] - E[f_0]\right)\left(E[g_1] - E[g_0]\right) \geq 0$, and thus
+\begin{equation}
+E[f_0]E[g_0] + E[f_1]E[g_1] \geq E[f_0]E[g_1] + E[f_1]E[g_0].
+\end{equation}
+Furthermore, conditioning on the value of $x_n$ gives
+\begin{equation}
+E[f] = \frac{1}{2} \left(E[f_0] + E[f_1]\right),
+E[g] = \frac{1}{2} \left(E[g_0] + E[g_1]\right).
+\end{equation}
+Therefore, conditioning again on the value of $x_n$,
+\begin{eqnarray*}
+E[fg] & = & \frac{1}{2} \left(E[f_0g_0] + E[f_1g_1]\right) \\
+      & \geq & \frac{1}{2} \left(E[f_0]E[g_0] + E[f_1]E[g_1]\right) \qquad \qquad \; \, \mbox{by the inductive hypothesis}\\
+      & \geq & \frac{1}{4} \left(E[f_0]E[g_0] + E[f_0]E[g_1] + E[f_1]E[g_0] + E[f_1]E[g_1]\right) \qquad \; \, \mbox{by (1)}\\
+      & = & \left(\frac{1}{2}E[f_0] + \frac{1}{2}E[f_1]\right)\left(\frac{1}{2}E[g_0] + \frac{1}{2}E[g_1]\right) \\
+      & = & E[f]E[g]. \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \mbox{by (2)}
+\end{eqnarray*}
+Thus, by the Principle of Mathematical Induction, the claim in question holds
+$\forall n \in \mathbb{N}$. \qquad $\blacksquare$
+\end{question}
+\end{document}

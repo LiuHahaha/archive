@@ -1,0 +1,242 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, January 23, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Problem 2}
+The following counterexample shows that the given statement is false:
+
+Let $X = \{0,1\}$, and let $\rho$ be the Euclidean metric restricted to $X$.
+$(X,\rho)$ is a complete metric space, since any Cauchy sequence is eventually
+constant. Let $\delta = 1, x = 0$. Then, $cl(B_{\delta}(x)) = \{0\} \neq
+X = \{y \in X : \rho(y,1) \leq \delta\}$, so that the sets in question
+are not equal. \qed
+\end{question}
+
+\begin{question}{Problem 5}
+We show that the given statement is true:
+
+Suppose $S \subseteq X$ is meagre ($S = \bigcup_{n = 1}^{\infty} S_n$, where
+each $S_n \subseteq X$ is nowhere dense). $S_n \subseteq cl(S_n)$, so
+\[S^c
+ \supseteq \left( \bigcup_{n = 1}^{\infty} cl(S_n) \right)^c
+ = \bigcap_{n = 1}^{\infty} cl(S_n)^c.
+\]
+As the complement of a closed set, each $cl(S_n)^c$ is open.
+$\forall n \in \N$, since $S_n$ is nowhere dense,
+\[cl(cl(S_n)^c) = int(cl(S_n))^c = \emptyset^c = X,\] so that $cl(S_n)^c$ is
+dense. Thus, by Baire's Theorem, $\bigcap_{n = 1}^{\infty} cl(S_n)^c$ is dense,
+so $S^c$ is dense. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+\begin{enumerate}[(a)]
+\item If $X = \emptyset$, $Y = \{0\}$, and $\rho$ and $\sigma$ are the Eucliean
+metrics on $X$ and $Y$, respectively, then, since there is no bijection between
+$X$ and $Y$, $(X,\rho)$ and $(Y,\rho)$ are not homeomorphic. \qed
+
+\item Let $X = \left(-\frac{\pi}{2},\frac{\pi}{2}\right)$, let $Y = \R$, and
+let $\rho$ and $\sigma$ be the Euclidean metrics on $X$ and $Y$, respectively.
+
+The tangent function is a continuous bijection from $X$ to $Y$,
+and its inverse, the arctangent function, is continuous. Thus, $(X,\rho)$ and
+$(Y,\sigma)$ are homeomorphic.
+
+Suppose, for sake of contradiction that there is a uniform homeomorphism
+$f : X \rightarrow Y$. Then, $\exists \delta > 0$ such that, $\forall
+x,y \in X$ with $|x - y| < \delta$, $|f(x) - f(y)| < 1$. Using the triangle
+inequality, it follows by induction on $n$ that, $\forall n \in \N$,
+$\forall x,y \in X$ with $|x - y| < n\delta$, $|f(x) - f(y)| < n$. Thus,
+since, for $n = \lceil \frac{\pi}{\delta} \rceil + 1$ ($\lceil\cdot\rceil$
+denotes the ceiling function), all $x_1,x_2 \in X$ satisfy
+$|x_1 - x_2| < n\delta$ and since $f$ is surjective, all $y_1,y_2 \in Y$ must
+satisfy $|y_1 - y_2| < n$. However, $0, n + 1 \in \R = Y$, which is a
+contradiction. Thus, $(X,\rho)$ and $(Y,\sigma)$ are not uniformly
+homeomorphic. \qed
+
+\item Let $X = [0,1]$, let $Y = [0,2]$, and let $\rho$ and $\sigma$ be the
+Euclidean metrics on $X$ and $Y$, respectively.
+
+The function $f : X \rightarrow Y$ defined by $f(x) = 2x, \forall x \in X$ is
+uniformly continuous (for any $\e > 0$, for $\delta := \e/2$,
+$\forall x,y \in X$, if $|x - y| < \delta$, then $|f(x) - f(y)| < \e$).
+Furthermore, $f\inv$ (defined by $f\inv(y) = y/2$, $\forall y \in Y$) is
+uniformly continuous (for any $\e > 0$, for $\delta := 2\e$,
+$\forall x,y \in X$, if $|x - y| < \delta$, then $|f(x) - f(y)| < \e$). Thus,
+$(X,\rho)$ and $(Y,\rho)$ are uniformly homeomorphic.
+
+If there were an isometry $f: Y \rightarrow X$, then
+$|f(0) - f(2)| = |0 - 2| = 2$, which is impossible, because $|x - y| \leq 1$,
+$\forall x,y \in X$. Thus, $(X,\rho)$ and $(Y,\sigma)$ are not isometric. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 8}
+Let $x_0 \in X$, and recursively define $x_{n + 1} = f(x_n)$, $\forall n \in
+\N$.
+
+We first show by induction on $m$ that, $\forall m \in \N$,
+$\rho(x_{m + 1}, x_m) \leq \alpha^m \rho(x_1,x_0)$. For $m = 0$, this is
+trivial. Suppose, as an inductive hypothesis, that, for some $m \in \N$,
+$\rho(x_{m + 1}, x_m) \leq \alpha^m \rho(x_1,x_0)$. Then, since $f$ is strictly
+contractive,
+\[\rho(x_{m + 2}, x_{m + 1})
+ = \rho(f(x_{m + 1}), f(x_m))
+ \leq \alpha \rho(x_{m + 1}, x_m)
+ = \alpha^{m + 1} \rho(x_1,x_0),
+\]
+completing the induction. By the triangle inequality, it follows that,
+$\forall m, n \in \N$,
+\[0
+ \leq \rho(x_{m + n}, x_m)
+ \leq \sum_{k = m}^{m + n - 1} \rho(x_{k + 1}, x_k)
+ \leq \rho(x_1, x_0) \sum_{k = m}^{\infty} \alpha^k
+ \leq \rho(x_1, x_0) \frac{\alpha^m}{1 - \alpha}
+ \rightarrow 0,
+\]
+as $m \rightarrow \infty$, so $\{x_n\}_{n = 1}^{\infty}$ is a Cauchy sequence
+and has a limit $x \in X$, (since $(X, \rho)$ is complete). It follows that,
+$\forall \e > 0$, $\exists n \in \N$ such that, $\rho(x_n,x) < \e/3$ and
+$\rho(x_n,x_{n + 1}) < \e/3$. By the triangle inequality,
+\begin{align*}
+\rho(x,f(x))
+ & \leq \rho(x,x_n) + \rho(x_n,f(x_n)) + \rho(f(x_n),f(x)) \\
+ & \leq \rho(x,x_n) + \rho(x_n,x_{n + 1}) + \alpha\rho(x_n,x) \\
+ & <    \rho(x,x_n) + \rho(x_n,x_{n + 1}) + \rho(x_n,x)
+   < \e,
+\end{align*}
+so that $x = f(x)$, as desired.
+
+Suppose $x,y \in X$ are fixed points of $f$. If $x$ and $y$ are distinct, then
+$\rho(x,y) > 0$, so
+\[\rho(x,y)
+ = \rho(f(x),f(y))
+ \leq \alpha \rho(x,y)
+ < \rho(x,y),
+\]
+which is a contradiction. Thus, the fixed point of $f$ is unique. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 10}
+$\forall n \in \N$, define
+\[X_n := \{f \in X : \exists x \in [0,1] \mbox{ such that }
+\forall y \in [0,1], |f(x) - f(y)| \leq n|x - y|\}.\]
+
+{\bf Step 1:}
+We first construct a function not in $X_n$ arbitrarily close (in $\rho)$ to a
+given function. Fix $n \in \N$, and let $f \in X$, and let $\e > 0$. Since $f$
+is continuous and has a compact domain, $f$ is uniformly continuous, so that
+$\exists \delta_n > 0$ such that, $\forall x,y \in [0,1]$ with
+$|x - y| < \delta$, $|f(x) - f(y)| < \frac{\e}{2}$. Let
+$g \in C([0,1])$ be defined $\forall x \in [0,1]$ by
+$g(x) = f(x) + \e\cos(ax)$, where
+$a := \max\left\{\frac{2\pi n}{\e}, \frac{2\pi}{\delta_n}\right\}$. Then, for
+$x \in [0,1]$, if $x_2$ is the second-nearest multiple of $\frac{\pi}{a}$ in
+$[0,1]$ to $x$ (if two such multiples are equidistant, pick either one; then
+$|x - x_2| < \frac{\pi}{a}$), by the geometry of the cosine curve,
+$|(\cos(ax) - \cos(ax_2)| \geq 1$. Then, since $|f(x) - f(x_2)| < \delta_n$ (by
+choice of $a$ and $x_2$,
+\begin{align*}
+|g(x) - g(x_2)|
+ & = |\e(\cos(ax) - \cos(ax_2)) + f(x) - f(x_2)| \\
+ & > \e - \frac{\e}{2}
+ = \e
+ \geq \frac{n\pi}{a} > n|x - x_2|, 
+\end{align*}
+and thus $g \notin X_n$. However, $\rho(f,g) < \e$.
+
+{\bf Step 2:}
+Let $U \subseteq X$ be open and nonempty, and let $f \in U$. Since
+$B(f,\e) \subseteq U$ for some $\e > 0$, we can construct $g \in U$ in terms of
+$f$ as in step 1, with $g \notin X_{2n}$, $\rho(f,g) < \e$. Then, by
+the construction of $g$, for any $h \in B(g,\e/2)$, $h \notin X_n$ ($h$
+oscillates with frequency at least that of $g$ and amplitude at least half that
+of $g$). Thus, $B(g,\e/2) \cap U$ is a nonempty open subset of $U$ not
+intersecting $X_n$.
+
+{\bf Step 3:}
+Let $\tau$ be the topology induced on $X$ by $\rho$. In step 2, we showed that,
+$\forall$ nonempty $U \in \tau, n \in \N$, $\exists$ a nonempty open set
+$V_{U,n} \subseteq U$ with $V_{U,n} \cap X_n = \emptyset$. For
+each $n \in \N$, let $W_n := \bigcup_{U \in \tau} V_{U,n}$, so that, as a union
+of open sets, each $W_n$ is open. Let $V := \bigcap_{n \in \N} W_n$. By
+construction, any open set has non-empty intersection with each $W_n$, so that
+each $W_n$ is dense. By Baire's Theorem, $V$ is nonempty.
+
+{\bf Step 4:}
+It remains then only to show that any $f \in V$ is nowhere differentiable. Note
+that, by construction of $V$, $\forall n \in \N$, $V \cap X_n = \emptyset$, so
+that it suffices to show that, if $f$ is differentiable at some point $x$, then
+$f \in X_n$ for some $n \in \N$. If $f$ is differentiable at $x$, then
+\[\exists D := \lim_{y \rightarrow x} \frac{f(x) - f(y)}{|x - y|} \in \R,\]
+Thus, $\exists \delta > 0$ such that
+$\left|\frac{f(x) - f(y)}{|x - y|} - D\right| < \e$ on $B(x,\delta)$, and, on
+the compact set $[0,1] \sminus B(x,\delta)$, $\frac{f(x) - f(y)}{|x - y|}$ is
+bounded, since it is continuous. Thus, some $n \in \N$ bounds $f$, so
+$f \in X_n$. \qed
+\end{question}
+\end{document}

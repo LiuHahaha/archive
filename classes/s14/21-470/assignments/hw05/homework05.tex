@@ -1,0 +1,280 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-470 Calculus of Variations}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Wednesday, April 23, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+\renewcommand{\Re}{\operatorname{Re}}   % real part of a complex number
+\newcommand{\sgn}{\operatorname{sign}}% sign of a real number
+\newcommand{\tT}{\widetilde{T}}         % for P3
+\newcommand{\A}{\mathcal{A}}            % for P3
+\renewcommand{\S}{\mathscr{S}}          % constraint set
+\newcommand{\X}{\mathscr{X}}            % entire linear space
+\newcommand{\Y}{\mathscr{Y}}            % domain of objective functional
+\newcommand{\V}{\mathscr{V}}            % set of admissible variations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+For $f : [0,1] \times \R^2 \times \R^2 \to \R$ defined by
+$f(x,y,z) = z_1^4 + z_2^2 - z_1y_2 + y_1^3 - 2xy_2$,
+\[f_{,2}(x,y,z)
+    =   \begin{bmatrix}
+            3y_1^2   \\
+            -z_1 - 2x
+        \end{bmatrix}
+    \quad \mbox{ and } \quad
+    f_{,3}(x,y,z)
+    =   \begin{bmatrix}
+            4z_1^3 - y_2    \\
+            2z_2
+        \end{bmatrix}.
+\]
+Hence, if $y_*$ minimizes $J$ over $\Y$, then the 1$^{st}$ Euler-Lagrange
+Equation gives
+\[
+    \begin{bmatrix}
+        0   \\
+        0
+    \end{bmatrix}
+    = f_{2,}(x,y(x),y'(x)) - \frac{d}{dx} f_{,3}(x,y(x),y'(x))  \\
+    =
+\begin{bmatrix}
+  3y_1(x)^2 - \frac{d}{dx} (4y_1'(x)^3 - y_2(x)\\
+  - y_1'(x) - 2x - \frac{d}{dx} 2y_2'(x)
+\end{bmatrix}.
+\]
+We also have the natural boundary conditions
+\[0
+    =   \begin{bmatrix}
+            1   \\
+            1
+        \end{bmatrix} \cdot
+        f_{,3}(x,y(x),y'(x)) \bigg|_{x = 0}
+    = 4y_1'(0)^3 - y_2(0) + 2y_2'(0)
+\]
+and
+\[0
+    =   \begin{bmatrix}
+            1   \\
+            -1/2
+        \end{bmatrix} \cdot
+        f_{,3}(x,y(x),y'(x)) \bigg|_{x = 1}
+    = 4y_1'(1)^3 - y_2(1) - y_2'(1).
+\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+For $f : [0,\pi/2] \times \R \times \R \times \R \to \R$ defined by
+$f(x,y,z,w) = w^2 - z^2 - 2y$, if $y_*$ minimizes $J$ over $\Y$, then the
+1$^{st}$ Euler-Lagrange Equation gives that $y'' \in C^2[0,\pi/2]$ and,
+$\forall x \in [0,\pi/2]$,
+\begin{align}
+\notag
+0
+ &  = f_{2,}(x,y(x),y'(x),y''(x))
+        - \frac{d}{dx} f_{,3}(x,y(x),y'(x),y''(x))
+        + \frac{d^2}{dx^2} f_{,4}(x,y(x),y'(x),y''(x))  \\
+ &  = -2 + 2y''(x) + 2y^{(4)}(x).
+\label{eq:2}
+\end{align}
+Solutions to $0 = y''(x) + y^{(4)}(x)$ are $\cos$, $\sin$, constant functions,
+and linear functions, a particular solution to (\ref{eq:2}) is the function
+$x \mapsto x^2/2$, so that the general solution to (\ref{eq:2}) is
+\[y(x) = c_1\cos(x) + c_2\sin(x) + c_3x + c_4 + x^2/2,
+    \quad \forall x \in [0,\pi/2].
+\]
+Thus, we have the boundary conditions
+\[0
+    = f_{,4}(x,y(x),y'(x),y''(x))\big|_{x = 0}
+    = 2y''(0)
+    = -2c_1 + 2,
+\]
+\begin{align*}
+0     = y(0) = c_1 + c_4,
+\quad\quad
+0   & = y(\pi/2) = c_2 + c_3\pi/2 + c_4 + \pi^2/8,  \\
+\mbox{ and } \quad
+0   & = y'(\pi/2) = -c_1 + c_3 + \pi/2,
+\end{align*}
+giving $c_1 = 1,c_2 = \pi^2/8 - 1 - \pi/2, c_3 = 1 - \pi/2,$ and $c_4 = -1$.
+\end{question}
+
+\begin{question}{Problem 3}
+For $f : [1,2] \times \R \times \R \times \R \to \R$ defined by
+$f(x,y,z,w) = x^3w^2 - 24xy$, if $y_*$ minimizes $J$ over $\Y$, then the
+1$^{st}$ Euler-Lagrange Equation gives, $\forall x \in [0,\pi/2]$,
+\begin{align*}
+0
+ &  = f_{2,}(x,y(x),y'(x),y''(x))
+        - \frac{d}{dx} f_{,3}(x,y(x),y'(x),y''(x))
+        + \frac{d^2}{dx^2} f_{,4}(x,y(x),y'(x),y''(x))  \\
+ &  = -24x + \frac{d^2}{dx^2} 2x^3y''(x),
+\end{align*}
+and hence, integrating twice gives $x^3 y''(x) = 2x^3 + c_1x + c_2$, for some
+$c_1,c_2 \in \R$. Dividing both sides by $x^3$ and integrating twice more
+gives, for some $c_3,c_4 \in \R$,
+\[y(x) = x^2 + c_3x + c_4 - c_1 \ln x + \frac{c_2}{2x},
+    \quad \forall x \in [1,2].
+\]
+The given boundary conditions give
+\begin{align*}
+6 & = y(1) = 1 + c_3 + c_4 + c_2/2 \\
+-1 & = y'(1) = 2 + c_3 - c_1 - c_2/2 \\
+8 & = y(2) = 4 + 2c_3 + c_4 - c_1 \ln 2 + c_2/4 \\
+4 & = y'(2) = 4 + c_3 - c_1/2 - c_2/8.
+\end{align*}
+Solving this (nonsingular) linear system gives
+$c_1 = c_4 = 0, c_2 = 8, c_3 = 1$, and so
+\[y(x) = x^2 + x + 4/x, \quad \forall x \in [1,2].\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+Let $f : [0,3] \times \R \times \R \to \R$ defined by $f(x,y,z) = z^4 - 8z^2$.
+\begin{enumerate}[(a)]
+\item The $1^{st}$ Weierstrass-Erdmann Corner Condition gives that
+\begin{equation}
+4\alpha^3 - 16\alpha
+    = f_{,3}(c,y(c),\alpha)
+    = f_{,3}(c,y(c),\beta)
+    = 4\beta^3 - 16\beta.
+\label{eq:WE1}
+\end{equation}
+The $2^{nd}$ Weierstrass-Erdmann Corner Condition gives that
+\begin{equation}
+- 3\alpha^4 + 8\alpha^2
+    = f(c,y(c),\alpha) - \alpha f_{,3}(c,y(c),\alpha)  
+    = f(c,y(c),\beta) - \alpha f_{,3}(c,y(c),\beta)     
+    = - 3\beta^4 + 8\beta^2.
+\label{eq:WE2}
+\end{equation}
+Equation (\ref{eq:WE1}) can be written as
+\[(\alpha - \beta)(\alpha^2 + \alpha\beta + \beta^2)
+    = \alpha^3 - \beta^3
+    = 4(\alpha - \beta),
+\]
+so that, since $c \in S(y)$ and hence $\alpha \neq \beta$,
+\begin{equation}
+\alpha^2 + \alpha\beta + \beta^2 = 4
+\label{eq:WE1simp}
+\end{equation}
+Equation (\ref{eq:WE2}) can be written as
+\[3(\alpha - \beta)(\alpha + \beta)(\alpha^2 + \beta^2)
+    = 3(\alpha^4 - \beta^4)
+    = 8(\alpha^2 - \beta^2)
+    = 8(\alpha - \beta)(\alpha + \beta)
+\]
+so that (again, since $c \in S(y)$ and hence $\alpha \neq \beta$),
+\[3(\alpha + \beta)(\alpha^2 + \beta^2) = 8(\alpha + \beta).\]
+Thus, we have two cases: either (C1) $\alpha^2 + \beta^2 = 8/3$ or (C2)
+$\alpha = - \beta$.
+
+Case (C1): ($\alpha^2 + \beta^2 = 8/3$) Using Equation (\ref{eq:WE1simp}), we have
+\[\alpha\beta = 4 - 8/3 = 4/3,\]
+so that $\sgn(\alpha) = \sgn(\beta)$ and $\beta = \frac{4}{3\alpha}$. Plugging
+this back into (C1) and rearranging gives
+\[9\alpha^4 - 24\alpha^2 + 16 = 0,\]
+so that the quadratic formula gives $\alpha^2 = 4/3$. But then (C1) gives
+$\beta^2 = 4/3$, and so $\alpha = \beta$ (since $\sgn(\alpha) = \sgn(\beta)$),
+contradicting the fact that $c \in S(y)$.
+
+Case 2 (C2): ($\alpha = -\beta$) Using Equation (\ref{eq:WE1simp}) gives
+$\alpha^2 = 4$, so that $(\alpha,\beta) \in \{(2,-2),(-2,2)\}$.
+
+This is consistent with the observation that $f(x,y,z) = (z^2 - 4) - 16$, which
+is clearly minimized when $z = \pm 2$.
+
+\item Minimizers with exactly $1$ corner must be piecewise linear, with slope
+$2$ on $(0,a)$ and slope $-2$ on $(a,3)$ or slope $-2$ on $(0,3-a)$ and slope
+$2$ on $(3-a,3)$, for some $a \in [0,3]$. Since $y(0) = 0$ and $y(3) = 2$,
+$a = 2$, and the two possible minimizers with exactly one corner are
+\[y_1(x) =
+    \left\{
+        \begin{array}{ll}
+            2x & \mbox{ if } x \in [0,2] \\
+            8 - 2x & \mbox{ if } x \in [2,3]
+        \end{array}
+    \right.
+    \quad \mbox{ and } \quad
+y_2(x) =
+    \left\{
+        \begin{array}{ll}
+            -2x & \mbox{ if } x \in [0,1] \\
+            2x - 4 & \mbox{ if } x \in [1,3]
+        \end{array}
+    \right..    
+\]
+\end{enumerate}
+\end{question}
+\end{document}

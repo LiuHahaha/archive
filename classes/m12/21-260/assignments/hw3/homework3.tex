@@ -1,0 +1,189 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Friday, July 13, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Section 7.1, Problem 15}
+Suppose $x = x_1(t), y = y_1(t)$ and $x = x_2(t), y = y_2(t)$ are both
+solutions to the linear homogeneous system
+\begin{eqnarray}
+x^{\prime} & = p_{1,1}(t)x + p_{1,2}(t)y \\
+y^{\prime} & = p_{2,1}(t)x + p_{2,2}(t)y.
+\end{eqnarray}
+
+Suppose that, for some $c_1,c_2 \in \mathbb{R}$,
+$x = c_1x_1(t) + c_2x_2(t)$ and $y = c_1y_1(t) + c_2y_2(t)$.
+Then, by linearity of the derivative,
+\[x^{\prime} = c_1x_1^{\prime}(t) + c_2x_2^{\prime}(t).\]
+Since $x_1$ and $x_2$ satisfy equation (1),
+\begin{eqnarray*}
+x^{\prime}
+ & = & c_1(p_{1,1}(t)x_1 + p_{1,2}(t)y_1)
+             + c_2(p_{1,1}(t)x_2 + p_{1,2}(t)y_2) \\
+ & = & p_{1,1}(c_1x_1 + c_2x_2) + p_{1,2}(c_1y_1 + c_2y_2) \\
+ & = & p_{1,1}x + p_{1,2}y,
+\end{eqnarray*}
+so that equation (1) is satisfied.
+
+The proof that such choices of $x$ and $y$ also satisfy equation (2) is
+essentially identical, up to the naming of some terms.
+Thus, the superposition principle holds for this system. \qed
+\end{question}
+
+\begin{question}{Section 7.1, Problem 20}
+By the given relation between voltage across and current through an inductor,
+if $V_4$ denotes the voltage across the inductor, then
+\[\frac{dI}{dt} = \frac{V_4}{1\,H}.\]
+By Kirchhoff's Voltage Law, if $V_3$ denotes the voltage across the $1\,\Omega$
+resistor, then
+\[\frac{V_4}{1\,H} = \frac{-V_3 - V}{1\,H},\]
+so that, by the given relation between voltage across and current through a
+resistor,
+\[\frac{-V_3 - V}{1\,H} = \frac{- I(1\,\Omega) - V}{1\,H}.\]
+Removing units of measurement gives the first desired result:
+\[\frac{dI}{dt} = -I - V. \mqed\]
+
+By the given relationship between voltage across and current through a
+capacitor, if $I_1$ is the current through the capacitor, then
+\[\frac{dV}{dt} = \frac{I_1}{0.5\,F}.\]
+By Kirchhoff's Current Law, if $I_2$ denotes the current through the
+$2\,\Omega$ resistor, then
+\[\frac{I_1}{0.5\,F} = \frac{I - I_2}{0.5\,F},\]
+so that, by the given relation between voltage across and current through a
+resistor (and noting that the voltage across this resistor is the same as that
+over the capacitor),
+\[\frac{I - I_2}{0.5\,F} = \frac{I - V/(2\,\Omega)}{0.5\,F}.\]
+Removing units of measurement gives the second desired result:
+\[\frac{dV}{dt} = 2I - V. \mqed\]
+\end{question}
+
+\begin{question}{Section 7.2, Problem 12}
+Gauss-Jordan elimination of the augmented matrix
+\[
+    \left[
+        \begin{array}{ccc|ccc}  
+             1 & 2 & 3 & 1 & 0 & 0 \\  
+             2 & 4 & 5 & 0 & 1 & 0 \\  
+             3 & 5 & 6 & 0 & 0 & 1 \\  
+        \end{array}
+    \right]
+\]
+gives the matrix
+\[
+    \left[
+        \begin{array}{ccc|ccc}  
+             1 & 0 & 0 & 1  & -3 & 2  \\  
+             0 & 1 & 0 & -3 & 3  & -1 \\  
+             0 & 0 & 1 & 2  & -1 & 0  \\  
+        \end{array}
+    \right],
+\]
+so that
+\[
+    \left[
+        \begin{array}{ccc}  
+             1 & 2 & 3 \\  
+             2 & 4 & 5 \\  
+             3 & 5 & 6 \\  
+        \end{array}
+    \right]\inv =
+    \mbox{
+        \fbox{
+            $\displaystyle
+                \left[
+                    \begin{array}{ccc}  
+                         1  & -3 & 2  \\  
+                         -3 & 3  & -1 \\  
+                         2  & -1 & 0  \\  
+                    \end{array}
+                \right]
+            $.
+        }
+    }
+\]
+\end{question}
+
+\newpage
+\begin{question}{Section 7.2, Problem 20}
+By definition of the inverse and identity matrices and by associativity of
+matrix multiplication,
+\[B = BI = B(AC) = (BA)C = IC = C. \mqed\]
+\end{question}
+
+\begin{question}{Section 7.3, Problem 4}
+Suppose the following hold:
+\begin{eqnarray}
+x_1 + 2x_2 - x_3 & = & 0 \\
+2x_1 + x_2 + x_3 & = & 0 \\
+x_1 - x_2 + 2_3 & = & 0
+\end{eqnarray}
+Noting that the sum of equations (3) and (5) is equation (4) allows us to
+ignore equation (4), as it does not additionally constrain the set of
+solutions.
+Eliminating the $x_1$ first term from equation (4) using equation (3) gives:
+\[-3x_2 + 3x_3 = 0\mbox{, or, more simply, } x_2 = x_3,\]
+and using this equation to eliminate the $x_3$ term from equation (3) gives:
+\[x_1 + x_2 = 0.\]
+This simplified system of linear equations has the obvious solution:
+\[
+    \bx = \mbox{\fbox{$\displaystyle\left\{
+        c\begin{bmatrix}
+                -1 \\
+                 1 \\
+                1
+         \end{bmatrix}
+         : c \in \mathbb{R}
+    \right\}$.}}
+\]
+
+
+\end{question}
+\end{document}

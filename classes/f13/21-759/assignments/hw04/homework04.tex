@@ -1,0 +1,330 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{textcomp}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-759 Differential Geometry}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Monday, October 20, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED square
+\newcommand{\inv}{^{-1}}                % inverse
+\newcommand{\ox}{{\overline{X}}}
+\newcommand{\oy}{{\overline{Y}}}
+\newcommand{\oz}{{\overline{Z}}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\sminus}{\backslash}        % set difference
+\renewcommand{\dim}{\operatorname{dim}} % dimension of a vector space
+\renewcommand{\det}{\operatorname{det}} % determinant of a matrix
+\newcommand{\sgn}{\operatorname{sign}}  % determinant of a matrix
+\newcommand{\rnk}{\operatorname{rank}}  % rank of a matrix
+\newcommand{\tr}{\operatorname{trace}}  % trace of a matrix
+\renewcommand{\div}{\operatorname{div}} % divergence of a vector field
+\newcommand{\grad}{\operatorname{grad}} % gradient of a scalar function
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\M}{\mathcal{M}}            % manifold M
+\newcommand{\D}{\mathcal{D}}            % \smooth real functions on a manifold
+\newcommand{\B}{\mathcal{B}}            % basis of a topology
+\newcommand{\pow}{\mathcal{P}}          % power set
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\renewcommand{\phi}{\varphi}            % replace \phi with \varphi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname\footnote{\myandrew} \\
+Due: \duedate
+
+I would be willing to present solutions to Exercises 9 and 12.
+
+\begin{question}{Problem 1}
+Since the extension into $\overline{\M}$, the connection on $\overline{\M}$,
+$\Pi_T$, and $(df)\inv$ are all linear (in $X$), $\nabla_X Y$ is linear in $X$.
+Also, if $h$ is a smooth function on $\overline\M$, then
+\begin{align*}
+\nabla_X (hY)|_p
+ &  = (df)\inv \left( \Pi_T \nabla_\ox h \oy \right)
+    = (df)\inv \left( \Pi_T dh(\ox)\oy + h\nabla_\ox \oy \right)    \\
+ &  = (df)\inv \left( dh(\ox)Y + h\nabla_\ox Y \right)
+    = dh(X)Y + h\nabla_X Y,
+\end{align*}
+so we have the Leibnitz Rule.
+\begin{align*}
+g(\nabla_X Y,Z) + g(Y,\nabla_X Z)
+ &  = \overline g(\Pi_T \nabla_\ox \oy, df Z)
+    + \overline g(df Y, \Pi_T \nabla_\ox \oz)          \\
+ &  = \overline g(\nabla_\ox df Y, df Z)
+    + \overline g(df Y, \nabla_\ox df Z)          \\
+ &  = \ox\overline g(df Y,df Z)
+    = Xg(Y,Z),
+\end{align*}
+so we have symmetry. Finally, the connection is torsion-free since
+\begin{align*}
+\nabla_X Y - \nabla_Y X
+ &  = (df)\inv \left( \Pi_T \nabla_\ox \oy - \nabla_\oy \ox \right) \\
+ &  = (df)\inv \left( \Pi_T [\ox,\oy] \right) \\
+ &  = (df)\inv [\Pi_T \ox,\Pi_T \oy]
+    = [X,Y]. \qed
+\end{align*}
+\end{question}
+
+\begin{question}{Exercise 5}
+\begin{enumerate}[a)]
+\item The flow is the solution to the differential equation
+\[\left\{
+    \begin{array}{l}
+        \frac{d}{dt} \phi(t,p) = A\phi(t,p)   \\
+        \phi(0,p) = p
+    \end{array}
+\right.
+\]
+Since $A$ is linear and constant, we have from ODEs that
+$\phi(t,p) = \exp(tA) p$.
+
+Let $p \in \M, w,v \in T_{\phi(t,p)}\M$. Then, since $\exp(tA)$ is linear,
+\[g(d\exp(tA)w,d\exp(tA)v)
+    = g(\exp(tA)w,\exp(tA)v)
+    = g(w,\exp(tA^T)\exp(tA)v)
+.\]
+Since $[\exp(tA^t)]\inv = \exp(-tA)$, $\exp(tA)$ is an isometry if and only if
+$A^T = -A$. \qed
+
+\item
+Since $\frac{d}{dt} \phi(t,p) = X(p) = 0$, $\phi(t,p) = p$ for all $t \in \R$.
+Let $d : \M^2 \to \R$ denote the metric induced by $g$. Then, since
+$q \mapsto \phi(t,q)$ is an isometry for $t \in (-\e,\e)$,
+\[d(\phi(t,q),p) = d(\phi(0,q),p).\]
+Thus, $\frac{d}{dt} d(\phi(t,q),p) \big|_{t = 0} = 0$, and hence
+$X(\phi(t,q)) = \frac{d}{dt}\phi(t,q)$ is tangent to the geodesic sphere
+centered at $p$.
+
+\item Since $f\inv : M \to N$ is an isometry and, $\forall q \in Y$,
+$X(f\inv(q)) = df\inv_q(Y(q))$, one direction suffices.
+
+Assume $X$ is a Killing field, and let $\e > 0$ such that the flow
+$\phi_X : (-\e,\e) \times U \to \M$ is an isometry. By local uniqueness,
+a solution to
+\[\left\{
+    \begin{array}{l}
+        \frac{d}{dt} \phi_Y(t,q) = Y(\phi_Y(t,q))   \\
+        \phi_Y(0,q) = q
+    \end{array}
+\right.
+\]
+is precisely $\phi_Y(t,f(p)) = f(\phi_X(t,p))$, since
+\[\frac{d}{dt} \phi_Y(t,f(p))
+    = df_{\phi_X(t,p)} \frac{d}{dt} \phi_X(t,p)
+    = df_{\phi_X(t,p)} X(\phi_X(t,p))
+    = Y(f(X(\phi_X(t,p))))
+    = Y(\phi_Y(t,f(p))).
+\]
+Also, if $t \in (-\e,\e)$, since $f$ is an isometry,
+\begin{align*}
+d(\phi_Y(t,f(p)),\phi_Y(t,f(q)))
+ &  = d(\phi_X(t,p),\phi_X(t,q))    \\
+ &  = d(\phi_X(0,p),\phi_X(0,q))
+    = d(\phi_Y(0,f(p)),\phi_Y(0,f(q))),
+\end{align*}
+so $q \mapsto \phi(t,q)$ is an isometry.
+
+%TODO
+\item ($\Rightarrow$) Suppose, first, that $q \in U$ with $X(q) \neq 0$. If
+$X(q) \neq 0$, then we can let $S$ be a submanifold of $U$ passing through $q$
+and normal to $X(q)$, with $\dim S = \dim M - 1$. We can choose coordinates
+$(x_1,\dots,x_{n - 1})$ in a neighborhood $V \subseteq U$ of $q$ such that
+$(x_1,\dots,x_{n - 1},t)$ are coordinates in a neighborhood
+$V \times (-\e,\e) \subseteq U$ and $X = \frac{\partial}{\partial t}$. Defining
+$X_i = \frac{\partial}{\partial x_i}$, we have
+\[\langle \nabla_{X_j} X, X_i \rangle + \langle \nabla_{X_i} X, X_j \rangle
+    = X\langle X_i, X_j \rangle - \langle [X,X_i], X_j \rangle
+        - \langle [X,X_j], X_i \rangle
+    = \frac{\partial}{\partial t} \langle X_i, X_j \rangle
+    = 0
+,\]
+where the last equality uses the fact that $X$ is a Killing field.
+
+Now, if $X(q) = 0$, then either $q \in \overline{\{q \in U : X(q) \neq 0\}}$ or
+there is a neighborhood $q$ on which $X \equiv 0$. In the first case, we have
+the desired equation by continuity, and, in the second case, the equation holds
+trivially.
+
+($\Leftarrow$) Under the same setup,
+\[\frac{\partial}{\partial t} \langle X_i, X_j \rangle
+    = X\langle X_i, X_j \rangle - \langle [X,X_i], X_j \rangle
+        - \langle [X,X_j], X_i \rangle
+    = \langle \nabla_{X_j} X, X_i \rangle + \langle \nabla_{X_i} X, X_j \rangle
+    = 0
+,\]
+so that $\langle X_i, X_j \rangle$ is constant and hence $X$ is Killing. \qed
+
+\item Using the same coordinates as in part d, since
+\[0
+    = \frac{\partial}{\partial t} \langle X_i, X_j \rangle
+    = \frac{\partial}{\partial t} g_{i,j}
+    = \frac{\partial}{\partial x_n} g_{i,j}
+,\]
+$g_{i,j}$ does not depend on $x_n$.
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 7}
+Let $U := \exp_p((-\e,\e))$, and let $\{e_i\}_{i = 1}^n$ be an orthonormal
+basis of $T_p\M$. If $q \in U$, then there is a geodesic $\exp_q(v)$ from $p$
+to $q$. Since $\exp$ is a local isometry, $\{d(\exp_q)e_i\}_{i = 1}^n$ is an
+orthonormal basis of $T_q\M$, so define $E_i(q) := d(\exp_q)e_i$. Since
+$\nabla_{E_i} E_j(p) = 0$ and the Riemann connection is a function of the
+metric (and hence is invariant under isometries)
+$\nabla_{E_i} E_j \equiv 0$ on $U$.
+\end{question}
+
+\begin{question}{Exercise 8}
+\begin{enumerate}[a)]
+\item Since $\{E_i(p)\}_{i = 1}^n$ is an orthonormal basis of $T_p\M$,
+\[\grad f(p)
+    = \sum_{i = 1}^n \langle \grad f(p), E_i(p) \rangle E_i(p)
+    = \sum_{i = 1}^n d f_p(E_i(p)) E_i(p)
+    = \sum_{i = 1}^n (E_i(f)) E_i(p).
+\]
+It follows from the Levi-Civita formula for the Riemann connection that, in a
+geodesic frame, the trace of the mapping $Y(p) \mapsto \nabla_Y X(p)$ is
+\[\sum_{i = 1}^n E_i(f_i)(p).\]
+
+\item If $\M = \R^n$, then $(E_i(f)) = \frac{\partial f}{\partial x_i}$ and
+$E_i(p) = e_i$, $\forall p \in \M$, so it follows from part a) that
+\[\grad f = \sum_{i = 1}^n \frac{\partial f}{\partial x_i} e_i
+    \quad \mbox{ and } \quad
+\div X = \sum_{i = 1}^n \frac{\partial f_i}{\partial x_i}.\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 9}
+\begin{enumerate}[a)]
+\item By part a) of Problem 8,
+\[\Delta f(p)
+    = (\div \grad f)(p)
+    = \div \left( \sum_{i = 1}^n (E_i(f))E_i(p) \right)
+    = \sum_{i = 1}^n (E_i(E_i(f)) (p)
+.\]
+By part b) of Problem 8, it follows that, if $M = \R^n$, then
+\[\Delta f(p)
+    = \sum_{i = 1}^n \frac{\partial f}{\partial x_i}
+        \left( \sum_{j = 1}^n \frac{\partial f}{\partial x_j} e_j \right)_i
+    = \sum_{i = 1}^n \frac{\partial f}{\partial x_i}
+                                            \frac{\partial f}{\partial x_i}
+    = \sum_{i = 1}^n \frac{\partial^2 f}{\partial x_i^2}.
+\]
+
+\item Using the normal product rule for derivatives,
+\begin{align*}
+\Delta(fg) (p)
+ &  = \sum_{i = 1}^n (E_i(E_i(fg)) (p)
+    = \sum_{i = 1}^n (E_i (fE_i(g) + gE_i(f))) (p)  \\
+ &  = \sum_{i = 1}^n fE_i(E_i(g))(p) + gE_i(E_i(f))(p) + E_i(f)E_i(g)  \\
+ &  = (f\Delta g)(p) + (g\Delta f)(p)
+                        + 2\left\langle \grad f(p), \grad g(p) \right\rangle.
+    \qed
+\end{align*}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 11}
+Let $p \in \M$ and let $E_i$ be a geodesic frame at $p$ and let $\omega_i$
+denote the differential $1$-form defined on the same neighborhood of $p$ as the
+geodesic frame by $\omega_i(E_j) = \delta_{i,j}$. Also, define the $n$-form
+$\nu := \wedge_{i = 1}^n \omega_i$. Then, for any
+$v_1,\dots,v_n \in T_p\M$,
+\[(\nu_p(v_1,\dots,v_n))^2
+    = \det\left( [\omega_i(v_j)]^2 \right)
+    = \det\left( [\langle E_i(p), v_j) \rangle]^2 \right)
+    = \det\left( [\langle v_i, v_j \rangle] \right),
+\]
+so $\nu$ is the volume element on $M$. Also, if
+$\theta_i
+    := \omega_1 \wedge \dots \wedge \hat\omega_i \wedge \dots \wedge \omega_n$
+and $X = \sum_{i = 1}^n f_iE_i$, then
+\begin{align*}
+(i(X)\nu)_p(v)
+ &  = \nu_p(X(p),v)  \\
+ &  = \sum_{\sigma \in S_n} \sgn(\sigma)
+                                \prod_{i = 1}^n \omega_i(v_{\sigma(i)})
+    = \sum_{i = 1}^n (-1)^{i + 1} \omega_i(X(p)) \theta_i(v)
+    = \sum_{i = 1}^n (-1)^{i + 1} f_i \theta_i(v)
+\end{align*}
+(where $v = (v_2,\dots,v_n)$ and $v_1 = X(p)$). It follows from properties of
+the exterior derivative that
+\[d(i(X)\nu)
+    = \sum_{i = 1}^n (-1)^{i + 1} (df_i \wedge \theta_i + f_i \wedge d\theta_i)
+    = \left( \sum_{i = 1}^n E_i(f_i) \right)\nu
+        + \sum_{i = 1}^n (-1)^{i + 1} f_i \wedge d\theta_i.
+\]
+Since
+\[d\omega_k(E_i,E_j)
+    = E_i\omega_k(E_j) - E_j\omega_k(E_i) - \omega_k([E_i,E_j])
+    = \omega_k(\nabla_{E_i} E_j - \nabla_{E_j} E_i)
+    = \omega_k(0)
+    = 0,
+\]
+$(d\theta_i)_p = 0$, and so
+\[d(i(X)\nu)(p) = \left( \sum_{i = 1}^n E_i(f_i) \right)\nu. \qed\]
+\end{question}
+
+\begin{question}{Exercise 12}
+By the result of Exercise 11 and Stokes' Theorem, if $\nu$ is a volume form,
+then
+\[\int_M \Delta f\nu
+    = \int_M \div \grad f \nu
+    = \int_M d(i(\grad f)\nu)
+    = 0.
+\]
+Since $\nabla f \geq 0$, $\nabla f = 0$. Then, applying Stokes Theorem and the
+result of part b) of Exercise 9,
+\[0
+    = \int_M d(i(\grad f^2/2) \nu)
+    = \int_M \Delta (f^2/2) \nu
+    = \int_M \|\grad f\|^2 \nu,
+\]
+so $0 = \grad f = df$. By Problem 5 from Assignment 1, then, $f \equiv C$ on
+$\M$, for some $C \in \R$. \qed
+\end{question}
+\end{document}

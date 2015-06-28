@@ -1,0 +1,49 @@
+\section{More Theory}
+Not affected by the number of points in each cluster, but dependent on the
+variance of the two clusters; that is, it is biased towards clusterings of
+equal entropy.
+
+An important special case is when
+
+Fix a number of clusters $K \in \N$, let $p_1,\dots,p_K$ be distributions
+on a sample space $\X$ and let $\pi = (\pi_1,\dots,\pi_K)$ be a distribution on
+$[K]$. Consider random variables $x_1,\dots,x_n$ in $\X$ drawn independently
+from the following process:
+\begin{enumerate}
+\item Draw $y_i \sim \pi$
+\item Draw $x_i \sim p_{y_i}$
+\end{enumerate}
+Then, the problem of clustering is to estimate $y_1,\dots,y_n$ given
+$x_1,\dots,x_n$.
+
+Without any further assumptions, this is, of course, impossible; for any
+true labels $y_1,\dots,y_n$, there are distributions $p_1,\dots,p_K$ under
+which the observations $x_1,\dots,x_n$ are highly likely.
+
+If we were given the true cluster distributions $p_1,\dots,p_K$, a reasonable
+and trivial maximum likelihood approach would be to assign
+$y_i = \arg\max p_y(x_i)$, but estimating $p_1,\dots,p_k$ precisely is a
+difficult problem
+
+Because clustering is, in general, an ill-defined problem, it is crucial, for
+any clustering algorithm, to understand the nature of the clusters extracted by
+that algorithm. Suppose the data points are drawn from $K$ underlying
+distributions, $p_1,\dots,p_k$, and let $n_i$ denote the number of points drawn
+from $p_i$ ($i \in [K]$). Then, the clustering problem can be well defined as
+finding a partition $\mathcal{P} = \{S_1,\dots,S_K\}$ of $\{x_i : i \in [n]\}$
+such that $\mathcal{P} = \{\{x_i : x_i \sim p_k\} : k \in [K]\}$, or at least
+minimizing some loss function over the space of partitions of
+$\{x_i : i \in [n]\}$.
+
+\subsection{The Relationship Between MIMax and CHMin}
+Na\"ively minimizing $H(Y | X)$ will place all data points in a single cluster
+(so that $H(Y | X) \leq H(Y) = 0$). Since
+\[I(X; Y) = H(Y) - H(Y | X) = \log(K) - (D_{KL}(Y, U) + H(Y | X)),\]
+where $U$ is distributed uniformly over $[K]$,
+\[\arg\max_Y I(X; Y)
+ = \arg\min_Y H(Y | X) + D_{KL}(Y, U).
+\]
+Hence, MIMax can be thought of as regularizing CHMin by penalizing label
+distributions far from uniform; said another way, relative to CHMin, MIMax
+generates clusters of equal (sample) size.
+

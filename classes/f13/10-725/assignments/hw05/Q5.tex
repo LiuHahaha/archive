@@ -1,0 +1,56 @@
+\section{Graph Lasso (25 points)}
+
+Please read Q4(b) for an introduction to the graph lasso problem. There, you will prove that if you want to learn a sparse inverse covariance matrix $K$ from data $X \in \mathbb{R}^{N \times P}$, then maximizing the likelihood corresponded to solving the optimization problem 
+$$
+\min_{K \succ 0} -\log \det (K) + Tr(SK) + \lambda \sum_{i \neq j} |K_{ij}|
+$$
+ where $S \in \mathbb{R}^{P \times P}$ is the sample covariance matrix (assuming that you don't penalize diagonal elements). In the previous question, you could use your mastery of matrix differentials to derive a good primal algorithm to solve this problem quickly. If you didn't do it, think about it for a second now.
+ 
+First, you will be the TA and generate data for your problem (to know how to run your own simulations, and to know what it's like to TA this class). We need to generate random draws from a gaussian distribution that has a sparse inverse covariance matrix. How do we come up with a sparse PSD matrix that is not just any PSD matrix, but also its inverse is consistent with a (probably dense) covariance matrix that encodes correlations? We'll do some hacky stuff.
+
+Choose a reasonable value for P (and N) that you think your algorithm will scale to without making your life miserable (for eg: N=250, P=25 is probably conservative). Generate $N$ points from a  $P$-dimensional standard gaussian, and calculate the empirical inverse covariance matrix. Threshold this entrywise at some reasonable value $\gamma$, to get a sparse matrix $iT$. This will be the unknown (to your algorithm) truth. Invert this to get a (probably dense) covariance matrix $T$. Now, generate $N$ points from a $P$-dimensional gaussian with covariance matrix $T$. 
+Call its sample inverse covariance $iS$, and its sample covariance $S$ (either the datapoints or $S$ is the input to your algorithm). Caution: Thresholding at $\gamma$ is not guaranteed to preserve PSD-ness, ie $iT$ may not be PSD. In this case, you can try again, or you can add a small constant times the identity matrix to make it PSD.
+
+\begin{enumerate}
+\item [3 points] Submit your data-generating code as text in your answer. What $N$, $P$, $\gamma$ did you use?
+
+\item [2 points] Plot the sparsity pattern of zero elements vs non-zero elements in $iT$ and $iS$ using \textit{imagesc}. This are respectively where the data came from, and your sample estimator from the data.
+\end{enumerate} 
+
+ 
+In this question, we will derive a dual for this problem, and perform dual ascent. Remember that a lot of the matrices are symmetric by definition.
+
+\begin{enumerate}
+\item[1 points] Introduce a new constraint (name the new variable Z), as we have often done and write down the Lagrangian (name the dual variable W).
+
+\item[4 points] Show clearly (not lengthily, but convincingly) that the dual is
+$$
+\max_{W \in \mathbb{R}^{p \times p}} \log \det (S + W) \mbox{ \ \ \ s.t.\ \ \ } W_{ii}=0 \mbox{ and } |W_{ij}| \leq \lambda \forall i \neq j
+$$
+\end{enumerate}
+
+We will use projected gradient ascent with backtracking line search to perform dual ascent. ALTERNATELY, you can run any other algorithm of your choice on the dual, but submit a solution that describes your algorithm and has the same amount of detail as below.
+
+
+You will run the algorithm while the duality gap is smaller than $\epsilon$ or till the iteration count crosses $MAXITER$ (choose a reasonable value for both! For eg: for the gap, $10^{-8}$ is aiming too high but $10^{-1}$ is trivial). 
+
+\begin{itemize}
+\item [4 points] Show that the duality gap at any dual feasible point $W$ is $\eta = Tr(SK) + \lambda \sum_{i \neq j} |K_{ij}| - n$ for an appropriate $K$. What did you choose for $\epsilon$ or $MAXITER$?
+
+\item [1 points] Why is the suggested algorithm better suited to the dual than the primal? 
+\end{itemize}
+
+
+Run a simple backtracking line search with a reasonable initial stepsize $t_0$ to find \textit{any} point that is better than the current point, and cutting your stepsize by $\delta<1$ at every step till you do so (remember that you are \textit{ascending}). Whenever you evaluate the function while backtracking, it needs to be at a feasible point, hence you need to take a (possibly large) step and then project and then evaluate. Again $t_0=20$ or $\delta=0.001$ are probably not great choices, just be reasonable. 
+
+\begin{itemize}
+\item [4 points] Implement your algorithm! Submit your code as text in the answer. Avoid using unnecessary functions. What did you choose for $t_0, \delta$?
+
+\item [3 points] Plot the sparsity pattern of zero elements vs non-zero elements in your final inverse covariance matrix using \textit{imagesc} for a \textit{good} value of $\lambda$. (Warning: MATLAB often faces rounding issues - many of the elements may be zero upto very high precision but appear nonzero in your plot - threshold them at some tiny value to avoid this problem)
+
+\item [3 points] Choose any two other sensible and revealing values of $\lambda$ and provide the sparsity pattern - does it make sense to you? How long did your algorithm take to run, in terms of time and number of iterations?
+\end{itemize}
+
+This problem is intentionally left open ended, and hence there is no single correct answer, but plenty of reasonable answers. If your simulated example and parameter choices don't demonstrate that the algorithm works, then you should go back and think of what you did wrong. Too few samples and hence $S$ is hardly informative? Algorithm hitting MAXITER and hence too conservative steps? Too low $\gamma$ and too high $\lambda$ simultaneously? 
+
+It is the last advanced implementation question and while the implementation itself is not hard at all, but we wanted you to think about what kind of choices you would make, because in real-life there won't be a TA around to hand you tuning parameters, and you must be your own TA!

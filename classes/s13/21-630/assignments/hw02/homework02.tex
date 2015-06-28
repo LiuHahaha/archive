@@ -1,0 +1,270 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Wednesday, January 30, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+\begin{enumerate}[A)]
+\item For $T > 1$, let $X,Y \in \C[0,T]$ be the constant functions $1$ and $0$,
+respectively. Then,
+\[\|\F[X] - \F[Y]\|_{\C}
+ \geq |\F[X](T) - \F[Y](T)|
+ =    \left| \int_0^T 1 \, ds\right|
+ =    T
+ >    1
+ >    C\|X - Y\|_{\C},
+\]
+for any $C \in (0,1)$. Thus, $\F$ is not a contraction. \qed
+
+\item We first show, by induction on $n$, that, $\forall n \in \N,
+t \in [0,T]$, \[|X^{(n + 1)}(t) - X^{(n)}(t)| \leq \|g\|\frac{t^n}{n!}.\]
+
+For $n = 0$, $\forall t \in [0,T]$,
+\begin{align*}
+\left| X^{(n + 1)}(t) - X^{(n)}(t) \right|
+ =    \left| X^{(1)} \right|
+ =    \left| g(t) + \int_0^t 0 \, ds \right|
+ \leq \|g\|
+ =    \|g\|\frac{t^n}{n!}.
+\end{align*}
+since $t^0 = 0! = 1$.
+Supposing now that the conclusion holds for some $n \in \N$,
+$\forall t \in [0,T]$,
+\[\left| X^{(n + 2)}(t) - X^{(n + 1)}(t) \right|
+ \leq \int_0^t \left| X^{(n + 1)} - X^{(n)} \right| \, ds
+ \leq \int_0^t \|g\|\frac{s^n}{n!} \, ds
+ =    \|g\|\frac{t^{n + 1}}{(n + 1)!},\]
+concluding the proof by induction. Thus, by the Triangle Inequality, $\forall
+n,k \in \N, t \in [0,T]$,
+\[|X^{(n + k)} - X^{(n)}|
+ = \left| \sum_{l = n}^{n + k - 1} X^{(n + l + 1)} - X^{(n + l)} \right|
+ \leq \sum_{l = n}^{n + k - 1} \left| X^{(n + l + 1)} - X^{(n + l)} \right|
+ \leq \sum_{l = n}^{\infty} \|g\|\frac{t^l}{l!}.
+\]
+$\sum_{l = 0}^{\infty} \frac{t^l}{l!}$ converges, so $X^{(n)}$ is uniformly
+Cauchy and thus uniformly convergent on $[0,T]$. \qed
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+We first show by induction on $n$ that, $\forall n \in \N$, $\forall t \in
+[0,\infty)$,
+\begin{align*}
+X^{(2n + 1)}(t) & = t^2 \\
+\mbox{and } X^{(2n + 2)}(t) & = -t^2.
+\end{align*}
+For $n = 0$, $\forall t \in [0,\infty)$,
+\[X^{(2n + 1)}(t)
+ = \int_0^t f(s,X^{(0)}(s)) \, ds
+ = \int_0^t f(s,0) \, ds
+ = \int_0^t 2s \, ds
+ = s^2 \bigg|_{s = 0}^{s = t}
+ = t^2,
+\]
+\[X^{(2n + 2)}(t)
+ = \int_0^t f(s,X^{(1)}(s)) \, ds
+ = \int_0^t f(s,s^2) \, ds
+ = \int_0^t -2s \, ds
+ = -s^2 \bigg|_{s = 0}^{s = t}
+ = -t^2,
+\]
+as desired.
+If we suppose now that the conclusion holds for some $n \in \N$, then,
+$\forall t \in [0,\infty)$,
+\[X^{(2(n + 1) + 1)}(t)
+ = \int_0^t f(s,X^{(2n + 2)}(s)) \, ds
+ = \int_0^t f(s,-s^2) \, ds
+ = \int_0^t 2s \, ds
+ = s^2 \bigg|_{s = 0}^{s = t}
+ = t^2,
+\]
+\[X^{(2(n + 1) + 2)}(t)
+ = \int_0^t f(s,X^{(2(n + 1) + 1)}(s)) \, ds
+ = \int_0^t f(s,s^2) \, ds
+ = \int_0^t -2s \, ds
+ = -s^2 \bigg|_{s = 0}^{s = t}
+ = -t^2,
+\]
+concluding the proof by induction.
+
+$\{X^{(n)}\}_{n = 0}^{\infty}$ has two constant, and thus convergent,
+subsequences:
+$\{X^{(2n + 1)}\}_{n = 0}^{\infty} = \{t \mapsto t^2\}_{n = 0}^{\infty}$
+and $\{X^{(2n + 2)}\}_{n = 0}^{\infty} = \{t \mapsto -t^2\}_{n = 0}^{\infty}$,
+with limits $X,Y : [0,\infty) \rightarrow \R$ defined $\forall t \in
+[0,\infty)$ by $X(t) = t^2$ and $Y(t) = -t^2$, respectively.
+However, neither $X$ nor $Y$ satisfies the differential equation:
+$\forall t \in (0,\infty)$,
+\begin{align*}
+\frac{dX}{dt}(t) & = 2t > -2t = f(t,X(t)), \\
+\mbox{and } Y(t) & = -2t < 2t = f(t,Y(t)). \mqed
+\end{align*}
+
+\end{question}
+
+\newpage
+%TODO
+\begin{question}{Problem 3}
+\begin{enumerate}[A)]
+\item Let $B = 1/4 + \|g\| < (0,1/2)$, define
+$\C_B := \{X \in \C : \|X\|_{\C} \leq B\}$, and define
+$\F : \C_B \rightarrow \C$ by $\F[X](t) = g(t) + \int_0^1 X^2(s) \, ds$,
+$\forall X \in t \in [0,1]$. We show first that the image
+$\F[\C_B] \subseteq \C_B$ and then that $\F$ is a contraction on $\C_B$. Then,
+the existence of $X \in \C_b$ with the desired property (i.e., being a fixed
+point of $\F$) follows from the Contraction Mapping Theorem (noting that any
+limit of a sequence of functions bounded by $B$ is itself bounded by $B$, so
+that $\C_B$ is closed).
+
+Suppose $X \in \C_b$. Clearly, $\F[X] \in \C$, so it suffices to show that
+$\|\F[X]\|_{\C} \leq B$:
+\begin{align*}
+\|\F[X]\|_{\C}
+ & =    \sup_{t \in [0,1]} \left| g(t)  + \int_0^1 X^2(s) \, ds \right| \\
+ & \leq \sup_{t \in [0,1]} \left| g(t) \right|
+   +    \int_0^1 \left| X^2(s) \right| \, ds \\
+ & =    \|g(t)\| + \int_0^1 \|X\|_{\C}^2  \, ds
+   \leq \|g\| + B^2 \leq B,
+\end{align*}
+since $B^2 < 1/4$. We now show that $\F$ is a contraction. Suppose
+$X,Y \in \C_B$. Then,
+\begin{align*}
+\|\F[X] - \F[Y]\|_{\C}
+ & = \left| \int_0^1 X^2(s) - Y^2(s) \, ds \right|
+   \leq \int_0^1 \left| (X(s) + Y(s))(X(s) - Y(s)) \right| \, ds \\
+ & \leq \int_0^1 \|X + Y\|\|X - Y\| \, ds
+   \leq \|X + Y\|\|X - Y\| \, ds \\
+ & \leq \left( \|X\| + \|Y\| \right) \|X - Y\| \, ds \leq 2B \|X - Y\|,
+\end{align*}
+so that, since $2B \in (0,1)$, $\F$ is a contraction, as desired. \qed
+
+%TODO
+\item Note that, $\forall t \in [0,1]$, \fbox{$X(t) = g(t) + c$,} where
+$c = \int_0^1 X^2(s) \, ds$ does not vary with $t$. Thus,
+\[c
+ = \int_0^1 X^2(s) \, ds
+ = \int_0^1 (g(t) + c)^2 \, ds
+ = k_2 + 2ck_1 + c^2,
+\]
+where $k_1 = \int_0^1 g(s) \, ds$ and $k_2 = \int_0^1 g^2(s) \, ds$ are
+constants. The quadratic formula then gives
+\[\mbox{\fbox{$\displaystyle
+ c
+ = \frac{1}{2} - k_1 \pm \sqrt{k_1^2 - k_1 + \frac{1}{4} - k_2}$.}}
+\]
+Note that, since $k_2 \leq k_1^2$ and $k_1 < 1/4$,
+$0 < k_1^2 - k_1 + \frac{1}{4} - k_2$, and thus the possible values of $c$
+give rise to \fbox{two distinct real solutions.}
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+\begin{enumerate}[A)]
+\item $\forall n \in \N$, $X^{(n)}(0) = 0 < 1$ and, $\forall t \in (0,1]$,
+$X^{(n)}(t)
+ =    \frac{t^2}{t^2 + (1 - nt)^2}
+ \leq \frac{t^2}{t^2}
+ = 1$,
+so $X^{(n)}$ is uniformly bounded on $[0,1]$. \qed
+
+\item Suppose, for sake of contradiction, that $X^{(n)}$ is equicontinuous on
+$[0,1]$, so that, for $\e = 1/2$, $\exists \delta > 0$ such that,
+$\forall n \in \N, s,t \in [0,1]$ with $|t - s| < \delta$,
+$|X^{(n)}(t) - X^{(n)}(s)| < \e$. Then, however, for $s = 0$,
+$t = \left( 2\lceil \delta\inv \rceil \right)\inv \in (0,\delta)$, $n = 1/t \in
+\N$, $|t - s| < \delta$, but
+\[|X^{(n)}(t) - X^{(n)}(s)|
+ = \left| \frac{t^2}{t^2 + (1 - nt)^2} - 0 \right|
+ = \left| \frac{t^2}{t^2} \right|
+ = 1 \geq 1/2 = \e,
+\]
+which is a contradiction. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+Let $\e > 0$ be given, and choose $\delta := \left( \frac{\e}{3000} \right)^3$.
+Then, $\forall n \in \N$, since $X^{(n)}$ is continuously differentiable,
+$\forall t,s \in [0,1]$ with $|t - s| < \delta$ (without loss of generality,
+$s \leq t$),
+\begin{align*}
+\left| X^{(n)}(t) - X^{(n)}(s) \right|
+ & =    \left| \int_s^t \frac{dX^{(n)}}{dx}(x) \, dx \right|
+ & \mbox{(Fundamental Theorem of Calculus)} \\
+ & \leq \int_s^t \left| \frac{dX^{(n)}}{dx}(x) \right| \, dx
+ & \mbox{(Triangle Inequality)} \\
+ & \leq \int_s^t 1000x^{-2/3} \, dx
+ & \mbox{(given bound)} \\
+ & =    3000x^{1/3} \bigg|_{x = s}^{x = t} \\
+ & \leq 3000(t - s)^{1/3}
+ & \mbox{(concavity of cube root)} \\
+ &  <   3000\delta^{1/3}
+   = \e. \mqed
+\end{align*}
+\end{question}
+\end{document}

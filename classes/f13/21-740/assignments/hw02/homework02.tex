@@ -1,0 +1,281 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-740 Introduction to Functional Analysis II}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Wednesday, October 9, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear functions
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+For any $m,n \in \N$ with $m > n$, the define the operator
+$A_{m,n} := A_m - A_n$. Using the fact that $A_{m,n} \geq 0$, it is easy to
+adapt the proof of the Cauchy-Schwarz Inequality to show, $\forall x,y \in X$,
+\begin{equation}
+\label{ineq:schwarz}
+(A_{m,n} x,y)^2 \leq (A_{m,n} x,x)(A_{m,n} y,y).
+\end{equation}
+Plugging $y = A_{m,n} x$ into this inequality gives
+\begin{align}
+\notag
+\|(A_m - A_n)x\|^4
+     = (A_{m,n} x,A_{m,n} y)^2
+ &   \leq (A_{m,n}x,x)(A_{m,n}^2x,A_{m,n}x)  \\
+\notag
+ &   \leq (A_{m,n}x,x)\|A_{m,n}\|^3\|x\|^2        \\
+\label{ineq:work}
+ &   \leq (A_{m,n}x,x)\|I - A_1\|^3\|x\|^2.
+\end{align}
+where the last line follows from $A_1 \leq A_n \leq A_m \leq I$. Since the
+sequence  $\{(A_nx,x)\}_{n = 1}^\infty$ is increasing and bounded by $1$,
+it converges and is hence Cauchy. It follows from (\ref{ineq:work}) that the
+sequence $\{A_nx\}_{n = 1}^\infty$ is Cauchy. Since $X$ is complete, we can
+define $L : X \to X$ by
+\[Lx = \lim_{n \to \infty} A_n x.\]
+Clearly, $L$ is linear and self-adjoint, and $A_1, \leq L \leq I$. Thus, for
+any $x \in X$, $-\|A\| \leq (A_1x,x) \leq (Lx,x) \leq \|x\|^2$, and so, since
+$\|L\| = \sup \{(Lx,x) : x \in X, \|x\| = 1\}$, $L$ is bounded. \qed
+
+I didn't use the hypothesis that $A_mA_n = A_nA_m$, but the proof \emph{seems}
+correct to me.
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+Note that, if $A = 0$, the operator $B = 0$ clearly has the desired properties.
+Thus, we assume $A \neq 0$. We first prove the result in the case $A \leq I$,
+and then generalize this.
+\vspace{-5mm}
+\paragraph{Step 1} Assume $A \leq I$. Define $B_0 = 0$ and
+\[B_{n + 1} = B_n + \frac{1}{2}(A - B_n^2) \quad \mbox{ for all } n \in \N.\]
+It is easily checked by induction that each $B_n$ is as a linear combination of
+powers of $A$, and it follows that, $\forall n,m \in \N$, $B_nB_m = B_mB_n$
+(since powers of $A$ commute), $B_n^* = B_n$. If for some $n \in \N$,
+$0 \leq B_n \leq A$, $\forall x \in X$, then
+\[B_{n + 1} = B_n + \frac{1}{2}(A - B_n^2) \geq B_n\]
+and, since $B_n \leq I$, so that $B_n^2 \leq B_n$,
+\[2B_{n + 1} = 2B_n - B_n^2 + A \leq B_n + A \leq 2A,\]
+and hence $B_{n + 1} \leq A$. By induction, then, $\forall n \in \N$,
+$0 \leq B_n \leq B_{n + 1} \leq I$. It follows from Problem 1 that
+$\{B_n\}_{n = 1}^\infty$ has a limit $B \in \L(X;X)$ (in the strong operator
+topology) with $B^* = B$. It is also clear from the construction of this limit
+in Problem 1 that $B \geq 0$ (since each $B_n \geq 0$), and that if
+$CA = AC$, so that each $CB_n = B_nC$, then $CB = BC$. Also, $\forall x \in X$,
+\[Bx
+    = \lim_{n \to \infty} B_{n + 1} x
+    = \lim_{n \to \infty} \left( B_n + \frac{1}{2} (A - B_n^2)x \right)
+    = Bx + \frac{1}{2} (A - B^2)X,
+\]
+and it follows that $Ax - B^2x = 0$, so that $B^2 = A$.
+\vspace{-5mm}
+\paragraph{Step 2:} ($A \not\leq I$)
+Define $A_1 := \frac{A}{\|A\|}$. For all
+$x \in X$, applying Cauchy-Schwarz
+\vspace{-3mm}
+\[0
+    \leq \frac{1}{\|A\|} (Ax,x)
+    = (A_1x,x)
+    \leq \|A_1\| \|x\|^2
+    = \|x\|^2
+    = (Ix,x),
+\]
+and hence $0 \leq A_1 \leq I$. Also, $A_1^* = A_1$ Thus, as already shown,
+$\exists B_1 \in \L(X;X)$ such that $B_1^* = B_1$, $B_1 \geq 0$, $B_1^2 = A_1$.
+Moreover, if $AC = CA$, then clearly $A_1C = CA_1$, and so $B_1C = CB_1$.
+
+It follows that the operator $B := \sqrt{\|A\|}B_1$ has the desired properties:
+$B^* = B$, $B \geq 0$, $B^2 = \sqrt{\|A\|}^2 B_1^2 = A$, and, if $AC = CA$ then
+$BC = AC$.
+
+Finally, we show that the positive operator $B$ with $B^2 = A$ is unique.
+Suppose $B^2 = C^2 = A$. Define $D := B - C$ and let $x \in X$, $y := Dx$.
+Then,
+\vspace{-2mm}
+\[(By,y) + (Cy,y)
+    = ((B + C)y,y)
+    = ((B + C)(B - C)x,y)
+    = ( (A - A)x,y)
+    = 0.
+\]
+Since $B$ and $C$ are positive, it follows from (\ref{ineq:schwarz}) that
+$By = Cy = 0$. Thus,
+\vspace{-2mm}
+\[\|(B - C)x\|^2
+    = \|Dx\|^2
+    = (Dx,Dx)
+    = (D^2x,x)
+    = (Dy,x) = 0,
+\]
+and hence, since $x$ was chosen arbitrarily $B = C$. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+If $\alpha = 0$, then, $\forall x \in X$, by Bessel's Inequality,
+\[\sum_{n = 1}^\infty |(x_n,x)|^2 \leq \|x\|^2,\]
+and so $(x_n,x) \to 0$ as $n \to \infty$. Therefore, $x_n \wto 0$ (weakly) as
+$n \to \infty$.
+
+I believe that, if $|\alpha| \in (0,1)$, then $\{x_n\}_{n = 1}^\infty$ need not
+converge weakly, but somehow, I wasn't able to produce a counterexample.
+
+I managed to show that, if $\{x_n\}_{n = 1}^\infty$ converges weakly to
+$x \in X$, then the sequence
+\[\{y_n\}_{n = 1}^\infty
+    := \left\{\frac{1}{n} \sum_{k = 1}^n\right\}_{n = 1}^\infty\]
+has a subsequence converging strongly to $x$, which might be helpful. In
+particular, as $n \to \infty$ $\|y_n\|^2 \to \alpha$, implying
+$\|x\|^2 = \alpha$, which I think might help produce a contradiction.
+\end{question}
+
+\begin{question}{Problem 6}
+For any $\lambda \in \R$, define $B_\lambda \in \L(X;X)$ by
+\[(B_\lambda x)_i = \left| \frac{1}{i} - \lambda \right| x_i,
+    \quad \forall i \in \N, x \in l^2.\]
+Then,
+\[(B_\lambda^2 x)_i = \left( \frac{1}{i} - \lambda \right)^2 x_i
+    = \left( (A - \lambda I)^2 x \right)_i,
+    \quad \forall i \in \N, x \in l^2,\]
+and hence $B_\lambda = \sqrt{L(\lambda)^2} = |L(\lambda)|$. Noting that
+$B_\lambda x_i = L(\lambda) x_i$ if $i < 1/\lambda$ and
+$(B_\lambda x)_i = - (L(\lambda) x)_i$ otherwise, we then have
+\[L(\lambda)^+
+    = \frac{1}{2} (B_\lambda + L(\lambda))
+    = \left\{
+        \begin{array}{ll}
+            \left( \frac{1}{i} - \lambda \right) x_i & \mbox{ if } i < \frac{1}{\lambda}  \\
+            0 & \mbox{ else}
+        \end{array}
+    \right., \quad \quad \forall i \in \N, \lambda \in \R, x \in l^2,
+\]
+It follows immediate that $\forall \lambda \in \R$,
+\[\Nul(L(\lambda)^+)
+    = \{x \in l^2 : x_1 = x_2 = \cdots = x_{i - 1} = 0\}
+    = cl(\sp\{e_j : j \geq i\}),
+\]
+where $i = \lceil1/\lambda\rceil$ is the least integer with $i \geq 1/\lambda$.
+\qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 8}
+Suppose, for sake of contradiction, that, for some $T \in \Cmp(X;X)$,
+$B := R + T$ is normal. We first show that $\sigma(R + T)$ is uncountable, and
+then show that $\sigma(B)$ must be countable, giving a contradiction.
+
+Let $L = R^*$ denote the left-shift operator. If $\lambda \in \C$ with
+$|\lambda| < 1$ and $x = (1,\lambda,\lambda^2,\ldots) \in l^2$, then
+$(L - \lambda I)x = 0$, and it follows that
+$\{\lambda \in \C : |\lambda| < 1\} \subseteq \sigma_p(L)\}$. Since
+$(L - \lambda I) = (R - \bar{\lambda} I)^*$ is bijective if and only if
+$(R - \bar{\lambda} I)$ is bijective,
+$\{\lambda \in \C : |\lambda| < 1\} \subseteq \sigma(R)$, and hence
+$\sigma(R)$ is uncountable. In particular, since $R$ has no eigenvalues,
+$\sigma(R)\sminus\sigma_p(R)$ is uncountable, and so, by the result of Problem
+7, $\sigma(R + T)$ is uncountable.
+
+\paragraph{Lemma 1} If $T \in \C(X;X)$, then $\sigma(T)$ is countable.
+
+{\emph Proof:} For all $n \in \N$, define
+$\Lambda_n := \{\lambda \in \sigma(T) : |\lambda| \geq 1/n\}$. Then,
+\[\sigma(T) = \bigcup_{n \in \N} \Lambda_n.\]
+Since $0$ is the only accumulation point of $\sigma(T)$, each $\Lambda_n$ is
+finite, and hence $\sigma(T)$ is countable. $\square$
+
+Now note that
+\[I = LR = R^*R = (B - T)^*(B - T) = B^*B - B^*T - T^*B + T^*T,\]
+and hence
+\[B^*B = I + B^*T + T^*B - T^*T.\]
+Let $C := B^*T + T^*B - T^*T$, and note that, since any finite sum of compact
+operators or composition of compact and bounded operators is compact, $C$ is
+compact. Also, $I + C - \lambda I = C - (1 + \lambda)I$, and so
+$\sigma(I + C) = \{\lambda - 1 : \lambda \in \sigma(C)\}$. By Lemma 1, then,
+$\sigma(B^*B) = \sigma(I + C)$ is countable. Since $B$ is normal, it should
+follow that $\sigma(B)$ is countable, although I wasn't able to show this
+clearly. \qed
+\end{question}
+
+\begin{question}{Problem 11}
+The inclusion $\bdry(\sigma(A)) \subseteq \sigma_{ap}(A)$ holds.
+
+Suppose $\lambda \in \bdry(\sigma_p(A))$. By definition of the
+boundary, there is a sequence $\{\lambda_n\}_{n = 1}^\infty$ with each
+$\lambda_n \in \K \sminus \sigma(A) = \rho(A)$. Since $\sigma(A)$ is closed,
+$\lambda \in \sigma(A)$. By (the contrapositive of) part (iii) of
+Proposition 5.6, $\forall i \in \N$,
+\[\|(\lambda_n I - A)\inv\| \geq \frac{1}{|\lambda_n - \lambda|} \to \infty
+\quad \mbox{as } n \to \infty.\]
+It follows that there is a sequence $\{y_n\}_{n = 1}^\infty$ in $Y$ such that
+each $y_n \to 0$ as $n \to \infty$ and each
+$x_n := (A - \lambda_n I)\inv y_n$ has $\|x_n\| = 1$. Thus,
+\[\lim_{n \to \infty} \|(\lambda I - A) x_n\| \to 0,\]
+and hence $\lambda \in \sigma_{ap}(A)$. \qed
+\end{question}
+\end{document}

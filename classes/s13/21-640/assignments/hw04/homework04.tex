@@ -1,0 +1,311 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Wednesday, March 6, 2013}
+\newcommand{\mycollaborators}{None}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+Collaborators: \mycollaborators
+
+\begin{question}{Problem 2}
+Since $cl(Y)$ is a linear manifold in $X$, we can take a Hamel basis
+$(x_i : i \in J)$ for $cl(Y)$ and extend it to a Hamel basis $(x_i : i \in I)$
+with for $X$ with $J \subseteq I$. $\exists y \in cl(Y)$ with
+$\|y - x_0\| = d$. Letting $z := x_0 - y$, we note that $\|z\| = d$ and that
+\[z = \sum_{i \in I \sminus J} \alpha_i(z) x_i\] (with at most finitely many
+$a_i(z) \neq 0$), since, if any $\alpha_i(z) \neq 0$ for some $i \in J$,
+$y' := x_0 - (z - \alpha_i(z)x_i) \in cl(Y)$, and
+$\|y' - x_0\| < \|y - x_0\| = d$, contradicting the definition of $d$.
+
+Thus, letting $K := \{i \in I : \alpha(z) \neq 0\}$,
+$Z := \sp((x_i : i \in K) \cup cl(Y))$, we can define $f : Z \rightarrow \K$
+as the continuous linear functional
+\[f(v) = \frac{\sum_{i \in K} \alpha_i(v)\|x_i\|}
+              {\sum_{i \in K} \alpha_i(z)\|x_i\|}.
+\]
+Then, $f(z) = 1$, $\sup\{|f(v)| : v \in Y, \|v\| \leq 1\} =
+f\left( \frac{z}{\|z\|} \right) = \frac1d$, and $f(v) = 0$, $\forall v \in
+cl(Y)$, so that, by Theorem 5.3, there is an extension $x^* \in X^*$ of $f$,
+with $\langle x^*,x_0\rangle = 1$, $\|x^*\| = \frac1d$, and
+$\langle x^*, y\rangle = 0$, $\forall v \in Y \subseteq cl(Y)$. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+We modify the proof of Theorem 6.1 (Hahn-Banach Theorem, Separation Form) in
+two ways.
+
+First, we choose $x_1 \in K_1$ to be an interior point (any interior point is
+internal, so the original proof still holds), and we observe that $0$ is then
+an interior point of $K$.
+
+Second, we observe that, if $0$ is an internal point of $K$ (say
+$B_{\delta}(0) := \{x \in X : \|x\| \leq \delta\} \subseteq K$), then,
+$\forall x \in B_1(0)$, $\delta x \in K$, so that the Minkowski Functional
+$p^K$ is bounded on $B_1(0)$ (by $\delta\inv$). Then, since $F \leq p^K$ on
+$X$, $\|F(x)\| \leq \|\delta\inv x\|, \forall x \in B_1(0)$ and thus $F$ is
+continuous.
+
+We also note that the generalization of $F$ to the case $\K = \mathbb{C}$
+preserves continuity. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item If $x, y \in K_1$, then, $\forall t \in (0,1)$,
+\[(tx + (1 - t)y)_{m(tx + (1 - t)y)}
+ = tx_{\max\{m(x),m(y)\}} + (1 - t)y_{\max\{m(x),m(y)\}}
+ > 0,\]
+so that $(tx + (1 - t)y) \in K_1$, and thus $K_1$ is convex.
+
+Suppose now that $x \in K_1$ and let $z \in X$ defined by
+$z_{m(x) + 1} = -1$ and $z_i = 0$, $\forall i \neq m(x) + 1$. Then,
+$\forall \e > 0$, for $y := x + \frac{\e}{2}z$, $y_{m(y)} = -\frac{\e}{2} <
+0$, so that $y \notin K_1$. Thus, $x$ is not an internal point of $K_1$, and so
+$K_1$ has no internal points. \qed
+
+\item Let $K_2 := \{0\}$, so that $K_2$ is clearly convex and
+$K_1 \cap K_2 = \emptyset$. Suppose, for sake of contradiction, that some
+nontrivial linear $F : X \rightarrow \R$ separates $K_1, K_2$. Since
+$F(0) = 0$, either $F[K_1] \subseteq [0,\infty)$ or
+$F[K_1] \subseteq (-\infty,0]$; we assume the former, as the argument in the
+other case is symmetric.
+
+$F$ is non-trivial, so $\exists x \in X$ with $F(x) \neq 0$. Let $z \in X$
+defined by $z_{m(x) + 1} = 1$ and $z_i = 0$, $\forall i \neq m(x) + 1$. Then,
+let $y := z - (|F(z)| + 1)\frac{x}{F(x)}$, so that $y_{m(y)} = z_{m(z)} = 1$,
+so $y \in K_1$. But
+\[F(y) = F(z) - (|F(z)| + 1)\frac{F(x)}{F(x)} = F(z) - (|F(z)| + 1) < 0,\]
+which is a contradiction. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6}
+The function $T : c_0 \rightarrow c$ defined by
+\[T\left( \{x_n\}_{n = 0}^{\infty} \right)
+ = \{x_0 + x_{n + 1}\}_{n = 0}^{\infty}, \quad
+    \forall \{x_n\}_{n = 0}^{\infty} \in c_0
+\]
+is a continuous linear bijection.
+
+Linearity is clear, since each coordinate of $T(x)$ is a linear combination of
+coordinates of $x$.
+
+If, for some $x \in c_0$, $\|x\|_{\infty} \leq 1$, then, $\forall i \in \N$,
+$|x_i| \leq 1$, so that $|(T(x))_i| \leq |x_0| + |x_i| \leq 2$, and thus
+$\|T(x)\|_{\infty} \leq 2$. Therefore, $T$ is bounded on $B_1(0)$ and is thus
+continuous.
+
+$\forall y \in c$, for $L := \lim_{n \rightarrow \infty} y_n$,
+$(y_n - L) \rightarrow 0$ as $n \rightarrow \infty$, and 
+$T(L,y_0 - L,y_1 - L,\ldots) = y$, so that $T$ is surjective.
+$T$ is also injective, since, if $x,y \in c_0$ with $T(x) = T(y)$, then
+\begin{align*}
+x_0
+ & = \lim_{n \rightarrow \infty} (T(x))_i
+   = \lim_{n \rightarrow \infty} (T(y))_i
+   = y_0, \\
+x_i
+ & = (T(x))_{i - 1} - x_0
+   = (T(y))_{i - 1} - y_0
+   = y_i, \quad \forall i \geq 1. \mqed
+\end{align*}
+\end{question}
+
+\newpage
+\begin{question}{Problem 8}
+Since $F$ is non-trivial and $F(0) = 0$, $S \neq \K$. If $S$ is closed,
+then $cl(S) = S \neq \K$, so $S$ is not dense.
+
+Since $S$ is the pre-image of the closed set $\{\alpha\}$, if $S$ is not
+closed, $F$ is not continuous. Then, we claim, $\forall \e > 0$, $s \in
+\K$, $\exists x \in B_{\e}(0)$ with $F(x) = s$ (the case $s = 0$ is trivial;
+since $F$ is unbounded on $B_{\e}(0)$, $\forall s \in \K \sminus \{0\}$,
+$\exists y \in B_{\e}(0)$ with $|F(y)| \geq |s| > 0$, so that
+$x := \frac{sy}{F(y)} \in B_{\e}(0)$ with $F(x) = \frac{sF(y)}{F(y)} = s$).
+
+Then, $\forall \e > 0$, $y \in X$, $\exists x \in B_{\e}(0)$ with
+$F(x) = \alpha -  F(y)$, so that $x + y \in B_{\e}(y)$ and $x + y \in S$, since
+and $F(x + y) = \alpha - F(y) + F(y) = \alpha$. Thus, $S$ is dense. \qed
+
+It's worth noting that $S$ is closed precisely when $F$ is continuous, and $S$
+is dense otherwise.
+\end{question}
+
+\begin{question}{Problem 9}
+Define
+$\displaystyle K
+ := \left\{f \in X : f(0) = 0 \mbox{ and } \int_0^1 f(x) \, dx \geq 1\right\}
+$,
+and, $\forall n \in \N$, define $f_n \in X$ by
+\[f_n(x) =
+    \left\{
+        \begin{array}{cl}
+            (n + 1)x & \forall x \in [0,1/n] \\
+            \frac{(n + 1)}{n} & \forall x \in (1/n,1]
+        \end{array}
+    \right..
+\]
+Clearly, each $f_n(0) = 0$ and it can be checked that
+\[\int_0^1 f(x) \, dx
+ = \frac{n + 1}{2n^2}
+ + \left( 1 - \frac1n \right)\left( \frac{n + 1}{n} \right)
+ = \frac{2n^2 + n + 1}{2n^2} \geq 1,
+\]
+so that each $f_n \in K$. Then, since
+$\|f_n\|_{\infty} = \frac{n + 1}{n} \rightarrow 1$ as $n \rightarrow \infty$,
+$\inf\{\|f\|_{\infty} : f \in K\} \leq 1$.
+
+Suppose $f \in K$. Since $f$ is continuous and $f(0) = 0$,
+$\exists \delta \in (0,1)$ such that $f < 1$ on $[0,\delta)$. Thus,
+\[1
+ \leq \int_0^1 f(x) \, dx
+ < \int_0^{\delta} 1 + \int_{\delta}^1 \|f\|_{\infty} \, dx
+ = \delta + (1 - \delta)\|f\|_{\infty},
+\]
+so that $1 = \frac{1 - \delta}{1 - \delta} < \|f\|_{\infty}$, and so
+$\nexists g \in K$ with
+$\|g\|_{\infty} = \inf\{\|f\|_{\infty} : f \in K\} \leq 1$. \\
+
+If $f^{(n)} \in K$ converge to $f \in X$, then 
+$f(0) = \lim_{n \rightarrow \infty} f^{(n)}(0) = 0$ and (since convergence in
+$\|\cdot\|_{\infty}$ is uniform)
+$\displaystyle \int_0^1 f(x) \, dx
+ = \lim_{n \rightarrow \infty} \int_0^1 f^{(n)}(x) \, dx
+ \geq 1$, so that $f \in K$, and thus $K$ is closed.
+
+Finally, if $f,g \in K$, then, $\forall t \in (0,1)$,
+$tf(0) + (1 - t)g(0) = 0$ and
+\[\int_0^1 tf(x) + (1 - t)g(x) \, dx
+ = t\int_0^1 f(x) \, dx + (1 - t) \int_0^1 g(x) \, dx
+ \geq t + (1 - t)
+ = 1,
+\]
+so that $tf + (1 - d)g \in K$, and thus $K$ is convex. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 12}
+Let $X$ be any infinite dimensional Banach space over $\R$, let
+$(x_i : i \in I)$ be a Hamel basis for $X$, and let $J \subseteq I$ be
+countably infinite, with $\sigma : \N \rightarrow J$ a bijection. Define
+$T : X \rightarrow X$ by
+\[\alpha_i(T(x)) = 
+  \left\{
+    \begin{array}{cl}
+      \alpha_i(x) & \mbox{if } i \in I \sminus J \\
+      (2n + 1)\inv\alpha_{\sigma(2n + 1)}(x) & \mbox{if } : i = \sigma(2n) \\
+      (2n + 1)\alpha_{\sigma(2n)}(x) & \mbox{if } : i = \sigma(2n + 1) \\
+    \end{array}
+  \right., \quad \forall x \in X, i \in I,
+\]
+where, $\alpha_i(x)$ is the projection of $x$ onto $x_i$. Clearly, $T$ is
+linear and injective ($T$ is its own inverse). Since, $\forall n \in \N$,
+$\|x_{\sigma(2n + 1)}\|_{\infty} = \max\{|\alpha_i(x)| : i \in I\} = 1$, and
+$\|T(x_{\sigma(2n + 1)})\|_{\infty} = 2n + 1$, $T$ is unbounded and hence
+discontinuous, but, since $T$ is its own inverse, $T^2$ continuous. \qed
+\end{question}
+
+\begin{question}{Problem 15}
+Suppose $X = Y = (l^{\infty}, \|\cdot\|_{\infty})$, and let $T \in \L(X;Y)$ be
+defined $\forall x \in X, i \in \N$ by $(T(x))_i = \frac{x_i}{i^2}$. We claim
+that $T[B]$ is closed, but that $\Ran(T)$ is not closed.
+
+Suppose there is a sequence $x^{(n)} \in B$ with $T(x^{(n)}) \rightarrow y$,
+for some $y \in l^{\infty}$. Then, $\forall i \in \N, \e > 0$,
+\[|y_i|
+   \leq |(T(x^{(n)})_i| + \e
+   =    \frac{|x_i|}{i^2} + \e
+   \leq \frac{1}{i^2} + \e,
+\]
+so that $x := (y_1,2^2y_2,3^2y_3,\dots) \in B$, and hence, since $T(x) = y$,
+$y \in T[B]$, and so $T[B]$ is closed.
+
+Now define, $\forall n,i \in \N$,
+$x^{(n)}_i :=
+            \left\{
+                \begin{array}{cl}
+                    i & \mbox{ if } i \leq n \\
+                    0 & \mbox{ else }
+                \end{array}
+            \right.$,
+so that
+$(T(x^{(n)}))_i =
+            \left\{
+                \begin{array}{cl}
+                    1/i & \mbox{ if } i \leq n \\
+                    0 & \mbox{ else }
+                \end{array}
+            \right.$.
+Then, for $y = (1,1/2,1/3,\dots)$, $\forall n \in \N$,
+$\|T(x^{(n)})i - y\| < 1/n$, so that $T(x^{(n)}) \rightarrow y$ as
+$n \rightarrow \infty$, but $y \notin \Ran(T)$, since
+$(1,2,3,\dots) \notin l^{\infty}$, and thus $\Ran(T)$ is not closed. \qed
+\end{question}
+\end{document}

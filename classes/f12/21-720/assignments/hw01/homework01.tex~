@@ -1,0 +1,419 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-720 Measure and Integration}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, September 12, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Let $S \subseteq \mathbb{R}^d$ be a countable set, so that there exists
+a bijection $f: S \rightarrow \mathbb{N}$. Let $\epsilon > 0$, and,
+$\forall i \in \mathbb{N}$, let $R_i$ be the closed hypercube of sidelength
+$\sqrt[n]{\epsilon2^{-i}}$ centered at $f\inv (i)$, so that $R_i$ has
+$d$-dimensional volume $\ell(R_i) = \epsilon2^{-i}$.
+
+Since,
+$\forall x \in S$, $x \in R_{f(x)}$, and, since $f$ is a bijection,
+\[S \subseteq \bigcup_{x \in S} R_{f(x)} = \bigcup_{i = 1}^{\infty} R_i,\]
+and, clearly, each $R_i$ is a cell. Thus, by definition of the Lebesgue outer
+measure,
+\[m^*(S)
+ \leq \sum_{i = 1}^{\infty} \ell(R_i)
+ = \epsilon \sum_{i = 1}^{\infty} 2^{-i}
+ = \epsilon.
+\]
+Since this holds for all $\epsilon > 0$, \fbox{$m^*(S) = 0$.}
+
+\item $\forall i \in \mathbb{N}$, let $C_i$ be the
+following recursively defined family of sets:
+\begin{eqnarray*}
+C_0 & = & [0,1] \\
+C_i
+ & = & \frac{C_{i - 1}}{3} \cup \left(\frac23 + \frac{C_{i - 1}}{3}\right)
+\end{eqnarray*}
+(where addition and multiplication of sets by real numbers denote translation
+and dilation, respectively).
+Let $C$ denote the Cantor set. It can be shown inductively
+$\forall i \in \mathbb{N}\cup\{0\}$, that $C \subseteq C_i$ and that
+\[C_i = \bigcup_{k = 1}^{2^i} I_k,\]
+where each $I_k$ is a cell of length $\ell(I_i) = \left(\frac13\right)^i$.
+Thus, by definition of the Lebesgue outer measure, $\forall i \in \mathbb{N}$.
+\[m^*(C)
+ \leq \sum_{i = 1}^{2^i} \left(\frac13\right)^i
+ = \left(\frac23\right)^i.
+\]
+Since this is true for all $i$, \fbox{$m^*(C) = 0$.}
+
+\item For notational convenience, let
+$S = \{x \in [0,1] | x \not \in \mathbb{Q}\}$.
+Since $\mathbb{Q}$ is countable, it follows from the result of part (a)
+that $m^*(\mathbb{Q}) = 0$. Since $[0,1]$ is a cell, $m^* = 1 - 0 = 1$.
+By sub-additivity of the Lebesgue outer measure,
+\[1 = m^*([0,1]) \leq m^*([0,1] \cap \mathbb{Q}) + m^*(S) = m^*(S).\]
+By monotonicity, $m^*(S) \leq m^*([0,1]) = 1$. Therefore, \fbox{$m^*(S) = 1$.}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+%TODO
+\begin{enumerate}[(a)]
+\item Any subspace $V$ of $\mathbb{R}^d$ is the image of the subspace $W$
+whose basis is the set of the first $n := \dim(V)$ canonical basis vectors of
+$\mathbb{R}^d$, under some rotation. Thus, since all rotations are
+orthonormal transformations, by the result of part (b) of problem 3, it
+suffices to show that $\lambda(W) = 0$.
+
+Let $\epsilon > 0$. Since $\mathbb{N}^n$ is countable, let
+$\bff: \mathbb{N} \rightarrow \mathbb{N}^n$ be a bijection.
+
+Then, $\forall i \in \mathbb{N}$, let
+\begin{align*}
+I_i = 
+&        (f_1(i),f_1(i) + 2)
+  \times (f_2(i),f_2(i) + 2)
+  \times \cdots
+  \times (f_n(i),f_n(i) + 2)                                              \\
+& \times \left(-\frac{\epsilon}{2^{n + 1 + i}},
+                                    \frac{\epsilon}{2^{n + 1 + i}}\right)
+  \times \left(-\frac12,\frac12\right)
+  \times \cdots
+  \times \left(-\frac12,\frac12\right)
+\subseteq \mathbb{R}^d,
+\end{align*}
+where $f_1(i),\ldots,f_n(i)$ are the components of $\bff(i)$.
+
+Since each $I_i$ is a cell, $\lambda(I_i) = \ell(I_i) = \frac{\epsilon}{2^i}$.
+Thus, by monotonicity and then by subadditivity,
+\[\lambda(V)
+ \leq \lambda\left(\bigcup_{i = 1}^{\infty} I_i \right)
+ \leq                 \sum_{i = 1}^{\infty} \lambda(I_i)
+ =    \epsilon        \sum_{i = 1}^{\infty} \frac{1}{2^i}
+ = \epsilon.
+\]
+Since this holds for all $\epsilon > 0$, $\lambda(V) = 0$. \qed
+
+%TODO
+\item
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+%TODO
+\begin{enumerate}[(a)]
+%TODO
+\item Let $c = \mu([0,1]^d)$ (noting that, since $\mu$ is a measure,
+$c \geq 0$).
+
+%TODO
+\item Since 
+
+\end{enumerate}
+\end{question}
+
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item Clearly, $\mu: [0,1] \rightarrow [0,\infty]$, and since
+$\emptyset \in \mathcal{E}$ and $\rho(\emptyset) = 0$, $\mu^*(\emptyset) = 0$.
+
+% Monotonicity
+Suppose $E \subseteq F \subseteq X$. If $E_1,E_2,\ldots \in \mathcal{E}$ such
+that $F \subseteq \bigcup_{i = 1}^{\infty} E_i$, then
+$E \subseteq \bigcup_{i = 1}^{\infty} E_i$, so that
+\[\left\{
+    \sum_{i = 1}^{\infty} \rho(E_i) \right|\left. E_i \in \mathcal{E},
+        F \subseteq \bigcup_{i = 1}^{\infty} E_i
+  \right\}
+ \subseteq
+ \left\{
+    \sum_{i = 1}^{\infty} \rho(E_i) \right|\left. E_i \in \mathcal{E},
+        E \subseteq \bigcup_{i = 1}^{\infty} E_i
+ \right\}.
+\]
+Then, taking the infimum on both sides gives $\mu^*(E) \leq \mu^*(F)$, so that
+$\mu^*$ is monotonic.
+
+% Countable Subadditivity
+Suppose $A_1,A_2,\ldots \subseteq X$. If
+$\sum_{i = 1}^{\infty} \mu^*(A_i) = \infty$, then the inequality
+\[m^*\left(\bigcup_{i = 1}^{\infty} A_i\right)
+ \leq \sum_{i = 1}^{\infty}m^*(A_i)\]
+trivially holds. Thus, we suppose $\sum_{i = 1}^{\infty} \mu^*(A_i) < \infty$.
+Let $\epsilon > 0$. Since $\mu^*$ is an infimum, $\forall i \in \mathbb{N}$,
+there is a family $\mathcal{G}_i \subseteq \mathcal{E}$ such that
+$A_i \subseteq \bigcup \mathcal{G}_i$ and
+\[\sum_{E \in \mathcal{G}_i} \mu^*(E)
+ \leq \mu^*(A_i) + \frac{\epsilon}{2^i}.\]
+Taking the sum over all $i \in \mathbb{N}$ gives
+\[\sum_{i = 1}^{\infty} \sum_{E \in \mathcal{G}_i} \mu^*(E)
+ \leq \sum_{i = 1}^{\infty} \mu^*(A_i) + \frac{\epsilon}{2^i}
+ = \epsilon + \sum_{i = 1}^{\infty} \mu^*(A_i).\]
+Since
+$\displaystyle \bigcup_{i = 1}^{\infty} A_i
+ \subseteq \bigcup_{i = 1}^{\infty} \bigcup_{E \in \mathcal{G}_i} E$, by
+monotonicity of $\mu^*$,
+\[\mu^*\left(\bigcup_{i = 1}^{\infty} A_i\right)
+  \leq \epsilon + \sum_{i = 1}^{\infty} \mu^*(A_i).\]
+Since this holds for all $\epsilon > 0$,
+\[\mu^*\left(\bigcup_{i = 1}^{\infty} A_i\right)
+  \leq \sum_{i = 1}^{\infty} \mu^*(A_i),\]
+so that $\mu^*$ is countably subadditive. Thus, $\mu^*$ is an outer measure,
+as desired. \qed
+
+\item
+%H^*_{\alpha} is an outer measure
+The result of part (a) implies that $H^*_{\alpha,\delta}$ is an outer
+measure. Since, $\forall \delta > 0$,
+$H^*_{\alpha,\delta}: \mathcal{P}(X) \rightarrow [0,\infty]$ and
+$H^*_{\alpha,\delta}(\emptyset) = 0$, taking the limit as
+$\delta \rightarrow 0^+$,
+$H^*_{\alpha}: \mathcal{P}(X) \rightarrow [0,\infty]$ and
+$H^*_{\alpha}(\emptyset) = 0$.
+
+%Monotonicity
+Since, $\forall \delta > 0$, for $E \subseteq F \in \mathcal{P}(X)$,
+$H^*_{\alpha,delta}(E) \leq H^*_{\alpha,\delta}(F)$, taking the limit as 
+$\delta \rightarrow 0^+$,
+$H^*_{\alpha}(E) \leq H^*_{\alpha}(F)$, so that $H^*_{\alpha}$ is monotonic.
+
+% Countable Subadditivity
+Since $H^*_{\alpha,\delta}$ is nondecreasing in $\delta$ (as it is an infimum
+and $\mathcal{E}_{\delta}$ becomes smaller as $\delta$ decreases),
+$\forall \delta > 0$,$H^*_{\alpha,\delta} \leq H^*_{\alpha}$.
+Therefore, since, $\forall \delta > 0$,
+$\forall E_1,E_2,\ldots \in \mathcal{P}(X)$,
+\[H^*_{\alpha,\delta}\left(\bigcup_{i = 1}^{\infty} E_i\right)
+  \leq \sum_{i = 1}^{\infty} H^*_{\alpha,\delta}(E_i)
+  \leq \sum_{i = 1}^{\infty} H^*_{\alpha}(E_i),
+\]
+so that, taking the limit as $\delta \rightarrow 0^+$,
+\[H^*_{\alpha}\left(\bigcup_{i = 1}^{\infty} E_i\right)
+  \leq \sum_{i = 1}^{\infty} H^*_{\alpha}(E_i).
+\]
+Therefore, $H^*_{\alpha}$ is countably subadditive and thus an outer measure.
+\qed
+
+% H_{\alpha} is a measure on \mathcal{B}
+Since $H^*_{\alpha}$ is an outer measure, by Caratheodory, it suffices to show
+that, $\forall B \in \mathcal{B}$, $\forall A \subseteq X$,
+\[H^*_{\alpha}(A) \geq H^*_{\alpha}(A \cap B) + H^*_{\alpha}(A \cap B^c),\]
+If either $H^*_{\alpha}(A \cap B) = \infty$ or
+$H^*_{\alpha}(A \cap B^c) = \infty$, then, by monotonicity,
+$H^*_{\alpha}(A) = \infty$ and the desired result trivially holds. Thus, we
+assume that each of these measures is finite.
+
+{\bf Lemma:} If $E,F \in \mathcal{P}$ with $d := \dist(E,F) > 0$, then
+\[H^*_{\alpha}(E \cup F) \geq H^*_{\alpha}(E \cup F).\]
+
+{\bf Proof of Lemma:} For $\delta < \frac{d}{2}$, if
+$B_1,B_2,\ldots \in \mathcal{E}_{\delta}$, then, each $B_i$ has
+$B_i \cap E = \emptyset$ or $B_i \cap F = \emptyset$ (for, if
+$x \in B_i \cap E$ and $y \in B_i \cap F$, then
+$\dist(E,F) \leq d(x,y) < 2\delta = d$, which is a contradiction).
+
+Thus, let $B_{j_1},B_{j_2},\ldots \in \mathcal{E}_{\delta}$ be the subsequence
+of $B_i$ such that $B_i \cap E \neq \emptyset$, and let
+$B_{k_1},B_{k_2},\ldots \in \mathcal{E}_{\delta}$ be the subsequence of $B_i$
+such that $B_i \cap F \neq \emptyset$ (if either subsequence is finite, we can
+add countably many empty sets to the sequence).
+Since we assumed that $H^*_{\alpha,\delta}(E) \leq H^*_{\alpha}(E) < \infty$
+and $H^*_{\alpha,\delta}(F) \leq H^*_{\alpha}(F) < \infty$, and, in the end,
+we are concerned only with infima, so that we can ignore infinite sums,
+\[\sum_{i = 1}^{\infty} \rho(B_i)
+ = \sum_{i = 1}^{\infty} \rho(B_{j_i})
+ + \sum_{i = 1}^{\infty} \rho(B_{k_i}).
+\]
+This implies that
+\begin{align*}
+   & \left\{\sum_{i = 1}^{\infty} \rho(B_i) \right|
+            \left. E \cup F \subseteq \bigcup_{i = 1}^{\infty} B_i,
+                        B_i \in \mathcal{E}_{\delta}\right\} \\
+ = & \left\{\sum_{i = 1}^{\infty} \rho(B_{j_i}) + \rho(B_{k_i})\right|
+            \left. E \subseteq \bigcup_{i = 1}^{\infty} B_{j_i},
+                   F \subseteq \bigcup_{i = 1}^{\infty} B_{k_i},
+                        B_{j_i},B_{k_i} \in \mathcal{E}_{\delta}\right\}.
+\end{align*}
+
+Rewriting the latter set as the element-wise sum of two sets, by definition of
+$H^*_{\alpha,\delta}$ and the fact that the infimum is nonincreasing with
+respect to inclusion,
+\[H^*_{\alpha,\delta}(E \cup F)
+ \geq H^*_{\alpha,\delta}(E)
+ +    H^*_{\alpha,\delta}(F),\]
+so that taking the limit as $\delta \rightarrow 0^+$ proves the lemma:
+\[H^*_{\alpha}(E \cup F) \geq H^*_{\alpha}(E) + H^*_{\alpha}(F).\]
+
+We now return to showing that, $\forall B \in \mathcal{B}$,
+$\forall A \subseteq X$,
+\[H^*_{\alpha}(A) \geq H^*_{\alpha}(A \cap B) + H^*_{\alpha}(A \cap B^c),\]
+Since $\mathcal{B}$ is the $\sigma$-algebra generated by all open sets and is
+closed under the set complement, it is sufficient to this for all closed sets
+$B$. Thus, let $B \in \mathcal{B}$, and let $A \subseteq X$.
+$\forall i \in \mathbb{N}$, define
+\begin{align*}
+B_i & = \{x \in X | \dist(\{x\},B) < 1/i\}, \\
+C_i & = A \cap (B_i \cap B_{i + 1}^c)
+\end{align*}
+
+Using the above lemma and then monotonicity gives
+\[H^*_{\alpha}(A \cap B_i^c) + H^*_{\alpha}(A \cap B)
+ \leq H^*_{\alpha}((A \cap B_i^c) \cup (A \cap B))
+ \leq H^*_{\alpha}(A \cup B). \mqed
+\]
+Thus, it remains only to show that
+\[\lim_{i \rightarrow \infty} \left(H^*_{\alpha}(A \cap B_i^c)\right) = H^*_{\alpha}(A \cap B^c).\]
+
+Since $B$ is closed, for all $x \in B^c$, $\dist(\{x\},B) > 0$, so that,
+$\forall i \in \mathbb{N}$,
+\[A \cap B^c = (A \cap B_i^c) \cup \bigcup_{j = i + 1}^{\infty} C_j.\]
+Thus, by monotonicity and then subadditivity,
+\[H^*_{\alpha}(A \cap B_i^c)
+ \leq H^*_{\alpha}(A \cap B^c)
+ \leq H^*_{\alpha}\left((A \cap B_i^c) \cup \bigcup_{j = i + 1}^{\infty} C_j\right)
+ \leq H^*_{\alpha}(A \cap B_i^c) + \sum_{j = i + 1}^{\infty} H^*_{\alpha}(C_j).
+\]
+
+Since the above summation is finite and each $H^*_{\alpha}(F_j) \geq 0$,
+$\lim_{i \rightarrow \infty}
+ \left(\sum_{j = i + 1}^{\infty} H^*_{\alpha}(C_j)\right) = 0$, and
+taking the limit as $i \rightarrow \infty$ in the above inequality:
+\[
+ \lim_{i \rightarrow \infty}\left(H^*_{\alpha}(A \cap B_i^c)\right)
+ \leq H^*_{\alpha}(A \cap B^c)
+ \leq \lim_{i \rightarrow \infty}\left(H^*_{\alpha}(A \cap B_i^c)\right) \mqed
+\]
+
+%TODO
+\item $\forall \bx \in \mathbb{R}^d$, $\delta > 0$,
+$\mathcal{E}_{\delta} = \mathcal{E}_{\delta} + \bx$, since a translated ball
+is a ball of the same radius, and,
+$\forall B(\by,r) \in \mathcal{E}_{\delta}$,
+$\rho(B(\by,r))) = \rho(B(\by + \bx,r)))$ Thus, since,
+for all Hausdorff measurable sets $E \in \mathcal{P}(\mathbb{R})$
+\[H_{\alpha}(E)
+ := \left\{\sum_{i = 1}^{\infty} \rho(B_i)\right|
+        \left. B_i \in \mathcal{E}_{\delta},
+            E \subseteq \bigcup_{i = 1}^{\infty} B_i
+\right\},\]
+$\forall \bx \in \mathbb{R}$,
+$H_{\alpha}(E) = H_{\alpha}(E + \bx)$.
+
+Thus, $H_d$ is translation invariant on $\mathcal{L}$, so that, by the result
+of problem 3, part (a), $\exists c \geq 0$ such that $H_d = c\lambda$. It
+remains only to show that $c \in (0,\infty)$. Let $B = B(\bzero,\sqrt[d]{2})$,
+let $C_1 = [-1,1]^d$, and let $C_2 = [-2,2]^d$.
+
+Since $C_1$ and $C_2$ are cells, $\lambda(C_1) = (1 - (-1))^d = 2^d$ and
+$\lambda(C_2) = (2 - (-2))^d = 4^d$.
+
+Thus, $H_{\alpha}(B),\lambda(C_1),\lambda(C_2) \in (0,\infty)$. By
+monotonicity (noting $C_1 \subseteq B \subseteq C_2$),
+\[c\lambda(C_1) = H_d(C_1) \leq H_d(B) \leq H_d(C_2) = c\lambda(C_2).\]
+The first inequality implies that $c \neq \infty$, and the latter inequality
+implies that $c \neq 0$. \qed
+
+\item {\bf Lemma:} If, for some $\alpha,\beta \in [0,\infty)$,
+$\alpha < \beta$ and $H_{\alpha}(S) < \infty$, then $H_{\beta}(S) = 0$.
+
+{\bf Proof of Lemma:} Let $\delta > 0$.
+Because $H_{\alpha,\delta}$ is an infimum, we can find a sequence of balls
+$B(x_1,r_1),B(x_2,r_2),\ldots \in \mathcal{E}_{\delta}$, with
+$S \subseteq \bigcup_{i = 1}^{\infty} B(x_i,r_i)$, such that
+\[\sum_{i = 1}^{\infty} c_{\alpha} r_i^{\alpha}
+ = \sum_{i = 1}^{\infty} \rho(B(x_i,r_i))
+ \leq H_{s,\delta}.\]
+Furthermore, since $H_{\alpha,\delta}$ is an infimum and $\mathcal{E}_{\delta}$
+becomes smaller as $\delta$ decreases, $H_{\alpha,\delta}$ increases as $\delta$
+decreases. Thus, taking the limit as $\delta \rightarrow 0^+$,
+\[\sum_{i = 1}^{\infty} c_{\alpha} r_i^{\alpha}
+ \leq H_{\alpha,\delta}(S)
+ \leq H_{\alpha}(S).
+\]
+
+Therefore,
+\begin{eqnarray*}
+H_{\beta,\delta}(S)
+ & \leq & \sum_{i = 1}^{\infty} c_{\beta}r_i^{\beta}
+   \leq   \frac{c_{\beta}}{c_{\alpha}} \sum_{i = 1}^{\infty} c_{\alpha} r_i^{\alpha}r_i^{\beta - \alpha} \\
+ & \leq & \frac{c_{\beta}}{c_{\alpha}} \delta^{\beta - \alpha}\sum_{i = 1}^{\infty} c_{\alpha}r_i^{\alpha} \quad \mbox{\quad(each $r_i \leq \delta$)}\\
+ & \leq & \frac{c_{\beta}}{c_{\alpha}} \delta^{\beta - \alpha}(H_{\alpha}(S) + 1).
+\end{eqnarray*}
+
+Since $H_{\alpha}(S) < \infty$ and $\beta > \alpha$, taking the limit as
+$\delta \rightarrow 0$ proves the lemma.
+
+Let $d = \sup\{\alpha \in [0,\infty] | H^*_{\alpha}(S) = \infty\}$. Suppose
+$\alpha \in (d,\infty)$. By choice of $d$, for
+$\beta = \frac{\alpha - d}{2} > d$, $H_{\beta}(S) < \infty$, so that, by the
+above lemma, $H_{\alpha}(S) = 0$. On the other hand, suppose $\alpha \in (0,d)$.
+By the above lemma, if $H_{\alpha}(S) \neq \infty$, then,
+$\forall \beta \in (\alpha,d]$, $H_{\beta}(S) = 0$, contradicting the choice
+of $d$ as the supremum. Thus, $d$ has the desired properties. Note $d$ is
+unique, as, if $d^{\prime} \neq d$ (without loss of generality,
+$d^{\prime} > d$), also had the desired properties, then, for
+$\alpha \in (d,d^{\prime}$, $\alpha = 0$ and $\alpha = \infty$, which is
+impossible. \qed
+
+
+%TODO
+\item
+
+\end{enumerate}
+\end{question}
+
+\end{document}

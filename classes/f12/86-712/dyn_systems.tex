@@ -1,0 +1,133 @@
+% LaTeX file for resume or CV
+% This file uses the resume document class (res.cls)
+
+\documentclass{res} 
+\setlength{\textheight}{9.5in} % increase text height to fit on 1-page 
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bchi}{\boldsymbol{\chi}}
+\newcommand{\bzero}{\mathbf{0}}
+
+\begin{document} 
+
+\name{Skew-Symmetric Matrices in Linear Systems of Differential Equations\\[12pt]}     % the \\[12pt] adds a blank
+				                     % line after name      
+
+\address{       Shashank Singh\\
+                86-712 Computational Neuroscience of Vision\\
+                September 9, 2012
+}
+\address{}
+\begin{resume}
+
+Consider an equation of the form
+\begin{equation}
+\frac{dx}{dt} = a x,
+\end{equation}
+where $a \in \mathbb{R}$.
+
+Rewriting equation (1) and then integrating gives
+\begin{align*}
+\frac1x \, dx & = a \, dt \\
+\ln(x)        & = at + C \\
+x             & = e^{at + C} = e^Ce^{at}
+\end{align*}
+(we can ``absorb'' the integration constants from both sides into $C$).
+
+Suppose now that we have $n$ equations with $n$ independent variables:
+\begin{align*}
+\frac{dx_1}{dt} & = a_{1,1}x_1 + a_{1,2}x_2 + \ldots + a_{1,n}x_n \\
+\frac{dx_1}{dt} & = a_{2,1}x_1 + a_{2,2}x_2 + \ldots + a_{2,n}x_n \\
+                &                     \vdots                      \\
+\frac{dx_1}{dt} & = a_{n,1}x_1 + a_{n,2}x_2 + \ldots + a_{n,n}x_n.
+\end{align*}
+We can write this more compactly as
+\begin{equation}
+\frac{d\bx}{dt} = A \bx,
+\end{equation}
+
+where
+\[A = \begin{bmatrix}
+        a_{1,1} & a_{1,2} & \ldots & a_{1,n} \\
+        a_{2,1} & a_{2,2} & \ldots & a_{2,n} \\
+        \vdots  & \vdots  & \vdots & \vdots  \\
+        a_{2,1} & a_{2,2} & \ldots & a_{2,n} \\
+      \end{bmatrix}
+\quad \mbox{ and } \quad
+\bx = \begin{bmatrix}
+        x_1    \\
+        x_2    \\
+        \vdots \\
+        x_n    \\
+      \end{bmatrix}
+\]
+Inspired by the solution to the $1$ variable equation, we'll assume that the
+solution is an exponential. Since we want a vector solution, we just multiply
+by a vector $\bchi$, so that we assume a solution is of the form
+$\bx = \bchi e^{rt}$, for some $r \in \mathbb{R}$. Plugging this into equation
+(2) gives
+\[r \bchi e^{rt} = A \bchi e^{rt}.\]
+Since $e^{rt} \neq 0$,
+\[(A - rI)\bchi = \bzero.\]
+Notice that $r$ and $\bchi$ solve this equation if and only if $\bchi$ is an
+eigenvector of $A$ and $r$ is the associated eigenvalue.
+
+For reasons that I won't go into here, the solutions of an $n \times n$ system
+of linear differential equations form an $n$-dimensional vector space, so that
+we can summarize the solution set as a linear combination of a basis set of
+solutions:
+\[\bx = \sum_{k = 1}^{n} c_k \bchi_k e^{r_k t},\]
+where $\bchi_k$ is the $i^{th}$ eigenvector and $r_k$ is the associated
+eigenvalue. (This gets more complicated when $A$ there are fewer than $n$
+linearly independent eigenvalues, but this doesn't happen when $A$ is
+skew-symmetric, which is what we care about here.)
+
+Now what happens when some eigenvalues are in $\mathbb{C}$ but not in
+$\mathbb{R}$? Then, each $r_k = a_k + b_ki$, where $a,b \in \mathbb{R}$.
+Thus,
+\begin{equation}
+\bx = \sum_{k = 1}^{n} c_k \bchi_k e^{a_k t}e^{b_k i t}.
+\end{equation}
+Now it's clear that $a_k$, the real part of the each eigenvalue acts as a
+dilaiton factor. But how do we interpret this complex component? We use Euler's
+identity:
+\[e^{it} = \cos(t) + i\sin(t).\]
+(if you haven't seen this before, the proof is one line; examine the Taylor
+expansions of sine, cosine, and the exponential function.)
+Rewriting equation (3) using Euler's Identity gives us
+\[\bx
+ = \sum_{k = 1}^{n}
+            c_k \bchi_k e^{a_k t}\left(\cos(b_k t) + i\sin(b_k t)\right).\]
+Splitting up $\bchi_k = \bc_k + i\bd_k$ into its real and complex components and
+doing some algebra shows that, for
+\[\bu_k = e^{a_kt}(\bc_k \cos(b_k t) - \bd_k \sin(b_k t)\]
+\[\bv_k = e^{a_kt}(\bc_k \sin(b_k t) + \bd_k \cos(b_k t)\]
+(since the complex eigenvectors of $A$ come in complex conjugate pairs and
+$\bu_k$ and $\bv_k$ are the same for each pair, we're replacing each pair with the
+pair $\{\bu_k,\bv_k\}$, which can be shown to be linearly independent, so that we
+still have a basis.)
+
+As it happens, when $A$ is skew-symmetric, \emph{all} (nonzero) eigenvalues of
+$A$ are \emph{purely} complex; that is, each $a_k = 0$. Therefore, we get the
+solution
+\[\bx
+ = \sum_{k = 1}^{n} c_k \bchi_k \left(\cos(b_k t) + i\sin(b_k t)\right),\]
+which is purely oscillatory.
+
+Thus, if we fit a skew-symmetric matrix $M_{skew}$ to the equation
+\[\bx^{\prime} = M_{skew} \bx,\]
+we get a matrix that captures the oscillatory motion of the dynamical system.
+
+
+\end{resume}
+\end{document}

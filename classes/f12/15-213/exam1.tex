@@ -1,0 +1,233 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries}{\thesection}{1em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-213 Introduction to Computer Systems}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Wednesday, October 10, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Midterm Note Sheet} \\
+\myclass \\
+Name: \myname \\
+
+\section{Data Representation}
+\begin{tabular}{|r|c|c|c|}
+\hline
+Type        & Size (32/64-bit) & Assembly suffix & Alignment (L32/L64/W32/W64) \\
+\hline
+char        &  1               & b               & 1                           \\
+\hline
+short       &  2               & w               & 2                           \\
+\hline
+int         &  4               & l               & 4                           \\
+\hline
+long        &  4/8             & q               & 4/8/4/8                     \\
+\hline
+long long   &  8               & q               & 4/8/8/8                     \\
+\hline
+void *      &  4/8             & q               & 4/8/4/8                     \\
+\hline
+float       &  4               & s               & 4                           \\
+\hline
+double      &  8               & d               & 4/8/8/8                     \\
+\hline
+long double &  12/16/10/8      & d               & 4/16/10/8                   \\
+\hline
+\end{tabular} \\
+On 32-bit (x86) Linux, chars aligned to 1, shorts aligned to 2, all other data types
+aligned to 4. \\
+On 64-bit (x86-64) Linux all $k$ byte data is aligned to multiples of $k$. \\
+On Windows, all $k$ byte data is aligned to multiples of $k$. \\
+When figuring out struct element alignment, biggest to smallest always works.
+All x86 systems (including x86-64 systems) use little endian format.
+\section{Assembly Language}
+\texttt{const(b,l,step\_size) = const + b + (step\_size * l)}. \\
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+64-bit & 32-bit & 16-bit & High-order 8-bit & Low-order 8-bit & Purpose      \\
+\hline
+\%rax  & \%eax  & \%ax   & \%ah             & \%al            & Return value \\
+\hline
+\%rbx  & \%ebx  & \%bx   & \%bh             & \%bl            & Callee Saved \\
+\hline
+\%rcx  & \%ecx  & \%cx   & \%ch             & \%cl            & Argument 4   \\
+\hline
+\%rdx  & \%edx  & \%dx   & \%dh             & \%dl            & Argument 3   \\
+\hline
+\%rsi  & \%esi  & \%si   &                  & \%sil           & Argument 2   \\
+\hline
+\%rdi  & \%edi  & \%di   &                  & \%dil           & Argument 1   \\
+\hline
+\%rbp  & \%ebp  & \%bp   &                  & \%bpl           & Callee Saved \\
+\hline
+\%rsp  & \%esp  & \%sp   &                  & \%spl           & Stack Pointer\\
+\hline
+\%r8   & \%r8d  & \%r8w  &                  & \%r8b           & Argument 5   \\
+\hline
+\%r9   & \%r9d  & \%r9w  &                  & \%r9b           & Argument 6   \\
+\hline
+\%r10  & \%r10d & \%r10w &                  & \%r10b          & Caller Saved \\
+\hline
+\%r11  & \%r11d & \%r11w &                  & \%r11b          & Caller Saved \\
+\hline
+\%r12  & \%r12d & \%r12w &                  & \%r12b          & Callee Saved \\
+\hline
+\%r13  & \%r13d & \%r13w &                  & \%r13b          & Callee Saved \\
+\hline
+\%r14  & \%r14d & \%r14w &                  & \%r14b          & Callee Saved \\
+\hline
+\%r15  & \%r15d & \%r15w &                  & \%r15b          & Callee Saved \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|c|c|c|}
+Flag & cmp a, b                     & test a,b              \\
+ZF   & $b - a == 0$                 & $a \& b == 0$         \\
+SF   & $b - a <  0$                 & sign bit of $a \& b$  \\
+OF   & signed overflow in $b - a$   & 0                     \\
+CF   & unsigned overflow in $b - a$ & 0                     \\
+\end{tabular}<++>
+
+In the below table, $\beta,\gamma$ are either b (1 byte), w (2 bytes),
+l (4 bytes), or q (8 bytes). \\
+\begin{tabular}{|c|c|}
+\hline
+Instrucion             & Description                                                        \\
+\hline
+mov $\beta$       S, D & D $\leftarrow$ S                                                   \\
+movs$\beta\gamma$ S, D & D $\leftarrow$ S with sign extension                               \\
+movz$\beta\gamma$ S, D & D $\leftarrow$ S with zero extension                               \\
+\hline
+push$\beta$       S    & push value of S into stack at \%esp; decrement \%esp by sizeof(S)  \\
+push$\beta$          D & pop value from stack at \%esp into S; increment \%esp by sizeof(S) \\
+\hline
+lea $\beta$       S, D & D $\leftarrow$ \&S                                                 \\
+\hline
+inc $\beta$          D & D $\leftarrow$ D + 1                                               \\
+dec $\beta$          D & D $\leftarrow$ D - 1                                               \\
+neg $\beta$          D & D $\leftarrow$ -D                                                  \\
+not $\beta$          D & D $\leftarrow \sim$ D                                              \\
+\hline
+add $\beta$       S, D & D $\leftarrow$ D + S                                               \\
+sub $\beta$       S, D & D $\leftarrow$ D - S                                               \\
+imul$\beta$       S, D & D $\leftarrow$ D $\times$ S                                        \\
+xor $\beta$       S, D & D $\leftarrow$ D \^ S                                              \\
+or  $\beta$       S, D & D $\leftarrow$ D | S                                               \\
+and $\beta$       S, D & D $\leftarrow$ D \& S                                              \\
+\hline
+sal $\beta$          D & D $\leftarrow$ D $<<$ k                                            \\
+shl $\beta$          D & D $\leftarrow$ D $<<$ k (identical to sal)                         \\
+sar $\beta$          D & D $\leftarrow$ D $>>$ k (arithmetic; fills with sign)              \\
+shr $\beta$          D & D $\leftarrow$ D $>>$ k (logical; fills with zeros)                \\
+\hline
+cmp $\beta$       a, b & See flags set below                                                \\
+test$\beta$       a, b & See flags set below                                                \\
+\hline
+\end{tabular}
+\begin{tabular}{|c|}
+\vdots          \\
+\hline
+arg3            \\
+\hline
+arg2            \\
+\hline
+arg1            \\
+\hline
+return address  \\
+\hline
+old \%ebp       \\
+\hline
+local variables \\
+\hline
+\vdots          \\
+\hline
+arg3            \\
+\hline
+arg2            \\
+\hline
+arg1            \\
+\hline
+return address  \\
+\hline
+old \%ebp       \\
+\hline
+local variables \\
+\hline
+\vdots          \\
+\end{tabular}
+\section{Casting}
+\begin{verbatim}
+unsigned int a = 0xFFFFFFFF;
+signed short b = -1;
+x = (b > a);
+\end{verbatim}
+Extended b to int first, then cast b to signed, so
+\texttt{b -> 0xFFFFFFFF}.
+\section{Caching}
+Address = 
+\begin{tabular}{|c|c|c|}
+\hline
+$t$ tag bits & $s$ set bits & $b$ block bits \\
+\hline
+\end{tabular} \\
+$S = 2^s$ is the number of sets
+$E$ (associativitiy) is the number of lines (blocks) per set.   \\
+$B = 2^b$ (block size) is the number of bytes per block         \\
+The total cache capacity in bytes is $C = S \times E \times B$  \\
+A Direct-Mapped cache has $E = 1$. \\
+A Fully Associative cache has $S = 1, E = C/B$. \\
+Array accesses are row-major. \\
+\end{document}

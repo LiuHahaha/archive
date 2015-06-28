@@ -1,0 +1,109 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{1}
+\section{Safe rules for the LASSO [25 points] (Adona)}
+%TODO
+\begin{enumerate}[(a)]
+\item The primal problem can be rewritten as
+\[\min_{\beta \in \R^p, z \in \R^n} f(z) + \lambda\|\beta\|_1
+    \quad \mbox{such that} \quad z = X\beta,
+\]
+and hence the dual function is
+\begin{align*}
+g(u)
+ &  = \min_{\beta \in \R^p, z \in \R^n} f(z) + \lambda\|\beta\|_1
+        + u^T(z - X\beta)   \\
+ &  = \left( \min_{z \in \R^n} f(z) + u^Tz \right)
+    + \min_{\beta \in \R^p} \lambda ( \|\beta\|_1 - u^TX\beta/\lambda)  \\
+ &  = -\left( \max_{z \in \R^n} u^Tz - f(-z) \right)
+    - \lambda \max_{\beta \in \R^p} (u^TX\beta/\lambda - \|\beta\|_1)   \\
+ &  = -f^*(-z) - \left( \|\cdot\|_1 \right)^* (X^Tu/\lambda)            \\
+ &  = -f^*(-z) - I_{\{v : \|v\|_\infty \leq 1\}}(X^Tu/\lambda)
+    = -f^*(-z) - I_{\{v : \|v\|_\infty \leq \lambda\}}(X^Tu)
+\end{align*}
+Thus, it follows from the definition of the indicator function that dual
+problem is
+\[\max_{u \in \R^n} g(u)
+    = \max_{
+        \begin{subarray}{c}
+            u \in \R^n\\
+            \|X^Tu\|_\infty \leq \lambda
+        \end{subarray}} -f^*(-u). \qed
+\]
+
+The stationarity KKT condition for $\beta$ gives
+\begin{align*}
+0
+ &  \in \partial (f(z) + \lambda\|\beta\|_1) + u^T \partial (z - X\beta)    \\
+ &  = \lambda \partial \|\beta\|_1 - u^T \partial X\beta
+ &  = \lambda \partial \|\beta\|_1 - X^Tu,
+\end{align*}
+so that
+\[X^tu \in \lambda \partial \|\beta\|_1
+    = \lambda \left\{
+        \begin{array}{ll}
+            [-1,1]              & : \mbox{ if } \beta_i = 0      \\
+            \{\sgn(\beta_i)\}   & : \mbox{ if } \beta_i \neq 0
+        \end{array}
+    \right..
+\]
+(this last equality was shown in class). \qed
+
+\item By definition, the dual problem is (after replacing $u$ with $-u$ since
+it is unconstrained)
+\begin{align*}
+\max_{\mu > 0} \min_{u \in \R^n} X_k^Tu + \mu(f^*(u) + \gamma)
+    & = \min_{\mu \geq 0} \mu \max_{u \in \R^n}
+                                \frac{-X_k^Tu}{\mu} - f^*(u) - \gamma   \\
+    & = \min_{\mu \geq 0}
+        \mu f\left( -\frac{X_k}{\mu} \right) - \mu\gamma,
+\end{align*}
+where we used the fact that, since $f$ is convex and continuous, $f^{**} = f$.
+\qed
+
+\item Plugging in the LASSO function and noting $\|X_k\| = 1$ gives
+\begin{align*}
+T_{k,+}
+ &  = \min_{\mu > 0} - \mu\gamma
+    + \frac{\mu}{2}\left\| Y + \frac{X_k}{\mu}\right\|_2^2  \\
+ &  = \frac{1}{2} \min_{\mu > 0} - 2\mu\gamma
+    + \mu \|Y\|_2^2 + 2Y^TX_k + \frac{1}{\mu}.
+\end{align*}
+Then, setting the appropriate derivative with respect to $\mu$ to $0$, we have
+\[0 = -2\gamma + \|Y\|_2^2 - \mu^{-2}
+    \quad \mbox{ so } \quad
+  \mu = \frac{1}{\sqrt{\|Y\|_2^2 - 2\gamma}}.
+\]
+Plugging this into $T_{k,+}$ gives
+\[T_{k,+} = \sqrt{Y^TY - 2\gamma} + Y^TX_k. \qed\]
+
+\item Since all the steps in part (c) would work if we replaced $X_k$ with
+$-X_k$, we have
+\[T_{k,-} = \sqrt{Y^TY - 2\gamma} - Y^TX_k.\]
+Thus,
+\[\max(T_{k,+},T_{k,-}) = \sqrt{Y^TY - 2\gamma} + |Y^TX_k|. \qed\]
+
+\item To be feasible, we want $sY^TY \geq 2\gamma$, so choose
+\[s = \frac{2\gamma}{\|Y\|_2^2}.\]
+Then, $\gamma = \frac{s\|Y\|_2^2}{2}$. \qed
+
+\end{enumerate}
+\end{document}

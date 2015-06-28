@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{6}
+\newcommand{\duedate}{Wednesday, February 27, 2013}
+\newcommand{\mycollaborators}{Kenny Lu (krlu)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\begin{enumerate}[A)]
+\item Let $\e > 0$. Since $\lim_{x \rightarrow 0^+}f'(x) = L$,
+$\exists \delta > 0$ such that, $\forall c \in (0,\delta)$, $|f'(c) - L| < \e$.
+By the Mean Value Theorem, $\forall x \in (0,\delta)$, $\exists c \in (0,x)$
+with $f'(c) = \frac{f(x) - f(0)}{x}$, so that
+$\left| \frac{f(x) - f(0)}{x} - L \right| < \e$,
+and thus $\lim_{x \rightarrow 0^+}\frac{f(x) - f(0)}{x} = L$. A similar
+argument shows $\lim_{x \rightarrow 0^-}\frac{f(x) - f(0)}{x} = L$, and so
+$f$ is differentiable at zero with $f'(0) = L$. \qed
+
+\item If $x_0 < 0$, $g(x) = 0, \forall x \in (2x_0,0)$, so $g$ is
+differentiable at $x_0$, with $g'(x_0) = 0 = p(x_+)^{p - 1}$.
+
+If $x_0 > 0$, $g(x) = x^p, \forall x \in (0,2x_0)$, so $g$ is differentiable at
+$x_0$, with $g'(x_0) = px^{p - 1} = p(x_+)^{p - 1}$.
+
+It follows that $\lim_{x \rightarrow 0^+} g'(x)
+ = \lim_{x \rightarrow 0^-} g'(x) = 0$, so that, by the result of part A), for
+$x = 0$, $g$ is differentiable at $x$ and $g'(x) = 0 = p(x_+)^{p - 1}$. It
+follows, since the mapping $x \mapsto p(x_+)^{p - 1}$ is continuous, that $g$
+is continuously differentiable on $\R$, with the desired derivative. \qed
+
+\item In the first case, suppose $x_0 < 0$. If there existed $t > 0$ with
+$X(t) \geq 0$, then, letting $t_0 := \inf\{t : X(t) \geq 0\}$, by the Mean
+Value Theorem, $\exists c \in (0,t_0)$ with $X'(c) = \frac{X(t_0) -
+X(0)}{t_0} > 0$, which contradicts the differential equation, since $X(c) < 0$.
+Thus, $X'(t) = 0, \forall t \in (0,\infty)$, so that \fbox{$X(t) = x_0$,}
+$\forall t \in (0,\infty)$. It follows that, $\forall t \in \R$, $x_0 > 0$,
+$\frac{\partial X}{\partial x_0}(t,x_0) = 1$.
+
+In the case $x_0 > 0$, noting that $\frac{dX}{dt}$ is non-negative, the
+differential equation simplifies to $\frac{dX}{dt} = X^p$, which we have
+previously solved:
+\[\mbox{\fbox{$\displaystyle X(t) = ((1 - p)(t - c))^{\frac{1}{1 - p}}, \quad
+ c = -\frac{x_0^{1 - p}}{1 - p}, \quad \mbox{for} \quad t < c$.}}\]
+
+It follows from the previous two paragraphs that $X$ is continuously
+differentiable in $x_0$, except perhaps at $0$ and that $X$ is continuous in
+$x_0$ (for $t < c$). Since clearly
+$\lim_{x_0 \rightarrow 0^-} \frac{\partial X}{\partial x_0} = 1$ and
+\[
+\lim_{x_0 \rightarrow 0^+} \frac{\partial X}{\partial x_0}
+ = \lim_{x_0 \rightarrow 0^+} ((1 - p)tx^{p - 1} + 1)^{\frac{p}{1 - p}}
+ = 1,
+\]
+by the result of part A), $X$ is differentiable in $x_0$ at $x_0 = 0$ and
+$\frac{\partial X}{\partial x_0}(t,0) = 1$, so that $f$ is continuously
+differentiable in $x_0$ on $\R$. \qed
+
+\item Using the results of part B),
+\[
+ \lim_{x_0 \rightarrow 0^+} \frac{g'(x_0) - g'(0)}{x_0^{p - 1}}
+ = \lim_{x_0 \rightarrow 0^+} \frac{px_0^{p - 1}}{x_0^{p - 1}}
+ = \mbox{\fbox{$p$,}}
+\]
+and, using the result of part C) and l'Hospital's Rule,
+\begin{align*}
+\lim_{x_0 \rightarrow 0^+} \frac{1}{x_0^{p - 1}}
+                    \left( \frac{\partial X}{\partial x_0}(t,x_0)
+                            - \frac{\partial X}{\partial x_0}(t,0) \right)
+ & = \lim_{x_0 \rightarrow 0^+}
+            \frac{((1 - p)tx^{p - 1} + 1)^{\frac{p}{1 - p}}}{x_0^{p - 1}} \\
+ & = \lim_{x_0 \rightarrow 0^+}
+ \frac{\frac{\partial}{\partial x_0}((1 - p)tx^{p - 1} + 1)^{\frac{p}{1 - p}}}
+                                {\frac{\partial}{\partial x_0}x_0^{p - 1}} \\
+ & = \lim_{x_0 \rightarrow 0^+}
+ \frac{p((1 - p)tx^{p - 1} + 1)^{\frac{2p - 1}{1 - p}}(1 - p)tx_0^{p - 2}}
+                                {(p - 1)x_0^{p - 2}} \\
+ & = \lim_{x_0 \rightarrow 0^+}
+                            p((1 - p)tx^{p - 1} + 1)^{\frac{2p - 1}{1 - p}}t
+   = \mbox{\fbox{$pt$.}}
+\end{align*}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[A)]
+\item If $\forall t \in \R, X = e^{\lambda t}v$, then
+\[Ae^{\lambda t}v = AX = \frac{dX}{dt}(t) = \lambda e^{\lambda t}v.\]
+Then, since $e^{\lambda t} \neq 0$, $Av = \lambda v$, so $v$ is an
+eigenvector of $A$, with associated eigenvalue $\lambda$. \qed
+
+\item Since $\alpha > 0$, for any $t_0 \in \R$, $\beta$ defined by
+\[\beta(t) = \int_{t_0}^t\frac{1}{\alpha(s)}ds, \forall t \in \R\]
+is differentiable, with $\beta' = \frac{1}{\alpha}$ on $\R$. Thus, for
+$X := Y \circ \beta$, by the Chain Rule,
+\[\frac{dX}{dt} = \beta'\cdot \left(\frac{dY}{dt}\circ \beta\right)
+ = \frac{\alpha}{\alpha} A(Y \circ \beta) = AX,\]
+so that $X$ is a satisfies the differential equation from part A). \qed
+
+%TODO
+\item Note first that the eigenvalues of $A$ are $\lambda_1 = -2 - \sqrt2,
+\lambda_2 = -2, \lambda_3 = \sqrt2 - 2$ of $A$, and that their associated
+eigenvectors are, respectively,
+\[v_1 = \left[
+            \begin{array}{c}
+                1       \\
+                -\sqrt2 \\
+                1
+            \end{array}
+        \right],
+v_2 = \left[
+            \begin{array}{c}
+                -1      \\
+                0       \\
+                1
+            \end{array}
+        \right],
+v_3 = \left[
+            \begin{array}{c}
+                1       \\
+                \sqrt2  \\
+                1
+            \end{array}
+        \right].
+\]
+By the result of part A), then, a fundamental matrix solution for
+$\frac{dX}{dt} = AX$ is
+\[\mbox{\fbox{$\displaystyle
+\Phi_X = \left[
+            \begin{array}{c}
+                e^{\lambda_1 t} v_1 \; \big| \;
+                e^{\lambda_2 t} v_2 \; \big| \;
+                e^{\lambda_3t } v_3
+            \end{array}
+        \right]
+$.}}
+\]
+By the result of part B), the function $t \mapsto Y(\int_1^t s \, ds)
+ = Y\left(t^2/2\right)$ is a solution to the differential equation for $X$ (for
+$t > 0$), so that $Y = X(\sqrt{2t})$ and thus a fundamental matrix solution for
+$\frac{dY}{dt} = t\inv AY$ is
+\[\mbox{\fbox{$\displaystyle
+\Phi_Y = \left[
+            \begin{array}{c}
+                e^{\lambda_1 \sqrt{2t}}v_1 \; \big| \;
+                e^{\lambda_2 \sqrt{2t}}v_2 \; \big| \;
+                e^{\lambda_3 \sqrt{2t}} v_3
+            \end{array}
+        \right]
+$.}}
+\]
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+We first observe that, for $X_1(t) := \Phi_{t_0}(t) v_0$,
+\begin{equation}
+\ddot X_1 = A \Phi_{t_0}v_0 = AX_1,   \quad
+        X_1(t_0) = 0 \cdot v_0 = 0,     \quad
+   \dot X_1(t_0) = I v_0 = v_0,
+\label{eq:1}
+\end{equation}
+so that $X_1$ is a solution to the first differential equation, and, for
+for $X_2(t) := \dot\Phi_{t_0}(t) x_0$,
+\[\ddot X_2 = A \dot\Phi_{t_0}x_0 = AX_2,   \quad
+        X_2(t_0) = I x_0 = x_0,     \quad
+   \dot X_2(t_0) = 0 \cdot x_0 = 0,\]
+so that $X_1$ is a solution to the first differential equation.
+
+We then observe that, for $X_3 := X_1 + X_2$, since the derivative is linear,
+\[\ddot X_3 = AX_1 + AX_2 = AX_3,       \quad
+        X_3(t_0) = 0 + x_0 = x_0,       \quad
+   \dot X_3(t_0) = v_0 + 0 = v_0,\]
+so that $X_3$ is a solution to the third differential equation.
+
+For an arbitrary $t_1 > t_0$, $b_1 \in \R^n$, we now solve the system
+\[
+\left\{
+\begin{array}{rcl}
+\ddot X_4(t)   & = & AX_4(t) + b_1\delta(t - t_1) \\
+\dot  X_4(t_0) & = & 0                        \\
+      X_4(t_0) & = & 0
+\end{array}
+\right.
+\]
+For $\e > 0$, we have (assuming $X(t) = 0$ for $t < t_1$)
+\begin{align*}
+\dot  X_4(t_1 + \e)
+ & = \int_{t_0}^{t_1 + \e} \ddot X_4(s) \, ds
+   = \int_{t_1}^{t_1 + \e} AX_4(s) + b_1\delta(s - t_1) \, ds
+   = \int_{t_1}^{t_1 + \e} AX_4(s) \, ds + b_1 \rightarrow b_1
+\end{align*}
+as $\e \rightarrow 0$. Thus, we have (since $\delta(t - t_1) = 0$ for $t >
+t_1$)
+\[
+\ddot X_4 = AX_4,   \quad
+        X_4(t_1) = 0,     \quad
+   \dot X_4(t_1) = b_1,
+\]
+Using the solution to equation (\ref{eq:1}), we have, $\forall t >
+t_1$, $X_4(t) = \Phi_{t_1}(t)b_1$. As a consequence, we now observe that, by
+the Principle of Superposition, for
+any $b_1,\dots,b_M \in \R^n$,
+\[X_5 := \sum_{\substack{k = 1 \\ t_k < t}}^M \Phi_{t_k}(t)b_k.\]
+is a solution to
+\[
+\left\{
+\begin{array}{rcl}
+\ddot X_5(t)   & = & AX_5(t) + \sum_{k = 1}^M b_k\delta(t - t_k) \\
+\dot  X_5(t_0) & = & 0                        \\
+      X_5(t_0) & = & 0
+\end{array}
+\right..
+\]
+
+Finally, for $\Delta t > 0$, $t_k := t_0 + k\Delta t$, we approximate
+\[b(t) \approx \sum_{k = 1}^{M} b(t_k) \Delta t \delta(t - t_k).\]
+Then, the solution to the given inhomogeneous system is approximately
+\[
+ X(t)
+ \approx \sum_{\substack{k = 1 \\ t_k < t}}^M \Phi_{t_k}(t)b(t_k)\Delta t
+ \approx \mbox{\fbox{$\displaystyle \int_{t_0}^t \Phi_s(t) b(s) \, ds$.}}
+\]
+\end{question}
+\end{document}

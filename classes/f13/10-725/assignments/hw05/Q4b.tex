@@ -1,0 +1,17 @@
+{\bf Part B} [10 points] 
+
+Recall that a zero-mean, $P$-dimensional Gaussian distribution is defined by its covariance matrix $\Sigma$. So `learning' such a distribution from some iid samples $X = \{ X^{(1)},\ldots, X^{(N)} \}$ amounts to an estimate $\widehat{\Sigma}$ of $\Sigma$. Since we have an i.i.d. sample from a known family of distributions, a natural approach is to pick the $\widehat{\Sigma}$ which maximizes the likelihood of the sample. However, if $N < P$, the estimate is not well-defined. Further, even if $N \geq P$ but $N$ and $P$ are of comparable size, the maximum likelihood estimate can have high variability, leading to bad predictive performance. Since $P$ is big, we are inclined to restrict attention to sparse distributions, for some appropriate notion of sparsity. A tempting, but unrealistic, kind of sparsity is independence of a large number of the features $i$ and $j$: $\Sigma_{ij} = E_{X \sim N(0,\Sigma)}(X_i X_j) = 0$. A more realistic kind of sparsity is conditional independence of features $i$ and $j$ given the other features. Since the distribution is Gaussian, this happens when $\Sigma^{-1}_{ij} = 0$. Since our sparsity belief/assumption concerns $\Sigma^{-1}$, let's orient our notation around that, starting with the log-likelihood function, which can be shown to be:
+$$\ell(K) = \textrm{log det}(K) - \textrm{tr}(SK)$$
+where $K$ is a symmetric positive semidefinite $P \times P$ matrix meant to estimate $\Sigma^{-1}$, $S$ is the empirical covariance matrix $S = \frac{1}{N-1} \sum_{i=1}^{N}(X_i - \bar{X})(X_i - \bar{X})^T$ and the sample mean $\bar{X} = \frac{1}{N}\sum_{i=1}^N X_i$.
+The maximizer of $\ell(K)$ is generally ill-defined and non-sparse, and so one considers the following $\ell_1$ penalized estimator (and the problem is lovingly called the graphical lasso):
+$$
+\min_{K \succ 0} -\log \det (K) + Tr(SK) + \lambda \sum_{i \neq j} |K_{ij}|
+$$
+
+\begin{enumerate}
+\item [3 points] Write down the subgradient method's update equations.
+
+\item [4 points] Write down the proximal gradient update equations.
+
+\item [3 points] Can you accelerate this? If yes, write down the update equations. If no, why not?
+\end{enumerate}

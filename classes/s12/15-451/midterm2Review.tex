@@ -1,0 +1,168 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% This is here, so that you can make your homework look %%
+%% pretty when you compile it.                           %%
+%%     DO NOT PUT YOUR NAME ANYWHERE ELSE!!!!            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myhwname}{Midterm 2 Review Sheet}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\thispagestyle{plain}
+\begin{tabular}{|p{20mm} | p{100mm} | p{30mm}|}
+\hline
+Algorithm & Description & Runtime(s) \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Intersections} ($\Omega(n^2)$ worst-case lower
+                                                                    bound)} \\
+\multicolumn{3}{|c|}{In: $n$ line segments; Out: $k$ intersections} \\
+\hline
+Naive
+          & Check every pair
+          & $\Theta(n^2)$ \\
+\hline
+Sweep-Line
+          & Sweep left-to-right keeping track with PQ and BST
+          & $O((n + k) \log n)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Convex Hull} ($\Omega(n \log n)$ lower bound)} \\
+\multicolumn{3}{|c|}{In: $n$ vertices; Out: $h$ edges of convex hull} \\
+\hline
+Naive
+          & check each possible line segment 
+          & $O(n^3)$ \\
+\hline
+Gift-Wrap
+          & for each vertex, find next min w.r.t. angle
+          & $O(n\cdot h) \subseteq O(n^2)$ \\
+\hline
+D \& C
+          & sort; recurse on left/right halves; merge at bridges
+          & $O(n \log n)$ \\
+\hline
+G-Scan
+          & ignore right turns; add left turns
+          & $O(n \log n)$ \\
+\hline
+Rand Inc
+          & sort by $x$; randomly add vertices with buildTent
+          & $O(n \log n)$ \\
+\hline
+Chan's
+          & uses Graham Scan as subroutines
+          & $O(n \log h)$ \\
+\hline
+K-S
+          & ``ultimate convex hull algorithm''; marriage-before-conquest
+          & $O(n \log h)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Geometric 2D Linear Programming}} \\
+\multicolumn{3}{|c|}{In: $\mathbf{c}$, $n$ half planes; Output: argmax $c^Tx$} \\
+\hline
+2D LP
+          & randomly add half planes; keep finding optimum
+          & expected $O(n)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Graph Traversal}} \\
+\multicolumn{3}{|c|}{In: $G$ ($n$ nodes, $m$ edges),source $s$/ dest $d$;
+Out: $d$, if $d$ reachable from $s$} \\
+\hline
+DFS
+          & find cycle, connected components, bipartition, topo sort, etc.
+          & $O(n + m)$ \\
+\hline
+BFS
+          & uses queue to maintain order; large memory footprint
+          & $O(n + m)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: MST}} \\
+\multicolumn{3}{|c|}{In: weighted graph $G$ ($n$ nodes, $m$ edges);
+Out: MST of $G$} \\
+\hline
+Prim's
+          & like Dijkstra's; $O(m + n \log n)$ w/Fib heap; w/ bin heap
+          & $O((m + n )\log n)$ \\
+\hline
+Boruvka's
+          & run Prim's simultaneously on all vertices
+          & $O(m \log n)$ \\
+\hline
+Kruskal's
+          & sort edges; add edges greedily
+          & $O(m \log n)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Shortest Path}} \\
+\multicolumn{3}{|c|}{In: weighted $G$ ($n$ nodes, $m$ edges), source $s$/
+dest $d$; Out: min path from $s$ to $d$} \\
+\hline
+Dijkstra's
+          & duh (w/ Fibo heap)
+          & $O(m + n \log n)$ \\
+\hline
+B-F
+          & works with negative edge weights by relaxing \emph{all} edges
+          & $O(m\cdot n)$ \\
+\hline
+F-W
+          & find \emph{all} shortest paths via DP (with negative edge weights)
+          & $\Theta(n^3)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Max Flow/Min Cut}} \\
+\multicolumn{3}{|c|}{In: weighted $G$ ($n$ nodes, $m$ edges), source $s$/
+dest $d$; Out: min path from $s$ to $d$} \\
+\hline
+F-F
+          & push $1$ down augmenting path; time depends on max cap $c$
+          & $O(cE)$ \\
+\hline
+P-P
+          & Push and relabel
+          & $\Theta(n^3)$ \\
+\hline
+\multicolumn{3}{|c|}{{\bf Problem: Parallel Matrix Multiplication}} \\
+\multicolumn{3}{|c|}{In: matrices $A$ and $B$; Out: $C = AB$} \\
+\hline
+P-Strassen
+          & $O(n^{\log_2 7} \log n)$ work
+          & $O(\log n)$ span \\
+\hline
+\end{tabular}
+
+Primal: Max $\mathbf{c}^T\mathbf{x}$ w/
+$A\mathbf{x} \leq \mathbf{b}$, $\mathbf{x} \geq \mathbf{0}$.
+Dual: Min $\mathbf{b}^T\mathbf{y}$ w/
+$A^T\mathbf{y} \geq \mathbf{c}$, $\mathbf{y} \geq \mathbf{0}$.
+
+Duality Theorem: If primal and dual are feasible, then
+$\mathbf{c}^T\mathbf{x} \leq \mathbf{b}^T\mathbf{y}$.
+
+\end{document}

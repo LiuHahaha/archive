@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,enumerate,comment}
+
+\newcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\prox}{\operatorname{prox}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\op}{{\operatorname{op}}}
+
+\begin{document}
+\twocolumn
+\section{Mastery set [25 points]\\(Aaditya)}
+\paragraph{Lemma 1:} If $f : D \to \R$ is convex and $m \in \R$, then
+$U_f(m) := \{ x \in D : f(x) \leq m \}$ is convex.
+
+\paragraph{Proof:} For $x,y \in U_f(m), \theta \in [0,1]$, if
+$z=\theta x+(1-\theta)y$, then
+\[f(z) \leq \theta f(x) + (1 - \theta)f(y) \leq m,\] so
+$z \in U_f(m)$. \qed
+
+\paragraph{A [2 + 2]} If $S = \emptyset$, then $S$ is trivially convex.
+Otherwise, for $x \in S$, $S = U_f(f(x))$ is convex, by Lemma 1. If $f$ is
+strictly convex and $\exists x,y \in S$ with $x \neq y$, for
+$\theta \in (0,1)$, $z = \theta x + (1 - \theta)y$,
+\[f(z) < \theta f(x) + (1 - \theta)f(y) = f(x),\]
+contradicting the fact that $x$ minimizes $f$.
+
+\paragraph{B [2 + 2]} If $A$ is orthogonal, $A^TA = I$, whose only singular
+value is $1$. For
+\[A =
+\begin{bmatrix}
+    1 & 0 \\
+    0 & 1
+\end{bmatrix},
+B =
+\begin{bmatrix}
+    0 & 1 \\
+    1 & 0
+\end{bmatrix},
+\]
+both $A$ and $B$ are orthogonal, but \fbox{$\tfrac12A + \tfrac12B$} is not
+orthogonal.
+
+\paragraph{C [2 + 2 + 2]} By Lemma 1, the unit ball $U_{\|\cdot\|}(1)$ is
+convex. Since, by part B, all orthogonal matrices are in the unit ball, it
+follows that any convex combination of orthogonal matrices is in the unit ball.
+By the triangle inequality, for any norm $\|\cdot\|$,
+\begin{align*}
+                \|x\| & = \|x - y + y\| \leq \|x - y\| + \|y\|  \\
+\mbox{ and }    \|y\| & = \|y - x + x\| \leq \|x - y\| + \|x\|,
+\end{align*}
+which implies
+\[-\|x - y\| \leq \|x\| - \|y\| \leq \|x - y\|,\]
+and so $|\|x\| - \|y\|| \leq \|x - y\|$ (this statement is precisely the
+Reverse Triangle Inequality. Hence, any norm is Lipschitz with respect to
+itself, with Lipschitz constant \fbox{$L = 1$.} \qed
+
+\paragraph{D [5]} We already showed that the convex hull of orthogonal matrices
+in contained in the unit ball of $\|\cdot\|_\op$.
+
+If $A$ satisfies
+$\|A\|_\op \leq 1$, then $A$ has a singular value decomposition
+$A = U\Sigma V^T$, where $U$ and $V$ are orthogonal and $\Sigma$ is diagonal
+and has entries in $[-1,1]$. Let $\D$ denote the set of diagonal matrices with
+diagonal entries in $\{-1,1\}$. It is geometrically obvious that
+$\conv\left(\{-1,1\}^n\right)~=~[-1,1]^n$, and hence $\Sigma \in \conv(\D)$.
+Also, any $D \in \D$ is clearly orthogonal. Thus, since
+$\Sigma = \sum_{D \in \D} \theta_D D$, where $\sum_{D \in \D} \theta_D = 1$,
+\[A
+    = U \left( \sum_{D \in \D} \theta_D D \right) V^T
+    = \sum_{D \in \D} \theta_D UDV^T
+\]
+is in the convex hull of orthogonal matrices (as any product of orthogonal
+matrices is itself orthogonal). \qed
+
+\paragraph{E [4+2]} Rearranging the first-order definition of strong convexity,
+\begin{align*}
+f(y) - \langle \nabla f(x), y - x \rangle
+    & \geq f(x) + \frac{\lambda}{2}\|y - x\|_2^2    \\
+f(x) + \langle \nabla f(y), y - x \rangle
+    & \geq f(y) + \frac{\lambda}{2}\|y - x\|_2^2.
+\end{align*}
+Adding these inequalities and cancelling terms,
+\[\langle \nabla f(y) - \nabla f(x), y - x \rangle
+    \geq \lambda\|y - x\|_2^2.\]
+Then, by Cauchy-Schwarz,
+\begin{align*}
+\|\nabla f(y) - \nabla f(x)\|
+ &  \geq \frac{\langle \nabla f(y) - \nabla f(x), y - x \rangle}{\|y - x\|_2}\\
+ &  \geq + \lambda\|y - x\|_2. \qed
+\end{align*}
+If $\nabla f$ is Lipschitz with Lipschitz constant $L$, then
+\[L\|y - x\|_2 \geq \|\nabla f(y) - \nabla f(x)\| \geq + \lambda\|y - x\|_2,\]
+so \fbox{$L \geq \lambda$.}
+\end{document}

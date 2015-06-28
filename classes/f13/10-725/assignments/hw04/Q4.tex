@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\X}{\mathcal{X}}
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+\newcommand{\KL}{{\operatorname{KL}}}
+\newcommand{\wx}{{\widetilde{x}}}
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{3}
+
+\section{Statistical estimation and penalty methods [25 points] (Sashank)}
+
+\paragraph{A [KL divergence estimation].}
+\begin{enumerate}[(a)]
+\item First, note that, $\forall x \in \X$, if
+\[0
+    = \left( \frac{d}{dg(x)} \log(g(x))p(x) - g(x)q(x) \right) (g^*(x))
+    = \frac{p(x)}{g^*(x)} - q(x),
+\]
+then $g^*(x) = \frac{p(x)}{q(x)}$, so that $g* = \frac{p}{q}$ maximizes
+$\log(g^*(x))p(x) - g^*(x)q(x)$. If $\KL(\P\|\Q) = \infty$, then
+$\int_\X \log(g^*(x))p(x) - g^*(x)q(x) = \infty$. Thus, assume
+$\KL(\P\|\Q) < \infty$. Then,
+\begin{align*}
+\KL(\P\|\Q)
+ &  = \int_\X p(x) \log \frac{p(x)}{q(x)} \, dx    \\
+ &  = \int_\X \left( \log \frac{p(x)}{q(x)} \right) p(x) - p(x) + p(x) \, dx \\
+ &  = \int_\X \left( \log g^*(x) \right) p(x) - g^*(x)q(x) \, dx + 1    \\
+ &  = \int_\X \sup_{g > 0} \left( \log g(x) \right) p(x) - g(x)q(x) \, dx + 1\\
+ &  = \sup_{g > 0} \int_\X \left( \log g(x) \right) p(x) - g(x)q(x) \, dx + 1
+\end{align*}
+(we use the Dominated Convergence Theorem switch the $\sup$ and the integral).
+\qed
+ 
+\item Not quite clear on how to do this; don't we need some sort of smoothing
+to get an estimate of $\frac{p(x)}{q(x)}$ that is finite almost everywhere?
+ 
+\item If $\frac{p(x)}{q(x)} = w^Tx$, then
+\[KL(\P,\Q)
+    = \sup_{
+        \begin{subarray}{c}
+            w \in \R^d\\
+            w^Tx = \log \frac{p(x)}{q(x)}
+        \end{subarray}} \int_\X w^Tx p(x) \, dx - \int\exp(w^Tx) q(x) \, dx + 1.
+\]
+This maximization problem is concave and smooth in $w$, so we should be able to
+use any simple constrained optimization algorithm. The dual problem is
+\[
+\inf_{v \geq 0} \sup_{w \in \R^d}
+    \int_\X w^Tx p(x) \, dx - \int\exp(w^Tx) q(x) \, dx + 1
+        + \int_\X v(x)\left( w^Tx - \frac{p(x)}{q(x)} \right).
+\]
+\end{enumerate}
+
+%TODO
+\paragraph{B [Penalty methods].}
+\begin{enumerate}[(i)]
+\item Since $f$ and $h$ convex and differentiable, the KKT conditions for $(P)$
+are
+\begin{align*}
+0 & = \nabla f(x^*) + \sum_{i = 1}^m u_i^*\nabla h_i(x^*)   \\
+u_i^* h_i(x^*) & = 0, \quad (i \in \{1,\dots,m\})           \\
+h(x^*) & \leq 0,                                            \\
+\mbox{and} \quad u^* & \geq 0.
+\end{align*}
+$(P(c))$ is unconstrained and $h^+$ need not be differentiable, so the only
+condition for $(P(c))$ is
+\begin{align*}
+0 & \in \partial \left( f(x_c^*) + cp(x_c^*) \right)
+    = \nabla f(x_c^*) + c\sum_{i = 1}^m \partial h_i^+(x_c^*),
+\end{align*}
+where $x_c^*$ is a primal solution of $(P(c))$.
+ 
+\item We show
+$\displaystyle 0  \in \nabla f(\wx) + c\sum_{i = 1}^m \partial h_i^+(\wx)$.
+Since $\displaystyle 0 = \nabla f(\wx) + \sum_{i = 1}^m u_i^*\nabla h_i(\wx)$,
+it suffices to show
+\[u_i^*\nabla h_i(\wx) \in c\partial h_i^+(\wx),\]
+for each $i \in \{1,\dots,m\}$. Suppose $h_i(\wx) < 0$. Then, since each
+$u_i^*h_i(\wx) = 0$, $u_i^* = 0$, and, since $h_i^+(\wx) = 0$, so that $h_i^+$
+achieves a local minimum at $\wx$,
+\[u_i^*\nabla h_i(\wx) = 0 \in c\partial h_i^+(\wx).\]
+Now suppose $h_i(\wx) = 0$. Then, $h_i^+(\wx) = h_i(\wx)$, so that, since
+$h_i^+ \geq h_i$ and $h_i$ is convex,
+\[ch_i^+(z) - ch_i^+(\wx) \geq u_i^*h_i(z) - u_i^*h_i(\wx)
+    \geq u_i^*\nabla h_i(\wx) \cdot (z - \wx) \quad \quad \forall z \in \R^n\]
+(using $c \geq \|u\|_\infty$), and so
+\[u_i^*\nabla h_i(\wx) \in c\partial h_i^+(\wx).\]
+Since $h(\wx) \leq 0$, this covers all cases. \qed
+ 
+\item Since $u^*$ is a solution to the dual, $u^* \geq 0$. Since the dual is
+bounded, there is a solution $x^*$ to the primal. Then, since
+$c > \|u^*\|_\infty$ and $u^* \geq 0$, by strong duality,
+\begin{align*}
+f(\wx) + c\sum_{i = 1}^m h_i^+(\wx)
+ &  \geq f(\wx) + \sum_{i = 1}^m u_i^* h_i^+(\wx)
+    \geq f(\wx) + \sum_{i = 1}^m u_i^* h_i(\wx)     \\
+ &  \geq f(x^*) + \sum_{i = 1}^m u_i^* h_i(x^*)
+    = f(x^*)
+    = f(x^*) + c\sum_{i = 1}^m h_i^+(x^*)
+\end{align*}
+since each $u_i^*h_i(x^*) = 0 = h_i^+(x^*)$. Thus, since $\wx$ minimizes the
+first expression, $f(\wx) = f(x^*)$ and $\wx$ is feasible, so $\wx$ solves
+$(P)$. \qed 
+\end{enumerate}
+\end{document}

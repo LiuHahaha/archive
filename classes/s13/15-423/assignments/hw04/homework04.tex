@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage[]{graphicx}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-423 Digital Signal Processing for CS}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Sunday, April 28, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\sminus}{\backslash}        % asymmetric set difference
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\sinc}{\operatorname{sinc}} % sinc function
+\newcommand{\Z}{\mathcal{Z}}            % Z-transform
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item By Linearity and the Time-Shifting property of the Z-transform,
+\[Y(z)
+    = b_0X(z) + b_1z^{-1}X(z) + b_2z^{-2}X(z)
+    = \mbox{\fbox{$(b_0 + b_1z^{-1} + b_2z^{-2})X(z)$.}}
+\]
+
+\item By Linearity and the Differentiation property of the Z-transform,
+\[Y(z) = \mbox{\fbox{$\displaystyle -z\frac{dX(z)}{dz} - 5X(z)$.}}\]
+\end{enumerate}
+
+\item The snap of a whip should closely approximate a delta function. Thus,
+assuming effect of the concert hall on the music was time-invariant (pretty
+reasonable) and linear (probably still reasonable), given a recording of the
+violinist, we can perform the same transformation on the sound as did the
+concert hall, by writing the signal as a linear combination of delta functions
+and then replacing the delta functions with the recording of the whip.
+
+\item Since convolutions in the time domain correspond to products in the
+frequency domain, we can simply convolve the signal with system corresponding
+to $H_1(Z)H_2(Z)$, rather than convolving it separately with the signal
+corresponding to $H_1(Z)$ and the signal corresponding to $H_2(Z)$.
+
+\item
+\begin{enumerate}
+\item Decomposing into partial fractions, we note
+\[\frac{z(2z - a - b)}{(z - a)(z - b)}
+    = \frac{z}{z - a} + \frac{z}{z - b}.
+    = \frac{1}{1 - az\inv} + \frac{1}{1 - bz\inv}.
+\]
+Then, by linearity of the inverse Z-transform,
+\[x[n]
+    = \Z\inv\left\{ \frac{z}{z - a} \right\}
+    + \Z\left\{ \frac{z}{z - b} \right\}
+    = \mbox{\fbox{$a^n u[n] + b^n u[n]$.}}
+\]
+
+\item Since $\Z\inv\{1\} = \delta[n]$, by linearity and the time-shifting
+property of Z-transform,
+\[x[n]
+    = \mbox{\fbox{$\delta[n] + 2\delta[n - 1] + 5\delta[n - 2] + 7\delta[n - 3]
+    + \delta[n - 5]$.}}
+\]
+\end{enumerate}
+
+\item By Parseval's Theorem, the sum of squared values of the original signal
+is equal to the integral of the square of the Z-transform (over a contour
+dependent on the region of convergence). Thus, we could just approximate this
+integral and compare it to the threshold.
+
+\item Since convolutions in the time domain correspond to products in the
+frequency domain, we can invert the effects of the systems in Problem 3 by
+convolving with the signal corresponding to $\frac{1}{H_1(Z)H_2(Z)}$.
+
+\item
+\begin{enumerate}
+\item The original time-domain signal must have bandwidth no greater than
+$\frac12\min\{Y,X\}$.
+
+\item The signal must have no frequencies greater than $Y$.
+
+\item The signal should first be low-pass filtered to remove any frequencies
+greater than $Y$, and then all but $1$ in $\alpha$ of the samples should be
+removed from the signal.
+
+\end{enumerate}
+
+\end{enumerate}
+\end{document}

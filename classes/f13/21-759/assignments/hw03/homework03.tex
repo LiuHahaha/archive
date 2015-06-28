@@ -1,0 +1,222 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{textcomp}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-759 Differential Geometry}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Monday, October 20, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED square
+\newcommand{\inv}{^{-1}}                % inverse
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\sminus}{\backslash}        % set difference
+\renewcommand{\dim}{\operatorname{dim}} % dimension of a vector space
+\renewcommand{\det}{\operatorname{det}} % determinant of a matrix
+\newcommand{\sgn}{\operatorname{sign}}  % determinant of a matrix
+\newcommand{\rnk}{\operatorname{rank}}  % rank of a matrix
+\newcommand{\tr}{\operatorname{trace}}  % trace of a matrix
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\M}{\mathcal{M}}            % manifold M
+\newcommand{\D}{\mathcal{D}}            % \smooth real functions on a manifold
+\newcommand{\B}{\mathcal{B}}            % basis of a topology
+\newcommand{\pow}{\mathcal{P}}          % power set
+\newcommand{\e}{\varepsilon}            % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname\footnote{\myandrew} \\
+Due: \duedate
+
+I would be willing to present solutions to problems 3, 4, and 5.
+
+\begin{question}{Problem 1}
+First, let $g : T_eG \times T_eG \to \R$ be an inner product (on the Lie
+algebra associated with $G$). We now extend this to a Riemann metric tensor on
+$G$ by defining
+\[g_p(v,w) := g_e(DL_{g\inv} v, DL_{g\inv} v).\]
+$\forall p \in G, v,w \in T_pG$.
+Let
+\[\omega := \sqrt{|g|} dx_1 \wedge \dots \wedge dx_n,\]
+be the usual volume form induced by $g$. Then, for any open set $A$ of $G$,
+define
+\[\mu(A) := \int_A\]
+For any $p \in G$, since $L_p$ is an isometry with respect to $g$,
+$L_p^*\omega = \omega$, so
+\[\mu(L_p(A))
+    = \int_{L_p(A)} \omega
+    = \int_A L_p^*\omega
+    = \int_A \omega
+    = \mu(A),
+\]
+and we have left-invariance, as desired. \qed
+
+If $\mu_2$ is another left-invariant Borel measure on $G$, define, for any open
+set $A$,
+\[\phi(A) := \frac{\mu(A)}{\nu(A)}\]
+(note, $\mu(A),\nu(A) \neq 0$). Then, $\forall p \in G$,
+\[\phi(L_p(A))
+    = \frac{\mu(pA)}{\nu(pA)}
+    = \frac{\mu(A)}{\nu(A)}
+    = \phi(A),\]
+and so $\phi$ is constant on $G$. From construction of the Borel
+$\sigma$-algebra, it follows that $\mu = c\nu$, for some constant $c \in \R$,
+on all Borel sets, so $\mu$ is unique up to constant multiples. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+\begin{enumerate}[(i)]
+\item If $X$ is a vector field and $\Phi_t$ is the associated flow,
+\begin{align*}
+L_X(\alpha \wedge \beta)
+ &  = \frac{d}{dt} \bigg|_{t = 0} \Phi_t^*(\alpha \wedge \beta)             \\
+ &  = \frac{d}{dt} \bigg|_{t = 0} \Phi_t^*(\alpha) \wedge \Phi_t^*(\beta)   \\
+ &  = \frac{d}{dt} \bigg|_{t = 0} \Phi_t^*(\alpha) \wedge \beta
+        + \alpha \wedge \frac{d}{dt} \bigg|_{t = 0} \Phi_t^*(\beta)         \\
+ &  = (L_X\alpha) \wedge \beta + \alpha \wedge (L_X\beta),
+\end{align*}
+where the third equality follows from the product rule and equation (4) in the
+notes (definition of the wedge product). \qed
+
+\item
+
+\item If $X$ is a vector field, since $d^2 = 0$, by Cartan's formula,
+\[L_X \circ d
+    = d \circ i_X \circ d + i_X \circ d \circ d
+    = d \circ d \circ i_X + d \circ i_X \circ d
+    = d \circ L_X. \qed
+\]
+
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+Fix any $p \in U$. If $q \in U$ and $\gamma : [0,1] \to U$ is a smooth curve
+from $p$ to $q$ (i.e., $\gamma(0) = p, \gamma(1) = q$), define
+\[f(q) := \int_\gamma \phi^*\omega,\]
+where $\phi^*\omega$ denotes the pullback of $\omega$ by $\phi^*$.
+
+\paragraph{Lemma 1} This $f$ is well defined on $U$.
+
+\emph{Proof:} Let $q \in U$. Since $U$ is simply connected, it is pathwise
+connected, and hence there is a smooth curve from $p$ to $q$.
+
+Suppose now that $\gamma_1,\gamma_2 : [0,1] \to U$ are smooth curves from $p$
+to $q$. Since $U$ is simply connected, there is a smooth homotopy
+$H : [0,1]^2 \to U$ between $\gamma_1$ and $\gamma_2$ (i.e.,
+$H(0,t) = \gamma_1(t)$ and $H(1,t) = \gamma_2(t)$, and $H(s,0) = p$ and
+$H(s,1) = q$, $\forall s,t \in [0,1]$.) Note that the image
+$\M_2 := H([0,1]^2)$ is a manifold whose boundary is the image of the
+``concatenation'' $\gamma$ of $\gamma_1$ and $\gamma_2$, where $\gamma_2$ is
+oriented backwards. Thus, by Stokes' Theorem, and properties of the pullback,
+\[ \int_{\gamma_1} \phi^*\omega - \int_{\gamma_2} \phi^*\omega
+    = \int_{\gamma} \phi^*\omega
+    = \int_{\M_2} d(\phi^*\omega)
+    = \int_{\M_2} \phi^*(d\omega)
+    = \int_{\M_2} \phi^*(0)
+    = 0. \quad \square
+\]
+Then, $\forall x \in \M$,
+\[d(f \circ \phi\inv)_x\left( \frac{\partial}{\partial x_i} \right)
+    = \frac{\partial}{\partial x_i} (f \circ \phi\inv \circ \phi) (\phi\inv(x))
+    = \frac{\partial}{\partial x_i} f (\phi\inv(x))
+    = \phi^*\omega\bigg|_{\phi\inv(x)}
+    \hspace{-5mm}= \omega_x\left(\frac{\partial}{\partial x_i}\right). \qed\]
+\end{question}
+
+\begin{question}{Problem 4}
+\[\int_\M \omega
+    = \int_\M d\alpha
+    = \int_{\partial \M} \alpha
+    = \int_\emptyset \alpha = 0. \qed
+\]
+Define $f : \R^2 \sminus \{(0,0)\} \to \R^2$ by
+\[f(x,y) := \left( \frac{x}{x^2 + y^2}, \frac{-y}{x^2 + y^2} \right),\]
+and let $\omega$ denote the $1$-form on $S^1$ corresponding to $f$. Then,
+\[\int_{S^1} \omega = 2\pi \neq 0,\]
+and so, by the previous result, $\omega$ cannot be exact, since $S^1$ is a
+compact manifold.
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+Note that a parametrization of the catenoid is given by
+\[(\cosh(z)\cos(t),\cosh(z)\sin(t),z) \quad z \in \R, t \in (0,2\pi)\]
+and a parametrization of the helicoid is given by
+\[(t\cos(z),t\sin(z),z) \quad z,t \in \R.\]
+Define $\Phi : \R^2 \to \R^2$ defined by
+\[\Phi(t,z) := (t,\sinh z).\]
+The Jacobian of $\Phi$ is
+\[J_\Phi
+    = \begin{bmatrix}
+        1   &   0       \\
+        0   &   \cosh v \\
+    \end{bmatrix},
+\]
+so $\det(J_\Phi)$ is non-zero everywhere and hence $\Phi$ is a local
+diffeomorphism. It is easily checked that, under this reparametrization of the
+helicoid, for both the catenoid and the helicoid, that
+\begin{align*}
+\left\langle\frac{\partial}{\partial z},
+                                    \frac{\partial}{\partial z}\right\rangle
+    & = \cosh^2(t), \\
+\left\langle\frac{\partial}{\partial z},
+                                    \frac{\partial}{\partial t}\right\rangle
+    & = 0,          \\
+\left\langle\frac{\partial}{\partial t},
+                                    \frac{\partial}{\partial t}\right\rangle
+    & = \cosh^2(t). \\
+\end{align*}
+
+The catenoid and helicoid are not globally isometric, as they are not even
+homeomorphic. For example, the helicoid is clearly simply connected, whereas
+the catenoid is not. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+I wasn't able to finish this problem.
+\end{question}
+\end{document}

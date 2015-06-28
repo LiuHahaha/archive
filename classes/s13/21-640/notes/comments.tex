@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\mydate}{Thursday, August 22, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}           % QED square (text mode)
+\newcommand{\mqed}{\quad \blacksquare}              % QED square (math mode)
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\Z}{\mathbb{Z}}                         % integers
+\newcommand{\Q}{\mathbb{Q}}                         % rational numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\K}{\mathbb{K}}                         % underlying field
+\renewcommand{\P}{\mathcal{P}}                      % power set
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\B}{\mathcal{B}}                        % local base
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+\begin{center}
+{\Large Some Comments on the Lecture Notes for 21-640} \\
+\myname \\
+\myandrew \\
+\mydate
+\end{center}
+
+{\bf Week 3}
+
+Page 10, Second to last paragraph   \\
+    - should read `Open Mapping Theorem', rather than `Banach-Steinhaus'.   \\
+
+{\bf Week 12}
+
+Page 7, Proof of Lemma 12.24       \\
+    - $F$ should map $(x,y)$ rather than $x + y$ to $x + y$.                \\
+
+{\bf Week 13}
+
+Page 5, Proof of Theorem 13.10     \\
+    - This may have been intentional, but the proof appears to stop abruptly
+      before actually showing
+        \[\forall x \in X, \|x\| = 0 \Rightarrow x = 0.\]
+
+{\bf Week 14}
+
+Page 1, Theorem 14.1               \\
+    - minor typo in first sentence - topological has an extra 'v'.  \\
+    - A (probably minor) exception - What if $\B = \{\{0\}\}$
+    (by translation invariance, the topology would have to be
+    discrete)? I think this should be possible on a TVS. However,
+    $\B$ would be a local base of balanced and convex, but not
+    absorbing, sets.    \\
+
+Page 1, Proof of Theorem 14.1               \\
+    - minor typo in second sentence - a ':' is missing the family
+    $\{p^V : V \in \B\}$.        \\
+
+Page 1, Theorem 14.2               \\
+    - typo in the last sentence:
+        \[\forall p \in \P, p \mbox{ is toplogically on } E\]
+should be
+        \[\forall p \in \P, p \mbox{ is bounded on } E.\]
+
+Page 4, Paragraph 2 \\
+    - minor typo in last sentence - 'equicontinuous' is missing the last 'u'\\
+
+Page 4, Definition 14.11 \\
+    - minor typo in part (c)- there is an extraneous `it'  \\
+
+Page 4, Theorem 14.14 \\
+    - minor typo in first sentence - `linear amppings' should read `linear mappings'  \\
+
+\newpage
+Page 5, Paragraph 2 \\
+    - minor typo in first sentence - `separating' is missing the second `a' \\
+    - (I think) the fact that $\{p_x : x^* \in X^*\}$ is separating depends on
+        a Hahn-Banach argument; if so, it might be clearer to mention this. \\
+
+Page 5, Remark 14.18 \\
+    - typo in second sentence - $X$ should be $X^*$.    \\
+
+Pages 9-10, Theorems 14.27-14.29 and Proposition 14.30 are mislabelled Theorems
+4.27-4.29 and Proposition 4.30, respectively.   \\
+
+Page 10, Definition 14.31\\
+    - typo in part (c) - $\forall x,y \in \K$ should read $\forall x,y \in X$.
+    \\
+
+Page 12, Paragraph 1\\
+    - minor typo in second sentence - missing close parenthesis. \\
+    - minor typo in third sentence - missing period.    \\
+\end{document}

@@ -1,0 +1,197 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Wednesday, April 10, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+We prove the contrapositive statement.
+
+Suppose $\liminf_{n \rightarrow \infty} f(x_n) < f(x)$. Then, there exist
+$\e > 0$ and a subsequence $\{x_{n_k}\}_{k = 1}^{\infty}$ such that each
+$f(x_{n_k}) \leq f(x) - \e$. Since $f$ is lower semi-continuous,
+$B := \{y : f(y) \leq f(x) - \e\}$ is closed. Furthermore, $B$ is convex,
+since, if $y_1,y_2 \in B, t \in (0,1)$, then
+\[f(ty_1 + (1 - t)y_2) \leq tf(y_1) + (1 - t)f(y_2) \leq f(x) - \e.\]
+By Theorem 8.12, since $x \notin B$,
+$x_{n_k} \not\rightarrow x$ as $k \rightarrow \infty$. But then
+$x_n \not\rightarrow \infty$ as $n \rightarrow \infty$. \qed
+\end{question}
+
+\begin{question}{Problem 2}
+Since $f$ is proper, $\exists x_0 \in X$ with $f(x_0) < \infty$. Define
+$B := \{x \in X : f(x) \leq f(x_0)\}$, and let $m := \inf f[B]$
+(\emph{a priori}, $m$ may be $-\infty$). Note that it suffices to show $f$
+achieves $m$.
+
+Since $m$ is an infimum, there is a sequence $\{x_n\}_{n = 1}^{\infty}$ with
+each $x_n \in B$ and $f(x_n) \rightarrow m$ as $n \rightarrow \infty$.
+
+Since $f$ is coercive, $B$ is bounded, and so, by Theorem 8.1,
+$\{x_n\}_{n = 1}^{\infty}$ has a subsequence $\{x_{n_k}\}_{k = 1}^{\infty}$
+converging weakly to some $x \in X$. Since $f(x_{n_k}) \rightarrow m$ as
+$k \rightarrow \infty$, by the result of problem 1,
+\[m
+    = \liminf_{k \rightarrow \infty} f(x_{n_k})
+    \geq f(x)
+\mqed.\]
+\vspace{-0.2in}
+\end{question}
+
+%TODO
+\begin{question}{Problem 5}
+Linearity of $T$ is clear, since each coordinate of $Tx$ is a sum of
+coordinates of $x$. Define
+\[M
+ := \sup \left\{ \sum_{n = 1}^{\infty} |a_{mn}| : m \in \N \right\}
+    \in \R
+.\]
+
+If $x \in c_0$ with $\|x\|_{\infty} = 1$, then
+\[\|Tx\|
+ =      \sup_{m \in \N} \left| \sum_{n = 1}^{\infty} a_{mn} x_n \right|
+ \leq   \sup_{m \in \N} \sum_{n = 1}^{\infty} |a_{mn}|
+ = M,
+\]
+and hence $T \in \L(c_0,c_0)$.
+%TODO: show $T : X \rightarrow X$
+
+Define $L$ for all $n \in \N, y^* \in l^1$ by
+\[(Ly^*)_n = \sum_{m = 1}^{\infty} a_{mn} y^*_m.\]
+We first check that $L \in \L(l^1,l^1)$. Since $L$ is clearly linear, it
+suffices to observe that, if $y^* \in l^1$,
+\[\|Ly^*\|_1
+    = \sum_{n = 1}^{\infty} \left| \sum_{m = 1}^{\infty} a_{mn} y^*_m \right|
+    \leq \sum_{m = 1}^{\infty} \sum_{n = 1}^{\infty} | a_{mn} y^*_m |
+    \leq \sum_{m = 1}^{\infty} |y^*_m| \sum_{n = 1}^{\infty} | a_{mn} |
+    \leq M \sum_{m = 1}^{\infty} |y^*_m|
+    = M \|y^*\|_1
+\]
+(we can switch the order of summation, since each term
+is non-negative).
+
+Then, by the usual identification of $l^1$ with $c_0^*$, if
+$y^* \in l^1, x \in c_0$,
+\begin{align*}
+\langle Ly^*,x \rangle
+    = \sum_{n = 1}^{\infty} \left( Ly^* \right)_n x_n
+    = \sum_{n = 1}^{\infty} \left( \sum_{m = 1}^{\infty} a_{mn} \right) x_n
+\end{align*}
+Hence, $L = T^*$. \qed
+\end{question}
+
+\begin{question}{Problem 7}
+We already mentioned in Remark 10.6 that
+$Z \subseteq \left( ^\perp Z \right)^\perp$.
+
+Let $X = (l^1,\|\cdot\|_1)$, and let $Z = c_0$. Identifying the dual of $X$
+with $l^\infty$ in the usual way, we note $Z \subseteq X^*$, and, since
+$(c_0,\|\cdot\|_\infty)$ is complete, $Z$ is closed in $X^*$. If $x \in X$ is
+non-zero, then (noting $l^1 \subseteq c_0$), $\langle x, x \rangle \neq 0$, and
+hence $x \notin ^\perp Z$. Thus, $^\perp Z = \{0\}$, and so
+$\left( ^\perp Z \right)^\perp = l^\infty$. But $c_0 \subsetneq l^\infty$. \qed
+\end{question}
+
+%TODO
+\begin{question}{Problem 8}
+For first step of this proof (showing $cl(\Ran(T))$ contains a ball in $Y$), I
+roughly followed the proof of Theorem 4.13 in Rudin's
+\emph{Functional Analysis}.
+
+If $y_0 \in Y \sminus cl(T[B_1(0)])$, then, by Theorem 8.13 and the fact that
+$T[B_1(0)]$ is balanced, there exists $y^* \in Y^*$ such that
+$\|y^*(y)\| \leq \|y^*(y_0)\|, \forall y \in T[B_1(0)]$. Note that
+$\forall x \in X$,
+\[\|\langle T^*y^*, x \rangle\|
+    = \|\langle y^*, Tx \rangle\|
+    < \|y^*(y_0)\|.
+\]
+
+Thus, $\|T^*y^*\| \leq \|y^*(y_0)\|$, and so
+\[\|y_0\|
+    \geq \frac{\|y_0\|\|T^*y^*\|}{\|y^*(y_0)\|}
+    \geq \frac{\|y_0\| c\|y^*\|}{\|y^*(y_0)\|}
+    \geq \frac{c\|y^*(y_0)\|}{\|y^*(y_0)\|}
+    = c.
+\]
+Thus, if $\|y\| \leq c$, then $y \in cl(T[B_1(0)])$, and so
+$B_{c/2}(0) \subseteq T[B_1(0)]$.
+
+Then, by a proof identical to the proof of Lemma 4.2 (note that, in Lemma 4.2,
+surjectivity is only used to cite Lemma 4.1, whose result we already have), we
+have $B_{c/2}(0) \subseteq T[B_2(0)]$.
+
+It now follows from linearity that, $\forall x \in X$,
+$B_{c/2}(Tx) \subseteq \Ran(T)$. Thus, it suffices to show that $\Ran(T)$ is dense
+in $Y$. Since $S^*$ is clearly injective, $\Nul(S^*) = \{0\}$, and hence
+\[cl(\Ran(T)) = ^\perp \left( \Nul(S^* \right) = Y. \mqed\]
+\end{question}
+\end{document}

@@ -1,0 +1,273 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-759 Differential Geometry}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, September 13, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED square
+\newcommand{\inv}{^{-1}}                % inverse
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\sminus}{\backslash}        % set difference
+\renewcommand{\dim}{\operatorname{dim}} % dimension of a vector space
+\renewcommand{\det}{\operatorname{det}} % determinant of a matrix
+\newcommand{\sgn}{\operatorname{sign}}  % determinant of a matrix
+\newcommand{\rnk}{\operatorname{rank}}  % rank of a matrix
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\M}{\mathcal{M}}            % manifold M
+\newcommand{\D}{\mathcal{D}}            % \smooth real functions on a manifold
+\newcommand{\B}{\mathcal{B}}            % basis of a topology
+\newcommand{\pow}{\mathcal{P}}          % power set
+\newcommand{\e}{\varepsilon}            % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname\footnote{\myandrew} \\
+Due: \duedate
+
+I would be willing to present solutions to problems 1,3,4, and 5.
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(i)]
+\item As a subspace of $\R^n$, $\M_\alpha$ is second countable and Hausdorff.
+
+Let $p \in \M_\alpha$. Since $\alpha$ is regular, without loss of generality,
+$(DF)_1 \neq 0$. By the Implicit Function Theorem, there exist open
+neighborhoods $U \subseteq \R^{n - 1}$ and $V \subseteq \R$ of
+$(p_2,\dots,p_n)$ and $p_1$, respectively, and a smooth function $g : U \to V$
+such that $\{(q,g(q)) : q \in U\} = (U \times V) \cap F\inv(\alpha)$. The
+function $\phi(x) := (x,g(x))$ on $U$ is clearly a diffeomorphism. Therefore,
+$(U, \phi)$ is a coordinate chart for $\M_\alpha$ in the neighborhood
+$U \times V$ of $p$, so $\M_\alpha$ is a manifold (of dimension $n-1$). \qed
+
+
+\item As shown in part (i),  $M_\alpha$ admits a differentiable structure
+of the form $\{(U_\gamma,\phi_\gamma)\}$, where $\phi(x) = (x,g_\gamma(x))$ on
+$U_\gamma$. Thus, if $(U_\gamma,\phi_\gamma)$ and $(U_\beta,\phi_\beta)$ are
+charts with
+$W := \phi_\gamma(U_\gamma) \cap \phi_\beta(U_\beta) \neq \emptyset$, then, on
+$W$, $\phi_\beta\inv\phi_\gamma \equiv id_n$, the identity on $\R^n$, and hence
+\[\det(D(\phi_\beta\inv\phi_\gamma)) = \det(id_n) = 1 > 0,\] so that
+$\M_\alpha$ is orientable. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+If $p_1 = p_2$ and $v_1 \neq v_2$ then, since $T_{p_1}\M$ is homeomorphic to $\R^n$
+(which is Hausdorff), there are open sets $V_1,V_2 \subset T_{p_1}\M$
+separating $v_1$ and $v_2$, and so the open sets $\M \times V_1$ and $\M \times
+V_2$ separate $(p_1,v_1)$ and $(p_2,v_2)$. If $p_1 \neq p_2$, then, since $\M$
+is Hausdorff, there are open sets $U_1,U_2 \subset \M$ separating $p_1$ and
+$p_2$ and, and so the open sets $U_1 \times T_{p_1}\M$ and
+$U_2 \times T_{p_2}\M$ separate $(p_1,v_1)$ and $(p_2,v_2)$. Thus, $T\M$ is
+Hausdorff. Since $\M$ and $T_p\M$ have a countable bases $\B$ and $\B_p$,
+set $\{U \times V : U \in \B, V \in \B_p, p \in U\}$ is a countable base for
+$T\M$.
+
+$\forall p \in \M$, since $T_p\M$ is a vector space for which the vectors
+$\frac{\partial}{\partial x_1},\dots,\frac{\partial}{\partial x_n}$ form a
+basis, there is a unique linear mapping $D_p : T_p\M \to \R^n$ such that,
+$\forall \in T_p\M$, $v = \sum_{i = 1}^n D_i(v) \frac{\partial}{\partial x_i}$.
+Then, the function $(p,v) \mapsto (\phi\inv(p),D_p(v))$ is a diffeomorphism
+between $\M$ and $\R^{2d}$.
+
+We first compute
+\[v\left[\left(\phi\inv\right)_i\right]
+ = \sum_{j = 1}^n a^j\frac{\partial}{\partial x_j}
+    (\phi\inv \circ \phi)_i (\phi\inv(p))
+ = \sum_{j = 1}^n a^j\frac{\partial}{\partial x_j}
+    x_i (\phi\inv(p))
+ = \sum_{j = 1}^n a^j \delta_i^j
+ = a^i.
+ \]
+We now compute this in an alternate manner:
+\[v\left[\left(\phi\inv\right)_i\right]
+ = \sum_{j = 1}^n b^j\frac{\partial}{\partial y_j}
+    (\phi\inv \circ \psi)_i (\psi\inv(p)).
+\]
+The result can be summarized in matrix notation:
+\[\mbox{\fbox{$a
+    = \left[D (\phi\inv \circ \psi)\right] \bigg|_{\psi\inv(p)} b$.}}\]
+\end{question}
+
+\begin{question}{Problem 3}
+Since $x_i = \left(\phi\inv\right)_i$,
+$df = \sum_{i = 1}^n \alpha_i d\left(\phi\inv\right)_i$, and so
+\[\frac{\partial}{\partial x_j}[f]
+ = \frac{\partial}{\partial x_j}
+        \sum_{i = 1}^n \alpha_i \left(\left(\phi\inv\right)_i \circ \phi\right)
+            \left( \phi\inv(p) \right)
+ = \sum_{i = 1}^n \alpha_i \frac{\partial}{\partial x_j} x_i
+            \left( \phi\inv(p) \right)
+ = \sum_{i = 1}^n \alpha_i \delta_i^j
+ = \alpha_j.
+\]
+Also, since $y_i = \left(\psi\inv\right)_i$,
+\[\frac{\partial}{\partial x_j}[f]
+ = \frac{\partial}{\partial x_j}
+        \sum_{i = 1}^n \beta_i \left(\left(\psi\inv\right)_i \circ \phi\right)
+            \left( \phi\inv(p) \right)
+ = \sum_{i = 1}^n \beta_i
+        \frac{\partial}{\partial x_j} \left(\psi\inv \circ \phi\right)_i
+            \left( \phi\inv(p) \right).
+\]
+The result can be summarized in matrix notation:
+\[\mbox{\fbox{$\alpha
+    = \left[D (\psi\inv \circ \phi)\right] \bigg|_{\phi\inv(p)} \beta$.}}\]
+\end{question}
+
+\begin{question}{Problem 4}
+Suppose that, for some $\alpha \in \R^n$,
+$\displaystyle df := \sum_{i = 1}^n \alpha_i dx_i = 0$. Then,
+\[0
+ = df\left( \sum_{j = 1}^n \alpha_j \frac{\partial}{\partial x_j} \right)
+ = \sum_{j = 1}^n \alpha_j \frac{\partial}{\partial x_j}
+        \sum_{i = 1}^n \alpha_i x_i
+ = \sum_{j = 1}^n \sum_{i = 1}^n \alpha_j \alpha_i \delta_i^j
+ = \sum_{i = 1}^n \alpha_i^2,
+\]
+and so $\alpha = 0$. Thus, $dx_1,\dots,dx_n$ are linearly independent. As the
+dual of an $n$-dimensional vector space, $T_p\M^*$ has dimension $n$, and so
+the $n$ independent vectors $dx_1,\dots,dx_n$ span $T_p\M^*$. \qed
+\end{question}
+
+\begin{question}{Problem 5}
+Without loss of generality, we may assume that, for every chart
+$(U_\alpha,\phi_\alpha)$ of $\M$, $U_\alpha$ is connected, since, otherwise, we
+may replace the chart by identical charts on the connected components of
+$U_\alpha$.
+
+Let $p \in \M$, and let $(U_\alpha,\phi_\alpha)$ be a chart at $p$. Since
+$df = 0$, for $v_i = \frac{\partial}{\partial x_i}$ and $g$ the identity on
+$\R$
+\[0
+ = df_p(v_i)[g]
+ = v_i[g \circ f]
+ = v_i[f]
+ = \frac{\partial}{\partial x_i} (f \circ \phi_\alpha)(\phi_\alpha\inv(p)),
+\]
+And so
+$[D(f \circ \phi_\alpha)] \bigg|_{\phi_\alpha\inv(p)} \hspace{-0.8cm}= 0$. By a
+theorem in multivariable calculus, since $U_\alpha$ is connected,
+$f \circ \phi_\alpha \equiv C_\alpha$ on $U_\alpha$, for some constant $C_p \in \R$. Since $\phi$
+is a surjection, it follows that $f \equiv C_p$ on $\phi(U)$.
+
+Now let $U := \cup \{\phi_\beta(U_\beta) : C_\beta = C_\alpha\}$,
+and let $V := \cup \{\phi_\beta(U_\beta) : C_\beta \neq C_\alpha\}$. As unions
+of open sets, both $U$ and $V$ are open, and clearly $\M = U \cup V$ and
+$U \cap V = \emptyset$. Thus, since $\M$ is connected and $U \neq \emptyset$,
+$V = \emptyset$, and so $f$ is constant. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+To show that $DF$ is injective (so that $F$ is an immersion), it suffices to
+show that
+\[DF =
+    \begin{bmatrix}
+        2x  & y & z & 0 \\
+        -2y & x & 0 & z \\
+        0   & 0 & x & y
+    \end{bmatrix}
+\]
+satisfies $\rnk(DF) \geq 2$, $\forall (x,y,z)$ with $x^2 + y^2 + z^2 = 1$. If
+$x$ is non-zero, then the first and third columns are independent. If $y$ is
+non-zero, then the first and fourth columns are independent. If $x = y = 0$,
+then $z = \pm1$, and so the last two columns are independent. Thus,
+$\rnk(DF) \geq 2$.
+
+We now show $F$ is injective.
+If one of $(x_1,y_1,z_1)$ is zero, then, checking several cases and using the
+fact that $([0],[0],[0]) \notin P^2$, one can verify that
+$(x_1,y_1,z_1) = (\pm x_2,\pm y_2,\pm z_2)$. If all values are nonzero, then
+\[\frac{x_1}{x_2} = \frac{y_2}{y_1} = \frac{z_1}{z_2} = \frac{x_2}{x_1},\]
+so that $x_1^2 = x_2^2$, and hence $x_1 \sim x_2$ (similarly, $y_1 \sim y_2$
+and $z_1 \sim z_2$). It follows that $F$ is injective, and thus $F$ is a
+diffeomorphism (it follows from the above work that $F\inv$ is differentiable).
+\end{question}
+
+\begin{question}{Problem 7}
+\begin{enumerate}[(i)]
+\item Suppose the orientation induced on $\M$ by $\{(U_\alpha,\phi_\alpha)\}$
+is preserved by all $g \in G$. Let $\{(V_\alpha,\pi_\alpha \circ x_\alpha)\}$
+be the quotient differentiable structure on $\M/G$. Then, if
+$\pi_\alpha(x_\alpha(V_\alpha)) \cap \pi_\beta(x_\beta(V_\beta))
+\neq \emptyset$, then, since $\pi_\beta\inv\pi_\alpha = \Phi_g$, for some
+$g \in G$, and $\Phi_g$ preserves orientation on $\M$,
+\begin{align*}
+\sgn(\det(D((\pi_\beta \circ x_\beta)\inv \circ \pi_\alpha \circ x_\alpha)))
+ & = \sgn(\det(D(x_\beta\inv \circ \Phi_g \circ x_\alpha)))   \\
+ & = \sgn(\det(D(x_\beta\inv \circ x_\alpha))) = 1,
+\end{align*}
+and hence $\M/G$ is orientable.
+
+\item Let $G$ be the group $(\{-1,1\},\cdot)$. As discussed in class,
+$G \times S^n \to S^n$ is a properly discontinuous action. Since $S^n$ is
+orientable, fix an oriented differentiable structure
+$\{(U_\alpha,\phi_\alpha)\}$.
+
+Since $\Phi_{-1}$ is the restriction of the antipodal mapping $x \mapsto -x$ on
+$\R^{n + 1}$ to $S^n$ and $\phi_\alpha$ and $\phi_\beta$ share orientation,
+\[\det(D(\phi_\beta\inv \circ \Phi_{-1} \circ \phi_\alpha))
+    = \det(-D (\phi_\beta\inv \circ \phi_\alpha))
+    = (-1)^{n + 1} \det(D \phi_\beta\inv \circ \phi_\alpha)),
+\]
+has sign $(-1)^{n + 1}$. Thus, $\Phi_{-1}$ is orientation preserving if and
+only if $n$ is odd, and so, by the result of part (i), $P^n = S^n/G$ is
+orientable if and only if $n$ is odd. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 8}
+Suppose $\exists \gamma_0 \in C^\infty([0,t_0),\M)$ with $\gamma_0(0) = p$.
+Consider an increasing sequence $t_n \in [0,t_0)$ converging to $t_0$. Since
+$\M$ is compact and $\gamma_0 \in C^\infty$, the sequence $\gamma_0(t_n)$ has a
+limit $p \in \M$. Thus, the solution $\gamma_0$ can be extended to a solution
+$\gamma_1 \in C^\infty([0,t_0],\M)$ (i.e., $\gamma_0$ is not right maximal).
+
+Similarly, any solution on a left-open interval can be left-extended. It
+follows by an extension theorem from ODE that there is a solution for all
+$t \in \R$.
+\end{question}
+\end{document}

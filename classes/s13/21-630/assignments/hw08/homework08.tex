@@ -1,0 +1,235 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{8}
+\newcommand{\duedate}{Wednesday, March 27, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+Given $\e > 0$, define
+$\displaystyle \delta := \min\left\{
+                                \frac{\sigma - \beta}{2B^3}e^{-\beta t_0},
+                                \e/B
+                            \right\}$,
+$\displaystyle T
+    := \sup \left\{ t > t_0 : |Y(s)| e^{\beta s} < \frac{\sigma - \beta}{B^2},
+                                            \forall s \in [t_0,t] \right\}.$
+
+Assume $|Y(t_0)| < \delta$, and note that, by continuity of $|Y(s)| e^{\beta s}$,
+$T > 0$.
+
+By Variation of Parameters, $\forall t \in [t_0,\infty)$,
+\begin{align*}
+|Y(s)|
+    = \left| e^{A(t - t_0)} Y(t_0)
+    + \int_{t_0}^t e^{A(t - s)} F(s,Y(s)) \, ds \right|
+ &  \leq \left| e^{At} \right| |Y(t_0)|
+    + \int_{t_0}^t \left| e^{A(t - s)} \right| |F(s,Y(s))| \, ds        \\
+ &  \leq B e^{-\sigma t} |Y(t_0)|
+    + B^2 \int_{t_0}^t e^{-\sigma(t - s)} e^{\beta s} |Y(s)|^2 \, ds,   \\
+ &  \leq e^{-\sigma t} \left( B |Y(t_0)|
+    + B^2 \int_{t_0}^t e^{(\sigma + \beta) s} |Y(s)|^2 \, ds \right),
+\end{align*}
+and so, for $t \in [t_0,T]$, by definition of $T$,
+\[|Y(t)| e^{\sigma t}
+    \leq B \delta
+    + B^2 \int_{t_0}^t e^{(\sigma + \beta) s} |Y(s)|^2 \, ds
+    \leq B \delta 
+    + (\sigma - \beta) \int_{t_0}^t |Y(s)| e^{\sigma s} \, ds.
+\]
+Applying the simple version of Gronwall's Inequality gives,
+$\forall t \in [t_0,T)$,
+\begin{equation}
+|Y(t)| e^{\sigma t}
+    \leq B\delta e^{(\sigma - \beta) t}
+    \leq \frac{\sigma - \beta}{2B^2} e^{-\beta t_0} e^{(\sigma - \beta) t}
+    \leq \frac{\sigma - \beta}{2B^2} e^{(\sigma - \beta) t}.
+\label{eq:1.1}
+\end{equation}
+Consequently, if $T$ were finite,
+\[
+|Y(T)| e^{\beta T}
+    \leq \frac12 \frac{\sigma - \beta}{B^2}
+\]
+which would contradict the continuity of $|Y(t)| e^{\beta t}$. Thus,
+$\forall t \geq t_0$, by the first inequality in (\ref{eq:1.1}),
+\[
+|Y(t)|
+    \leq B\delta e^{-\beta t}
+    \rightarrow 0
+    \quad \mbox{ as } \quad t \rightarrow \infty,
+\]
+and, by choice of $\delta$, $|Y(t)| \leq \e$, so that $0$ is
+stable and hence asymptotically stable. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+The set of critical points of the system is
+\[\mbox{\fbox{$C := \{(0,0),(1,0),(0,3),(2,-1)\}$.}}\]
+Also,
+\[Df =
+\begin{bmatrix}
+    1 - 2X - Y  & -X            \\
+    -2Y         & 3 - 2X - 2Y
+\end{bmatrix}.
+\]
+Since
+\[Df\big|_{(0,0)} =
+\begin{bmatrix}
+    1   & 0 \\
+    0   & 3
+\end{bmatrix}
+,\]
+which has as an eigenvalue $1 > 0$, by Theorem 5.3, \fbox{$(0,0)$ is unstable.}
+Since
+\[Df\big|_{(1,0)} =
+\begin{bmatrix}
+    -1  & -1 \\
+    0   & 1
+\end{bmatrix}
+,\]
+which has as an eigenvalue $1 > 0$, by Theorem 5.3, \fbox{$(1,0)$ is unstable.}
+Since
+\[Df\big|_{(0,3)} =
+\begin{bmatrix}
+    -2  & 0 \\
+    -6  & -3
+\end{bmatrix}
+,\]
+which has as an eigenvalues $-2,-3 < 0$, by Theorem 5.2, \fbox{$(0,3)$ is
+(asymptotically) stable.} Since
+\[Df\big|_{(2,-1)} =
+\begin{bmatrix}
+    -2  & -2 \\
+    2   & 1
+\end{bmatrix}
+,\]
+whose eigenvalues have real part $-1/2 < 0$, by Theorem 5.2, \fbox{$(2,-1)$ is
+(asymptotically) stable.}
+\end{question}
+
+\begin{question}{Problem 3}
+Define $Y(t) : \R \rightarrow \R^2$ by $Y_1 = X$ and $Y_2 = \dot X$, let
+$\e > 0$ and choose $\delta := \min\{\e/2,1\}$. Then,
+\[\dot Y
+    = f(Y(t)) := Y_2(t)
+    = \left[ \begin{array}{c} Y_2 (t)\\ -Y_1(t)-2Y_1^3(t) \end{array} \right].
+\]
+
+Define $v : \R^2 \rightarrow \R$ for all $(y_1,y_2) \in \R^2$ by
+$v(y_1,y_2) := y_1^2 + y_1^4 + y_2^2$. Then,
+\[\frac{d}{dt} v(Y(t))
+    = D_*v(Y(t))
+    = \left[ \begin{array}{c} Y_2 (t)\\ -Y_1(t)-2Y_1^3(t) \end{array} \right]
+    \cdot \left[ \begin{array}{c} 2Y_1(t)+4Y_1^3(t) \\ 2Y_2(t) \end{array} \right]
+    = 0,
+\]
+so that $v(Y(t))$ is constant. Then, $\forall t \geq 0$, if $|Y(0)| < \delta$
+(so that $Y_1^2(0) + Y_1^4(0) \leq 2Y_1^2(0)$),
+\[|Y(t)| = \sqrt{Y_1^2(t) + Y_2^2(t)}
+    \leq \sqrt{v(Y(t))}
+    = \sqrt{v(Y(0))}
+    \leq \sqrt{2(Y_1^2(0) + Y_2^2(0))}
+    < 2\delta
+    \leq \epsilon. \mqed
+\]
+\end{question}
+
+\begin{question}{Problem 4}
+Define $Y(t) : \R \rightarrow \R^2$ by $Y_1 = X$ and $Y_2 = \dot X$, let
+$\e > 0$ and choose $\delta := \min\{\e,1\}/4$. Then,
+\[\dot Y
+    = f(Y(t)) := Y_2(t)
+    = \left[ \begin{array}{c} Y_2 (t)\\ -Y_1(t)+2Y_1^3(t) \end{array} \right].
+\]
+Suppose $|Y(0)| < \delta$, and define
+\[T := \sup \{t \geq 0 : |Y(s)| < \min\{\e, 1\}/2, \forall s \in [0,t]\},\]
+supposing, for sake of contradiction, that $T$ is finite (since
+$|Y(0)| < \delta$, $T \geq 0$).
+
+Define $v : \R^2 \rightarrow \R$ for all $(y_1,y_2) \in \R^2$ by
+$v(y_1,y_2) := y_1^2 - y_1^4 + y_2^2$. Then,
+\[\frac{d}{dt} v(Y(t))
+    = D_*v(Y(t))
+    = \left[ \begin{array}{c} Y_2 (t)\\ -Y_1(t)+2Y_1^3(t) \end{array} \right]
+    \cdot \left[ \begin{array}{c} 2Y_1(t)-4Y_1^3(t) \\ 2Y_2(t) \end{array} \right]
+    = 0,
+\]
+so that $v(Y(t))$ is constant. $\forall t \in [0,T]$, since
+$|Y(t)| < 1/2$,
+\[Y_1^2(t) - Y_1^4(t) = Y_1^2(t)(1 - Y_1^2(t)) \geq \frac12 Y_1^2(t),\]
+and it follows that
+\[|Y(t)| = \sqrt{Y_1^2(t) + Y_2^2(t)}
+    \leq \sqrt{2v(Y(t))}
+    = \sqrt{2v(Y(0))}
+    \leq \sqrt{4(Y_1^2(0) + Y_2^2(0))}
+    < 2\delta
+    \leq \min\{\epsilon,1\}/2.
+\]
+In particular, $|Y(T)| < \min\{\e,1\}/2$, contradicting the continuity of $Y$
+(by definition of $T$). \qed
+\end{question}
+\end{document}

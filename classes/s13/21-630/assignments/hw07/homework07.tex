@@ -1,0 +1,278 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{7}
+\newcommand{\duedate}{Wednesday, March 20, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+We first show that $0$ is asymptotically stable for the homogeneous
+\begin{equation}
+\dot X(t) = AX,
+\label{eq:1.1}
+\end{equation}
+and then use Variation of Parameters to show that stability also holds for $Y$.
+
+By the comment on page 90 of the notes, it suffices to show that $0$ is
+asymptotically stable in the case that $A$ is in Jordan form. Let
+$J_0,J_1,\dots J_k$ be the Jordan blocks of $A$ (with only $J_0$ diagonal).
+Since the operator norm of a matrix is at least the operator norm of any
+submatrix, $\forall t \geq 0, i \in \{0,\dots,k\}$, if $J_i$ is a
+$k_i \times k_i$ block associated with generalized eigenvalue $\lambda_i$ and
+$\sigma$ is the eigenvalue with the greatest real part,
+\[Ce^{-\lambda t}
+    \geq \left|e^{At}\right|
+    \geq |e^{J_it}|
+    \geq |e^{J_it}|_{\infty}
+    \geq \left\{
+        \begin{array}{cl}
+            e^{\sigma t} : \mbox{ if } i = 0 \\
+            e^{\lambda_i t} \frac{t^{k_i - 1}}{(k_i - 1)!} : \mbox{ else }
+        \end{array}
+    \right.
+\]
+Since the above inequality holds for all $t \geq 0$, $\sigma, \lambda_i < 0$.
+Then, by Theorem 5.1, $0$ is asymptotically stable for equation (\ref{eq:1.1}).
+
+Pick $\delta$ such that, for all solutions $\phi$ to equation (\ref{eq:1.1})
+with initial condition $|\phi(0)| < \delta$, $\phi(t) \rightarrow \infty$ as
+$t \rightarrow \infty$, and suppose $\phi$ is a solution to equation
+(\ref{eq:1.1}) (with $|\phi(0) > 0|$). Then, since solutions to a homoeneous
+linear system form a vector space,
+$\frac{\delta \phi(t)}{2\phi(0)} \rightarrow 0$ as $t \rightarrow \infty$, so
+that $\phi(t) \rightarrow 0$ as $t \rightarrow 0$ (i.e., all solutions of
+equation (\ref{eq:1.1}) converge to $0$).
+
+By Theorem 4.3 (Variation of Parameters), for any fundamental matrix solution
+$\phi$ to equation (\ref{eq:1.1}), then, $\forall t \geq 0$,
+\[|Y(t)|
+ \leq |\phi(t)\phi\inv(0)Y(0)|
+        + \int_0^t |\phi(t)\phi\inv(s)||b(s)| \, ds.
+\]
+I wasn't able to finish this solution, but I think that if I were to establish
+a stronger statement about equation (\ref{eq:1.1}), such as that solutions
+decay \emph{expontially}, then the result could easily be deduced from the
+above inequality; the fact that $\phi(t) \rightarrow 0$ as
+$t \rightarrow \infty$ doesn't seem quite sufficient, as the integral is still
+positive and non-decreasing with $t$. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+\begin{enumerate}[(A)]
+\item For
+$P =
+    \begin{pmatrix}
+        i/\omega    & -i/\omega \\
+        1           & 1
+    \end{pmatrix},
+D =
+    \begin{pmatrix}
+        -i\omega    & 0 \\
+        0           & i\omega
+    \end{pmatrix},
+\mbox{ so that }
+P\inv = \frac12
+    \begin{pmatrix}
+        -i\omega    & 1 \\
+        i\omega     & 1
+    \end{pmatrix}
+$, $A = PDP\inv$.
+
+Then, since $D$ is diagonal,
+\begin{align*}
+e^{At}
+   = Pe^{Dt}P\inv
+ & = P \begin{pmatrix}
+        e^{-i\omega t}    & 0 \\
+        0           & e^{i\omega t}
+       \end{pmatrix} P\inv \\
+ & = P \begin{pmatrix}
+        \cos(\omega t) - i\sin(\omega t)   & 0 \\
+        0                                   & \cos(\omega t) + i\sin(\omega t)
+       \end{pmatrix} P\inv \\
+ & = P \left(\cos(\omega t) I + \omega\inv \sin(\omega t) D \right) P\inv \\
+ & = \cos(\omega t) PIP\inv + \omega\inv \sin(\omega t) PDP\inv
+   = \cos(\omega t) I + \omega\inv \sin(\omega t) A. \mqed
+\end{align*}
+
+\item We first show, by induction on $n$, that, $\forall n \in \N$,
+\vspace{-0.1in}
+\[A^{2n} = (-\omega^2)^n I
+\quad \mbox{ and } \quad
+A^{2n + 1} = (-\omega^2)^n A.\]
+\vspace{-0.3in}
+
+For $n = 0$, this clearly holds.
+Suppose now that the formula holds for some $n \in \N$. Then,
+\begin{align*}
+A^{2(n + 1)}
+ & = A^2A^{2n}
+   = ((-\omega^2)I)((-\omega^2)^nI)
+   = (-\omega^2)^{n + 1}I, \\
+\mbox{ and so }
+A^{2(n + 1) + 1}
+ & = A^{2(n + 1)}A
+   = (-\omega^2)^{n + 1}A,
+\end{align*}
+completing the induction. Using this formula for $A^k$ and the Taylor
+series of sine and cosine,
+\begin{align*}
+e^{At}
+   = \sum_{k = 0}^{\infty} \frac{t^k}{k!}A^k
+ & = \sum_{k = 0}^{\infty} \frac{t^{2k}}{(2k)!}A^{2k}
+   + \sum_{k = 0}^{\infty} \frac{t^{2k + 1}}{(2k + 1)!}A^{2k + 1} \\
+ & = \sum_{k = 0}^{\infty} \frac{t^{2k}}{(2k)!}(-\omega^2)^k I
+   + \sum_{k = 0}^{\infty}
+                        \frac{t^{2k + 1}}{(2k + 1)!}(-\omega^2)^k A \\
+ & = \sum_{k = 0}^{\infty} \frac{(-1)^k(\omega t)^{2k}}{(2k)!} I
+   + \omega\inv \sum_{k = 0}^{\infty}
+                        \frac{(-1)^k(\omega t)^{2k + 1}}{(2k + 1)!} A
+   = \cos(\omega t) I + \frac{\sin(\omega t)}{\omega\inv} A. \mqed
+\end{align*}
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+We first show that $0$ is stable for the homogeneous equation
+\begin{equation}
+\dot X(t) = AX,
+\label{eq:3.1}
+\end{equation}
+and then use Variation of Parameters to show that stability also holds for $Y$.
+
+By the comment on page 90 of the notes, it suffices to show that $0$ is stable
+in the case that $A$ is in Jordan form. Let $J_0,J_1,\dots J_k$ be the
+Jordan blocks of $A$ (with only $J_0$ diagonal). Since the operator norm of a
+matrix is at least the operator norm of any submatrix, $\forall t \geq 0,
+i \in \{0,\dots,k\}$, if $J_i$ is a $k_i \times k_i$ block associated with
+generalized eigenvalue $\lambda_i$ and $\sigma$ is the eigenvalue with the
+greatest real part,
+\[B
+    \geq \left|e^{At}\right|
+    \geq |e^{J_it}|
+    \geq |e^{J_it}|_{\infty}
+    \geq \left\{
+        \begin{array}{cl}
+            e^{\sigma t} : \mbox{ if } i = 0 \\
+            e^{\lambda_i t} \frac{t^{k_i - 1}}{(k_i - 1)!} : \mbox{ else }
+        \end{array}
+    \right.
+\]
+Since the above inequality holds for all $t \geq 0$, $\sigma \leq 0$ and each
+$\lambda_i < 0$ (as $k_i \geq 2$). Then, by Theorem 5.1, $0$ is stable for
+equation (\ref{eq:3.1}).
+
+Let $\e > 0$, and define $\beta := \int_0^{\infty} |b(s)| \, ds$ (we assume the
+Lebesgue integral, so that $|b|$ has finite integral). By Theorem 4.3
+(Variation of Parameters), for any fundamental matrix solution $\phi$ to
+equation (\ref{eq:3.1}), $\forall t \geq 0$,
+\begin{align*}
+|Y(t)|
+ \leq |\phi(t)\phi\inv(0)Y(0)|
+        + \int_0^t |\phi(t)\phi\inv(s)||F(s,Y(s))| \, ds    \\
+ \leq |\phi(t)\phi\inv(0)Y(0)|
+        + \int_0^t |\phi(t)\phi\inv(s)||b(s)||Y(s)| \, ds.
+\end{align*}
+Since $\phi(t)\phi\inv(s)$ is a solution of equation (\ref{eq:3.1}) with
+initial condition $\phi(s)\phi\inv(s) = I$, $\delta\phi(t)\phi\inv(s)$ is also
+a solution, with initial condition $\delta I$. Thus, since $0$ is stable for
+equation (\ref{eq:3.1}), by choosing $\delta$ sufficiently small,
+$|\delta\phi(t)\phi\inv(s)| \leq 1$, and thus $\phi(t)\phi\inv(s)| \leq
+\delta\inv$, for all $s,t \geq 0$, so that
+\[|Y(t)| \leq |Y(0)|\delta\inv + \int_0^t \delta\inv|b(s)||Y(s)| \, ds.\]
+
+Then, by the full version of Gronwall's Inequality, $\forall t \geq 0$,
+\begin{align*}
+|Y(t)|
+ & \leq |Y(0)|\delta\inv + \int_0^t |Y(0)|\delta\inv \delta\inv |b(s)|
+            e^{\int_s^t \delta\inv |b(\tau)| \, d\tau} \, ds \\
+ & \leq |Y(0)|\left( \delta\inv
+                + \delta^{-2} \int_0^t |b(s)| e^{\delta\inv\beta} \right) \, ds
+   \leq |Y(0)|\left( \delta\inv
+                + \delta^{-2} \beta e^{\delta\inv\beta} \right)
+   \leq \e,
+\end{align*}
+for
+$|Y(0)|
+  \leq \left( \delta\inv + \delta^{-2} \beta e^{\delta\inv\beta} \right)\inv$,
+so that $0$ is stable for the non-homogeneous equation. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+Let $\delta > 0$, and suppose $Y(0) = \delta/2$. Solving by separation of
+variables gives, for some $C \in \R$,
+\[\log(Y(t))
+ = \int \frac{1}{Y(t)} \, dY
+ = \int \frac{1}{1 + t} \, dt
+ = \log(1 + t) + C,
+\]
+so that $Y(t) = e^C(1 + t)$, and thus, using the initial condition
+$Y(0) = \delta/2$, $Y(t) = (\delta/2)(1 + t) \rightarrow \infty$ as
+$t \rightarrow \infty$. It follows that $0$ is not stable. \qed
+\end{question}
+\end{document}

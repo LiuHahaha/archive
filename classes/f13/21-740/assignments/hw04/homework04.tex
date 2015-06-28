@@ -1,0 +1,336 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-740 Introduction to Functional Analysis II}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Monday, November 25, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+\renewcommand{\Re}{\operatorname{Re}}   % real part of a complex number
+\newcommand{\tT}{\widetilde{T}}         % for P3
+\newcommand{\A}{\mathcal{A}}            % for P3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\vspace{-6mm}
+\paragraph{Lemma 1} Suppose $\D(B) \subseteq X$ is dense in $X$,
+$B : \D(B) \to X$ is linear and closed. Then, for any integrable
+$g : [0,\tau] \to \D(B)$, $t \in [0,\tau]$, if $B \circ g$ is integrable, then
+\[B\int_0^t g(s) \, ds = \int_0^t Bg(s) \, ds.\]
+
+\emph{Proof:} Claim 1: Suppose $g$ is a simple function, i.e., for some
+$k \in \N$, $c_1,\dots,c_k \in \D(B)$,
+\[g = \sum_{i = 1}^k c_i \chi_{E_i},\]
+where $\{E_i : i = 1,\dots,k\}$ is a partition of $[0,\tau]$ into
+Lebesgue-measurable sets and $\chi_{E_i}$ is the characteristic function of
+$A_i$ (we refer to $\{E_i : i = 1,\dots,k\}$ as the \emph{partition underlying
+$g$}). Then,
+\[B\int_0^t g(s) \, ds
+    = B \sum_{i = 1}^k c_i \lambda(E_i)
+    = \sum_{i = 1}^k B c_i \lambda(E_i)
+    = \int_0^t B g(s) \, ds,
+\]
+where $\lambda$ denotes the Lebesgue measure, proving Claim 1.
+
+General Case: Now consider a sequences of
+simple functions $\{g_k\}_{k = 1}^\infty$ mapping $[0,\tau]$ to $\D(B)$ and
+$\{h_k\}_{k = 1}^\infty$ mapping $[0,\tau]$ to $X$ such that
+\[\sup_{t \in [0,\tau]} \|g(t) - g_k(t)\|_X \to 0
+\quad \mbox{ and } \quad
+\sup_{t \in [0,\tau]} \|Bg(t) - h_k(t)\|_X \to 0
+\quad \mbox{ as } k \to \infty
+\]
+(such sequences exist because $\D(B)$ is dense in $X$ and both $g$ and
+$B \circ g$ are integrable.) In particular, we can take such sequences such
+that $g_k(s) = g(s)$ for some $s$ in each set of the partition underlying $g$,
+and, $\forall k \in \N$, the partition of $[0,\tau]$ underlying $g_k$ is a
+refinement of the partition underlying $h_k$. It follows from these constraints
+that
+\[\sup_{t \in [0,\tau]} \|Bg_k(t) - h_k(t)\|_X \to 0
+    \quad \mbox{ as } k \to \infty,
+\]
+and so, by Claim 1,
+\[\lim_{k \to \infty} B \int_0^t g_k(s) \, ds
+    = \lim_{k \to \infty} \int_0^t Bg_k(s) \, ds
+    = \lim_{k \to \infty} \int_0^t h_k(s) \, ds
+    = \int_0^t Bg(s) \, ds
+.\]
+Since $B$ is closed, $\int g_k \to \int g$, and
+$B \circ \int g_k \to \int B \circ g$, it follows that
+$\int g : [0,\tau] \to \D(B)$ and $B \int g = \int B \circ g$. $\square$
+
+We calculate
+\begin{align*}
+\lim_{h \to 0} \frac{1}{h} \left( \int_0^t T(t + h - s) f(s) \, ds
+ - \int_0^t T(t - s) f(s) \, ds \right)
+ &  = \lim_{h \to 0} \frac{1}{h} \int_0^t (T(h) - I) T(t - s) f(s) \, ds    \\
+ &  = \lim_{h \to 0} \frac{(T(h) - I)}{h} \int_0^t T(t - s) f(s) \, ds      \\
+ &  = A \int_0^t T(t - s) f(s) \, ds = Av(t)
+\end{align*}
+and
+\begin{align*}
+\lim_{h \to 0} \frac{1}{h} \int_t^{t + h} T(t + h - s) f(s) \, ds
+ &  = \lim_{h \to 0} T(h) \frac{1}{h} \int_t^{t + h} T(t - s) f(s) \, ds    \\
+ &  = \lim_{h \to 0} T(h) \frac{1}{h} \int_t^{t + h} T(s) f(t - s) \, ds    \\
+ &  = I f(t) = f(t).
+\end{align*}
+Thus, $\dot v(t) = Av(t) + f(t), \forall t \in [0,\tau]$.
+\end{question}
+
+\begin{question}{Problem 2}
+By a generation theorem from class, there exist constants $C,\omega \in \R$ and
+$\delta \in (0,\pi/2)$ such that
+\[\left\{\lambda \in \C
+            : |\arg(\lambda - \omega)| < \frac{\pi}{2} + \delta\right\}
+    \subseteq \rho(A)\]
+and
+\[\|R(\lambda;A)\|
+    \leq \frac{C}{|\lambda - \omega|},
+    \quad \forall \lambda \in \C
+            \mbox{ with } |\arg(\lambda - \omega)| < \frac{\pi}{2} + \delta.
+\]
+Furthermore, by another part of the same theorem, it suffices to show that
+\[\{\lambda \in \C : \Re(\lambda) > \omega + \|L\|\}
+    \subseteq \rho(A + L)
+\quad \mbox{ and } \quad
+\|R(\lambda;A + L)\| \leq \frac{C}{\lambda - (\omega + C\|L\|)},\]
+whenever $\Re \lambda > \omega + C\|L\|$.
+Since $L$ is bounded, it can shift the spectrum by at most $\|L\|$, and so
+\[
+\{\lambda \in \C : \Re(\lambda) > \omega + \|L\|\}
+    \subseteq \left\{\lambda \in \C
+        : |\arg(\lambda - (\omega + \|L\|))| < \frac{\pi}{2} + \delta\right\}
+    \subseteq \rho(A + L).
+\]
+It is easily checked from the definition of the resolvent operator that
+\[R(\lambda; A + L)
+    = \sum_{k = 0}^\infty R(\lambda; A) \left( LR(\lambda; A) \right)^k
+\]
+(we showed this as a lemma for Problem 6 of Assignment 3). Thus, by the
+triangle inequality and the identity $\frac1{1 - x} = \sum_{i = 0}^\infty x^i$,
+for $\Re \lambda - \omega > C\|L\|$,
+\begin{align*}
+\|R(\lambda; A + L)\|
+    \leq \sum_{k = 0}^\infty \frac{C^{k + 1}\|L\|^k}
+                                            {(\lambda - \omega)^{k + 1}}
+ &  = \frac{C}{\lambda - \omega} \sum_{k = 0}^\infty \frac{C^k\|L\|^k}
+                                                    {(\lambda - \omega)^k}  \\
+ &  = \frac{C}{\lambda - \omega}
+                    \left( 1 - \frac{C\|L\|}{\lambda - \omega} \right)\inv  \\
+ &  = \frac{C}{\lambda - \omega}
+        \left( \frac{\lambda - \omega}{\lambda - \omega - C\|L\|} \right)
+    = \frac{C}{\lambda - \omega - C\|L\|}. \qed
+\end{align*}
+\end{question}
+
+\vspace{-8mm}
+\begin{question}{Problem 3}
+We assume without loss of generality that $T$ is quasicontractive, since there
+exists an equivalent norm under which $T$ is quasicontractive, and it suffices
+to prove the result for an equivalent norm. In particular, suppose
+$\omega \in \R$ with $\|T(t)\| \leq e^{\omega t}, \forall t \geq 0$.
+Note that $\forall c \in \R$,
+\[\left\| e^{cI} \right\|
+    = \left\| \sum_{k = 0}^\infty \frac{(cI)^k}{k!} \right\|
+    = \left\| \sum_{k = 0}^\infty \frac{c^k}{k!} I\right\|
+    = \|e^cI\|.
+    = e^c.
+\]
+Since $\|T(t)\| \leq e^{\omega t}$, there exists $\e > 0$ such
+\[\frac{\|T(t)\| - 1}{h}
+    \leq 1 + \frac{d}{dt} e^{\omega t} \bigg|_{t = 0}
+    = \omega + 1,
+\]
+for all $h \in (0,\e)$. Since, $\forall t \geq 0, h \in (0,\e)$, since $T(h)$
+and $I$ commute,
+\begin{align*}
+\left\| e^{t\A_h} \right\|
+&   = \left\| \exp \left( \frac{t(T(h) - I)}{h} \right) \right\|
+    = \left\| \exp \left( \frac{tT(h)}{h} \right) \right\|
+                                \left\| \exp \left( -tI/h \right) \right\| \\
+&   \leq \exp \left( t\|T(h)\|/h \right) \exp \left( -t/h \right)
+    = \exp \left( \frac{t(\|T(h)\| - 1)}{h} \right)
+    \leq e^{(\omega + 1) t}
+\end{align*}
+By the Fundamental Theorem of Calculus, $\forall t \geq 0, h \in (0,\e),
+x \in X$
+\begin{align*}
+T(t) x - e^{t\A_h} x
+ &  = \int_0^t \frac{d}{ds} e^{(t - s)\A_h} T(s) x \, ds    \\
+ &  = \int_0^t e^{(t - s)\A_h} (A - \A_h) T(s) x \, ds      \\
+ &  = \int_0^t e^{(t - s)\A_h} T(s) (Ax - \A_hx) \, ds
+\end{align*}
+since $A$ and each $\A_h$ commutes with $T(t)$ for all $t \geq 0$. Then,
+$\forall t \geq 0, x \in X$,
+\begin{align*}
+\|T(t) x - e^{t\A_h} x\|
+ &  \leq \int_0^t \|e^{(t - s)\A_h}\| \|T(s)\| \|(Ax - \A_hx)\| \, ds   \\
+ &  \leq te^{(2\omega + 1)t} \|(Ax - \A_hx)\| \to 0,
+\end{align*}
+as $h \to 0$, by definition of $A$ and $\A_h$. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+If $x \in \D(A)$ is non-zero, then
+\[
+\Re [Ax,x]
+    = \|x\|^2 \Re \left[ A\frac{x}{\|x\|}, \frac{x}{\|x\|} \right]
+    \leq 0.
+\]
+
+Thus, $A$ is dissipative. As in the proof of Lemma 10.10, we have,
+$\forall x \in X, \lambda \in \C$,
+\begin{align*}
+\|(\lambda I - A)x\| \|x\|
+    \geq |[(\lambda I - A)x,x]|
+    = \Re[(\lambda I - A)x,x]
+    = \Re \lambda \|x\|^2 - \Re [Ax,x]
+    \geq \Re \lambda \|x\|^2.
+\end{align*}
+It follows that, for $\Re \lambda > 0$, $\lambda I - A$ is
+injective and, if $\lambda I - A$ is surjective, then
+$R(\lambda;A) \leq \frac{1}{\Re \lambda}$.
+
+By a generation theorem for analytic semigroups, it suffices now to show that
+\[H := \{\lambda \in \C : \Re \lambda > 0\} \subseteq \rho(A),\]
+for which we essentially follow the proof of Lemma 10.11.
+
+Define $\Lambda := \rho(A) \cap H$. Since
+$\rho(A)$ is open in $\C$, $\Lambda \neq \emptyset$ by assumption, and $H$ is
+connected, it suffices to show that $\Lambda$ is closed in the relative
+topology on $H$. Let $\{\lambda_k\}_{k = 1}^\infty$ be a sequence in $\Lambda$
+converging to $\lambda \in H$. To show $\lambda \in \Lambda$, it suffices to
+show $\lambda I - A$ is surjective. Let $y \in X$ and, $\forall n \in \N$, put
+\[x_n := R(\lambda_n; A)y.\]
+Noting that, since $1/\lambda_n \to 1/\lambda$ as $n \to \infty$, the sequence
+$\{1/\lambda_n\}_{n = 1}^\infty$ is bounded,
+\begin{align*}
+\|x_n - x_m\|
+ &  = \|R(\lambda_n;A)y - R(\lambda_m;A)y\| \\
+ &  = |\lambda_n - \lambda_m|\|R(\lambda_n;A)\|\|R(\lambda_m;A)\|\|y\|  \\
+ &  \leq |\lambda_n - \lambda_m|\frac{\|y\|}{\lambda_n\lambda_m}
+\end{align*}
+using a resolvent identity (Proposition 7.26). It follows that
+$\{x_n\}_{n = 1}^\infty$ is Cauchy, and so we may put
+\[x := \lim_{n \to \infty} x_n.\]
+Note that each $x_n \in \D(A)$ and $Ax_n \to \lambda x - y$. Since $A$ is
+closed, $x \in \D(A)$ and $y = \lambda x - Ax$.
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+Since $T$ is analytic, by Proposition 11.19, for $t > 0$, $T(t) : X \to \D(A)$.
+Thus, for $s,t \in [0,\tau]$ with $s < t$, $T(t - s)(f(s) - f(t)) \in \D(A)$,
+and hence $w(t) \in \D(A), \forall t \in [0,\tau]$.
+
+Let $f \in C^{0,\theta}([0,\tau];X)$ with $C > 0$ such that
+\[\|f(t) - f(s)\| \leq C|t - s|^\theta, \quad \forall s,t \in [0,\tau].\]
+
+Since $T$ is an analytic semigroup, $\exists K > 0$ such that
+\[\|AT(t)\| \leq K/t, \quad \forall t \in [0,\tau],\]
+and let $s,t \in [0,\tau]$ with $s < t$. Adding forms of $0$, by integral and
+semigroup properties,
+\begin{align*}
+w(t) - w(s)
+ &  = \int_0^t T(t - r)(f(r) - f(t)) \, dr
+    - \int_0^s T(s - r)(f(r) - f(s)) \, dr \\
+ &  = \int_0^s T(t - r)(f(r) - f(t))
+    -  T(s - r)(f(r) - f(s)) \, dr
+    + \int_s^t T(t - r)(f(r) - f(t)) \, dr \\
+ &  = \int_0^s (T(t - s) - I)T(s - r)(f(r) - f(s)) \, dr
+    + \int_s^t T(t - r)(f(r) - f(t)) \, dr  \\
+ &  + \int_0^s T(t - r)(f(s) - f(t)) \, dr.
+\end{align*}
+We now bound the norm of $A$ applied to each of these three terms.
+\begin{align*}
+\left\| A \int_0^s T(t - r) (f(s) - f(t)) \, dr \right\|
+ &  \leq \int_0^s \| A T(t - r) \| \| (f(s) - f(t)) \| \, dr    \\
+ &  \leq \int_0^s \frac{k}{t - r} C (t - s)^\theta \, dr
+    \leq kC \int_0^s (t - r)^{\theta - 1} \, dr    \\
+ &  = \frac{kC}{\theta} (t^\theta - (t - s)^\theta)
+\end{align*}
+\vspace{-7mm}
+\begin{align*}
+\left\| A \int_s^t T(t - r) (f(r) - f(t)) \, dr \right\|
+ &  \leq \int_s^t \| A T(t - r) \| \| (f(r) - f(t)) \| \, dr    \\
+ &  \leq \int_s^t \frac{k}{t - r} C (t - r)^\theta \, dr    \\
+ &  \leq kC \int_0^{t - s} t^{\theta - 1} \, dr
+    = \frac{kC}{\theta} (t - s)^\theta.
+\end{align*}
+
+[I didn't have time to finish writing this part up. I'm not sure I divided the
+pieces of $Aw$ correctly\dots]
+
+
+Thus, we have, $\forall s,t \in [0,\tau]$,
+\[\|Aw(t) -Aw(s)\| \leq \frac{kC}{\theta} |t - s|^\theta,\]
+so that $Aw \in C^{0,\theta}([0,\tau];X)$. \qed
+\end{question}
+\end{document}

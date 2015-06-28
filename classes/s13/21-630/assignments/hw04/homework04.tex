@@ -1,0 +1,158 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Wednesday, February 13, 2013}
+\newcommand{\mycollaborators}{None}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+Collaborators: \mycollaborators
+
+\begin{question}{Problem 1}
+I wasn't able to solve this problem. I did notice that the solution to the
+equation
+\[Y(t) = A + \int_{t_0}^t b(s)\sqrt{Y(s)} \, ds,\]
+has the form of the desired bound:
+\[Y(t) = \left( \sqrt{A} + \int _{t_0}^t b(s) \, ds \right)^2.\]
+I tried working along the lines of the proof given in class of Gronwall's
+Inequality with this solution in mind, but wasn't able to get the desired
+result.
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[A)]
+\item We suppose that $R$ is continuous. It follows, as discussed in class,
+that, since $R(0) = 1 > 0$, $R$ is positive and differentiable on $[0,\infty)$.
+Differentiating the given equation gives, $\forall t \in [0,\infty)$,
+$\frac{dR(t)}{dt} = \frac{1}{R(t)}$. Separation of variables and then
+integration give, $\forall t \in [0,\infty)$,
+\[
+ \frac{R^2(t)}{2} = t + C,
+\]
+for some constant $C \in \R$, and so, since $R(0) = 1$,
+\fbox{$R(t) = \sqrt{2t + 1}$.}
+
+\item The function $X: [0,\infty) \rightarrow \R$ defined
+$\forall t \in [0,\infty)$ by
+\[X(t) =
+    \left\{
+        \begin{array}{cl}
+            0.1         & : t \in [0,1.01)      \\
+            10(t - 1)   & : t \in [1.01,2)      \\
+            10          & : t \in [2,\infty)    \\
+        \end{array}
+    \right..
+\]
+is continuous and positive on $[0,\infty)$.
+$\forall t \in [0,1.01)$, $X(t) \leq 1 \leq 1 + \int_0^t \frac{1}{X(s)} \, ds$,
+and $\forall t \in [1.01,\infty)$,
+\[
+  X(t)
+  \leq 10
+  \leq 1 + \int_0^1 10 \, ds
+  \leq 1 + \int_0^1 \frac{1}{X(s)} \, ds
+  \leq 1 + \int_0^t \frac{1}{X(s)} \, ds.
+\]
+Furthermore, $X(2) = 10 > \sqrt{5} = R(2)$. Thus, $X$ is a counterexample. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+By orthogonality and then by linearity of $R$,
+\begin{equation}
+ f(t,Rx)
+ = F(t,|Rx|)Rx
+ = F(t,|x|)Rx
+ = R(F(t,|x|)x)
+ = R f(t,x).
+\label{eq:3.1}
+\end{equation}
+
+Since solutions to the given system are unique, it suffices to show that
+\begin{align*}
+\frac{d(RX)}{dt} & = f(t,RX(t,t_0,x_0)) \\
+RX(t_0,t_0,x_0) & = Rx_0.
+\end{align*}
+The latter equation trivially holds. Furthermore, for all $t$, by
+(\ref{eq:3.1}) and the fact that $R$ is linear,
+\[
+  f(t,RX(t,t_0,x_0))
+ = R f(t,X(t,t_0,x_0)).
+ = R \frac{dX}{dt}
+ = \frac{d(RX)}{dt}. \mqed
+\]
+\end{question}
+
+\begin{question}{Problem 4}
+Suppose $f(t,x) = x^2(1 - x)$, $\forall x \in \R$. Since $f$ satisfies a
+Lipschitz condition in $x$ on any bounded subset of the domain, any solution
+$X$ to the given system is unique. However, for any $x_0 \in \R$, if $x_0 \leq
+0$, then $\lim_{t \rightarrow +\infty} X(t,t_0,x_0) = 0$, whereas, if $x_0 > 0$,
+then $\lim_{t \rightarrow +\infty} X(t,t_0,x_0) = 1$. Thus, the function $x_0
+\mapsto \lim_{t \rightarrow +\infty} X(t,t_0,x_0)$ is discontinuous, and so the
+given statement is false. \qed
+\end{question}
+
+\end{document}

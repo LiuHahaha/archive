@@ -1,0 +1,140 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,enumerate,comment}
+
+\newcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\prox}{\operatorname{prox}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}   % argmin
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}   % argmax
+\newcommand{\e}{\varepsilon}                            % \varepsilon
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{3}
+\section{Convergence rate of generalized gradient descent [15 points] (Adona)}
+For convenience, we use the notation $\langle \cdot, \cdot \rangle$ to denote
+the dot product in several expressions.
+\begin{enumerate}[(a)]
+\item A second-order Taylor approximation gives, for some $\xi \in \R^n$,
+\[g(y) \leq g(x)    + (\nabla g(x))^T(y - x)
+                    + \frac12(y - x)^T(\nabla^2f(\xi))(y - x).\]
+
+Since all directional derivatives of $\nabla g$ are bounded in magnitude by $L$
+(this is immediate from the definition of directional derivative) and
+$\|(\nabla^2f(\xi))(y - x)\|$ is the magnitude of the derivative of $\nabla g$
+at $\xi$ in the direction $y - x$,
+$\|(\nabla^2f(\xi))(y - x)\| \leq L\|y - x\|$.
+Thus, by Cauchy-Schwartz,
+\[(y - x)^T(\nabla^2f(\xi))(y - x)
+    \leq \|(y - x)\|_2\|(\nabla^2f(\xi))(y - x)\|_2
+    \leq L\|(y - x)\|_2^2
+.\]
+Then, since $f = g + h$,
+\begin{equation}
+\label{ineq_a}
+f(y)
+    \leq g(x) + (\nabla g(x)^T) (y - x) + \frac{L}{2} \|y - x\|_2^2
+    + h(y). \qed
+\end{equation}
+ 
+\item Substituting $y = x^+ = x - tG_t(x)$ into (\ref{ineq_a}) gives
+\begin{align}
+\label{ineq_b}
+\notag
+f(x^+)
+ &  \leq g(x) + (\nabla g(x)^T) (x - tG_t(x) - x)
+    + \frac{L}{2} \|x - tG_t(x) - x\|_2^2 + h(x - tG_t(x)). \\
+\notag
+ &  = g(x) - t(\nabla g(x)^T) G_t(x)
+    + \frac{Lt^2}{2} \|G_t(x)\|_2^2 + h(x - tG_t(x)). \\
+ &  \leq g(x) - t\langle \nabla g(x), G_t(x) \rangle
+    + \frac{t}{2} \|G_t(x)\|_2^2 + h(x - tG_t(x)),
+\end{align}
+where the last inequality follows by bounding a factor of $t$ by $1/L$. \qed
+ 
+\item From the definitions of $G_t$ and $\prox_t$, we have
+\[x - tG_t(x)
+    = \prox_t(x - t\nabla g(x))
+    = \argmin_{z \in \R^n} \frac{1}{2t} \| x - t\nabla g(x) - z\|_2^2 + h(z).
+\]
+The zero subgradient characterization of optimality and definition of
+$\argmin$ then imply
+\begin{align*}
+0
+ &  \in \partial \frac{1}{2t} \| x - t\nabla g(x) - (x - tG_t(x))\|_2^2
+                                                        + h(x - tG_t(x))    \\
+ &  =   \partial \frac{1}{2} \| G_t(x) - \nabla g(x)\|_2^2
+                                                + \partial h(x - tG_t(x))   \\
+ &  =   \{-(G_t(x) - \nabla g(x)\} + \partial h(x - tG_t(x)),
+\end{align*}
+and hence $G_t(x) - \nabla g(x) \in \partial h(x - tG_t(x))$. \qed
+ 
+\newpage
+\item Since $G_t(x) - \nabla g(x) \in \partial h(x - tG_t(x))$,
+\begin{align*}
+h(x - tG_x(x))
+    & \leq h(z) - \langle G_t(x) - \nabla g(x), z - (x - tG_t(x)) \rangle  \\
+    & =    h(z) + \langle G_t(x), x - z             \rangle
+                - t\|     G_t(x)                    \|_2^2
+                + \langle \nabla g(x), x - z        \rangle
+                + t\langle \nabla g(x), G_t(x)      \rangle \\
+    & \leq h(z) + \langle G_t(x), x - z             \rangle
+                - t\|     G_t(x)                    \|_2^2
+                + g(z) - g(x)
+                + t\langle \nabla g(x), G_t(x)      \rangle,
+\end{align*}
+by bilinearity of the inner product and convexity of $g$ (since
+$\langle \nabla g, x - z \rangle \leq g(z) - g(x)$). Substituting this bound
+for $h(x - tG_x(x))$ in (\ref{ineq_b}) and observing that several terms cancel
+gives
+\begin{align}
+\notag
+f(x^+)
+ &  \leq h(z) + g(z) + \langle G_t(x), x - z \rangle
+    -    \frac{t}{2} \|G_t(x)\|_2^2 \\
+\label{ineq_d}
+ &  \leq f(z) + \langle G_t(x), x - z \rangle - \frac{t}{2} \|G_t(x)\|_2^2
+\end{align}
+since $f = g + h$. \qed
+ 
+%TODO
+\item Plugging $z = x$ into (\ref{ineq_d}) gives
+\begin{align*}
+f(x^+)
+    \leq f(x) + \langle G_t(x), x - x \rangle - \frac{t}{2} \|G_t(x)\|_2^2
+    \leq f(x)
+\end{align*}
+(and the latter inequality is strict if and only if $G_t(x) \neq 0$), so that
+generalized gradient descent does indeed decrease the criterion $f$ in each
+iteration. Plugging $z = x^\star$ into (\ref{ineq_d}) gives
+\begin{align*}
+f(x^+)
+    \leq f(x^\star) + \langle G_t(x), x - x^\star \rangle
+    -    \frac{t}{2} \|G_t(x)\|_2^2.
+\end{align*}
+Substituting $G_t(x) = \frac{x - x^+}{t}$ and simplifying gives the desired
+result:
+\[f(x^+) \leq f(x^\star) + \frac{1}{2t}
+    \left( \|x - x^\star\|_2^2 - \|x^+ - x^\star\|_2^2 \right). \qed\]
+ 
+\item Since each $f(x^{(k)}) \leq f(x^{(k - 1)}$, by the result of part (e)
+\begin{align*}
+k(f(x^{(k)}) - f(x^\star))
+    = \sum_{i = 1}^k f(x^{(k)}) - f(x^\star)
+ &  \leq \sum_{i = 1}^k f(x^{(i)}) - f(x^\star) \\
+ &  \leq \sum_{i = 1}^k \frac{1}{2t} \left(\|x^{(k - 1)} - x^\star\|_2^2
+                                        - \|x^{(k)} - x^\star\|_2^2 \right) \\
+ &  \leq \frac{\|x^{(0)} - x^\star\|_2^2}{2t},
+\end{align*}
+since the last sum telescopes. Dividing by $k$ gives the desired result:
+\[f(x^{(k)}) - f(x^\star) \leq \frac{\|x^{(0)} - x^\star\|_2^2}{2tk}. \qed\]
+ 
+\end{enumerate}
+\end{document}

@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-484A Graph Theory}
+\newcommand{\duedate}{Monday, March 26, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Make-up Assignment} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+%TODO
+\begin{question}{Problem 1}
+Since $Q_0$ is $K_1$ and $Q_1$ is $K_2$, and, by convention,
+$\forall i \in \mathbb{N}$, $\kappa(K_i) = i - 1$, $\kappa Q_0 = 0$ and
+$\kappa Q_1 = 1$. Since, by convention, $\lambda(K_1) = 0$,
+$\lambda(Q_0) = 0$. Finally, since removing the only edge in $Q_1$ creates a
+disconnected graph, $\lambda(Q_1) = 1$. Therefore, the claim in question holds
+for $k \in \{0,1\}$.
+
+{\bf Lemma:} $\forall k \in \mathbb{N}\backslash\{0,1\}$,
+$\forall u,v \in V(Q_k)$ there exists a set of $k$ internally disjoint paths
+from $u$ to $v$, 
+
+{\bf Proof:} The proof goes by induction on $k$. For $k = 2$, the Lemma is
+trivial, since there are two internally disjoint paths between any two
+vertices of a square. Suppose, as an inductive hypothesis, that the lemma
+holds for some $k \in \mathbb{N}\backslash\{0,1\}$. Let
+$u = (u_1,u_2,\ldots,u_{k + 1})$ and $v = (v_1,v_2,\ldots,v_{k + 1})$ be two
+vertices in $Q_{k + 1}$. We split into two cases:
+
+Case 1: There exists some $i \in \{1,2,\ldots,k + 1\}$ such that $u_k = v_k$.
+Then, the subgraph of $Q_{k + 1}$ induced by the set of vertices with $i^{th}$
+component $u_i = v_i$ is $Q_k$, so that, by the inductive hypothesis, there
+are $k$ internally disjoint paths from $u$ to $v$ going only through vertices
+with $i^{th}$ component $u_i = v_i$. There also exists another from $u$ to $v$
+path through $(u_1,u_2,\ldots,1 - u_i,\ldots,u_k)$ and
+$(v_1,v_2,\ldots,1 - v_i,\ldots,v_k)$, and going through only vertices with
+$i^{th}$ component $1 - u_k = 1 - v_k$, so that adding this to the set of $k$
+internally disjoint paths from $u$ to $v$ creates a set of $k + 1$ internally
+disjoint paths from $u$ to $v$. Therefore, there exists a set of $k + 1$
+internally disjoint paths from $u$ to $v$, concluding this case.
+
+Case 2: $\forall i \in \{1,2,\ldots,k + 1\}$, $u_i \neq v_i$ (i.e., $u$ and
+$v$ are `opposite' vertices in $Q_{k + 1}$). Consider constructing $k + 1$
+paths $P_1,P_2,\ldots,P_{k + 1}$ from $u$ to $v$ in the following fashion:
+$\forall i,j \in \{1,2,\ldots,k + 1\}$, the $j^{th}$ vertex of the $i^{th}$
+path is
+\[(u_1,u_2,\ldots,u_{i - 1},1 - u_i,1 - u_{i + 1},\ldots,1 - u_{i + j - 1},
+                                 u_{i + j},u_{i + j + 1},\ldots,u_{k + 1}k).\]
+(i.e., the $i^{th}$ path proceeds by `flipping' consecutive component bits on
+each step of the path, starting with the $i^{th}$ component. Then,
+$\{P_1,P_2,\ldots,P_{k + 1}\}$ is an internally disjoint set of paths from $u$
+to $v$, concluding the proof of the claim.
+
+By Menger's Theorem, it follows from this claim that,
+$\forall u,v \in V(Q_k)$, any minimal $u$-$v$ separating set has size at least
+$k$. Thus, any vertex-cut of $Q_k$ has size at least $k$, and therefore
+$\kappa(Q_k) \geq k$. Furthermore, by Theorem 5.11 (Whitney),
+$\lambda(Q_k) \geq \kappa(Q_k) \geq k$.
+
+Suppose that, for some $k \in \mathbb{N}\backslash\{0,1\}$, with $k \geq 2$,
+$v \in (Q_k)$. Since there are exactly $k$ sequences of ones and zeros
+differing from $v$ in exactly one coordinate, the degree of $v$ in $Q_k$ is
+$k$. Since there are clearly vertices that are not adjacent to $v$, removing
+the set of neighbors of $v$ from $G$ results in a disconnected graph, so that
+$\kappa(Q_k) \leq k$. Removing each of the $k$ edges incident to $v$ from
+$Q_k$ clearly results in a disconnected graph, so that $\lambda(Q_k) \leq k$.
+
+Therefore, $\kappa(Q_k) = \lambda(Q_k) = k$. \qquad $\blacksquare$
+\end{question}
+\end{document}

@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-621 Introduction to Lebesgue Integration}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Wednesday, December 5, 2012}
+\newcommand{\problemlist}{Chapter 2, Page 91, Problems 11, 15, 21}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+%Due: \duedate \\
+\problemlist \\
+\begin{question}{Problem 11}
+Let $f : \R^d \rightarrow \R$ be integrable, with $\int_E f \geq 0$ on every
+measurable $E \subseteq \R^d$, and suppose, for sake of contradiction that,
+that $E^- := f\inv((-\infty, 0))$ has $m(E^-) > 0$. Then, if,
+$\forall n \in \N$, we define $E_n := f\inv((-\infty, -1/n))$, by countable
+additivity of the Lebesgue measure,
+\[
+0
+ < m(E^-)
+ = m\left( \bigcup_{n = 1}^{\infty} E_n \right)
+ \leq \sum_{n = 1}^{\infty} m(E_n)
+\]
+(since $f$ is measurable, each $E_n$ is measurable).
+Thus, for some $n > 0$, $m(E_n) > 0$. Therefore,
+\[
+\int_{E_n} f
+ \leq \int_{E_n} -\frac{1}{n}
+ = -\frac{m(E_n)}{n}
+ < 0,
+\]
+contradicting the fact that $f$ has non-negative integral over all measurable
+sets. \qed
+
+A nearly identical proof shows that, if $f$ has non-positive integral over
+all measurable sets, then, $f \leq 0$ almost everywhere. It follows that, if
+$f$ has zero integral on all measurable sets, $f \leq 0$ almost everywhere,
+and $f \geq 0$ almost everywhere, so that $f = 0$ almost everywhere. \qed
+\end{question}
+
+\begin{question}{Problem 15}
+$\forall n \in \N$, since $f$ is continuous on
+$\left( \frac{1}{n}, 1 \right)$, since Riemann and Lebesgue integrals of $f$
+agree on $\left( \frac{1}{n}, 1 \right)$,
+\[\lim_{a \rightarrow 0} \int_a^1 f
+ = \lim_{a \rightarrow 0} \int_a^1 \frac{1}{\sqrt{x}} \, dx
+ = \lim_{a \rightarrow 0} 2\sqrt{x} \, \Big|_{x = a}^{x = 1} = 2 - 2\sqrt{a}
+ = 2.
+\]
+Thus, by the Lebesgue Monotone Convergence Theorem, 
+\[\int_{\R} f
+ = \int_0^1 \lim_{n \rightarrow \infty} f\chi_{(\frac{1}{n}, 1]}
+ = \lim_{n \rightarrow \infty} \int_\frac{1}{n}^1 f
+ = 2.
+\]
+Then, again, by the Lebesgue Monotone Convergence Theorem, since translating a
+function does not change its integral over $\R$,
+\[\int_{\R} F
+ = \sum_{n = 1}^{\infty} \int_{\R} \frac{f(x - r_n)}{2^n} \, dx.
+ = \sum_{n = 1}^{\infty} \frac{1}{2^n} \int_{\R} f(x - r_n) \, dx.
+ = 2 \sum_{n = 1}^{\infty} \frac{1}{2^n}
+ = 2
+ < \infty,
+\]
+so that $F$ is integrable, and thus that $F$ is finite almost everywhere, so
+that the series by which $F$ is defined converges almost everywhere. \qed
+
+Suppose $\tilde{F} = F$ almost everywhere, let $I$ be an interval, and let
+$M \in \R$. Since $\Q$ is dense in $\R$, $r_n \in \Q \cap I$, for some
+$n \in \N$. Note that $f > 2^nM$ on the interval
+$I_M := \left( r_n, r_n + \frac{1}{2^nM} \right)$. Since $I \cap I_M$ is an
+nonempty open interval, $m(I \cap I_M) > 0$, so that, since $\tilde{F} = F$
+almost everywhere, $\exists x \in I \cap I_M$ with
+$\tilde{F}(x) = F(x) \geq \frac{f(x)}{2^n} > M$. Thus, $\tilde{F}$ is
+unbounded on $I$. \qed
+\end{question}
+
+\begin{question}{Problem 21}
+The following lemma is used in proofs of parts (b) and (d) of this problem:
+
+{\bf Lemma 1:} If $f, g \in L^1(\R^d)$, then
+\[
+\int_{\R^d} \int_{\R^d} |f(x - y)g(y)| \, dy \, dx
+   = \|f\|_{L^1(\R^d)} \|g\|_{L^1(\R^d)}.
+\]
+
+
+{\bf Proof:} By Fubini's Theorem and linearity
+of the integral,
+\begin{align*}
+\int_{\R^d} \int_{\R^d} |f(x - y)g(y)| \, dy \, dx
+ & = \int_{\R^d} \int_{\R^d} |f(x - y)g(y)| \, dx \, dy, \\
+ & = \int_{\R^d} |g(y)| \int_{\R^d} |f(x - y)| \, dx \, dy, \\
+ & = \int_{\R^d} |g(y) \|f\|_{L^1(\R^d)} \, dy \\
+ & = \|f\|_{L^1(\R^d)} \int_{\R^d} |g(y)| \, dy
+   = \|f\|_{L^1(\R^d)} \|g\|_{L^1(\R^d)}.
+\end{align*}
+The third equality holds because translating a function does not change its
+$L^1$ norm. \qed
+
+\begin{enumerate}[(a)]
+\item The function $(x,y) \in \R^{2d} \mapsto x - y$ is measurable, 
+so that, since any composition or product of measurable functions is
+measurable, the function $(x,y) \in \R^{2d} \mapsto f(x - y) g(y)$ is
+measurable. \qed
+
+\item By Fubini's Theorem and Lemma 1, if
+$\|f\|_{L^1(\R^d)}\|,\|g\|_{L^1(\R^d)}\| < \infty$, then
+\[
+\int_{\R^{2d}} |f(x - y)g(y)| \, dx \, dy
+ = \int_{\R^d} \int_{\R^d} |f(x - y)g(y)| \, dy \, dx
+ = \|f\|_{L^1(\R^d)} \|g\|_{L^1(\R^d)} < \infty. \mqed
+\]
+
+\item This follows immediately from part (b) and Fubini's Theorem. \qed
+
+\item By the Triangle Inequality and then by Lemma 1,
+\[
+\|f*g\|_{L^1(\R^d)}
+ =    \int_{\R^d} \left|\int_{\R^d} f(x - y)g(y) \, dy \right| \, dx
+ \leq \int_{\R^d} \int_{\R^d} |f(x - y)g(y)| \, dy \, dx,
+ = \|f\|_{L^1(\R^d)} \|g\|_{L^1(\R^d)}.
+ \]
+with equality when $f, g \geq 0$. \qed
+
+\item Since $f$ is integrable, it follows from Proposition 4.1 that $\hat{f}$
+is continuous and bounded. \qed
+
+\end{enumerate}
+\end{question}
+\end{document}

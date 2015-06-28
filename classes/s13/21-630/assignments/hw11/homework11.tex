@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{11}
+\newcommand{\duedate}{Wednesday, April 17, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass            \\
+Name: \myname       \\
+Email: \myandrew    \\
+Due: \duedate
+
+\vspace{-0.2in}
+\begin{question}{Problem 1}
+\vspace{-0.2in}
+\begin{enumerate}[A)]
+\item By definition of $\Omega(X(0))$, picking some $\ol x \in \Omega(X(0))$,
+there is a sequence $\{t_k'\}$ with $t_k' \to \infty$ as
+$k \to \infty$, such that $X(t_k') \to \ol x$ as $k \to \infty$. Consequently,
+$\dist(X(t_k'),\Omega(X(0))) \to 0$ as $k to \infty$. Thus, by choosing $k_1$
+sufficiently large, the sequence $\{t_k\} = \{t_{k + k_1}'\}$ has the desired
+properties.
+
+By definition of $C^+(X(0))$, since $C^+(X(0))$ is unbounded, there is a
+sequence $\{s_k'\}$ with $s_k' \to \infty$ as $k \to \infty$, such that
+$|X(s_k')| \to \infty$ as $k \to \infty$. Consequently, since $\Omega(X(0))$ is
+bounded, $\dist(X(s_k'),\Omega(X(0))) \to \infty$ as $k \to \infty$. Thus, for
+$k_2$ sufficiently large, the sequence $\{s_k\} = \{s_{k + k_1}'\}$ has the
+desired properties. \qed
+
+\item Since $t_k,s_k \to \infty$ as $k \to \infty$, for each $k \in \N$,
+$\exists m,n \in \N$ with $t_k < s_m$ and $s_k < t_n$. Thus, we can inductively
+construct a sequence $\{(t_{k_n},s_{k_n})\}$ such that, for each $k \in \N$,
+$t_k < s_k$ and $s_k < t_{k + 1}$. By continuity of $X$ and the distance
+function and the Intermediate Value Theorem, $\exists \tau_k$ with
+$t_k < \tau_k < s_k$ and $X(\tau_k) \in S_2$ (clearly $\tau_k \to \infty$ as
+$k \to \infty$). \qed
+
+\item Since $\Omega(X(0))$ is bounded, $S_2$ is bounded, and, since the
+distance function is continuous, $S_2$ is closed. Thus, $S_2$ is compact, and
+so $\{X(\tau_k)\}$ has a subsequence $\{X(\tau_{k_n})\}$ converging to some
+$\ol x \in S_2$. It follows that $\ol x \in \Omega(X(0))$, contradicting the
+definition of $S_2$. \qed
+\vspace{-0.2in}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+If $r(0) > 1$, then, from the differential equation defining $r$, it is clear
+that $r(t) \to 1$. It follows that
+\vspace{-0.1in}
+\begin{align*}
+\theta(t)
+ &  = \int_0^t (r - 1)^2 + \sin^2\theta \, dt
+    = \int_0^t \frac{-\dot r}{(r - 1)^2} + \sin^2\theta \, dt
+    = \int_0^t \frac{d}{dt} \frac{1}{r - 1} + \sin^2\theta \, dt    \\
+ &  = \frac{1}{r - 1} - \frac{1}{r(0) - 1} + \int_0^t \sin^2\theta \, dt
+    \geq \frac{1}{r - 1} - \frac{1}{r(0) - 1} \rightarrow \infty
+\end{align*}
+as $t \to \infty$. Consequently,
+\fbox{$\Omega(X(0)) = \{(x,y) : x^2 + y^2 = 1\}$} is the unit circle.
+
+If $(X(0),Y(0)) = (0,1)$, then $(r(0),\theta(0)) = (1,\pi/2)$. Thus, by
+uniqueness, $r(t) = 1, \forall t \geq 0$. Also,
+\[\frac{d\theta}{dt} = \sin^2(\theta)
+    \Rightarrow -\cot(\theta) = \int \csc^2\theta \, d\theta = t + C,
+\]
+and hence, with the initial condition $\theta(0) = \pi/2$,
+\[\theta = \cot\inv(-t - C) = \cot\inv(-t).\]
+It follows that, as $t \to \infty$, $\theta = \cot\inv(-t) \to \pi$.
+Consequently,
+\[\mbox{\fbox{$\Omega((0,1)) = \{(-1,0)\}$.}}\]
+
+\end{question}
+
+\begin{question}{Problem 3}
+By definition of $C^+(X(0))$, we can choose $t_0 \geq 0$ with
+$X(t_0) \in \Omega(X(0))$. By Uniqueness, it suffices to show that
+$\exists t_1 > t_0$ such that $X(t_1) = X(t_0)$.
+
+Suppose, for sake of contradiction, that no such time $t_1$ exists. Since $X$
+is non-constant, $X(t_0)$ is not a critical point. Thus, by the Comment on page
+148, we can choose a transversal $L$ with
+$X(t_0) \in L\sminus\{\mbox{end points}\}$. By Corollary 6.1,
+$\exists s_k \to \infty$ with $X(s_k) \in L$, $X(s_k) \to X(t_0)$, and
+$s_{k + 1} > s_k, \forall k \in \N$, and, by our assumption, we may also assume
+$X(t_0) \neq X(s_k), \forall k \in \N$. Then, we may choose $j,k \in \N$ with
+$t_0 < s_j < s_k$, and $|X(s_k) - X(t_0)| < |X(s_j) - X(t_0)|$.
+However, for $S := X([0,s_k])$, this contradicts the monotonicity conclusion of
+Lemma 6.2. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+We first calculate
+\begin{align*}
+\dot r
+    & = \dot X \cos \theta + \dot Y \sin \theta \\
+    & = \left( r\cos\theta + r^3\cos\theta\sin^2\theta
+            - r^5\cos\theta + r^3\sin\theta \right) \cos \theta     \\
+    & + \left( r\sin\theta + r^3\sin^3\theta
+            - r^5\sin\theta - r^3\cos\theta \right) \sin \theta,    \\
+    & = r\left( 1 + r^2\sin^2\theta - r^4 \right),  \\
+\dot \theta
+    & = \dot Y r\inv \cos \theta - \dot X r\inv \sin \theta \\
+    & = \left( \sin\theta + r^2\sin^3\theta
+            - r^4\sin\theta - r^2\cos\theta \right) \cos \theta   \\
+    & - \left( \cos\theta + r^2\cos\theta\sin^2\theta
+            - r^4\cos\theta + r^2\sin\theta \right) \sin \theta
+      = -r^2.
+\end{align*}
+
+Since
+\[1 - r^4 \leq 1 + r^2\sin^2\theta - r^4 \leq 1 + r^2 - r^4,\]
+if $r \in (0,1]$, then $\dot r > 0$, and, if
+$r > \sqrt{\frac12 (1 + \sqrt5)}$, then $\dot r < 0$. It follows, then, that
+the annulus
+\[A = \left[ 1, \sqrt{\frac12 (1 + \sqrt5)} \right] \times \R\]
+defined in polar coordinates is positively invariant. Hence, for any solution
+$X$ with initial condition in $A$, since $A$ is closed,
+$\Omega(X(0)) \subseteq A$. Furthermore, since $\dot \theta = -r^2 \leq -1$ in
+$A$, $X$ has no critical points in $A$, and so $\Omega(X(0))$ contains no
+critical points. Thus, by the Poincar\'e-Bendixson Theorem, there is a periodic
+solution $\widetilde{X}$, and, moreover, $C^+(\widetilde{X}(0)) \subseteq A$,
+so that $\widetilde{X}$ is nonconstant. \qed
+\end{question}
+\end{document}

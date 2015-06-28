@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{12}
+\newcommand{\duedate}{Wednesday, April 24, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass            \\
+Name: \myname       \\
+Email: \myandrew    \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\begin{enumerate}[a)]
+\item $\ol y$ may be a critical point, and so there need not exist a
+transversal $T$ whose center is $\ol y$.
+
+\item Define $f \in C^1(\R^2,\R^2)$ in polar coordinates by
+\[f(r,\theta)
+  = \begin{bmatrix}
+        -(r - 1)^4  \\
+        (r - 1)^2 + \sin^2(\theta)
+    \end{bmatrix}
+.\]
+There is a transversal $L$ normal to the unit circle and centered at $(0,1)$.
+We showed in Problem 2 of Assignment 11 that $\Omega((1,1))$ is the unit circle
+and that the solution with $X(0) = (1,1)$ goes through $L$ infinitely many
+times, but that $\Omega((0,1)) = \{(-1,0)\}$, and hence, by uniqueness, the
+unit circle is not the orbit of a periodic solution. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+Consider the Predator-Prey model discussed in lecture, with
+$a = b = c = d = 2$. $\forall k \in \N$, the solution with $X_k(0) = (2,1/k)$
+is periodic, but the solution with $X(0) = (2,0)$ is not periodic.
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+Note that, by the chain rule,
+\[\frac{d}{dt} \left( (\dot X)^2 + X^4 \right)
+    = 2\dot X \ddot X + 4X^3 \dot X
+    = 2\dot X (\ddot X + 2X^3)
+    = 0,
+\]
+and hence $(\dot X)^2 + X^4 = C$, for some constant $C \in \R$.
+I wasn't able to finish this problem.
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{align*}
+\frac{d}{dt}\left( Z - X^2 - Y^2 \right)
+ & = \dot Z - 2X \dot X - 2Y \dot Y                             \\
+ & = 2(X^2 + Y^2)^{3/2}(1 - Z) + 2X^2 \left( X^2 + Y^2 \right)  \\
+ & - 2X\left(X\sqrt{X^2 + Y^2}(1 - Z) + X^3 - Y\right)          \\
+ & - 2Y\left(Y\sqrt{X^2 + Y^2}(1 - Z) + X^2Y + X\right)         \\
+ & = 2\sqrt{X^2 + Y^2}(1 - Z)(X^2 + Y^2 - (X^2 + Y^2))          \\
+ & + 2X^2(X^2 + Y^2 - (X^2 + Y^2))
+   + 2(XY - YX)
+   = 0,
+\end{align*}
+Thus that $Z - X^2 - Y^2 = C$, for some constant $C \in \R$. Hence,
+converting to polar coordinates, we replace $Z$ by $C + r^2$, giving
+\begin{align*}
+\dot r
+ & = \dot X \cos\theta + \dot Y \sin\theta   \\
+ & = \left( r^2\cos^2\theta(1 - C - r^2)
+        + r^3\cos^4\theta - r\sin\theta\cos\theta \right)    \\
+ & + \left( r^2\sin^2\theta(1 - C - r^2)
+        + r^3\cos^2\theta\sin^2\theta + r\cos\theta\sin\theta \right)   \\
+ & = r^2(1 - C - r^2) + r^3\cos^2\theta
+   = r^2(1 - C - r^2 + r\cos^2\theta),    \\
+\dot \theta
+ & = \dot Y \frac{\cos\theta}{r} - \dot X \frac{\sin\theta}{r}  \\
+ & = \left( r\sin\theta\cos\theta(1 - C - r^2)
+        + r^2\cos^3\theta\sin\theta + \cos^2\theta \right)  \\
+ & - \left( r\cos\theta\sin\theta(1 - C - r^2)
+        + r^2\cos^3\theta\sin\theta - \sin^2\theta \right)
+   = 1.
+\end{align*}
+Now observe that
+\[-r^2 + 1 - C
+    \leq -r^2 + r\cos\theta + 1 - C
+    \leq -r^2 + r + 1 - C.
+\]
+If $C \in (0,1)$, since $-r^2 + 1 - C > 0$ for $r < \sqrt{1 - C}$ and
+$-r^2 + r + 1 - C < 0$ for $r > s$. Thus, the annulus
+\[A
+    = \left[ \sqrt{1 - C}, \frac{1 + \sqrt{5 - 4C}}{2} \right] \times \R
+\]
+defined in polar coordinates is positively invariant. Since
+$\dot \theta = 1$, solutions in $A$ are bounded away from critical points.
+Since $A$ is bounded, by Poincar\'e-Bendixson, the planar system has a periodic
+solution. Since such a solution exists for each $C \in (0,1)$ and (since
+$Z = r^2 + C$) different values of $C$ lead to distinct solutions, the original
+system has infinitely many periodic solutions. \qed
+\end{question}
+\end{document}

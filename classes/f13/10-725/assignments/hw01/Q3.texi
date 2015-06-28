@@ -1,0 +1,9 @@
+\section{Programming gradient descent [25 points] (Yifei)}
+
+\begin{enumerate}
+\item[(a)] (5 pts)
+\item[(b)] (8 pts)
+\item[(c)] (6 pts)
+\item[(d)] (4 pts)
+\item[(e)]
+\end{enumerate}

@@ -1,0 +1,15 @@
+(* ideally, this would be in SeqUtils, 
+   but we wanted to separate the code you write into a different file *)
+
+structure LookAndSay : sig
+                         val look_and_say : ('a * 'a -> bool) -> 'a Seq.seq -> (int * 'a) Seq.seq
+                     end =
+struct
+  fun look_and_say (eq : 'a * 'a -> bool) (s : 'a Seq.seq)
+      : (int * 'a) Seq.seq =
+      let
+        fun lasHelp (s : 'a Seq.seq, x : 'a, acc : int) : 'a Seq.seq * int = raise Fail "unimplemented"
+      in
+        raise Fail "unimplemented"
+      end
+end

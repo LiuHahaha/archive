@@ -1,0 +1,140 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+%\usepackage{mysymbols}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\prox{\mathrm{prox}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}   % argmin
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}   % argmax
+\newcommand{\inv}{{^{-1}}}                              % inverse
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+\newcommand{\conv}{{\operatorname{conv}}}   % convex hull
+
+\begin{document}
+\twocolumn
+
+\section{Mastery set [25 point]}
+\begin{enumerate}[A.]
+\item Since each $\partial (a_i^T x + b_i) = \{a_i\}$,
+\[\partial f(x)
+    = \conv \left( \left\{ a_i : a_i^Tx + B = f(x) \right\} \right).
+\]
+Since each $\partial f_i(A_ix) = A_i^T \partial f_i(A_ix)$,
+\[\partial f(x)
+    = \conv \bigcup_{i : f_i(A_ix) = f(x)} A_i^T \partial f_i(A_ix).
+\]
+Since each $\partial \|x\|_{p_i}
+    = \left\{\argmax_{\|y\|_{q_i} = 1} y^Tx \right\}$
+(where $q_i$ is the H\"older conjugate of $p_i$), each
+$\partial \|A_ix\|_{p_i}
+    = \left\{ A_i^T \argmax_{\|y\|_{q_i} = 1} y^TA_ix \right\}$,
+so
+\begin{align*}
+ & \partial f(x)   \\
+ &  = \conv \bigcup_{i : \|A_ix\|_{p_i} = f(x)}
+            \left\{ A_i^T \argmax_{\|y\|_{q_i} = 1} y^TA_ix \right\}.
+\end{align*}
+ 
+\item This is true under any strictly convex norm $\|\cdot\|$ (including
+$\|\cdot\|_p, p \in (1,\infty)$), since the projection is
+\[\argmin_{y \in C} \|x - y\|,\]
+which is a strictly convex optimization problem and hence has a unique
+solution.
+
+% verify that these are the right questions
+In the case that $C$ is nonconvex, the projection need not be unique. Consider,
+for instance, $C = \{-1,1\} \subseteq \R$. Then, $\|0 - (-1)\| = \|0 - 1\|$,
+and so the projection is not unique.
+ 
+\item In general the projection operator onto a convex set need not be
+differentiable. Consider, for instance, $C = (-\infty,0] \subseteq \R$. $C$ is
+clearly convex, but the projection operator is
+\[P_C(x)
+    = \left\{
+        \begin{array}{ll}
+            x   &   \mbox{ if } x \leq 0   \\
+            0   &   \mbox{ else }
+        \end{array}
+    \right.,
+\]
+which is not differentiable at $x = 0$.
+ 
+\item A linear program is always convex. The objective function is linear, and
+hence convex. The constraint set is an intersection of half-planes, which are
+always convex, and hence the constraint set is convex.
+ 
+%TODO
+\item Let
+\begin{align*}
+f_1(x) & := ax + b,     \\
+f_2(x) & := e^x,        \\
+f_3(x) & := x\log x,    \\
+f_4(x) & := \|x\|^2/2.
+\end{align*}
+Clearly,
+\begin{align*}
+f_1^*(y)
+ &  = \max_x xy - ax - b
+    = \max_x (y - a)x - b   \\
+ &  = \left\{
+        \begin{array}{ll}
+            b           & \mbox{ if } y = a   \\
+            + \infty    & \mbox{ else }
+        \end{array}
+    \right..
+\end{align*}
+If
+\[0
+    = \frac{d}{dx} xy - e^x
+    = y - e^x,
+\]
+then, for $y > 0$, $x = \log y$. Thus
+\begin{align*}
+f_2^*(y)
+ &  = \max_x xy - e^x   \\
+ &  = \left\{
+        \begin{array}{ll}
+            +\infty     & \mbox{ if } y < 0 \\
+            0           & \mbox{ if } y = 0 \\
+            y \log y - y & \mbox{ if } y > 0
+        \end{array}
+    \right..
+\end{align*}
+If, for $x > 0$,
+\[0
+    = \frac{d}{dx} xy - x \log x
+    = y - \log x - 1,
+\]
+then, $x = e^{y - 1}$. Thus,
+\begin{align*}
+f_3^*(y)
+ &  = \max_x xy - x \log x  \\
+ &  = y e^{y - 1} - (y - 1) e^{y - 1}
+    = e^{y - 1}.
+\end{align*}
+
+If $x$ maximizes $x^Ty - \|x\|^2/2$, then, letting $c := \|x\|$, $x$ maximizes
+$x^Ty - c^2/2$, and hence $x^Ty = c\|y\|_*$, where $\|\cdot\|_*$ denotes the
+dual norm of $\|\cdot\|$. Thus,
+\[f_4^*(y) = \max_{c \in \R} c\|y\|_* - c^2/2.\]
+If
+\[0
+    = \frac{d}{dc} c\|y\|_* - c^2/2
+    = \|y\|_* - c,
+\]
+then $c = \|y\|_*$, and so
+\[f_4^*(y) = \|y\|_*^2/2.\]
+\end{enumerate}
+\end{document}

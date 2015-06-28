@@ -1,0 +1,182 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Friday, February 15, 2013}
+\newcommand{\mycollaborators}{Evan Cavallo (ecavallo)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\K}{\mathbb{K}} % real numbers
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+Collaborators: \mycollaborators
+
+\begin{question}{Problem 3}
+We suppose $\Ran(T)$ is not of the first category in $Y$, and show that
+$\Ran(T) = Y$. Since $\Ran(T)$ is a linear manifold, it suffices to show that
+$\Ran(T)$ contains some ball, say, of radius $\delta > 0$, in $Y$, since, then,
+$\Ran(T)$ contains a Hamel basis of $Y$ (normalized to have each element's norm
+less than $\delta$). Didn't have time to finish writing this one.
+\end{question}
+
+\begin{question}{Problem 4}
+By Remark 2.14, the identity function $I : (X,\|\cdot\|_1) \rightarrow
+(X,\|\cdot\|_2)$ is discontinuous. Then, by the Closed Graph Theorem, the graph
+$\Gr(I) = \{(x,x) : x \in X\}$ is not closed, so that there is a sequence
+$\{x_n\}_{n = 1}^{\infty}$ in $X$ with $(x_n,x_n) \rightarrow (y,z)$ as
+$n \rightarrow \infty$ and $y \neq z$. From the definition of the product norm
+on $X^2$, it follows that $\|x_n - y\| \rightarrow 0$ and
+$\|x_n - z\| \rightarrow 0$ as $n \rightarrow \infty$. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+Let $X = Y = c_0$ (equipped with the norm $\|\cdot\| = \|\cdot\|_{\infty}$, so
+that $X$ and $Y$ are Banach spaces), and define $T: X \rightarrow Y$ such that,
+for all sequences $\left\{ x_n \right\}_{n = 1}^{\infty} \in c_0$,
+$T\left( \left\{ x_n \right\}_{n = 1}^{\infty} \right)
+ = \left\{ n\inv x_n \right\}_{n = 1}^{\infty}$. Clearly $T$ is linear and
+injective, and, since $\sup \{\|Tx\| : x \in c_0, \|x\| = 1\} = 1$, $T$ is
+continuous.
+
+$\forall k \in \N$, since the sequence whose first $k$ terms are $1$ and whose
+remaining terms are $0$ is in $c_0$, the sequence
+$S_k = \{x_n\}_{n = 1}^{\infty}$ with $x_n = n\inv$ for $n \leq k$ and
+$x_n = 0$ otherwise is in $c_0$, and furthermore $\|S_k - \{1\}_{n =
+1}^{\infty}\| = n\inv \rightarrow 0\|$ as $k \rightarrow \infty$. However,
+since the constant sequence $\{1\}_{n = 1}^{\infty} \notin c_0$, so
+$\{n\inv\}_{n = 1}^{\infty} \notin T[X]$, and thus $T[X]$ is not closed. \qed
+\end{question}
+
+\begin{question}{Problem 7}
+Since $V$ is continuous, the graph $\Gr(V)$ is closed, so that
+$V[Y] \times Y = \{(Vy,y) : y \in Y\}$ is closed in $Z \times Y$. Thus, by
+definition of the product norm, $V[Y]$ is closed in $Z$, and thus, since $V$ is
+linear, $V[Y]$ is a Banach space with $V : Y \rightarrow V[Y]$ bijective. Then,
+by the Bounded Inverse Theorem, $V\inv : V[Y] \rightarrow Y$ is continuous.
+Then, since $U = V\inv \circ T$, $U$ is continuous. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 8}
+Since $X \subseteq Y$, $\forall x_n \in \R^{\N}$, $\|x_n\|_Y \rightarrow 0$ as
+$n \rightarrow \infty$ implies $\|x_n\|_X \rightarrow 0$ as $n \rightarrow
+\infty$. Suppose some sequence $(x_n,x_n) \rightarrow (x,y)$ in $(X,
+\|\cdot\|_X) \times (X, \|\cdot\|_Y)$. Then, since $\|x_n - x\| \rightarrow 0$
+a $n \rightarrow \infty$, $\|x_n - x\|_X \rightarrow 0$ as $n \rightarrow
+\infty$. It follows that $x = y$, so that the graph $\Gr(I)$ of the identity
+$I : (X,\|\cdot\|_X) \rightarrow (X,\|\cdot\|_Y)$ is closed.
+
+By the Closed Graph Theorem, then, $I$ is continuous. It follows, by Remark
+2.14 that $\|\cdot\|_X$ and $\|\cdot\|_Y$ are equivalent norms on $X$, implying
+the desired result.
+\end{question}
+
+\begin{question}{Problem 9}
+Suppose $Y$ is a Banach space over $\K$, and let
+$L : X \rightarrow \K$ be discontinuous and linear (we showed the
+existence of such mappings in Problem 2 of Assignment 2). Since $L$ is linear,
+the graph $X := \Gr(L)$ is a normed linear space (under the product norm). Let
+$\pi : X \rightarrow \K$ be the projection mapping $(x,Tx) \mapsto Tx$, noting
+that, by definiton of the product topology, projections are continuous. Then,
+$f : Y \rightarrow X$ defined by $f(x) = (x,Tx)$ is discontinuous, since
+otherwise $L = \pi \circ f$ would be continuous.
+
+Since $f$ is bijective, define $T = f\inv$. Since $f$ is discontinuous, it is
+immediate from the topological definition of continuity that $T$ is not open.
+However, since $T$ is the just projection of $X$ into $Y$, $T$ is linear,
+continuous, and surjective, as desired. \qed
+\end{question}
+
+\begin{question}{Problem 10}
+Since $|a_n| \rightarrow \infty$ as $n \rightarrow \infty$, we can take a
+subsequence $\left\{ a_{n_k} \right\}_{k = 1}^{\infty}$ with $a_{n_k} > 4^k$,
+$\forall k \in \N$. Define $g : \R \rightarrow \R$ to be the $2\pi$-periodic
+function defined by
+\[g(x) = \sum_{k = 1}^{\infty} 2^{-k} \sin(n_k x),
+\quad \forall x \in \R.\]
+
+It is easy to show that the sequence of continuous functions
+$\sum_{k = 1}^n 2^{-k} \sin(n_k x) \rightarrow g$ uniformly on $\R$ as
+$n \rightarrow \infty$, so that $g$ is continuous. Note also that,
+$\forall n,m \in \N$,
+\[\int_0^{2\pi} \sin(nx) \sin(mx) \, dx
+ =  \left\{
+        \begin{array}{cl}
+            \pi - \frac{\sin(4 \pi n)}{4n} \geq 1   & : n = m               \\
+            0                                       & : \mbox{otherwise}
+        \end{array}
+    \right..
+\]
+Therefore, $\forall k \in \N$,
+\[
+      a_{n_k} \int_0^{2\pi} g(x) \sin(n_k x) \, dx
+ \geq 4^k \sum_{i = 1}^{\infty}
+                \int_0^{2\pi} 2^{-i} \sin(n_i x) \sin(n_k x) \, dx
+ \geq 4^k \left( 2^{-k} \right)
+ =    2^k \rightarrow \infty
+\]
+as $k \rightarrow \infty$ (where we use the Bounded Convergence Theorem move
+the summation outside the integral). Thus, since it has an unbounded
+subsequence, the desired sequence is unbounded. \qed
+\end{question}
+\end{document}

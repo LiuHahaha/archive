@@ -1,0 +1,191 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{10}
+\newcommand{\duedate}{Wednesday, August 8, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Section 10.1, Problem 6}
+An obvious particular solution to the given nonhomogeneous \diffeq is
+$y(t) = \frac12x$.
+
+The characteristic equation of the homogeneous \diffeq associated with the
+given nonhomogeneous equation is $r^2 + 2 = 0$, whose roots are
+$r \in \{-\sqrt{2}i,\sqrt{2}i\}$. Thus, the solutions to the associated
+homogeneous equation are of the form
+\[y(t) = c_1\cos\left(\sqrt{2}x\right) + c_2\sin\left(\sqrt{2}x\right),\]
+for some $c_1,c_2 \in \mathbb{R}$, and so, since the particular and general
+solutions are independent, solutions to the given nonhomogeneous equation are
+of the form
+\[y(t)
+ = \mbox{\fbox{$\displaystyle c_1\cos\left(\sqrt{2}x\right)
+ + c_2\sin\left(\sqrt{2}x\right)
+ + \frac12x$.}}
+.\]
+Since $y(0) = 0$, \fbox{$c_1 = 0$.} Then, since $y(\pi) = 0$,
+$c_2
+ =       \frac{-\pi}{\sin\left(\sqrt{2}\pi\right)}
+ \approx \mbox{\fbox{$3.26$.}}$
+\end{question}
+
+\begin{question}{Section 10.1, Problem 19}
+In the first case, suppose $\lambda > 0$. Then, the characteristic equation of
+the given \diffeq is $r^2 - \mu^2 = 0$, whose roots are $r = \pm\mu$. Then,
+solutions to the \diffeq are of the form
+\[y(x) = c_1\cosh(\mu x) + c_2\sinh(\mu x),\quad c_1,c_2 \in \mathbb{R}.\]
+Since $y(0) = 0$, $c_1 = 0$. Since $0 = y^{\prime}(L) = c_2\mu\cosh(\mu L)$,
+and since $\mu \neq 0$ and $\cosh$ is everywhere strictly positive, $c_2$.
+Thus, the given \diffeq has no positive eigenvalues.
+
+In the second case, suppose $\lambda = 0$, so that $y^{\prime\prime} = 0$.
+Then, solutions to the \diffeq are of the form
+\[y(x) = c_1x + c_2,\quad c_1,c_2 \in \mathbb{R}.\]
+Since $y(0) = 0$, $c_2 = 0$, and, since $0 = y^{\prime}(L) = c_1$, $c_1 = 0$.
+Thus, the given \diffeq does not have zero as an eigenvalue.
+
+In the last case, suppose $\lambda < 0$. Then, the characteristic equation of
+the given \diffeq is $r^2 + \mu^2 = 0$, whose roots are $r = \pm\mu i$. Then,
+solutions to the \diffeq are of the form
+\[y(x) = c_1\cos(\mu x) + c_2\sin(\mu x),\quad c_1,c_2 \in \mathbb{R}.\]
+Since $y(0) = 0, c_1 = 0$. Since $y^{\prime}(L) = 0$, so that
+$c_2\mu\cos(\mu L) = 0$ and we are interested only in the case $c_2 \neq 0$
+(and $\mu \neq 0$), $\cos(\mu L) = 0$, and thus $\mu L - \frac{\pi}{2}$ is an
+integer multiple of $\pi$. Then, \[\mu = \frac{\pi/2 + n\pi}{L}\] and the
+eigenvalues of the given \diffeq are, $\forall n \in \mathbb{N}$,
+\[\lambda_n
+ = \mbox{\fbox{$\displaystyle\left(\frac{\pi/2 + n\pi}{L}\right)^2$,}}\]
+with associated
+eigenfunctions
+\[y_n(x)
+ = \mbox{\fbox{$\displaystyle\sin\left(\frac{\pi/2 + n\pi}{L}x\right)$.}}\]
+\end{question}
+
+\begin{question}{Section 10.2, Problem 16}
+\begin{enumerate}[(a)]
+\item Three periods of the graph of $f$ are plotted below:
+\vspace{1.5in}
+
+\item Suppose $a_n$ and $b_{n + 1}$ ($\forall n \in \mathbb{N}$) are such that
+\[f(x)
+ = \frac{a_0}{2}
+ + \sum_{n = 1}^{\infty} \left(a_n \cos(n\pi x)
+                             + b_n \sin(n\pi x)\right).\]
+$a_0 = \int_{-1}^1 f(x) \, dx = \mbox{\fbox{$1$.}}$
+$\forall n \in \mathbb{N}\backslash\{0\}$, the Euler-Fourier formulas and
+integration by parts give that
+\begin{eqnarray*}
+a_n
+ & = &  \int_{-1}^1 f(x)   \cos(n\pi x) \, dx
+   =   2\int_0^1    f(x)   \cos(n\pi x) \, dx \\
+ & = & 2\int_0^1    (1 - x)\cos(n\pi x) \, dx \\
+ & = & \mbox{\fbox{$\displaystyle \frac{2 - 2\cos(\pi n)}{\pi^2n^2}$.}}
+\end{eqnarray*}
+Since $f$ is even, $\forall n \in \mathbb{N}\backslash\{0\}$,
+$b_n = \mbox{\fbox{$0$.}}$
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 10.3, Problem 4}
+\begin{enumerate}[(a)]
+\item Suppose $a_n$ and $b_{n + 1}$ ($\forall n \in \mathbb{N}$) are such that
+\[f(x)
+ = \frac{a_0}{2}
+ + \sum_{n = 1}^{\infty} \left(a_n \cos(n\pi x)
+                             + b_n \sin(n\pi x)\right).\]
+$a_0 = \int_{-1}^1 f(x) \, dx = \mbox{\fbox{$4/3$.}}$
+
+$\forall n \in \mathbb{N}\backslash\{0\}$, the Euler-Fourier formulas and
+integration by parts give that
+\begin{eqnarray*}
+a_n
+ & = &  \int_{-1}^1 f(x)     \cos(n\pi x) \, dx
+   =   2\int_0^1    f(x)     \cos(n\pi x) \, dx \\
+ & = & 2\int_0^1    (1 - x^2)\cos(n\pi x) \, dx \\
+ & = & \mbox{\fbox{$\displaystyle \frac{4\sin(\pi n) - 4\pi n\cos(\pi n)}{\pi^3n^3}$.}}
+\end{eqnarray*}
+Since $f$ is even, $\forall n \in \mathbb{N}\backslash\{0\}$,
+$b_n = \mbox{\fbox{$0$.}}$
+
+\item Three periods of the graph of $f$ are plotted below:
+\vspace{1.5in}
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Section 10.4, Problem 16}
+\begin{enumerate}[(a)]
+\item The Euler-Fourier formula for a sine series and integration by parts
+give that, for
+\[f(x) = \sum_{n = 1}^{\infty} b_n\sin\left(\frac{n\pi x}{2}\right),\]
+$\forall n \in \mathbb{N}\backslash\{0\}$,
+\begin{eqnarray*}
+b_n
+ & = & \frac22\int_0^2 f(x)\sin\left( \frac{n\pi x}{2} \right) \\
+ & = &        \int_0^1  x  \sin\left( \frac{n\pi x}{2} \right)
+   +          \int_1^2     \sin\left( \frac{n\pi x}{2} \right) \\
+ & = & \frac{4}{\pi^2n^2}  \sin\left( \frac{\pi n} {2} \right)
+   -   \frac{2}{\pi n}     \cos\left( \frac{\pi n} {2} \right)
+   +   \frac{2}{\pi n}     \cos\left( \frac{\pi n} {2} \right)
+   -   \frac{2}{\pi n}     \cos\left(       \pi n      \right) \\
+ & = & \mbox{\fbox{$\displaystyle
+       \frac{4}{\pi^2n^2}  \sin\left( \frac{\pi n} {2} \right)
+   -   \frac{2}{\pi n}     \cos\left(       \pi n      \right)
+       $.}}
+\end{eqnarray*}
+
+\item Three periods of the graph of $f$ are plotted below:
+\vspace{1.5in}
+\end{enumerate}
+\end{question}
+\end{document}

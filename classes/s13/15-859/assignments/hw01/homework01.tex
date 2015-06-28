@@ -1,0 +1,296 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{wasysym}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-859 Information Theory and Applications in TCS}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Thursday, February 7, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\I}{\mathcal{I}}
+
+% probability related macros
+\newcommand{\pr}[1]{\mathsf{P}\left( #1 \right)} % probability of event #1
+\newcommand{\E}[2]{\operatornamewithlimits{\mathbb{E}}_{#2}\left[ #1 \right]} % expected value of #1 over #2
+\newcommand{\Bern}[1]{\operatorname{Bernoulli}\left( #1 \right)} % Bernoulli distribution of parameter p
+\newcommand{\giv}{\, | \,} % \pr{A \giv B} probability of A given B
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Problem Set \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Problem 1}
+All entropies are given in bits.\\
+$P(Y = 3) = \frac14, P(Y = 4) = P(Y = 5) = \frac38$, so
+$\displaystyle
+H(Y) = \frac{1}{4}\log_2(4) + 2 \cdot \frac{3}{8}\log_2\left(\frac83\right) = $
+\fbox{$\displaystyle \frac{11 - 3\log_23}{4}$.}
+
+Since $Y$ is a (deterministic) function of $X$, \fbox{$H(Y \giv X) = 0$} and
+$I(X; Y) = H(Y) = $ \fbox{$\displaystyle \frac{11 - \log_23}{4}$.}
+
+$H(X \giv Y = 3) = \log_22 = 1$, $H(X \giv Y = 4) = \log_26 = 1 +
+\log_23$, and $H(X \giv Y = 5) = \log_212 = 2 + log_23$ (computed by counting
+the number of possible series of each length). Thus, \[H(X \giv Y) = \E{H(X \giv
+Y = y)}{y \in \{3,4,5\}} = \frac14 \cdot 1 + \frac38 (3 + 2\log_23) =
+\mbox{\fbox{$\displaystyle \frac{11 + 6\log_23}{8}$.}}
+\]
+Thus, $H(X) = H(X \giv Y) + H(Y) = $ \fbox{$\displaystyle \frac{33}{8}$.}
+
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item
+For $i \in \{1,2,\ldots,n - 2\}$,
+$I(B_i,B_{i + 1}\giv B_1,B_2,\ldots,B_{i - 1}) = 0$, since $B_i$ is independent
+of $B_{i + 1}$ given $B_1,B_2,\ldots,B_{i - 1}$. However, if $i = n - 1$, then,
+$I(B_i,B_{i + 1}\giv B_1,B_2,\ldots,B_{i - 1}) = 1$, since $H(B_{i + 1}) = 1$,
+and $B_{i + 1}$ can be uniquely determined from $B_i$, given the values of
+$B_1,B_2,\dots,B_{i - 1}$.
+
+\item Since conditioning cannot reduce entropy,
+$H(Y\giv X,Z) \leq H(Y \giv X)$.
+\begin{align*}
+H(X,Y,Z) + H(X)
+ & =    H(Y,Z \giv X) + 2H(X) \\
+ & =    H(Y \giv X,Z) + H(Z \giv X) + 2H(X) \\
+ & \leq H(Y \giv X) + H(Z \giv X) + 2H(X) \\
+ & =    H(X,Z) + H(X,Z).
+\end{align*}
+This inequality can be re-written as the ``submodular'' inequality.
+Furthermore, $H(Y \giv X,Z) = H(Y \giv X)$ if and only if $Y$ is conditionally
+independent of $Z$ given $X$, so that this is precisely the condition under
+which equality holds. \qed
+
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Since, for $X = x$ fixed, $Z = z$ if and only if $Y = z - x$,
+\begin{align*}
+H(Z \, | \, X)
+ & = \sum_x p(x) \sum_z p(Z = z \, | \, X = x)
+                     \log\left( \frac{1}{p(Z = z \, | \, X = x)} \right) \\
+ & = \sum_x p(x) \sum_z p(Y = z - x \, | \, X = x)
+                     \log\left( \frac{1}{p(Y = z - x \, | \, X = x)} \right) \\
+ & = \sum_x p(x) \sum_y p(Y = y \, | \, X = x)
+                     \log\left( \frac{1}{p(Y = y \, | \, X = x)} \right)
+ = H(Y \, | \, X). \mqed
+\end{align*}
+
+\item As shown in part (d) below, if $X \perp Y$, then $H(Z) = H(X) + H(Y) \geq
+\max\{H(X),H(Y)\}$, since entropy is non-negative. \qed
+
+\item Suppose $X \sim \Bern{1/2}$ and $Y = -X$. Then, $H(X) = H(Y) = 1$, but,
+since $Z$ is always $0$, $H(Z) = 0 < 1 = \min\{H(X),H(Y)\}$. \qed
+
+\item By part (a),
+\begin{align*}
+H(X) + H(Y) - H(Z)
+ & = H(X) + H(Y) - H(Z \giv X) - H(X) \\
+ & = H(Y) - H(Y \giv X)
+   = I(X;Y).
+\end{align*}
+Since $I(X;Y) = 0$ if and only if $X \perp Y$, $H(Z) = H(X) + H(Y)$ if and only
+if \fbox{$X \perp Y$.} \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item For $x \in \{0,1\}^n, r \in [0,\infty)$, let $B(x,r) \subseteq \{0,1\}^n$
+denote the ball of Hamming radius $r$ centered at $x$. By the given inequality,
+the cardinality of $B(x,\tau n)$ is 
+\begin{equation}
+|B(x,\tau n)| = \sum_{j = 0}^{\tau n} {n \choose j} \leq 2^{h(\tau)n}
+\label{eq:4.a.1}
+\end{equation}
+(there are ${n \choose j}$ strings with Hamming distance exactly $j$ from $x$,
+since we construct such a string by choosing $j$ bits of $x$ to flip). If $C$
+is a $\tau$-covering, then
+$\{0,1\}^n = \bigcup_{x \in C} B(x, \tau n)$. Thus,
+\begin{align*}
+2^n = |\{0,1\}^n|
+ & =    \left| \bigcup_{x \in C} B(x, \tau n) \right|
+   \leq \sum_{x \in C} \left| B(x, \tau n) \right|
+ & \mbox{(by the Union Bound)} \\
+ & \leq \sum_{x \in C} 2^{h(\tau)n}
+ =    |C| 2^{h(\tau)n},
+ & \mbox{(by (\ref{eq:4.a.1}))}
+\end{align*}
+which can be rewritten in the desired form:
+\[|C|
+ \geq \frac{2^n}{2^{h(\tau)n}}
+ = 2^{(1 - h(\tau))n}. \mqed
+\]
+
+\item Couldn't get this one. \frownie
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item
+Clearly the leaves of the entire tree are $\{a_1,a_2,\dots,a_n\}$. Furthermore,
+if the leaves in the subtree rooted at some internal node $N$ are $\{a_i,a_{i +
+1},\dots,a_j\}$ ($1 \leq i < j \leq n)$, then, since for some $k \in \{i,i + 1,
+\dots,j\}$, the leaves in the subtrees rooted at the left and right children of
+$N$ are $\{i,i + 1,\dots,k\}$ and $\{k + 1,k + 2,\dots,j\}$, so that both
+children of $N$ have the desired property. Thus, by induction, the desired
+property holds for all internal nodes in the tree. \qed
+
+\item In the sum $\sum_{[i,j] \in \I} q_{[i,j]}$, each $p_i$ appears once for
+each internal node which is an ancestor of $[i,i]$. Since the length $l_i$ of
+the code for $a_i$ is the number of ancestors of $[i,i]$,
+\[\sum_{[i,j] \in \I} q_{[i,j]}
+ = \sum_{i \in \{1,2,\ldots,n\}} p_il_i
+ = L. \mqed
+ \]
+
+\item
+For any node $[i,j]$, let $S([i,j])$ denote the set of nodes in the
+subtree rooted at $[i,j]$. We show by induction that, for each internal node
+$[i,j]$ in the tree,
+\[
+ H(X \giv X \in \{a_i,a_{i + 1},\dots,a_j\})
+ =  \sum_{[i',j'] \in S([i,j])}
+    \frac{q_{[i',j']}}{q_{[i,j]}} 
+    h\left(\frac{q_{[i',k']}}{q_{[i',j']}} \right),
+\]
+which, in the case $i = 1, j = n$, reduces to the desired result. If $i = j$,
+this is trivial, since $H(X \giv X = a_i) = 0 = h(1)$. Suppose now, that the
+result holds for the left and right children of some internal node $[i,j]$.
+Then, letting $D$ be a Bernoulli random variable with $D = L$ if $X \in
+\{a_i,a_{i + 1},\dots,a_k\}$ and $D = R$ otherwise, computing conditional
+entropy as an expected value
+\begin{align*}
+ H(X \giv X \in \{a_i,\dots,a_j\})
+ & = H(X \giv L, X \in \{a_i,\dots,a_j\}) + H(L) \\
+ & = \frac{q_{[i,k]}}{q_{[i,j]}}
+     \left( \sum_{[i',j'] \in S([i,k])}\frac{q_{[i',j']}}{q_{[i,k]}}
+     h\left(\frac{q_{[i',k']}}{q_{[i',j']}}\right)\right) \\
+ & + \frac{q_{[k + 1,j]}}{q_{[i,j]}}
+     \left(\sum_{[i',j'] \in S([k + 1,j])}
+     \frac{q_{[i',j']}}{q_{[k + 1,j]}} h\left(\frac{q_{[i',k']}}{q_{[i',j']}}\right)\right)
+   + \frac{q_{[i,j]}}{q_{[i,j]}} h\left( \frac{q_{[i,k]}}{q_{[i,j]}} \right) \\
+ & = \sum_{[i',j'] \in S([i,j])}
+     \frac{q_{[i',j']}}{q_{[i,j]}} 
+     h\left(\frac{q_{[i',k']}}{q_{[i',j']}} \right),
+\end{align*}
+so that the result holds for $[i,j]$. \qed
+
+\item By the results of parts (b) and (c),
+\begin{align*}
+L - H(X)
+ & = \left( \sum_{[i,j] \in \I} q_{[i,j]} \right)
+   - \sum_{[i,j] \in \I}
+                    q_{[i,j]} h \left( \frac{q_{[i,k]}}{q_{[i,j]}} \right) \\
+ & \leq \sum_{[i,j] \in \I} q_{[i,j]}
+   - 2 \left( \frac{\min\{q_{[i,k]},q_{[k + 1,j]}\}}{q_{[i,j]}} \right)
+ & \mbox{(since $h(1 - x) = h(x)$ and $h(x) \geq 2x$)} \\
+ & = \sum_{[i,j] \in \I} \left| q_{[k + 1,j]} - q_{[i,k]} \right|. \mqed
+ & \mbox{(since $q_{[i,j]} = q_{[i,k]} + q_{[k + 1, j]}$)} \\
+\end{align*}
+
+\item Suppose, for sake of contradiction, that, for some $[i,j] \in \I$,
+$\left| q_{[i,k]} - q_{[k + 1,j]} \right| > \max\{p_k, p_{k + 1}\}$. If
+$q_{[i,k]} < q_{[k + 1, j]}$,
+\[\left| q_{[i,k + 1]} - q_{[k + 2,j]} \right|
+ = \left| q_{[i,k]} + p_{k + 1} - (q_{[k + 1,j]} - p_{k + 1}) \right|
+ < \left| q_{[i,k]} - q_{[k + 1,j]} \right|,
+ \]
+and, if $q_{[i,k]} > q_{[k + 1, j]}$
+\[\left| q_{[i,k - 1]} - q_{[k,j]} \right|
+ = \left| q_{[i, k]} - p_k - (q_{[k + 1,j]} + p_k) \right|
+ < \left| q_{[i,k]} - q_{[k + 1,j]} \right|,
+ \]
+Either case contradicts to choice of
+$k = \argmax_{\ell : i \leq \ell < j}\left| q_{[i,k]} - q_{[k + 1,j]} \right|$.
+\qed
+
+\item By parts (d) and (e), since each $p_i$ can be used at most
+twice (once as $p_k$ and once as $p_{k + 1}$)
+\[L - H(X)
+  \leq \sum_{[i,j] \in \I} \left| q_{[i,k]} - q_{[k + 1, j]} \right|
+  \leq \sum_{[i,j] \in \I} \max\{p_k, p_{k + 1}\}
+  \leq 2. \mqed
+\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6}
+Pinsker's Inequality can be rewritten in the form
+\begin{equation}
+\sqrt{2D(p \, || \, q)} \geq \sum_{a \in A} |p(a) - q(a)|.
+\label{eq:6.1}
+\end{equation}
+Thus, since mutual information is the divergence of joint and product
+distributions (shown in class),
+\begin{align*}
+\sqrt{2I(X;Y)}
+ & = \sqrt{2D(p(x,y);p(x)p(y))} \\
+ & \geq \sum_{(x,y) \in \mathcal{X} \times \mathcal{Y}}   |p(x,y) - p(x)p(y)|
+ & \mbox{(by (\ref{eq:6.1}))} \\ 
+ & = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}}
+                                           |p(y \, | \, x)p(x) - p(x)p(y)|
+ & \mbox{(definition of conditional probability)} \\
+ & = \sum_{x \in \mathcal{X}} p(x) \sum_{y \in \mathcal{Y}}
+                                           |p(y \, | \, x) - p(y)| \\
+ & = \sum_{x \in \mathcal{X}} p(x) d(x) 
+   = \E{d(x)}{x \leftarrow \mathcal{X}}. \mqed
+ & \mbox{(definitions of $d$, expected value)}
+\end{align*}
+\end{question}
+\end{document}

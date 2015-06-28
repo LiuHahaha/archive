@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\setcounter{MaxMatrixCols}{30}
+\allowdisplaybreaks
+\begin{document}
+
+\begin{center}
+\textbf{Shashank Singh}
+
+\textbf{sss1@andrew.cmu.edu}
+
+\textbf{21-355C \quad Real Analysis, Fall 2011}
+
+\textbf{Assignment 9}
+
+\textbf{Due: Wednesday, Novemeber 16}
+\end{center}
+
+%DONE
+\textbf{Question 0.1.} Let $g$ be a differentiable real function of
+$\mathbb{R}$ such that, $\forall x \in \mathbb{R}$, $|g^{\prime}(x)| \leq M$,
+for some $M \in \mathbb{R}$. Let $\epsilon = \frac{1}{M + 1} > 0$. Let
+$f: \mathbb{R} \rightarrow \mathbb{R}$ such that, $\forall x \in \mathbb{R}$,
+$f(x) = x + \epsilon g(x)$. Then, by Theorem 5.3, since the identity and $g$
+are differentiable on $\mathbb{R}$, $f$ is differentiable on $\mathbb{R}$ and,
+$\forall x \in \mathbb{R}$, $f^{\prime}(x) = 1 + \epsilon g^{\prime}(x)$.
+$\forall x \in \mathbb{R}$, since $-(M + 1) < g^{\prime}(X)$, $-1 < \epsilon
+g^{\prime}(x)$, so $f^{\prime}(x) > 0$. Suppose, for sake of contradiction,
+that $f$ were not injective; in particular, suppose $\exists x_1, x_2 \in
+\mathbb{R}$ such that $x_1 \neq x_2$ and $f(x_1) = f(x_2)$. Then, by the
+Mean Value Theorem (in particular, by Theorem 5.10), $\exists x \in \mathbb{R}$
+such that $f(x_2) - f(x_1) = (x_2 - x_1)f^{\prime}(x)$. Since $x_1 \neq x_2$
+and $f(x_1) = f(x_2)$, this implies that $f^{\prime}(x) = 0$, contradicting
+the above proof that $f^{\prime}(x) > 0$. Thus, $f$ is injective.
+\qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Question 0.2.} Let $f: (0, \infty) \rightarrow \mathbb{R}$ be
+differentiable its domain, such that $\lim_{x \rightarrow \infty}
+f^{\prime}(x) = 0$. Let $g: \mathbb{R} \rightarrow \mathbb{R}$ such that,
+$\forall x \in \mathbb{R}$, $g(x) = f(x + 1) - f(x)$. Let $\epsilon \in
+\mathbb{R}$ with $\epsilon > 0$. Since $\lim_{x \rightarrow \infty}
+f^{\prime}(x) = 0$, $\exists x_0 \in (0,\infty)$ such that, $\forall x \in
+\mathbb{R}$ with $x > x_0$, $|f^{\prime}(x)| < \epsilon$. Let $x \in
+\mathbb{R}$ with $x > x_0$. Suppose, for sake of contradiction that $g(x) >
+\epsilon$. Then, by the Mean Value Theorem (in particular, by Theorem 5.10),
+$\exists c \in (x, x + 1)$ such that $|g(x)| = |f(x + 1) - f(x)| =
+|((x + 1) - x) f^{\prime}(c)| = |f^{\prime}(c)|$. However, since $c > x_0$,
+this contradicts the result that $|f^{\prime}(c)| < \epsilon$. Therefore,
+$\forall x \in \mathbb{R}$ with $x > x_0$, $|g(x)| < \epsilon$, so that
+$\lim_{x \rightarrow \infty} g(x) = \infty$. \qquad $\blacksquare$ \\
+
+%NOT DONE
+\textbf{Question 0.3.}
+
+%NOT DONE
+\textbf{Question 0.4.}
+
+%NOT DONE
+\textbf{Lemma 0.5.}
+
+%NOT DONE
+\textbf{Question 0.6.}
+
+%NOT DONE
+\textbf{Question 0.7.}
+
+%NOT DONE
+\textbf{Question 0.8.}
+
+%NOT DONE
+\textbf{Question 0.9.}
+
+%NOT DONE
+\textbf{Question 0.10.}
+\end{document}

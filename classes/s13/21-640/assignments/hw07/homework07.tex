@@ -1,0 +1,232 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{7}
+\newcommand{\duedate}{Wednesday, May 7, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+Suppose $x \in (C + K)^C$. Then, $\forall k \in K$, $x \notin C + k$, and so,
+since $C + k$ is closed (by continuity of $+$), there exist neighborhoods
+$U_k$ and $V_k$ with $x \in U_k$, $k \in V_k$, and
+$U_k \cap (C + V_k) = \emptyset$ (take neighborhoods $U$ of $x$ and $V$ of $0$
+with $U \cap C = \emptyset$ and $V - V \subseteq U - x$, and choose
+$U_k := V + x, V_k := V + k$).
+
+Since $K$ is compact, it has a finite cover
+$\{V_{k_1},\dots,V_{k_n}\} \subseteq \{V_k : k \in K\}$.
+Thus, for $U := \bigcap_{i = 1} U_{k_i}$,
+\[(C + K) \cap U
+    \subseteq \left( C + \bigcup_{i = 1}^n V_{k_i} \right) \cap U
+    = \emptyset,
+.\]
+$x \in U$, and $U$ is open.
+Therefore, $(C + K)^C$ is open, and so $C + K$ is closed. \qed
+\end{question}
+
+\begin{question}{Problem 2}
+Since $X$ is locally convex, it has a separating family of seminorms; in
+particular, there is a seminorm $p : X \to \R$ with $p(x) \neq 0$. We can then
+(uniquely) define a linear functional $f_0 : \vspan(x) \to \R$ by
+$f_0(x) = p(x) \neq 0$, noting $|f(y)| \leq p(y)$, $\forall y \in \vspan(x)$.
+Then, by the Hahn-Banach Theorem, there is an extension $f : X \to \R$ of $f_0$
+with $|f| \leq p$. Thus, since $p$ is continuous on $X$ and $p(0) = 0$, it is
+immediate that $f$ is continuous at $0$, and so, by Proposition 13.3, $f$ is
+continuous on $X$. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Suppose $E \subseteq X$ is $\tau$ bounded, so that, by Theorem 14.2,
+$\forall x \in X$, the function $f \mapsto |f(x)|$ is bounded on $E$. Then,
+we can define $b : [0,1] \to \R$ by
+\[b(x) := \sup_{f \in E} |f(x)|, \quad \forall x \in [0,1].\]
+Note that since each $f$ is continuous, $\forall \alpha \in \R$ the set
+\[\{x \in [0,1] : b(x) > \alpha\}
+    = \bigcup_{f \in E} \{x \in [0,1] : |f(x)| > \alpha\}\]
+is a union of open sets and is therefore open, so that $b$ is lower
+semi-continuous (thanks to Jimmy Murphy for pointing this out to me).
+Since the function $g := x \mapsto \frac{|x|}{1 + |x|}$ is continuous and
+non-decreasing, $g \circ b$ is also lower semi-continuous.
+
+Semi-continuous functions are clearly Borel measurable and hence Lebesgue
+measurable. Also, $g \leq 1$ on $\R$, so, by the Lebesgue's
+Dominated Convergence Theorem, $g \circ b$ is integrable on $[0,1]$.
+
+By construction of $\rho$ and the fact that $\rho$-balls give a local base of
+$\sigma$ at $0$, $E$ is $\sigma$-bounded if and only if, $\forall \e > 0$,
+$\exists t_\e > 0$ such that $\forall t > t_\e, f \in E$,
+$\rho(f/t,0) < \e$. Since
+\[\rho(f/t,0)
+    = \int_0^1 \frac{|f(x)/t|}{1 + |f(x)/t|} \, dx
+    = \int_0^1 \frac{|f(x)|}{t + |f(x)|} \, dx
+    \leq \int_0^1 \frac{|b(x)|}{t + |b(x)|} \, dx,
+\]
+and, again by the Dominated Convergence Theorem, the last integral approaches
+$0$ as $t \to \infty$, for every $\e > 0$, such a $t_\e$ must exist. \qed
+
+\item 
+By Theorem 14.2 and the definition of $p_x$, the family
+\[\{\{f \in X : p_x(f) = |f(x)| < 1/n_x, \forall x \in S\}
+    : S \subseteq [0,1] \mbox{ finite, }
+        n_x \in \N \mbox{ for each } x \in S\}\]
+of sets is a local base of $(X,\tau)$ at $0$. Thus, letting $\e = 1/4$, to show
+that $I$ is not continuous, it suffices, for an arbitrary finite set
+$S \subseteq [0,1]$ to construct a function $f$ with $f = 0$ on $S$ and
+\[\rho(f,0)
+    = \int_0^1 \frac{|f(x)|}{1 + |f(x)|} \, dx \geq \e.\]
+Although we do not explicitly give the construction, on can construct such a
+function $f$ by fixing $f = 0$ on $S$ and $f = 1$ on a set of measure at least
+$1/2$ (and positive distance from $S$), and then interpolating to make $f$
+continuous. \qed
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+Suppose $E$ is topologically bounded, and let $\{\alpha_n\}_{n = 1}^\infty$ and
+$\{x_n\}_{n = 1}^\infty$ be sequences in $\K$ and $X$, respectively, with
+$\alpha_n \to 0$ as $n \to \infty$. Suppose $U \subseteq X$ is a neighborhood
+of $0$. Since $E$ is topologically bounded, $\exists t_0 > 0$ such that
+$E \subseteq tU, \forall t > t_0$. Since $\alpha_n \to 0$, $\exists N \in \N$
+with $\alpha_n < 1/t, \forall n > N$. since each $x_n \in tU$, $\forall n > N$,
+$\alpha_nx_n \in U$. Therefore, $\alpha_nx_n \to 0$ as $n \to \infty$.
+
+Suppose, on the other hand, that $E$ is not topologically bounded, so that
+there is a neighborhood $V$ of $0$ such that, $\forall n \in \N, \exists t_n > n$
+with $E \not\subseteq t_nV$. Then, $\forall n \in \N$, for
+$\alpha_n = \frac{1}{t_n}$, $\exists x_n \in E$ with $\alpha_nx_n \notin V$, and
+hence $\alpha_nx_n \not\to 0$ as $n \to \infty$. \qed
+\end{question}
+
+%TODO
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item $\forall x,y,z \in X$,
+$\rho(x + z,y + z) = F((x + z) - (y + z)) = F(x - y) = \rho(x,y)$.
+
+\item Let $r > 0, B := \{x \in X : \rho(x,0) < r\}$, $\alpha \in \K$ with
+$|\alpha| \leq 1$, and $x \in B$.
+
+By part (d) of Lemma 5.32, since each $V_n$ is convex, absorbing, and balanced,
+\begin{align*}
+\rho(\alpha x,0)
+    = F(\alpha x)
+    & = \max \left\{ \frac1n\min\{1,p_n(\alpha x)\} : n \in \N \right\}     \\
+    & = \max \left\{ \frac1n\min\{1,|\alpha| p_n(x)\} : n \in \N \right\}   \\
+    & \leq \max\left\{\frac1n\min\{1,p_n(x)\} : n \in \N\right\}
+      = F(x)
+      = \rho(x,0)
+      < r.
+\end{align*}
+Thus, $\alpha x \in B$, and so $B$ is balanced. \qed
+
+\item Let $r > 0, B := \{x \in X : \rho(x,0) < r\}$, $x,y \in B$, and
+$t \in (0,1)$. Then, $\forall n \in \N$,
+\[p_n(tx + (1 - t)y) \leq p_n(tx) + p_n((1 - t)y) = tp_n(x) + (1 - t)p_n(y),\]
+by Lemma 5.32, since each $V_n$ is convex and absorbing.
+Since $tp_n(x), (1 - t)p_n(y) \geq 0$,
+\[\min\{1,tp_n(x) + (1 - t)p_n(y)\}
+    \leq \min\{1,tp_n(x)\} + \min\{1,(1 - t)p_n(y)\}.
+\]
+Thus,
+\begin{align*}
+\rho(tx + (1 - t)y,0)
+    & = \max \left\{ \frac1n\min\{1,p_n(tx + (1 - t)y)\} : n \in \N \right\}     \\
+    & \leq \max \left\{ \frac1n\min\{1,tp_n(x) + (1 - t)p_n(y)\} : n \in \N \right\}   \\
+    & \leq t\max \left\{ \frac1n\min\{1,p_n(x)\} : n \in \N \right\}   \\
+    & + (1 - t)\max \left\{ \frac1n\min\{1,p_n(y)\} : n \in \N \right\}   
+     = t\rho(x,0) + (1 - t)\rho(y,0)
+      < r.
+\end{align*}
+Thus, $tx + (1 - t)y \in B$, and so $B$ is convex. \qed
+
+%TODO
+\item Let $\tau$ denote the topology of $X$. If $r \in (0,1]$, then the
+$\rho$-ball of radius $R$ centered at $0$ is
+\begin{align*}
+\{x \in X : F(x) < r\}
+    & = \{x \in X : \max\{\min\{1,p_n(x)\}/n : n \in \N\} < r\}   \\
+    & = \bigcap_{n \in \N} \{x \in X : \min\{1,p_n(x)\} < nr\}  \\
+    & = \bigcap_{n = 1}^{\lceil r \rceil} \{x \in X : p_n(x) < nr\}
+      = \bigcap_{n = 1}^{\lceil r \rceil} V(p_n,nr).
+\end{align*}
+By Theorems 14.1 and 14.2, then, the topology induced on $X$ by $\rho$ is no
+finer than $\tau$.
+
+I didn't have time to figure out how to show the converse.
+\end{enumerate}
+\end{question}
+\end{document}

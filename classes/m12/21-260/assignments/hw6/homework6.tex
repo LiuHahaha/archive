@@ -1,0 +1,148 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{6}
+\newcommand{\duedate}{Wednesday, July 25, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Section 3.1, Problem 14}
+The characteristic equation of the given \diffeq is $2r^2 + r - 4 = 0$, whose
+solutions are $r_1 = \frac14\left(\sqrt{33} - 1\right)$ and
+$r_2 = \frac14\left(-\sqrt{33} - 1\right)$. Thus, general solutions to the
+given \diffeq are of the form
+\[y = \mbox{\fbox{$c_1e^{r_1t} + c_2e^{r_2t}$,}}\]
+where, for $t_0 = 0$,
+\begin{eqnarray*}
+c_1 & = & \frac{y^{\prime}(t_0) - y(t_0)r_2}{r_1 - r_2}e^{-r_1t_0}
+      = \mbox{\fbox{$\displaystyle \frac{2}{\sqrt{33}}$}}\\
+c_2 & = & \frac{y(t_0)r_1 - y^{\prime}(t_0)}{r_1 - r_2}e^{-r_2t_0}
+      = \mbox{\fbox{$\displaystyle -\frac{2}{\sqrt{33}}$.}}
+\end{eqnarray*}
+\end{question}
+
+\begin{question}{Section 3.2, Problem 18}
+If the Wronskian of $f$ and $g$ is $t^2e^t$, then,
+$f(t)g^{\prime}(t) - f^{\prime}(t)g(t) = t^2e^t$. Thus, since $f(t) = t$,
+so that $f^{\prime} = 1$, \[tg^{\prime}(t) - g(t) = t^2e^t.\] Since this is a
+linear first-order differential equation, we can solve it by writing it in
+standard form and multiplying by an integration factor of
+$\mu := e^{-\int 1/t \, dt} = t^{-1}$, giving
+\[\mu(t)g(t) = \int e^t \, dt = e^t + C,\] for some $C \in \mathbb{R}$.
+Then, \[g(t) = \frac{e^t + C}{\mu(t)} = \mbox{\fbox{$te^t + Ct$}}\]
+(note that, without any initial value of $g$, we cannot further specify $C$).
+\end{question}
+
+\begin{question}{Section 3.3, Problem 12}
+The characteristic equation of the given \diffeq is $4r^2 + 9 = 0$, whose
+solutions are $r_1 = \frac32i$ and $r_2 = -\frac32i$.
+
+Thus, the general solution of the given \diffeq is
+\[y
+ = \mbox{
+    \fbox{
+        $\displaystyle
+            c_1\cos\left(\frac32t\right)
+          + c_2\sin\left(\frac32t\right)
+        $.
+    }
+   }\
+\]
+\end{question}
+
+\begin{question}{Section 3.4, Problem 12}
+The characteristic equation of the given \diffeq is $r^2 - 6r + 9 = 0$, whose
+unique solution is $r = 3$. Thus, one solution to the \diffeq is
+\[y_1(t) = e^{3t}.\]
+Employing d'Alembert's method, to find another linearly independent solution
+gives the solution
+\[y_2(t) = te^{3t}.\]
+Thus, the general solution of the given differential equation is
+\[y
+ = \mbox{
+    \fbox{
+        $c_1e^{3t} + c_2te^{3t}$
+    ,}
+   }
+\]
+for some $c_1,c_2 \in \mathbb{R}$. Since $y(0) = -1$, \fbox{$c_1 = -1$,} and,
+since $y^{\prime}(0) = 2$, \fbox{$c_2 = 5$.}
+\end{question}
+
+\begin{question}{Section 3.4, Problem 28}
+Suppose another solution to the given \diffeq is of the form
+$y_2(x) = v(x)y_1(x)$. Substituting this into the given \diffeq and
+simplifying gives
+\[e^xv^{\prime\prime}(x) + \left(2e^x + \frac{x}{1 - x}e^x\right)v^{\prime}
+ = 0,\]
+so that cancelling the $e^x$ terms gives
+\[v^{\prime\prime}(x) + \left(2 + \frac{x}{1 - x}\right)v^{\prime}
+ = 0.\]
+Letting $w = v^{\prime}$ gives the first order linear differential equation
+\[w^{\prime} + \left(2 + \frac{x}{1 - x}\right)w = 0,\] which can be written
+in the form
+$\frac1w w^{\prime} = -\left(2 + \frac{x}{1 - x}\right),$
+so that it is seperable. Then,
+\[\ln|w|
+ = \int \frac1w \, dw
+ = \int -\left(2 + \frac{x}{1 - x}\right) \, dx
+ = \log(1 - x) - x + C_1,
+\]
+for some $C_1 \in \mathbb{R}$. Thus, $w = (1 - x)e^{-x + C_1}$, so that
+$v = \int w \, dx = xe^{-x + C_1} + C_2$, for some $C_2 \in \mathbb{R}$.
+Therefore,
+\[y_2 = \mbox{\fbox{$(xe^{-x + C_1} + C_2)e^x = xe^{C_1} + C_2e^{x}$.}}\]
+\end{question}
+\end{document}

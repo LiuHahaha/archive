@@ -1,0 +1,36 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{tikz}
+\usepackage{multirow}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\begin{document}
+%\thispagestyle{plain}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Name                          & Distribution                                                                   & $E[X]$                  & Var$[X]$
+& z-transform\\
+\hline
+Bernoulli$(p)$, $p \in [0,1]$ & $p_X(k) = \left\{\begin{array}{cc}p & k = 1\\ 1 - p & k = 0\end{array}\right.$ & $p$                     & $p(1 - p)$
+& $1 - p + zp$ \\
+\hline
+Binomial$(n,p)$               & $p_X(k) = {n \choose k}p^k(1 - p)^{n - k} $                                    & $np$                    & $np(1 - p)$
+& $(zp + (1 - p))^n$ \\
+\hline
+Geometric$(p)$                & $p_X(k) = (1 - p)^{k - 1}p$                                                    & $\displaystyle \frac1p$ & $\displaystyle \frac{1 - p}{p^2}$
+& $\displaystyle \frac{zp}{1 - z(1 - p)}$ \\
+\hline
+Poisson$(\lambda)$            & $p_X(k) = \frac{e^{- \lambda} \lambda^k}{k!}$                                  & $\lambda$               & $\lambda$
+& $e^{(z - 1)\lambda}$ \\
+\hline
+\end{tabular}
+
+Bayes' Law (discrete): $P(F|E)=\frac{P(F\cap E)}{P(E)}=\frac{P(E|F)\cdot P(F)}{P(E)}$ \;\; (cont.): $f_X(x|Y=y)=\frac{P(Y=y|X=x)f_X(x)}{P(Y=y)}$
+
+Law of Total Probability: If $A$ and $B$ are events, then $P[A] = P[A | B] P[B] + P[A | \overline{B}] P[\overline{b}]$.
+\end{document}

@@ -1,0 +1,152 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-423 Digital Signal Processing for CS}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Monday, February 4, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\I}{\mathcal{I}}
+
+% probability related macros
+\newcommand{\pr}[1]{\mathsf{P}\left( #1 \right)} % probability of event #1
+\newcommand{\E}[2]{\operatornamewithlimits{\mathbb{E}}_{#2}\left[ #1 \right]} % expected value of #1 over #2
+\newcommand{\Bern}[1]{\operatorname{Bernoulli}\left( #1 \right)} % Bernoulli distribution of parameter p
+\newcommand{\giv}{\, | \,} % \pr{A \giv B} probability of A given B
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\section{Composing signals}
+\begin{enumerate}
+\item The following signal is a pulse train of period $N_1 + N_2$ and duty
+cycle $\displaystyle \frac{N_1}{N_1 + N_2}$:
+\[s_1[n]
+ := \sum_{k \in \Z} p[n + k(N_1 + N_2)],
+ \mbox{ where $p[n] := u[n] - u[n - N_1]$ is a pulse of length $N_1$.}
+\]
+ 
+\item The following signal is an exponential signal beginning at $n = n_0$ and
+tapering as $\alpha^{n - n_0}$:
+\[s_2[n]
+ := u[n - n_0]e_{\alpha}[n - n_0].
+\]
+ 
+\item The following signal is a sinusoid of zero phase and amplitude decaying
+as $\alpha^n$:
+\[s_3[n]
+ := \sin[n]e_{\alpha}[-n].
+\]
+ 
+\item The following signal is a complex exponential of frequency $\omega$ and
+zero phase, ending at $n = n_0$:
+\[s_4[n]
+ := e_{\omega,0}[n]u[-n + n_0].
+\]
+ 
+\item The following signal is an impulse train of phase $-1$ and period $4$:
+\[s_5[n]
+ := \sum_{k \in \Z} \delta[n - (4k + 1)].
+\]
+$s_5$ can also be written in terms of $s_1$ (see problem $1$), with $N_1 = 1$,
+$N_2 = 3$:
+\[s_5[n]
+ = s_1[n - 1].
+ \]
+\end{enumerate}
+
+\newpage
+\section{System properties}
+\begin{enumerate}
+\item The system is causal ($y[n]$ depends only on $x[n - 4]$), is not
+memoryless ($y[n]$ must remember $x[n - 4]$), is linear ($y$ is a linear
+combination of terms of $x$), and is shift-invariant ($n$ appears only as an
+argument to $x$).
+
+The system is invertible if and only if $\alpha$ is non-zero (the mapping
+$x[n] \mapsto \frac{y[n + 4]}{\alpha}$ is an inverse).
+ 
+\item
+The system is not causal ($y[n]$ anticipates $x[n + 1]$), is memoryless ($y[n]$
+depends only on $x[n]$ and $x[n + 1]$), is linear ($y[n]$ is a linear
+combination of terms of $x$), and is shift-invariant ($n$ appears only as an
+argument to $x$).
+ 
+\item
+It can be shown by induction on $n$ that, $\forall n \in \N,\;y[n] = \sum_{i =
+0}^{\infty} \beta^i(\alpha_0 x[n - i] + \alpha_1 x[n - i - 1])$. Thus, the 
+system is causal ($y[n]$ depends only on $x[n], x[n - 1]$, and $y[n - 1]$),
+is not memoryless ($y[n]$ depends on $x[n - 1]$), is linear ($y[n]$ is a linear
+combination of terms of $x$), and is shift-invariant ($n$ appears only as an
+argument to $x$).
+ 
+\item 
+The system is causal ($y[n]$ depends only on previous terms), is not memoryless
+(if $K > 0$, $y[n]$ depends on $x[n - 1]$), is linear ($y[n]$ is a linear
+combination of terms of $x$), and is not shift-invariant (e.g., if $x$ is the
+DC signal $s[n]$, and $K = 0$, then $y[n] = n$, which is clearly not
+shift-invariant).
+
+\item
+The system is causal ($y[n]$ depends only on previous terms), is not memoryless
+(if $K > 0$, $y[n]$ depends on $x[n - 1]$), is linear ($y[n]$ is a linear
+combination of terms of $x$), and is shift-invariant ($n$ appears only as an
+argument to $x$).
+
+
+\item The system is causal and memoryless ($y[n]$ depends only on $x[n]$), is
+non-linear (if $x_1$ and $x_2$ are the DC signal $s[n]$, then the sum of their
+quartics, the constant signal of amplitude $2$, is not the quartic of their
+sum, constant signal of amplitude $16$), and is shift-invariant ($n$ appears
+only as an argument to $x$).
+
+\end{enumerate}
+\end{document}

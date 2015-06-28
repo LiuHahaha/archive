@@ -1,0 +1,104 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-238 Mathematical Studies Algebra II}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Monday, February 6, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Exercise 1}
+Since the determinant of $AB$ is $0$, rank$(AB) < 3$. Furthermore, no row of
+$AB$ is a multiple of another, so that rank$(AB) > 2$, and thus
+dim(Im($AB)) = 2$. Note that $(AB)^2 = 9AB$. Therefore, the
+dim(Im$(A(BA)A)) \geq 2$. Since the dimension of the image of a composition of
+linear functions is at most the minimum of the dimensions of the images of
+those functions, dim(Im($BA)) \geq 2$. Since $BA$ is a $2 \times 2$ matrix of
+rank $2$, $BA$ is invertible. Note that $(AB)^2 = 9AB$. Therefore,
+$B(AB)^2A = 9BABA$, so that, right-multiplying by $(BABA)^{-1}$ gives
+\[BA = 9I_2 = \left[\begin{array}{cc} 9 & 0 \\ 0 & 9 \end{array}\right].
+\qquad \blacksquare\]
+\end{question}
+
+\begin{question}{Exercise 2}
+\begin{enumerate}[i.]
+\item Since the determinant is multiplicative and $AB = -BA = -IBA$,
+$|AB| = |-I||B||A|$. Since $(-I)$ is a diagonal matrix, its determinant is the
+product of the elements in its diagonal, so that $|-I| = (-1)^n$. Therefore,
+since $|BA| = |A||B| = |AB|$, $n$ must be even. \qquad $\blacksquare$
+
+\item Since the polynomial $x^2 - 1$ over $E$ has all of its roots in $E$ and
+$A^2 - I_n$ is the minimal polynomial of $A$ over $E$, $A$ is diagonalizable.
+Thus, for some invertible $P$ and some diagonal matrix $S$, $A = PSP^{-1}$, so
+that $A = ABB = -BAB^{-1} = (BP)S(BP)^{-1}$.
+
+Since the elements along the diagonals of both $S$ and $(-S)$ are the
+eigenvalues of $A$, $A$ must have the same number of positive and negative
+eigenvalues. Since the eigenvalues of $A^2$ are the squares of the eigenvalues
+of $A$, and $A^2 = I_n$, the eigenvalues of $A$ are $1$ and $(-1)$, each with
+multiplicity $m$.
+\end{enumerate}
+\end{question}
+\newpage
+\begin{question}{Exercise 5}
+Suppose, for sake of contradiction that there existed a square matrix $A$ such
+that \[\sin A = \left[\begin{array}{cc} 1 & 1996 \\ 0 & 1 \end{array}\right].\]
+
+As with $\sin$, we can define $\cos A$ by the usual power series:
+\[\cos A = \sum_{n = 0}^{\infty} \frac{(-1)^n}{(2n + 1)!} A^{2n + 1}.\]
+Then,
+\[\cos^2 A = I_2 - \sin^2 A = \left[\begin{array}{cc} 0 & -3992 \\ 0 & 0 \end{array}\right].\]
+Let $a,b,c,d$ be the elements of $\cos A$, so that
+\[\cos^2 A = \left[\begin{array}{cc} a & b \\ c & d \end{array}\right]^2 =
+  \left[\begin{array}{cc} a^2 + bc & ab + bd \\ ca + cd & bc + d^2 \end{array}\right].\]
+
+This gives the system of simultaneous equations:
+\begin{eqnarray*}
+a^2     & = & - bc   \\
+ab + bd & = & - 3992 \\
+ca      & = & - cd   \\
+cb      & = & - d^2.
+\end{eqnarray*}
+If $c = 0$, then $a = d = 0$, so that $ab + bd = 0 \neq -3992$, which is a
+contradiction. Similarly, if $c \neq 0$, then $a = - d$, so that
+$ab + bd = 0 \neq -3992$. Therefore, there does not exist a matrix $A$ such
+that
+\[\sin A = \left[\begin{array}{cc} 1 & 1996 \\ 0 & 1 \end{array}\right].\qquad \blacksquare\]
+\end{question}
+\end{document}

@@ -1,0 +1,343 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{mathrsfs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-470 Calculus of Variations}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, February 7, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+\renewcommand{\Re}{\operatorname{Re}}   % real part of a complex number
+\newcommand{\tT}{\widetilde{T}}         % for P3
+\newcommand{\A}{\mathcal{A}}            % for P3
+\renewcommand{\S}{\mathcal{S}}          % Schwartz space
+\newcommand{\X}{\mathscr{X}}            % entire linear space
+\newcommand{\Y}{\mathscr{Y}}            % domain of objective functional
+\newcommand{\V}{\mathscr{V}}            % set of admissible variations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+For any $y \in \Y$, integrating by parts and using the boundary condition
+$y(1) = 1$,
+\[\int_0^1 xy(x)^4
+    = \frac{x^2}{2} y(x)^4 \bigg|_{x = 0}^{x = 1}
+        - \int_0^1 2x^2 y(x)^3 y'(x) \, dx
+    = \frac12 - \int_0^1 2x^2 y(x)^3 y'(x) \, dx.
+\]
+Consequently, $\forall y \in \Y$, $J(y) = 1/2$, and so each $y \in \Y$ is both
+a minimizer and a maximizer.
+\end{question}
+
+\begin{question}{Problem 2}
+First note that $J$ is unbounded above on $\Y$ (it is straightforward to
+construct a sequence $\{p_n\}_{n = 1}^\infty$ of second-order polynomials in
+$\Y$ with $J(p_n) \to +\infty$ as $n \to \infty$).
+
+For $f : [1,2] \times \R \times \R \to \R$, defined by
+\[f(x,y,z) := x^2z^2 + 2y^2 \quad \forall x \in [1,2], y,z \in \R,\]
+$J(y) = \int_1^2 f(x,y(x),y'(x)) \, dx$, for all $y \in \Y$.
+Since
+\[f_{,2}(x,y,z)
+    = 4y
+\quad \mbox{ and } \quad
+f_{,3}(x,y,z)
+    = 2x^2z, \quad \forall x \in [0,1], y,z \in \R,
+\]
+if $y$ minimizes $J$ on $\Y$, the $1^{st}$ Euler-Lagrange Equation gives
+\[4y(x)
+    = \frac{d}{dx} 2x^2 y'(x)
+    = 4xy'(x) + 2x^2y''(x).
+\]
+Since $x \mapsto x^{-2}$ and $x \mapsto x$ are independent solutions of this
+linear second-order differential equation,
+\[y(x) = \frac{c_2}{x^2} + c_1 x,\]
+for some $c_1,c_2 \in \R$. Plugging in the boundary conditions and solving the
+resulting linear system of equations gives $c_1 = 3, c_2 = -4$, so that
+$y(x) = -4x^{-2} + 3x, \forall x \in [1,2]$. I wasn't able to show that this
+minimizes $J$, but I think a convexity argument should suffice.
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+First note that, $J$ is unbounded below on $\Y$. For $n \in \N$, define
+$y_n \in \Y$ by $y_n(x) = \sin(nx), \forall x \in [0,\pi]$. Then, since
+$\int_0^\pi \sin(x)^2 \, dx = \int_0^\pi \cos(x)^2 \, dx = \pi/2$,
+\[J(y_n)
+    = \int_0^\pi \sin(nx)^2 - n^2 \cos^2(nx) \, dx
+    = (1 - n^2) \frac{\pi}{2} \to -\infty
+\]
+as $n \to \infty$. It is also apparently the case, although I was unable to
+show this, that $J$ is non-positive (i.e., that $\|y\|_2 \leq \|y'\|_2$ for all
+$y \in \Y$).
+
+For $f : [0,\pi] \times \R \times \R \to \R$, defined by
+\[f(x,y,z) := y^2 - z^2 \quad \forall x \in [0,\pi], y,z \in \R,\]
+$J(y) = \int_0^\pi f(x,y(x),y'(x)) \, dx$, for all $y \in \Y$.
+Since
+\[f_{,2}(x,y,z)
+    = 2y
+\quad \mbox{ and } \quad
+f_{,3}(x,y,z)
+    = -2z, \quad \forall x \in [0,1], y,z \in \R,
+\]
+if $y$ minimizes $J$ on $\Y$, the $1^{st}$ Euler-Lagrange Equation gives
+\[2y(x)
+    = \frac{d}{dx} - 2y'(x)
+    = -2y''(x).
+\]
+Since $\cos$ and $\sin$ are independent solutions of this linear second-order
+differential equation,
+\[y(x) = c_1 \cos(x) + c_2 \sin(x), \quad \forall x \in [0,\pi]\]
+for some $c_1,c_2 \in \R$. The boundary conditions immediately imply $c_1 = 0$.
+On the other hand
+\[J(c_2 \sin)
+    = \int_0^\pi c_2^2 \sin^2(x) - c_2^2 \cos^2(x) \, dx
+    = 0,
+\]
+so that any multiple of $\sin$ maximizes $J$ on $\Y$.
+\end{question}
+
+\begin{question}{Problem 4}
+As noted in Problem 3, $J$ is unbounded below on $\Y$. Without the boundary
+condition $y(0) = 0$, $J$ is also unbounded above. For $n \in \N$, define
+$y_n \in \Y$ by $y_n(x) = n(\pi - x), \forall x \in [0,\pi]$. Then,
+\[J(y_n)
+    = \int_0^\pi n^2 (\pi - x)^2 - n^2 \, dx
+    = n^2 \frac{\pi^3}{3} - n^2\pi \to +\infty
+\]
+as $n \to \infty$.
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+First note that, $J$ is unbounded above on $\Y$. For $n \in \N$, define
+$y_n \in \Y$ by $y_n(x) = nx + 1, \forall x \in [0,1]$.
+\[J(y_n)
+    = \int_0^1 (n - x)^2 + 2x(nx + 1) \, dx \to +\infty
+\]
+as $n \to \infty$. For $f : [0,1] \times \R \times \R \to \R$, defined by
+\[f(x,y,z) := (z - x)^2 + 2xy \quad \forall x \in [0,1], y,z \in \R,\]
+$J(y) = \int_0^1 f(x,y(x),y'(x)) \, dx$, for all $y \in \Y$.
+Since
+\[f_{,2}(x,y,z)
+    = 2x
+\quad \mbox{ and } \quad
+f_{,3}(x,y,z)
+    = 2z - 2x, \quad \forall x \in [0,1], y,z \in \R,
+\]
+if $y$ minimizes $J$ on $\Y$, the $1^{st}$ Euler-Lagrange Equation gives
+\[0
+    = 2x - \frac{d}{dx} (2y'(x) - 2x)
+    = x - y''(x) + 1,
+\]
+and so $y''(x) = x + 1$. Integrating with respect to $x$ twice gives
+\[y(x) = \frac16 x^3 + \frac12 x^2 + c_1 x + c_2,\]
+for some $c_1,c_2 \in \R$. Since $y(0) = 1$, $c_2 = 1$. The second boundary
+condition derived for the free right endpoint is
+$0 = f_{,3}(x,y(x),y'(x)) \big|_{x = 1} = 2y'(1) - 2$, and it follows that
+$c_1 = -1/2$.
+I wasn't able to show that this minimizes $J$, but I think a convexity argument
+should suffice.
+\end{question}
+
+\vspace{-3mm}
+\begin{question}{Problem 6}
+Note that $J$ is unbounded above on $\Y$ (it is straightforward to
+construct a sequence $\{p_n\}_{n = 1}^\infty$ of second-order polynomials in
+$\Y$ with $J(p_n) \to +\infty$ as $n \to \infty$).
+For $f : [1,8] \times \R \times \R \to \R$, defined by
+\[f(x,y,z) := xz^4 \quad \forall x \in [1,8], y,z \in \R,\]
+$J(y) = \int_1^8 f(x,y(x),y'(x)) \, dx$, for all $y \in \Y$.
+Since
+\[f_{,2}(x,y,z)
+    = 0
+\quad \mbox{ and } \quad
+f_{,3}(x,y,z)
+    = 4xz^3, \quad \forall x \in [1,8], y,z \in \R,
+\]
+if $y$ minimizes $J$ on $\Y$, the $1^{st}$ Euler-Lagrange Equation gives
+\[0
+    = - \frac{d}{dx} 4xy'(x)^3
+    = - 4 y'(x)^3 - 12xy'(x)^2y''(x)
+    = y'(x) + 3x y''(x)
+\]
+Since $x \mapsto x^{2/3}$ and any non-zero constant function are independent
+solutions of this linear second-order differential equation,
+$y(x) = c_1 x^{2/3} + c_2$, for some $c_1,c_2 \in \R$. The boundary conditions 
+give $c_1 = 1, c_2 = 3$. I wasn't able to show that this minimizes $J$, but I
+think a convexity argument should suffice.
+\end{question}
+
+\begin{question}{Problem 7}
+We conclude that $g$ is constant on $[a,b]$.
+Suppose, for sake of contradiction, that $\exists x,y \in (a,b)$ with
+$g(x) \neq g(y)$ (without loss of generality, $x < y$ and $g(x) < g(y)$).
+Since $g$ is continuous, $\exists \delta > 0$ with
+\[a \leq x - \delta < x + \delta \leq y - \delta < y + \delta \leq b,\]
+such that, for some $\e > 0$,
+\[\inf \{g(z) : z \in (y - \delta, y + \delta)\}
+    - \sup \{g(z) : z \in (x - \delta, x + \delta)\}
+\geq \e.\]
+Define $v : [a,b] \to \R$ for all $x \in [a,b]$ by
+\vspace{-3mm}
+\[
+    v(z) := \left\{
+        \begin{array}{cc}
+            -\exp \left( -\frac{1}{1 - ((z - x)/\delta)^2} \right)
+                                        & : z \in (x - \delta,x + \delta)   \\
+            \exp \left( -\frac{1}{1 - ((z - y)/\delta)^2} \right)
+                                        & : z \in (y - \delta,y + \delta)   \\
+            0                           & \mbox{ else}
+        \end{array}
+    \right..
+\]
+Since the bump function $z \mapsto \exp\left(
+-\frac{1}{1 - z^2} \right)1_{(-1,1)}$ (where $1_{(-1,1)}$ denotes the indicator
+function of $(-1,1)$) is in $C^\infty(\R)$, $v \in C^\infty([a,b])$.
+Furthermore, $v(a) = v(b) = 0$, and
+\vspace{-3mm}
+\[\int_a^b v(z) \, dz
+    = \int_{y - \delta}^{y + \delta} 
+            \exp \left( -\frac{1}{1 - ((z - y)/\delta)^2} \right) \, dz
+    - \int_{x - \delta}^{x + \delta} 
+            \exp \left( -\frac{1}{1 - ((z - x)/\delta)^2} \right) \, dz
+    = 0,
+\]
+so that $v \in \overline{\V}$. However, a translating change of variables gives
+\vspace{-2mm}
+\begin{align*}
+\int_a^b g(z)v(z) \, dz
+i &  = \int_{y - \delta}^{y + \delta} (g(z) - g(z + x - y))
+            \exp \left( -\frac{1}{1 - ((z - y)/\delta)^2} \right) \, dz \\
+ &  \geq \e \int_{y - \delta}^{y + \delta} 
+            \exp \left( -\frac{1}{1 - ((z - y)/\delta)^2} \right) \, dz
+    > 0,
+\end{align*}
+giving a contradiction. \qed
+\end{question}
+
+\vspace{-5mm}
+\begin{question}{Problem 8}
+At any $y \in \Y$, the set of admissible variations at $y$ is
+\vspace{-3mm}
+\[\V := \left\{ v \in C^2([a,b])
+                            : v(a) = v(b) = \int_a^b v(x) \, dx = 0 \right\}.\]
+\vspace{-3mm}
+Thus, for any extremum $y \in \Y, v \in \V$, the G\^ateaux variation
+satisfies
+\begin{align*}
+0
+    = \delta J(y;v)
+    = \int_a^b f_{,2}(x,y(x),y'(x)) v(x) + f_{,3}(x,y(x),y'(x)) v'(x) \, dx \\
+    = \int_a^b \left[ f_{,2}(x,y(x),y'(x)) 
+                    - \frac{d}{dx} f_{,3}(x,y(x),y'(x)) \right] v(x) \, dx,
+\end{align*}
+via integration by parts and $v(a) = v(b) = 0$. By the result of
+Problem 7, $\exists C \in \R$ such that
+\vspace{-3mm}
+\[C
+   = f_{,2}(x,y(x),y'(x)) - \frac{d}{dx} f_{,3}(x,y(x),y'(x)),
+    \quad \forall x \in [a,b]. \qed\]
+\end{question}
+
+\begin{question}{Problem 9}
+Multiplying the $1^{th}$ Euler-Lagrange Equation by $y'(x)$ on both sides,
+$\forall x \in [a,b]$,
+\begin{equation}
+\label{eq:fEL1}
+y'(x)f_{,2}(x,y(x),y'(x)) = y'(x)\frac{d}{dx}f_{,3}(x,y(x),y'(x)).
+\end{equation}
+The Chain Rule gives
+\[\frac{d}{dx} f(x,y(x),y'(x))
+    = f_{,1}(x,y(x),y'(x)) + y'(x)f_{,2}(x,y(x),y'(x))
+                                                + y''(x)f_{,3}(x,y(x),y'(x))
+\]
+\[\Rightarrow
+y'(x)f_{,2}(x,y(x),y'(x))
+    = \frac{d}{dx} f(x,y(x),y'(x))
+    - f_{,1}(x,y(x),y'(x)) - y''(x)f_{,3}(x,y(x),y'(x)).
+\]
+Plugging this into Equation (\ref{eq:fEL1}) and rearranging gives
+\begin{align*}
+\frac{d}{dx} f(x,y(x),y'(x)) - f_{,1}(x,y(x),y'(x))
+ &  = y'(x)\frac{d}{dx}f_{,3}(x,y(x),y'(x)) + y''(x)f_{,3}(x,y(x),y'(x))    \\
+ &  = \frac{d}{dx} y'(x) f_{,3}(x,y(x),y'(x)).
+\end{align*}
+By the product rule. Rearranging again gives
+\[
+\frac{d}{dx} \left( f(x,y(x),y'(x)) - y'(x) f_{,3}(x,y(x),y'(x)) \right)
+    = f_{,1}(x,y(x),y'(x)),
+\]
+and so integrating with respect to $x$ gives, for some $c \in \R$,
+\[
+f(x,y(x),y'(x)) - y'(x) f_{,3}(x,y(x),y'(x))
+    = c + \int_a^x f_{,1}(t,y(t),y'(t)) \, dt. \qed
+\]
+\end{question}
+\end{document}

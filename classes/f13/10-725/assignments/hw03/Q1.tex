@@ -1,0 +1,119 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+%\usepackage{mysymbols}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\prox{\mathrm{prox}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}   % argmin
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}   % argmax
+\newcommand{\inv}{{^{-1}}}                              % inverse
+
+\begin{document}
+\twocolumn
+\section{Mastery set [25 points]}
+For any $p \in [1,\infty]$, let
+\[B_p := \{x \in \R^n : \|x\|_p \leq 1\}\]
+denote the $p$-norm unit ball.
+\paragraph{Q1. [2+2+3]}
+\begin{enumerate}[(a)]
+\item The projection is given in each coordinate by
+\[(P_{\R^n_+}(x))_i = \max \{0,x_i\}.\]
+ 
+\item The projection is
+\[P_{B_2}(x)
+ =  \left\{
+        \begin{array}{ll}
+            x                   & : \mbox{ if } \|x\|_2 \leq 1  \\
+            \frac{x}{\|x\|}     & : \mbox{ else }
+        \end{array}
+    \right..
+\]
+ 
+\item The projection is given in each coordinate by
+\[(P_{B_\infty}(x))_i
+ =  \left\{
+        \begin{array}{ll}
+            -1      & : \mbox{ if } x_i < 1  \\
+            x_i     & : \mbox{ if } -1 \leq x \leq 1    \\
+             1      & : \mbox{ else }
+        \end{array}
+    \right..
+\]
+ 
+\end{enumerate}
+
+\paragraph{Q2. [3+3]}
+\begin{enumerate}[(a)]
+\item Let
+\[x^* := \argmin_{x \in \R^n} \frac{1}{2}\|x - z\|_2^2
+    - \lambda \sum_{i = 1}^n \log(|x_i|).\]
+Taking an appropriate derivative in each coordinate gives
+\[0 = x_i^* - z_i - \frac{\lambda}{x_i^*}
+    = (x_i^*)^2 - z_ix_i^* - \lambda.\]
+The quadratic formula gives
+\[\mbox{\fbox{$\displaystyle x_i^*
+    = \frac{z_i \pm \sqrt{z_i^2 + 4\lambda}}{2}$.}}\]
+(Since the regularization term decreases away from $0$, we use the negative
+value if $z_i < 0$ and the positive value otherwise).
+
+\item Let
+\[x^* := \argmin_{x \in \R^n} \frac{1}{2}\|x - z\|_2^2
+    + \lambda(x^TAx + b^Tx + c).\]
+Taking an appropriate gradient gives
+\begin{align*}
+0 & = (x^* - z) + \lambda((A + A^T)x^* + b) \\
+\mbox{ or } \quad z - \lambda b & = (2\lambda A + I)x^*,
+\end{align*}
+since $A = A^T$. Since $A$ is positive semidefinite and $\lambda \geq 0$,
+$(2\lambda A + I)$ is invertible, so
+\[\mbox{\fbox{$\displaystyle x^* = (2\lambda A + I)\inv(z - \lambda b)$.}}\]
+\end{enumerate}
+
+\paragraph{Q3. [4+4+4]}
+\begin{enumerate}[(a)]
+\item The dual program is
+\begin{align*}
+\min_{u \in \R^4} \quad &   4u_1 + 2u_2         \\
+\mbox{ such that } \quad
+                        &   u_1 + u_2   \geq 2, \\
+                        &   -u_1 - u_2  \geq 1, \\
+\mbox{ and } \quad
+                        &   u_1, u_2    \geq 0.
+\end{align*}
+The original problem is unbounded, and the dual is unfeasible.
+ 
+\item The dual program is
+\begin{align*}
+\min_{u \in \R^4} \quad &   -4u_1 + 2u_2        \\
+\mbox{ such that } \quad
+                        &   -u_1 + u_2  \geq 2, \\
+                        &   -u_1 + u_2  \geq 1, \\
+\mbox{ and } \quad
+                        &   u_1, u_2    \geq 0.
+\end{align*}
+The original problem is infeasible, and the dual is unbounded.
+ 
+\item The dual program is
+\begin{align*}
+\min_{u \in \R^4} \quad &   -4u_1 + 2u_2        \\
+\mbox{ such that } \quad
+                        &   -u_1 + u_2  \geq 2, \\
+                        &   u_1 - u_2   \geq 1, \\
+\mbox{ and } \quad
+                        &   u_1, u_2    \geq 0.
+\end{align*}
+The original and dual programs are both infeasible.
+ 
+\end{enumerate}
+\end{document}

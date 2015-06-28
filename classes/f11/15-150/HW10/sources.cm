@@ -1,0 +1,28 @@
+group is
+  $/basis.cm
+  sequence/sources.cm
+  matrix/sources.cm
+  
+  order.sml
+  seq.sml
+  las.sml
+  sequtils.sml
+  
+  game.sig
+  player.sig
+  humanplayer.sml
+  minimax.sml
+  jamboree.sml
+  referee.sml
+  
+  nim.sml
+  runnim.sml
+
+  explicit.sml
+
+(*
+  (* uncomment when you start working on connect 4 *)
+  connect4.sml  
+  runconnect4.sml
+
+*)

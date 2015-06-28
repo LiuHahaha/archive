@@ -1,0 +1,457 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-720 Measure and Integration}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, September 19, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\LRd}{\mathcal{L}\left(\R^d\right)} % Lebesgue measurable sets of \R^d
+\newcommand{\LR}[1]{\mathcal{L}\left(\R^{#1}\right)} % Lebesgue measurable sets of \R^{#1}
+\newcommand{\B}{\mathcal{B}} % Borel family of sets
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Since $\mu$ is a measure, $\mu(\emptyset) = 0$, so that, since
+$\emptyset \in \Sigma$ (as $\Sigma$ is a $\sigma$-algebra) and
+$\emptyset \subseteq \emptyset$, $\mu^*(\emptyset) = 0$.
+
+Suppose $A,B \in \pow{X}$ with $A \subseteq E$. If $B \subseteq E$, then
+$A \subseteq E$, so that
+\[\left\{\mu(E) \right| \left. A \subseteq E, E \in \Sigma\right\}
+\supseteq \left\{\mu(E) \right| \left. B \subseteq E, E \in \Sigma\right\}.\]
+Thus
+\[\mu^*(A)
+ = \inf\left\{\mu(E) \right| \left. A \subseteq E, E \in \Sigma\right\}
+\leq \inf\left\{\mu(E) \right| \left. B \subseteq E, E \in \Sigma\right\}
+ = \mu^*(B),\]
+so that $\mu^*$ is monotonic.
+
+$\forall E_1,E_2,\ldots \in \Sigma$
+with $A_i \subseteq E_i$, for $E := \bigcup_{i = 1}^{\infty} E_i$,
+$E \in \Sigma$, $\bigcup_{i = 1}^{\infty} A_i \subseteq E$, and 
+\[\mu(E) \leq \sum_{i = 1}^{\infty} \mu(E_i).\]
+Then, taking the infimum over all sequences $E_1,E_2,\ldots \in \Sigma$, and
+noting that the infimum on the left does not increase when we replace $E$
+with any superset of $\bigcup_{i = 1}^{\infty} A_i$, gives
+\[\mu^*\left( \bigcup_{i = 1}^{\infty} A_i \right)
+ \leq \sum_{i = 1}^{\infty} \mu^*(A_i).\]
+Therefore, $\mu^*$ is countably subadditive, so that $\mu^*$ is an outer
+measure. \qed
+
+\item $\forall E_1,E_2,\ldots \in\Sigma$
+with $E_i \subseteq A_i$, for $E := \bigcup_{i = 1}^{\infty} E_i$,
+$E \in \Sigma$, $E \subseteq \bigcup_{i = 1}^{\infty} A_i$, and, since
+the $A_i$'s are pairwise disjoint and $\mu$ is countably additive,
+\[\mu(E) \geq \sum_{i = 1}^{\infty} \mu(E_i).\]
+Then, taking the supremum over all sequences $E_1,E_2,\ldots \in \Sigma$, and
+noting that the supremum on the left does not decrease when we replace $E$
+with any subset of $\bigcup_{i = 1}^{\infty} A_i$, gives
+\[\mu^*\left( \bigcup_{i = 1}^{\infty} A_i \right)
+ \geq \sum_{i = 1}^{\infty} \mu^*(A_i).\]
+
+
+\item By definition of $\mu^*$ and $\mu_*$ as an infimum and a supremum,
+respectively, $\forall n \in \N$, $\exists E_i, F_i \in \Sigma$ such that
+$A \subseteq E_i$, $F_i \subseteq A^c$, $\mu^*(E) \leq \mu(A) + 1/n$ and
+$\mu(F_i) \geq \mu_*(A^c)- 1/n$. Without loss of generality, $\{E_i\}$ is
+decreasing (otherwise, we can replace $E_i$ with
+$\bigcap_{k = 1}^i E_k$) and $\{F_i\}$ is increasing (otherwise, we can
+replace $F_i$ with $\bigcup_{k = 1}^i F_k$).
+
+Note that $E_i^c \subseteq A^c$ and $A \subseteq F_i^c$, so that, for 
+$S_i := E_i \cap F_i^c$ (and thus $S_i^c = E_i^c \cup F_i$),
+\[\mu^*(A) \leq \mu(S_i) \leq \mu(E_i) \leq \mu^*(A) + 1/n,\]
+and
+\[\mu_*(A^c) \geq \mu(S_i^c) \geq \mu(F_i) \geq \mu_*(A^c) - 1/n.\]
+Since $\{S_i\}$ is decreasing and $\{S_i^c\}$ is increasing,
+for $S := \bigcup_{i = 1}^{\infty} S_i$, taking the limit as
+$n \rightarrow \infty$ in the above inequalities,
+\[\mu^*(A) = \lim_{i \rightarrow \infty} \mu(S_i) = \mu\left( S \right)\]
+and
+\[\mu_*(A^c) = \lim_{i \rightarrow \infty} \mu(S_i) = \mu\left( S^c \right)\]
+
+Since $\Sigma$ is closed under countable unions and intersections,
+$S \in \Sigma$, so that
+\[\mu(A) = \mu(S) + \mu(S^c) = \mu^*(A) + \mu_*(A^c). \mqed\]
+
+\item Suppose $A \in \pow{X}$ with $\mu_*(A) = \mu^*(A)$. By definition of
+$\mu_*$ and $\mu^*$ as a supremum and infimum, respectively,
+$\forall n \in \N$, $\exists E_n, F_n \in \Sigma$ such that
+$E_n \subseteq A \subseteq F_n$ and
+$\mu(E_n) + \frac{1}{n} \geq A \geq \mu(F_n) - \frac{1}{n}$. Furthermore,
+we can assume $\{E_i\}$ is an increasing sequence (otherwise, we replace $E_i$
+with $\bigcup_{k = 1}^i E_i$) and $\{F_i\}$ is a decreasing sequence
+(otherwise, we replace $F_i$ with $\bigcap_{k = 1}^i F_i$).
+
+Let \[E = \bigcup_{i = 1}^{\infty} E_i,
+\quad F = \bigcap_{i = 1}^{\infty} F_i.\]
+Since $\{E_i\}$ is an increasing sequence and $\{F_i\}$ is a decreasing
+sequence, $\mu(E) = \lim_{n \rightarrow \infty}(\mu(E_i)) = \mu_*(A)$ and
+$\mu(F) = \lim_{n \rightarrow \infty}(\mu(F_i)) = \mu^*(A)$.
+Since $\sigma$-algebras are closed under countable unions and countable
+intersections, $E,F \in \Sigma$. Thus, since
+$\mu(E) = \mu_*(A) = \mu^*(A) = \mu(F)$, $\mu(F \sminus E) = 0$, so that
+$A \in \Sigma_{\mu}$.
+
+Suppose, on the other hand, that $A \in \Sigma_{\mu}$. Then,
+$\exists E,F \in \Sigma$ with $E \subseteq A \subseteq F$, such that
+$\mu(F \sminus E) = 0$. Then, by definition of $\mu_*$ and $\mu^*$,
+$\mu(E) \leq \mu_*(A),\mu^*(A) \leq \mu(F)$, so that $\mu_*(A) = \mu^*(A)$.
+\qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item Suppose $A$ is bounded. By regularity of
+$\lambda$, $\forall \epsilon > 0$, there exist an open set $U$ and a compact
+set $K$ with $K \subseteq A \subseteq U$ such that
+\[\lambda(K) + \frac{\epsilon}{2} > \lambda(A) > \lambda(U) - \frac{\epsilon}{2}.\]
+Then, $\lambda(U \sminus K) = \lambda(U) - \lambda(K) < \epsilon$.
+
+Now consider the general case, where $A$ may be unbounded.
+Since $\Z^d$ is countable, there is a bijection $f: \N \rightarrow \Z^d$ and a
+sequence of (disjoint, closed) cubes $C_1,C_2,\ldots$ with $C_i$ centered at
+$f(i)$ and having sidelength $1 - \frac{\epsilon}{d2^{i + 2}}$, and thus
+volume at least $1 - \frac{\epsilon}{2^{i + 2}}$. Since $A \cap C_i$ is
+bounded (so that $\lambda(A) < \infty$, there exists a compact set $K_i$ with
+$K_i \subseteq A \cap C_i$ and
+\[\lambda(K_i)
+ > \lambda(A \cap C_i) - \frac{\epsilon}{2^{i + 2}}
+ \geq \lambda(A \cap Q_i) - \frac{\epsilon}{2^{i + 1}},\]
+where $Q_i$ is the half-closed cube of sidelength $1$ centered at $f(i)$. Thus, by
+countable additivity, since the $K_i$'s are disjoint (and closed, so
+measurable)
+\begin{align*}
+\lambda\left( \bigcup_{i = 1}^{\infty} K_i \right)
+ & = \sum_{i = 1}^{\infty} \lambda(K_i)
+   > \sum_{i = 1}^{\infty} \lambda(A \cap Q_i) - \frac{\epsilon}{2^{i + 1}} \\
+ & = \lambda\left( \bigcup_{i = 1}^{\infty} (A \cap Q_i) \right) - \epsilon/2
+   = \lambda(A) - \epsilon/2.        & \mbox{(since $Q_i$'s partition $\R^d$)}
+\end{align*}
+Then, since a countable union of disjoint closed sets is closed,
+$C := \bigcup_{i = 1}^{\infty} K_i$ is a closed subset of $A$. Just as for bounded
+$A$, we can still take an open set $U$ such that
+$\lambda(U) < \lambda(A) + \epsilon/2$, and thus
+$\lambda(U \sminus K) < \epsilon$. \qed
+
+\item By the result of part (a), $\forall i \in \N$,
+$\exists C_i,U_i \subseteq \LRd$ with $C_i$ closed and $U_i$ open, such that
+$C_i \subseteq A \subseteq U_i$ and $\lambda(U_i \sminus C_i) 1/i$. Let
+$F = \bigcup_{i = 1}^{\infty} C_i$ and let $G = \bigcap_{i = 1}^{\infty} U_i$.
+Since $\{U_i \sminus C_i\}$ is a decreasing sequence (if not, we can replace
+$C_n$ with $\bigcup_{i = 1}^n C_i$ and replace $U_n$ with
+$\bigcap_{i = 1}^n U_i$) and $\lambda(U_1 \sminus C_1) < 1 < \infty$
+\[\lambda(G \sminus F)
+ = \lim_{i \rightarrow \infty} (\lambda(U_i \sminus C_i)) = 0.\]
+Since $\sigma$-algebras are closed under countable unions and intersections,
+$F,G \in \B$, so that, by definition of the completion, $A \in \B_{\lambda}$,
+and $\LRd \subseteq \B_{\lambda}$. Then, since $\LRd$ is complete,
+$B_{\lambda} \subseteq \LRd$, so $B_{\lambda} = \LRd$. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+Suppose $\lambda(A) = 0$, $E \subseteq A$. By monotonicity, any subset
+of $A$ has Lebesgue measure $0$. Thus,
+\begin{align*}
+\lambda(E \cap F) + \lambda (E^c \cap F)
+ & = \lambda(E^c \cap F)                        & \mbox{(by monotonicity)}              \\
+ & = \lambda\left( E^c \cap F \cap A \right)
+   + \lambda\left( E^c \cap F \cap A^c\right)   & \mbox{(since $A \in LRd$)}            \\
+ & = \lambda\left( E^c \cap F \cap A^c\right)   & \mbox{(by monotonicity)}              \\
+ & = \lambda\left( F \cap A^c \right)           & \mbox{(since $E^c \cap A^c = A^c$)}   \\
+ & = \lambda\left( F \cap A \right)
+   + \lambda\left( F \cap A^c \right)           & \mbox{(by monotonicity)}              \\
+ & = \lambda\left( F \right).                   & \mbox{(since $A \in LRd$)}            \\
+\end{align*}
+Therefore, $E \in \LRd$.
+
+Suppose, on the other hand, that $\lambda(A) > 0$. $\forall \balpha \in A$,
+let $C_{\balpha} = \left( \alpha + \Q^d \right) \cap A$. By the Axiom of Choice, there
+exists a choice function $f$ for the family
+$\mathcal{C} = \{C_{\balpha} : \balpha \in A, C_{\balpha} \neq \emptyset\}
+\subseteq \pow{A}$, so that we
+can define $E = \{f(C) : C \in \mathcal{C}\} \subseteq A$. Note that
+$\mathcal{C}$ is a partition of $A$.
+
+{\bf Claim 1:} $\forall \bq_1,\bq_2 \in \Q^d$,
+$(E + \bq_1) \cap (E + \bq_2) = \emptyset$.
+
+{\bf Proof of Claim 1:} Suppose that $\bx_1 + \bq_1 = \bx_2 + \bq_2$ for some
+$\bx_1,\bx_2 \in E$. Then, $\bx_1 - \bx_2 = \bq_2 - \bq_1$, so that
+$(\bx_1 - \bx_2) \in \Q^d$, implying that $\bx_1,\bx_2 \in C_{\bx_1}$.
+However, since distinct $C_{\balpha}$'s are disjoint, this contradicts the
+construction of $E$.
+
+{\bf Claim 2:} $\forall$ compact $K \subseteq E$, $\lambda(K) = 0$.
+
+{\bf Proof of Claim 2:}
+$\forall \bq \in \Q_1 := \{\bq \in \Q^d : \|\bq\| \leq 1\}$, let
+$K_{\bq} =  K + \bq$. Since $\lambda$ is translation invariant,
+$\forall \bq \in \Q_1$, $\lambda(K_{\bq}) = \lambda(K)$. Since $K$ and $\Q_1$
+are bounded,  $\bigcup_{\bq \in \Q_1} K_{\bq}$ is bounded, so that
+\[\sum_{\bq \in \Q_1} \lambda(K)
+ = \sum_{\bq \in \Q_1} \lambda(K_{\bq})
+ = \lambda\left( \bigcup_{\bq \in \Q_1} K_{\bq} \right)
+ < \infty\]
+(Claim 1 implies that the $K_{\bq}$'s are disjoint, allowing us to use
+countable additivity in the last equality). Since $|\Q_1| = |\N|$, this
+implies that $\lambda(K) = 0$, proving the claim.
+
+If follows from Claim 2 and the regularity of $\lambda$ that $\lambda(E) = 0$.
+
+{\bf Claim 3:} $E$ is not Lebesgue measurable.
+
+{\bf Proof of Claim 3:} Suppose $E \in \LRd$. Note that there exists some
+$\Q^{\prime} \subseteq \Q^d$ such that
+$A = \bigcup_{\bq \in \Q^{\prime}} \bq + E$. Therefore, since $\lambda$ is
+translation invariant,
+\[\sum_{\bq \in \Q^{\prime}}\lambda(E)
+ = \sum_{\bq \in \Q^{\prime}} \lambda(\bq + E)
+ = \lambda(A) > 0\]
+(where the last equality follows from the supposed measurability of $E$).
+However, this contradicts the fact that $\lambda(E) = 0$, so that $E$ is not
+Lebesgue measurable. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item
+Since $\B(\R^{m + n})$ is the $\sigma$-algebra generated by the family of open
+sets in $\R^{m + n}$, it is sufficient to show that, for any open set
+$U \in \pow{\R^{m + n}}$,
+$U \in \sigma(\{A \times B | A \in \B(\R^m), B \in \B(R^n)\})$.
+Since any open cell in $R^m$ is in $\B(R^m)$ and any open cell in $R^n$ is in
+$\B(\R^n)$, and any open cell in $\R^{m + n}$ is the cross-product of some
+open cell in $\B(R^m)$ and some open cell in $\B(\R^n)$, every open cell in
+$\R^{m + n}$ is in $\{A \times B | A \in \B(\R^m), B \in \B(\R^n)\}$.
+Therefore, since any open set is a countable union of open rectangles, any
+open set $U \in \pow{\R^{m + n}}$ is in
+$\sigma(\{A \times B | A \in \B(\R^m), B \in \B(R^n)\})$.
+
+Since $\B(\R^{m + n})$ is a $\sigma$-algebra, to show that
+$\B(\R^{m + n})
+ \supseteq \sigma(\{A \times B | A \in \B(\R^m), B \in \B(R^n)\})$, it is
+sufficient to show that
+$\B(\R^{m + n}) \supseteq \{A \times B | A \in \B(\R^m), B \in \B(\R^n)\}$.
+
+\item Since $\LR{m + n}$ is a $\sigma$-algebra, to show that
+$\LR{m + n} \supseteq \sigma(\{A \times B | A \in \LR{m}, B \in \LR{n}\})$, it
+is sufficient to show that 
+$\LR{m + n} \supseteq \{A \times B | A \in \LR{m}, B \in \LR{n}\}$. Note that
+$\LR{m} = \B(\R^m) \cup \mathcal{N}_m$, where
+$\mathcal{N}_m = \{N \in \pow{\R^m} | \exists E \in \B(\R^m)\}$. If
+$A \in \B(\R^m)$ and $B \in \B(\R^n)$, then, by the result of part (a),
+$A \times B \in \B(\R^{m + n}) \subseteq \LR{m + n}$. Otherwise, either
+$A \in \mathcal{N}_m$ or $B \in \mathcal{N}_n$; without loss of generality,
+suppose $A \in \mathcal{N}_m$ (the case $B \in \mathcal{N}_n$ is identical).
+Then, there is some $E \in \B(\R^m)$ such that $A \subseteq E$ and
+$\lambda_m(E) = 0$. But then, $\lambda_{m + n}(E \times B) = 0$, so that,
+since $A \times B \subseteq E \times B$, by the result of problem 3,
+$A \times B \in \LR{m + n}$.
+
+We now show that
+$\LR{m + n} \neq \sigma(\{A \times B | A \in \LR{m}, B \in \LR{n}\})$. We
+showed in class the existence of a non-measurable set $E_1 \in \pow{\R^m}$.
+Let $E_2 = E_1 \times \{(0,0,\ldots,0)\} \in \pow{\R^{m + n}}$. By the result
+of problem 3, $E_2 \in \LR{m + n}$, since $\lambda_{m + n}(E_2) = 0$. (This
+follows from the result of part (a) of problem 2 on Assignment 1, since
+$E_2 \subseteq V$, for some subspace $V$ of $\R^{m + n}$ with
+$\dim(V) \leq m < m + n$). However, $E_1 \not \in \LR{m}$. \qed
+
+\item Since, $\mathcal{L}(\R) = \B_{\lambda}(\R) \supseteq \B(\R)$, it follows
+from the results of parts (a) and (b) that
+\[\mathcal{L}(\R^2)
+ \supsetneq \sigma\left( \{A \times B | A,B \in \mathcal{L}(\R) \right)
+ \supseteq  \sigma\left( \{A \times B | A,B \in \B(\R) \right)
+ = \B(\R^2). \mqed
+\]
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+This solution was inspired by Example 8 in Chapter 2 of Rudin's \emph{Real and
+Complex Analysis}.
+
+Since $\Q$ is countable, there is a bijection $f: \N \rightarrow \Q$.
+$\forall n \in \N$, let
+$R_i := (f(i) - \frac{1}{3^{i + 1}},f(i) + \frac{1}{3^{i + 1}})$,
+\[S_i := R_i \sminus \left( \bigcup_{k = i + 1}^{\infty} R_k \right).\]
+Then, $\forall i \in \N$, let
+$T_i
+ = (f(i) - \frac{1}{2 \cdot 3^{i + 1}},f(i) + \frac{1}{2 \cdot 3^{i + 1}})$
+(noting that $\lambda(T_i) = \lambda(R_i)/2$), and let
+\[V = \bigcup_{i = 1}^{\infty} S_i \cap T_i.\]
+
+We claim that, for all $a < b$, $0 < \lambda(V \cap (a,b)) < b - a$. Note
+that, since any interval $(a,b)$ has some $R_n \subseteq (a,b)$ such that
+since each $R_i \in \B(\R) \subseteq \mathcal{L}{(R)}$,
+$b - a = \lambda(R_i) + \lambda(R_i^c \cap (a,b))$, it is sufficient to show
+that $0 < \lambda(R_i \cap V) < \lambda(R_i)$.
+
+We first show that $0 < \lambda(R_i \cap V)$.
+Since, for any $i \in \N$, there must be some $k > i$ such that
+$f(k) \not \in R_i$, $\bigcup_{k = i + 1} R_k$ contains some interval with no
+points in $S_i$, and thus, by countable additivity of $\lambda$,
+\[\lambda(R_i) - \sum_{k = i + 1}^{\infty} \lambda(R_k) < \lambda(S_i).\]
+Therefore, since each $R_i$ is an interval, so that $\lambda(R_i) = 3^i$,
+\begin{equation}
+\frac{\lambda(R_i)}{2}
+ = \lambda(R_i)\left( 1 - \sum_{k = 1}^{\infty} \frac{1}{3^i} \right)
+ = \lambda(R_i) - \sum_{k = i + 1}^{\infty} \frac{1}{3^{k}}\lambda(R_i)
+ < \lambda(S_i).
+\end{equation}
+Therefore, since $S_i,T_i \in \B(\R)$,
+\begin{align*}
+\lambda(S_i \cup T_i)
+ & \leq \lambda(R_i) = \frac12 \lambda(R_i) + \frac12 \lambda(R_i )
+                  & \mbox{(by monotonicity ($S_i \cup T_i \subseteq R_i$))} \\
+ & <    \lambda(S_i) + \lambda(T_i)
+                   & \mbox{(by (1), since $\lambda(T_i) = \lambda(R_i)/2$)} \\
+ & =    \lambda(S_i \sminus T_i) + \lambda(T_i \sminus S_i) + 2\lambda(S_i \cap T_i) \\
+ & =    \lambda(S_i \cup T_i) + \lambda(S_i \cap T_i).
+\end{align*}
+Subtracting $\lambda(S_i \cup T_i)$ then gives, by monotonicity,
+$0 < \lambda(S_i \cap T_i) \leq \lambda(R_i \cap V)$, as desired.
+
+We now show that $\lambda(R_i \cap V) < \lambda(R_i)$. By countable additivity
+of $\lambda$ and the definition of $V$,
+\begin{align*}
+\lambda(R_i \cap V)
+ & = \lambda \left( \bigcup_{k = i}^{\infty} R_i \cap S_k \cap T_k \right)
+                          & \mbox{($R_i \cap S_k = \emptyset$ for $k < i$)} \\
+ & \leq \sum_{k = i}^{\infty} \lambda(R_i \cap S_k \cap T_k)
+   \leq \sum_{k = i}^{\infty} \lambda(R_i \cap T_k)
+                   & \mbox{countable additivity, monotonicity of $\lambda$} \\
+ & <    \sum_{k = i}^{\infty} \lambda(T_k)
+           & \mbox{monotonicity, $\exists T_k$ with $T_k \cap V_n = \emptyset,
+                                                         \lambda(T_k) > 0$} \\
+ & =    \sum_{k = i}^{\infty} \frac{\lambda(R_k)}{2}
+   =    \sum_{k = i}^{\infty} \frac{\lambda(R_i)}{2^{k + 1}}
+   =    \lambda(R_i). \mqed\\
+\end{align*}
+
+\end{question}
+
+\begin{question}{Problem 6} Let $\Sigma = \sigma(A)$, and define
+$\mu: \Sigma \rightarrow [0,\infty]$ by
+\[\mu(A)
+ = \inf \left\{\sum_{i = 1}^{\infty} \mu_0(E_i) \right.
+    \left|
+        E_i \in \mathcal{A}, A \subseteq \bigcup_{i = 1}^{\infty} E_i
+    \right\}
+.\]
+By the result of part (a) of Problem 4 on Assignment 1, $\mu$ is an outer
+measure on $X$.
+
+We first show that $\mu = \mu_0$ on $\mathcal{A}$, so that it is in fact an
+extension $\mu_0$ to $\Sigma$. Note that, since $\mathcal{A}$ is closed under
+complements and finite unions, by De Morgan's laws, $\mathcal{A}$ is also
+closed under finite intersections. Suppose that $A \in \mathcal{A}$. Clearly,
+since $A \subseteq A$ and $\mu$ is an infimum, $\mu(A) \leq \mu_0(A)$. Suppose
+$A_1,A_2,\ldots \in \mathcal{A}$ with $A \in \bigcup_{i = 1}^{\infty} A_i$.
+$\forall i \in \N$, let
+\[B_i = A \cap A_i \cap \left( \bigcup_{k = 1}^i A_k \right)^c,\] so that the
+$B_i$'s are pairwise disjoint, $A = \bigcup_{i = 1}^{\infty} B_i$, and
+$B_i \in \mathcal{A}$. Thus,
+\[\mu_0(A) = \mu_0\left( \bigcup_{i = 1}^{\infty} B_i \right)
+ = \sum_{i = 1}^{\infty} \mu_0(B_i),\]
+so that, by non-negativity and finite additivity of $\mu_0$ on $\mathcal{A}$,
+\[\mu_0(A)
+ = \sum_{i = 1}^{\infty} \mu_0(B_i)
+ \leq \sum_{i = 1}^{\infty} \mu_0(B_i) + \mu_0(A_i \cap B_i^c)
+ \leq \sum_{i = 1}^{\infty} \mu_0(A_i).
+\]
+Taking the infimum on both sides gives $\mu_0(A) \leq \mu(A)$, and
+thus $\mu = \mu_0$ on $\mathcal{A}$.
+
+We now show that, $\forall E \in \Sigma$, $A \in \pow{X}$,
+$\mu(A) = \mu(A \cap E) + \mu(A \cap E^c)$.
+
+Let $\epsilon > 0$. By definition of $\mu$ as an infimum, there exists a
+sequence $A_1,A_2,\ldots \in \mathcal{A}$ such that
+\[A \subseteq \bigcup_{i = 1}^{\infty} A_i
+ \quad \mbox{ and } \quad
+\sum_{i = 1}^{\infty} \mu_0(A_i)
+ \leq \mu(A) + \epsilon.
+\]
+Then,
+\begin{align*}
+\mu(A \cap E) + \mu(A \cap E^c)
+ & \leq \sum_{i = 1}^{\infty} \mu_0(A_i \cap E)
+   +    \sum_{i = 1}^{\infty} \mu_0(A_i \cap E^c)
+                                       & \mbox{(since $\mu$ is an infimum)} \\
+ & =    \sum_{i = 1}^{\infty} \mu_0( (A_i \cap E) \cup (A_i \cap E^c) )
+                              & \mbox{(since $\mu_0$ is finitely additive)} \\
+ & =    \sum_{i = 1}^{\infty} \mu_0(A_i)
+   \leq \mu(A) + \epsilon.
+\end{align*}
+Then, countable subadditivity of $\mu$ gives that
+$\mu(A) \leq \mu(A \cap E) + \mu(A \cap E^c) \leq \mu(A) + \epsilon$ for all
+$\epsilon > 0$, so that $\mu(A) = \mu(A \cap E) + \mu(A \cap E^c)$.
+Therefore, by the Caratheodory Criterion, $\mu$ is a measure on $\Sigma$, and,
+as shown above, it extends $\mu_0$, as desired. \qed
+
+\end{question}
+\end{document}

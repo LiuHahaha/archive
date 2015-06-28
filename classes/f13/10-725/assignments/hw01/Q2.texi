@@ -1,0 +1,21 @@
+\section{LPs and gradient descent in Stats/ML [25 points] (Sashank)}
+
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+
+\paragraph{A [4+4+5]}
+\begin{enumerate}[(a)]
+%TODO
+\item
+%TODO
+\item
+%TODO
+\item
+\end{enumerate}
+
+\paragraph{B [6+6]}
+\begin{enumerate}[(a)]
+%TODO
+\item
+%TODO
+\item
+\end{enumerate}

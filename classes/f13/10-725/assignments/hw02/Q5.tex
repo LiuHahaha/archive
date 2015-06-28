@@ -1,0 +1,12 @@
+\section{ Accelerating matrix completion [15 points] (Adona)}
+
+In this problem we will continue exploring the matrix completion algorithms of Q3, in particular how they combine with acceleration and backtracking, and how they behave on a realistic dataset. 
+
+(a) [\textbf{7}] Implement the generalized gradient descent (soft-impute) algorithm of Q3(a) with acceleration. Run both the non-accelerated and accelerated versions for different $\lambda$s in $\Lambda = \text{logspace}(0,3,30)$, and plot the number of iterations the two algorithms took to converge for each value of $\lambda$, starting from $B=0$. As before, run the algorithms until either $\frac{|f_{k+1} - f_{k}|}{f_{k}} < 10^{-4}$ (where $f_k$ is the objective function value at $k^{th}$ iteration), or after a maximum of 500 iterations (whichever occurs first). Further, for fixed $\lambda = 10$, plot and compare the value of the objective at each iteration $\#$ with and without acceleration. What do you observe? Does acceleration help for this problem? 
+
+(b) [\textbf{2}] Do the same as in part (a), but now using warm starts. Is there any difference in the comparison between no acceleration and acceleration?
+%(b) [\textbf{2}] Consider the backtracking algorithm of Lecture 8, slide 13. Would backtracking further help in the case of matrix completion? Why or why not?
+
+(c) [\textbf{6}] Next we will explore how matrix completion performs as an algorithm for image reconstruction. Download the image of Mona Lisa from \url{http://www.stat.cmu.edu/~ryantibs/convexopt/homeworks/mona_bw.jpg}. Construct a test image by randomly subsampling $50\%$ of the pixels, and setting the remaining pixels to zero. Run matrix completion with accelerated generalized gradient descent on the subsampled image for a few (10-15) different $\lambda$s in the range $10^{-2} - 10^2$. What do you observe? Show the original image, the subsampled image, and 3-4 reconstructions across the range of $\lambda$s. Which $\lambda$ returns the best results? Repeat this experiment at $20\%$ subsampling level, and show the best reconstructed image. What $\lambda$ did you choose in this case, and was it different from the best $\lambda$ at $50\%$ subsampling level?
+
+

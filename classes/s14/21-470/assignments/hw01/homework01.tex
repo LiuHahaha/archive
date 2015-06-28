@@ -1,0 +1,208 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-470 Calculus of Variations}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, January 29, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+\renewcommand{\Re}{\operatorname{Re}}   % real part of a complex number
+\newcommand{\tT}{\widetilde{T}}         % for P3
+\newcommand{\A}{\mathcal{A}}            % for P3
+\renewcommand{\S}{\mathcal{S}}          % Schwartz space
+\newcommand{\Y}{\mathcal{Y}}            % domain of functional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+[I wasn't able to get very far with the integrals in parts (b) and (c), and
+wasn't able to determine much about the constants in part (d). Based on
+numerical computation, I believe (a) offers the slowest solution, followed by
+(b), (c), and then (d).]
+\begin{enumerate}[(a)]
+\item Since $y'(x) = 1$ for all $x \in [0,1]$,
+\begin{align*}
+J(y)
+    = \int_0^1 \frac{\sqrt{1 + y'(x)^2}}{\sqrt{y(x)}} \, dx
+    = \sqrt{2} \int_0^1 x^{-1/2} \, dx
+    = 2\sqrt{2} x^{1/2} \bigg|_{x = 0}^{x = 1}
+    = 2\sqrt{2}.
+\end{align*}
+ 
+\item Since
+\[y(x) = \sqrt{x - x^2}
+    \quad \mbox{ and } \quad
+y'(x) = \frac{1 - x}{\sqrt{2x - x^2}}\]
+for all $x \in (0,1]$,
+\begin{align*}
+J(y)
+    = \int_0^1 \frac{\sqrt{1 + (1 - x)^2/(2x - x^2)}}{(2x - x^2)^{1/4}} \, dx
+ &  = \int_0^1 \frac{\sqrt{2x - x^2 + x^2 - 2x + 1}}{(2x - x^2)^{3/4}} \, dx \\
+ &  = \int_0^1 (2x - x^2)^{-3/4} \, dx.
+\end{align*}
+ 
+\item Since $y'(x) = x^{-1/2}/2$ for all $x \in (0,1]$, using the inequality
+$\sqrt{a + b} \leq \sqrt{a} + \sqrt{b}$ for $a,b \geq 0$,
+\begin{align*}
+J(y)
+    = \int_0^1 \frac{\sqrt{1 + 1/(4x)}}{x^{1/4}} \, dx
+ &  = \int_0^1 \sqrt{x^{-1/2} + x^{-3/2}/4} \, dx.
+\end{align*}
+
+\item Observing that
+\[\frac{dx}{d\theta} = \frac{c^2}{2} (1 - \cos\theta)
+\quad \mbox{ and } \quad
+\frac{dy}{dx}
+    = \left. \frac{dy}{d\theta} \middle/ \frac{dx}{d\theta} \right.
+    = \frac{\sin\theta}{1 - \cos\theta},
+\]
+so that
+\[\left( \frac{dy}{dx} \right)^2
+    = \left( \frac{\sin\theta}{1 - \cos\theta} \right)^2
+    = \frac{1 - \cos^2\theta}{(1 - \cos\theta)^2}
+    = \frac{1 + \cos\theta}{1 - \cos\theta},
+\]
+and changing variables from $x$ to $t$, $J(y)$ simplifies significantly:
+\begin{align*}
+J(y)
+ &  = \int_0^{\theta_1} \frac{\sqrt{1 + \frac{1 + \cos \theta}
+                                                {1 - \cos\theta}}}
+                        {\sqrt{\frac{c^2}{2}(1 - \cos\theta)}}
+      \frac{c^2}{2} (1 - \cos\theta) \, d\theta
+    = \frac{c}{\sqrt2} \int_0^{\theta_1} \sqrt{1 + \frac{1 + \cos \theta}
+                                                {1 - \cos\theta}}
+      \sqrt{1 - \cos\theta} \, d\theta   \\
+ &  = \frac{c}{\sqrt2} \int_0^{\theta_1}
+                        \sqrt{1 - \cos\theta + 1 + \cos\theta} \, d\theta
+    = \frac{c}{\sqrt2} \int_0^{\theta_1}
+                        \sqrt{2} \, d\theta = c\theta_1.
+\end{align*}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+Since
+\[\frac{d^2}{dx^2} \sqrt{1 + x^2}
+    = \frac{d}{dx} \frac{x}{\sqrt{1 + x^2}}
+    = \left( 1 + x^2 \right)^{-3/2}
+    \geq 0,\]
+the function $x \mapsto \sqrt{1 + x^2}$ is convex.
+Thus, by Jensen's Inequality and a linear change of variables
+\begin{align*}
+J(y)
+    = \int_a^b \sqrt{1 + y'(x)^2} \, dx
+ &  = (b - a) \int_0^1 \sqrt{1 + y'((b - a)u + a)^2} \, du
+ &  \mbox{(Change of Variables)}    \\
+ &  \geq (b - a) \sqrt{1 + \left( \int_0^1 y'((b - a)u + a) \, du \right)^2}
+ &  \mbox{(Jensen's Inequality)}    \\
+ &  = \sqrt{(b - a)^2 + \left( \int_a^b y'(x) \, dx \right)^2}
+ &  \mbox{(Change of Variables)}    \\
+ &  = \sqrt{(b - a)^2 + (B - A)^2},
+\end{align*}
+where the last step uses that $\int_a^b y'(x) = B - A$ by the Fundamental
+Theorem of Calculus. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item The bound represents the `vertical component' of the surface area:
+\begin{align*}
+J(y)
+    = 2 \pi \int_0^b y(x) \sqrt{1 + y'(x)^2} \, dx
+ &  \geq 2 \pi \int_0^b y(x) \sqrt{y'(x)^2} \, dx  \\
+ &  \geq \pi \int_0^b 2 y(x) y'(x) \, dx
+    = \pi y(x)^2 \bigg|_{x = 0}^{x = b}
+    = \pi B^2,
+\end{align*}
+since $y \in \Y$ is non-negative. The bound essentially states that the minimal
+surface area is at least the surface area of the disc of radius $B$ centered at
+$(b,0)$, normal to the $x$-axis. \qed
+ 
+\item If, for any $x \in [0,b]$, $y(x) > 0$, then
+$y(x)\sqrt{1 + y'(x)} > y(x)\sqrt{y'(x)^2}$. Since $y$ and $y'$ are continuous,
+it follows that the first inequality in part (a) above can be made strict, so
+that no $y \in \Y$ achieves $J(y) = \pi B^2$. \qed
+ 
+\item There is indeed such a sequence. For $n \in \N$, define $y_n \in \Y$ by
+$y_n(x) = B(x/b)^n, \forall x \in [0,b]$. Then, using the inequality
+$\sqrt{a + b} \leq \sqrt{a} + \sqrt{b}$ for $a,b \geq 0$,
+\begin{align*}
+J(y_n)
+    = 2\pi \int_0^b y_n(x) \sqrt{1 + y_n'(x)^n}
+ &  = 2\pi \int_0^b B(x/b)^n \sqrt{1 + (Bnx^{n - 1}/b^n)^2} \, dx  \\
+ &  \leq 2\pi B \int_0^b (x/b)^n(1 + Bnx^{n - 1}/b^n) \, dx \\
+ &  = 2\pi B \left( \frac{b}{n + 1} + \frac{B}{2} \right)
+    \to \pi B^2
+\end{align*}
+as $n \to \infty$. By the result of part (a), it follows that
+$J(y_n) \to \pi B^2$ as $n \to \infty$. \qed
+ 
+\end{enumerate}
+\end{question}
+\end{document}

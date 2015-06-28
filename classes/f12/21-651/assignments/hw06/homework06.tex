@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{6}
+\newcommand{\duedate}{Monday, November 19, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\epi}[1]{\operatorname{epi} #1 } % epigraph of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(i)]
+\item Suppose $(X,\tau)$ is a normal space, $A \subseteq X$ is
+closed in $\tau$, and $f : A \rightarrow \R^I$ is continuous.
+$\forall i \in I$, let $f_i : A \rightarrow \R$, be the $i^{th}$ coordinate of
+$f$, (i.e, $\forall x \in A$, $f_i(x) = f(x) (i)$). By Tietze's Extension
+Theorem, $\forall i \in I$, there is an extension $F_i : X \rightarrow \R$, of
+$f_i$ to $X$. Let $F : X \rightarrow \R^I$ be the function whose $i^{th}$
+coordinate is $F_i$ (so that, $F_i = \pi_i \circ F$, where $\pi_i$ is the
+projection map into $\R$). Then, since each $F_i$ is continuous, by Lemma 131,
+$F$ is contiuous. Thus, $f$ has a continuous extension $F$ to $X$, so that
+$\R^I$ has the universal extension property. \qed
+
+\item If $X = \R$ and $\tau$ is the standard topology, then
+$A := \{0,1\} \subseteq \R$ is closed under the standard topology. If
+$f : A \rightarrow A$ is the identity function, $f$ is continuous (as the
+topology induced on $A$ by $\tau$ is discrete), but it follows from the
+Intermediate Value Theorem that no extension of $f$ to $X$ is continuous.
+Thus, $\{0,1\}$ does not have the universal extension property. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+Since any closed set containing
+$\displaystyle \bigcup_{\alpha \in \Lambda} E_{\alpha}$ contains each
+$E_{\alpha}$ and thus each $\overline{E_{\alpha}}$,
+$\displaystyle
+\bigcup_{\alpha \in \Lambda} \overline{E_{\alpha}}
+ \subseteq \overline{\bigcup_{\alpha \in \Lambda} E_{\alpha}}$.
+
+Suppose, for sake of contradiction, that, for some
+$x \in \overline{\bigcup_{\alpha \in \Lambda} E_{\alpha}}$,
+$x \notin \bigcup_{\alpha \in \Lambda} \overline{E_{\alpha}}$. Since
+$\{E_{\alpha}\}_{\alpha \in \Lambda}$ is locally finite, $x$ has a
+neighborhood $U \in \tau$ such that, for some finite
+$\Lambda_0 \subseteq \Lambda$, $U$ intersects $E_{\alpha}$ only for
+$\alpha \in \Lambda_0$. Since
+$x \notin \bigcup_{\alpha \in \Lambda} \overline{E_{\alpha}}$, for each
+$\alpha \in \Lambda$, $x$ has a neighborhood $U_{\alpha} \in \tau$ such that
+$U_{\alpha} \cap E_{\alpha} = \emptyset$. Then however, since $\Lambda_0$ is
+finite, $V := U \cap \bigcap_{\alpha \in \Lambda_0} U_{\alpha} \in \tau$ is a
+neighborhood of $x$ with
+$V \cap \bigcup_{\alpha \in \Lambda} E_{\alpha} = \emptyset$,
+contradicting the fact that
+$x \in \overline{\bigcup_{\alpha \in \Lambda} E_{\alpha}}$. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+Since the Sorgenfrey topology $\tau$ is finer than the standard topology on
+$\R$ (under which $\R$ is Hausdorff), $(\R,\tau)$, is Hausdorff.
+
+I didn't have time to complete the proof that an open cover of the Sorgenfrey
+line has a locally finite refinement.
+\end{question}
+
+\begin{question}{Problem 4}
+Note: I got this counterexample from Wikipedia, after being unable to find a
+proof or counterexample on my own. The proof that the Long Line is locally
+compact and Hausdorff is my own. However, I wasn't able to prove that the Long
+Line is not paracompact.
+
+We construct the Long Line topology as follows:
+
+Consider the lexicographical ordering $\prec$ on $X := \R \times [0,1)$ (so
+that $(x_0,y_0) \prec (x_1,y_1)$ if and only if $x_0 < x_1$ or $x_0 = x_1$ and
+$y_0 < y_1$, and consider the order topology $\tau$ on $X$ generated by
+$\prec$ (the topology generated by the subbase
+$\{\{x \in X : a \prec x\} : a \in X\}
+ \cup \{\{x \in X : x \prec b\} : b \in X\}$ (such sets can be written
+$(a,\infty)$ and $(-\infty,b)$).
+
+Suppose $(x_0,y_0), (x_1,y_1) \in X$ are distinct (so that, since $\prec$ is a
+total order, without loss of generality, $(x_0,y_0) \prec (x_1,y_1)$). Then,
+either $\left(-\infty,\left(\frac{|x_0 - x_1|}{2},y_0\right)\right)$ and
+$\left(\left(\frac{|x_0 - x_1|}{2},y_0\right),\infty\right)$ (if $x_0 < x_1$)
+or $\left(-\infty,\left(x_0,\frac{|y_0 - y_1|}{2}\right)\right)$ and
+$\left(x_0,\left(\frac{|y_0 - y_1|}{2}\right),\infty\right)$ (if $x_0 = x_1$)
+are disjoint open sets which separated $(x_0,y_0)$ and $(x_1,y_1)$. Thus,
+$(X,\tau)$ is Hausdorff.
+
+For any $x \in \R$, $\{x\} \times [0,1) \subseteq X$ under the topology
+induced by $\tau$ is clearly homeomorphic to $[0,1) \subseteq R$ under the
+standard topology. Thus, since $\R$ is locally compact under the standard
+topology, $(X,\tau)$ is locally compact.
+\end{question}
+
+\begin{question}{Problem 5}
+I was unable to come up with a counterexample for this one. However, Wikipedia
+claims that the following topology is a counterexample.
+
+Let $X := \Z^+$, the set of positive integers, and, $\forall a,b \in X$,
+define $U_a(b) := \{b + na : n \in X \cup \{0\}\} \subseteq X$. Then, let
+$\tau$ be the topology generated by the subbase
+$\B := \{U_a(b) : a,b \in X, b \mbox{ is prime}\}$. Then, $\tau$ is second
+countable and Hausdorff, but not normal, and thus not metrizable.
+\end{question}
+
+\begin{question}{Problem 6}
+Consider $\R$ under the Sorgenfrey topology $\tau$. As shown in part (ii) of
+Example 23, $(\R, \tau)$ is first countable, as shown in part (ii) of
+Example 57, $(\R,\tau)$ is separable, and, as shown in Exercise 92,
+$(\R,\tau)$ is normal. Clearly, $(\R, \tau)$ is $T_1$, since, for any
+$x,y \in \R$, $\left[x, x + \frac{|x - y|}{2}\right)$ contains $x$ but not
+$y$, and thus, $(\R,\tau)$ is $T_4$.
+
+Since the Cartesian product of two second countable spaces is second countable
+and the Sorgenfrey plane is not second countable (as second countability is
+hereditary, and the anti-diagonal in $\R^2$ gives an uncountable subspace in
+which the induced topology is discrete), the Sorgenfrey line is not second
+countable.
+
+Since $(\R,\tau)$ is separable but not second countable, it follows from
+Urysohn's Metrization Theorem that $(\R,\tau)$ is not metrizable, as desired.
+\qed
+\end{question}
+\end{document}

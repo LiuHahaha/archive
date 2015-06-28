@@ -1,0 +1,110 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+%\usepackage{mysymbols}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}                 % real numbers
+\newcommand{\Col}{\mathcal{C}}              % column space of a matrix
+\newcommand{\Nul}{\mathcal{N}}              % null space of a matrix
+\newcommand{\inv}{{^{-1}}}                  % inverse
+\def\prox{\mathrm{prox}}                    % proximal operator
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}   % argmin
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}   % argmax
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{1}
+\section{Projections and proximal operators [25 points] (Adona)}
+\paragraph{Q1. [4+4]} 
+\begin{enumerate}[a)]
+\item For a symmetric matrix $A$ we want to find positive semidefinite matrix
+$B$ minimizing the sum of the absolute values of the eigenvalues of $B - A$.
+Clearly, if $A = U\Sigma U\inv$ is the singular value decomposition of $A$,
+this is achieved by
+\[B = U\Sigma^+U\inv.\]
+where $\Sigma^+$ is the diagonal matrix with entries
+$\Sigma^+_{ii} = \max\{0,\Sigma_{ii}\}$.
+
+\item Let $x^* \in \R^n$ such that $Ax^* + b$ is the projection of $y$ onto
+$\{Ax + b : x \in \R^n\}$. Then, $Ax^*$ is the projection of $y - b$ onto the
+column space $\Col(A)$, so $(y - b) - Ax^*$ is orthogonal to every vector in
+$\Col(A)$ and is hence in the null space $\Nul(A^T)$. Then,
+\[A^T((y - b) - Ax^*) = 0, \quad \mbox{and so} \quad A^T(y - b) = A^TAx^*. \]
+
+Since $A$ has full column rank, $A^TA$ is an invertible (square) matrix, so
+\[(A^TA)\inv A^T(y - b) = x^*,\]
+and hence the projection $p$ of $y$ onto $\{Ax + b : x \in \R^n\}$ is
+\[p = Ax^* + b = \mbox{\fbox{$\displaystyle A(A^TA)\inv A^T(y - b) + b$.}}\]
+\end{enumerate}
+
+\paragraph{Q2. [5+7+5]}
+\begin{enumerate}[a)]
+\item Let
+\[x^* := \argmin_{x \in \R^n} \frac{1}{2}\|x - z\|_2^2
+                                        + \lambda\sum_{i = 1}^n (x_i)_+.\]
+Clearly, if $z_i \leq 0$, then $x_i^* = z_i$. If $z_i > 0$, then
+$x^*_i \geq 0$. If $x^*_i > 0$, we have
+\[0
+    = \frac{\partial}{\partial x^*_i}
+        \frac12 \sum_{z_i > 0} (x^*_i - z_i)^2 + \lambda x^*_i
+    = x^*_i - z_i + \lambda,
+\]
+so that $x^*_i = z_i - \lambda$ when this is positive. Thus, we have
+\[\mbox{\fbox{$\displaystyle x_i^*
+ =  \left\{
+        \begin{array}{ll}
+            z_i             & : \mbox{ if } z_i \leq 0              \\
+            0               & : \mbox{ if } 0 < z_i \leq \lambda    \\
+            z_i - \lambda   & : \mbox{ if } \lambda < z_i           \\
+        \end{array}
+    \right.$.}}
+\]
+
+\item Let
+\[x^* := \argmin_{x \in \R^n} \frac{1}{2}\|x - z\|_2^2 + \lambda\|x\|_2\]
+Clearly, $x^* = cz$, for some $c \in [0,1]$. Thus, $c = 0$ or
+\[0
+    = \frac{d}{dc} \frac{1}{2}\|(c - 1)z\|_2^2 + \lambda\|cz\|_2
+    = (c - 1)\|z\|_2^2 + \lambda\|z\|_2,
+\]
+so $c = 1 - \frac{\lambda}{\|z\|_2}$. Thus,
+\[\mbox{\fbox{$\displaystyle x^*
+    = \left\{
+        \begin{array}{ll}
+            \left(1 - \frac{\lambda}{\|z\|_2}\right)z
+                                        & \mbox{ if } \lambda \leq \|z\|_2 \\
+            0   & \mbox{else}
+        \end{array}
+    \right.$.}}
+\]
+
+\item Let
+\[x^* := \argmin_{x \in \R^n} \frac{1}{2}\|x - z\|_2^2 + \lambda\|x\|_\infty\]
+and $\rho := \|x\|_\infty$. Clearly, by definitions of the $2$- and
+$\infty$-norms, in each coordinate of $x^*$,
+\[x_i^*
+ =  \left\{
+        \begin{array}{ll}
+            \rho    & : \mbox{ if } \rho < z_i                  \\
+            z_i     & : \mbox{ if } -\rho \leq z_i \leq \rho    \\
+            -\rho   & : \mbox{ if } z_i < -\rho
+        \end{array}
+    \right..
+\]
+Then, we have
+\[0 = \frac{d}{d\rho} \frac{1}{2}\|x^* - z\|_2^2 + \lambda\|x\|_\infty
+    = \sum_{|z_i| > \rho} \rho - |z_i| + \lambda
+    = -\|x^* - z\|_1 + \lambda,
+\]
+so $\|x^* - z\|_1 = \lambda$.
+\end{enumerate}
+\end{document}

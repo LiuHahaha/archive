@@ -1,0 +1,219 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\duedate}{Friday, April 13, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bvarphi}{\boldsymbol{\varphi}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\Var}{\operatorname{Var}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Midterm 2 Study Guide} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Exam Date: \duedate \\
+
+\hrule
+{\Large \bf Lagrange Multipliers}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 85 (Lagrange Multipliers)}: Let
+$U \subseteq \mathbb{R}^N$ be an open set, let $f: U \rightarrow \mathbb{R}$,
+and $\mathbf{g}: U \rightarrow \mathbb{R}^M$ with $M < N$ be $C^1$, and
+\[F := \{\mathbf{x} \in U : \mathbf{g}(\mathbf{x}) = \mathbf{0}\}.\]
+Let $\mathbf{x}_0 \in F$, and assume $f$ attains a local extremum at
+$\mathbf{x}_0$. Then, if $G_{\mathbf{g}}(\mathbf{x}_0)$ has maximum rank $M$,
+there exist $\lambda_1,\lambda_2,\ldots,\lambda_M \in \mathbb{R}$ such that
+\[\nabla f(\mathbf{x})
+ = \lambda_1 \nabla g_1(\mathbf{x}_0) + \lambda_2 \nabla g_2(\mathbf{x}_0)
+ + \ldots + \lambda_M \nabla g_M(\mathbf{x}_0).
+\]
+\begin{itemize}
+\item Proof is $\approx 2$ pages, so probably too long.
+\item Know how to use them to find extrema.
+\end{itemize}
+\end{enumerate}
+
+\hrule
+{\Large \bf Curves}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 94 (Peano Curve)} There exists a continuous function
+$\bvarphi: [0,1] \rightarrow \mathbb{R}^2$ such that
+$\bvarphi([0,1]) = [0,1]^2$.
+
+% SEEMS VERY UNLIKELY
+%{\bf Proof:} For $n \in \mathbb{N}$, divide $[0,1]$ into $4^n$ equal closed
+%intervals $I_{k,n}$ and divide $[0,1]^2$ into $4^n$ equal closed squares
+%$Q_{k,n}$.
+
+\item \textbf{Theorem 101 (Length of a Smooth Curve)} Let $\gamma$ be a $C^1$
+curve with parametrization $\bvarphi: I \rightarrow \mathbb{R}^N$. Recall
+that
+\[\Var_I \bvarphi
+ := \sup \left\{
+           \sum_{i = 1}^n \|\bvarphi(t_i) - \bvarphi(t_{i - 1})\}
+         \right\}
+,\]
+and that $L(\gamma) := \Var_I \bvarphi$. Then,
+\[L(\gamma) = \int_a^b \|\bvarphi^{\prime}(t)\|\; dt.\]
+\begin{itemize}
+\item Proof requires Lemmas 103 and 104.
+\item Likely just need to know how to calculate length.
+\end{itemize}
+
+\item \textbf{Lemma 103 (Triangle Inequality for Integrals)} If
+$\mathbf{f}: [c,d] \rightarrow \mathbb{R}^N$ is Riemann Integrable, then
+$\|\mathbf{f}\|: [c,d] \rightarrow \mathbb{R}$ is Riemann Integrable and
+\[\left\|\int_c^d \mathbf{f}(t) \; dt\right\|
+                                      \leq \int_c^d \|\mathbf{f}(t)\| \; dt.\]
+
+\item \textbf{Lemma 104 (Another Integral Inequality)} If
+$\mathbf{f}: [c,d] \rightarrow \mathbb{R}^N$ is Riemann Integrable, then, for
+$t_0 \in [c,d]$, 
+\[\left\|\int_c^d \mathbf{f}(t) \; dt\right\|
+  \geq \int_c^d \|\mathbf{f}(t)\| \; dt - 2\int_c^d\|\mathbf{f}(t)
+  - \mathbf{f}(t_0)\| \; dt
+.\]
+
+\item \textbf{Proposition 116 (Absolute Continuity implies Finite Variation)}
+If $\bvarphi: [a,b] \rightarrow \mathbb{R}^N$ is absolutely continuous, then
+$\bvarphi$ has finite variation.
+
+\begin{itemize}
+\item Proof relies on previous exercise.
+\end{itemize}
+
+\item \textbf{Theorem 119 (Regular curves can be Arc-Length Parametrized)}
+If $\gamma$ is regular (i.e., it is piecewise $C^1$ and admits a parametric
+representation $\bvarphi: [a,b] \rightarrow \mathbb{R}^N$ with nonzero left
+and right derivatives on $[c,d]$), then $\gamma$ can be parametrized by
+arclength.
+
+{\bf Proof:} Define a \emph{length} function
+$s: [a,b] \rightarrow [0,L(\gamma)]$. Show that $s$ is invertible. Then, since
+the inverse of a continuous, one-to-one function on a compact set is
+continuous, $s^{-1}$ is continuous. Therefore, since, by the FTC,
+$s^{\prime} > 0$ a.e., so that $s$ is piecewise $C^1$, $s^{-1}$ is $C^1$ with
+the usual derivative, so that
+$\bpsi(t) := \bvarphi(s^{-1}(t)), t \in [0,L(\gamma)]$ is equivalent to
+$\bvarphi$, and, furthermore,
+\[\bpsi^{\prime}(t)
+ = \frac{\bvarphi^{\prime}(s^{-1}(t))}
+        {\|\bvarphi^{\prime}(s^{-1}(t))\|}
+,\] so that $\|\bpsi^{\prime}(t)\| = 1$. \quad $\blacksquare$
+
+\end{enumerate}
+
+\hrule
+{\Large \bf Curve Integrals}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 129 (Fundamental Theorem of Calculus for Curves)} Let
+$U \subseteq \mathbb{R}^N$ be open, let $f \in C^1(U)$, let
+$\mathbf{x},\mathbf{y} \in U$, and let $\gamma$ be piecewise $C^1$ in $U$ with
+parametric representation $\bvarphi: [a,b] \rightarrow \mathbb{R}^N$ such that
+$\bvarphi(a) = \mathbf{y}$ and $\bvarphi(b) = \mathbf{x}$. Then,
+\[\int_{\gamma}\nabla f = f(\mathbf{x}) - f(\mathbf{y}).\]
+
+{\bf Proof:} Define $p(t) = f(\bvarphi(t))$. By the Chain Rule, $p$ is
+piecewise $C^1$ with (a.e)
+\[p^{\prime}(t)
+ = \sum_{i = 1}^N
+             \frac{\partial f}{\partial x_i}(\bvarphi(t))\varphi_i^{\prime}(t)
+.\]
+Thus, by the FTC,
+\[\int_{\gamma}\nabla f
+ = \int_a^b \sum_{i = 1}^N
+        \frac{\partial f}{partial x_i}(\bvarphi(t))\varphi_i^{\prime}(t) \; dt
+ = \int_a^b p^{\prime}(t) \; dt = p(b) - p(a) = f(\mathbf{y}) - f(\mathbf{x})
+. \quad \blacksquare\]
+
+\item \textbf{Theorem 130 (Conservative Field Equivalents)} Let
+$U \subseteq \mathbb{R}^N$ be an open, connected set, and let
+$\mathbf{g}: U \rightarrow \mathbb{R}^N$ be continuous. Then, the following
+are equivalent:
+\begin{enumerate}[(i)]
+\item $\mathbf{g}$ is conservative.
+
+\item For every piecewise $C^1$ closed oriented curve $\gamma$ in $U$,
+\[\int_{\gamma} \mathbf{g} = 0.\]
+
+\item $\forall \mathbf{x},\mathbf{y} \in U$ and for piecewise $C^1$ oriented
+curves $\gamma_1$, $\gamma_2$ in $U$ with the same endpoints,
+\[\int_{\gamma_1} \mathbf{g} = \int_{\gamma_2} \mathbf{g}.\]
+\end{enumerate}
+
+{\bf Proof:} That (i) $\Rightarrow$ (ii) follows immediately from the FTC for
+Curves. That (ii) $\Leftrightarrow$ (iii) is trivial. Thus, we prove
+(ii) $\Rightarrow$ (i).
+
+\item \textbf{Theorem 132 (Conservative Fields are Irrotational)} Let
+$U \subseteq \mathbb{R}^N$ be open, and let
+$\mathbf{g}: U \rightarrow \mathbb{R}^N$ be conservative and $C^1$. Then,
+$\mathbf{g}$ is irrotational.
+
+{\bf Proof:\} Since $\mathbf{g}$ is conservative, $\mathbf{g} = \nabla f$ for
+some $f: U \rightarrow \mathbb{R}$. Since $\mathbf{g}$ is $C^1$, $f$ is $C^2$.
+Therefore, by the Schwartz Theorem, $\forall i, j \in \{1,2,\ldots,N\}$,
+\[\frac{\partial g_i}{\partial x_j}
+ = \frac{\partial^2 f}{\partial x_j x_i}
+ = \frac{\partial^2 f}{\partial x_i x_j}
+ = \frac{\partial g_j}{\partial x_i},
+\]
+so that $\mathbf{g}$ is irrotational. \quad $\blacksquare$
+
+\item \textbf{Theorem 135 (Poincar\'e's Lemma I (Starshaped Domains))}
+
+\item \textbf{Theorem 143 (Homotopic Curves Integrals in Irrotational Fields)}
+
+\item \textbf{Theorem 144 (Poincar\'e's Lemma II (Simply Connected Domains))}
+
+\item \textbf{Lemma 145 (Lebesgue Number)}
+
+\item \textbf{Theorem 150 (Simple Connectivity Equivalents)}
+
+\item \textbf{Theorem 154 (Integral Definitions of the Winding Number)}
+
+\item \textbf{Theorem 155 (Winding Number Constant on Connected Components)}
+
+\end{enumerate}
+\end{document}

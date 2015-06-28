@@ -1,0 +1,133 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\X}{\mathcal{X}}
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+\newcommand{\KL}{{\operatorname{KL}}}
+\newcommand{\tr}{{\operatorname{tr}}}
+\newcommand{\wx}{{\widetilde{x}}}
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{3}
+
+\section{Advanced Theory}
+\newcommand{\cm}[1]{\mathcal{#1}}
+\renewcommand{\d}{{\rm d}}
+\newcommand{\x}{{\rm x}}
+{\bf Part A [15 points]}
+\begin{enumerate}
+\item By properties of the logarithm,
+\begin{align*}
+\ell(\mu,\Sigma)
+    = \sum_{i = 1}^n \log \mathcal{N}(x_i; \mu, \Sigma)
+ &  = - \sum_{i = 1}^n \log \left( (2\pi)^{n/2}\sqrt{\det \Sigma} \right)
+                        + \frac{1}{2} (x_i - \mu)^T \Sigma\inv (x_i - \mu).
+\end{align*}
+
+\item
+\begin{align*}
+\frac{\partial}{\partial \mu} \ell(\mu,\Sigma)
+ &  = -\frac{\partial}{\partial \mu}
+      \sum_{i = 1}^n \log (2\pi)^{n/2}\sqrt{\det \Sigma}
+                        + \frac{1}{2} (x_i - \mu)^T \Sigma\inv (x_i - \mu). \\
+ &  = - \sum_{i = 1}^n \frac{1}{2} \frac{\partial}{\partial \mu}
+    \left( x_i^T \Sigma\inv x_i - \mu^T \Sigma\inv x_i - x_i^T \Sigma\inv \mu
+                                            + \mu^T \Sigma\inv \mu \right)  \\
+ &  = \sum_{i = 1}^n \frac{\partial}{\partial \mu}
+            \left( \mu \Sigma\inv x_i^T
+                                - \frac{\mu^T \Sigma\inv \mu}{2} \right)    \\
+ &  = \sum_{i = 1}^n \Sigma\inv x_i^T - \Sigma\inv \mu
+    = \left( \sum_{i = 1}^n \Sigma\inv x_i^T \right) - n \Sigma\inv \mu.
+\end{align*}
+\begin{align*}
+\frac{\partial}{\partial \Sigma\inv} \ell(\mu,\Sigma)
+ &  = - \frac{\partial}{\partial \Sigma\inv}
+        \sum_{i = 1}^n \log \left( (2\pi)^{n/2}\sqrt{\det \Sigma} \right)
+                        + \frac{1}{2} (x_i - \mu)^T \Sigma\inv (x_i - \mu). \\
+ &  = - \frac{n}{2} \frac{\partial}{\partial \Sigma\inv}
+        \log (\det \Sigma)
+        - \frac{\partial}{\partial \Sigma\inv} \sum_{i = 1}^n \frac{1}{2} (x_i - \mu)^T \Sigma\inv (x_i - \mu)   \\
+ &  = \frac{n}{2} \frac{\partial}{\partial \Sigma\inv} \log (\det \Sigma\inv)
+        - \frac{\partial}{\partial \Sigma\inv} 
+        \tr \left( \Sigma\inv
+            \sum_{i = 1}^n \frac{1}{2} (x_i - \mu) (x_i - \mu)^T \right)    \\
+ &  = \frac{n}{2} \Sigma
+        - \sum_{i = 1}^n \frac{1}{2} (x_i - \mu) (x_i - \mu)^T.
+\end{align*}
+
+%TODO
+\item For any matrix $V \in \mathcal{S}^d_+$ define $g_V : \R \to \R$ by
+\[g_V(t) = g(\Sigma + tV),\]
+and note that it suffices to show that $g_V$ is concave (i.e., that
+$g_V''(t) \leq 0$) when $\Sigma + tV \succ 0$. Since $\Sigma \succ 0$, $\Sigma$
+has a square root $\sqrt\Sigma \succ 0$.
+\begin{align*}
+g_V(t)
+    = g\left( \Sigma + tV \right)
+ &  = g\left( \sqrt\Sigma
+        \left( I
+        + t\sqrt\Sigma\inv V \sqrt\Sigma\inv \right) \sqrt\Sigma \right)    \\
+ &  = \log \left( \sqrt{\det \Sigma}
+                    \det \left( I + t\sqrt\Sigma\inv V \sqrt\Sigma\inv \right)
+                        \sqrt{\det \Sigma} \right)                          \\
+ &  = \log \left( \det \Sigma \right)
+        + \log \left( \det \left( I
+        + t\sqrt\Sigma\inv V \sqrt\Sigma\inv \right) \right)                \\
+ &  = \log \left( \det \Sigma \right)
+        + \sum_{i = 1}^n \log \left( 1 + t\lambda_i \right),
+\end{align*}
+where $\lambda_1,\dots,\lambda_n \geq 0$ are the eigenvalues of
+$\sqrt\Sigma\inv V \sqrt\Sigma\inv$. Differentiating twice then gives
+\[g_V'(t)
+    = \sum_{i = 1}^n \frac{\lambda_i}{1 + t\lambda_i}
+    \quad \mbox{ and } \quad
+  g_V''(t)
+    = \sum_{i = 1}^n \frac{-\lambda_i^2}{(1 + t\lambda_i)^2} \leq 0.
+\]
+Now define $f_i : \R \to \R$ by
+\[f_i(t)
+    = h_i((\mu_0,\Sigma_0) + t(\mu,\Sigma)).
+\]
+
+From part 1.,
+\begin{align*}
+\ell(\mu,\Sigma)
+ &  = - \sum_{i = 1}^n \log \left( (2\pi)^{n/2}\sqrt{\det \Sigma} \right)
+                        + \frac{1}{2} (x_i - \mu)^T \Sigma\inv (x_i - \mu)  \\
+ &  = - \sum_{i = 1}^n \log \left( (2\pi)^{n/2} \right)
+                        + \frac{1}{2} \log\left( \det \Sigma \right)
+                        + \frac{1}{2} (x_i - \mu)^T \Sigma\inv (x_i - \mu).
+\end{align*}
+Since $g$ is concave and each $h_i$ is convex, $\ell(\mu,\Sigma)$ is generally
+neither convex nor concave.  \qed
+
+\item Setting the derivatives in part 2 to $0$ and solving for $\mu$ and
+$\Sigma$ gives
+\[\mu_{mle} = \frac{1}{n} \sum_{i = 1}^n x_i
+    \quad \mbox{ and } \quad
+    \Sigma_{mle} = \frac{1}{n} \sum_{i = 1}^n (x_i - \mu) (x_i - \mu)^T
+.\]
+Plugging these into the $\mathcal{N}(x;\mu,\Sigma)$ gives the MLE estimate of
+the Gaussian.
+
+\end{enumerate}
+
+{\bf Part B [10 points]}
+Didn't have time to finish this part.
+\end{document}

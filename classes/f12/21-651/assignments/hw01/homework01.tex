@@ -1,0 +1,428 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, September 14, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+We show $\mathcal{B}$ is a basis by showing that it fulfills properties (i),
+(ii), and (iii) as given in proposition 21 of the lecture notes.
+
+As corrected, $\emptyset \in \mathcal{B}$.
+Since $\mathbb{R} = (-\infty,1) \cup (-2,2) \cup (1,\infty)$, the sets of
+$\mathcal{B}$ cover $\mathbb{R}$. Thus, it remains only to show that
+$\mathcal{B}$ satisfies property (iii).
+
+Let
+\begin{align*}
+\mathcal{B}_1 = \{(x - r,x + r) : x \in \mathbb{R}\sminus\{0\},
+                                                              r \in (0,|x|)\},
+\mathcal{B}_2 = \{(-\infty,-a) \cup (-r,r) \cup (a,\infty) :
+                                                         r,a \in (0,\infty)\},
+\end{align*}
+so that $\mathcal{B} = \mathcal{B_1} \cup \mathcal{B_2}$.
+
+For
+\[B_1 = (x_1 - r_1,x_1 + r_1),B_2 = (x_2 - r_2,x_2 + r_2) \in \mathcal{B}_1,\]
+if
+$a = \max\{x_1 - r_1,x_2 - r_2\}$ and $b = \min\{x_1 + r_1,x_2 + r_2\}$,
+then, for $x = \frac{a + b}{2} \neq 0$, $r = x - a$,
+$B_1 \cap B_2 = (x - r,x + r) \in B_1$. Thus, property (iii) is clearly
+fulfilled in this case.
+
+For 
+\[B_1 = (-\infty,-a_1) \cup (-r_1,r_1) \cup (a_1,\infty),
+  B_2 = (-\infty,-a_2) \cup (-r_2,r_2) \cup (a_2,\infty) \in \mathcal{B}_2,\]
+if $a = \max(a_1,a_2)$ and $r = \min(r_1,r_2)$, then,
+$B_1 \cap B_2 = (-\infty,a) \cup (-r,r) \cup (a,\infty) \in \mathcal{B}_2$.
+Thus, property (iii) is clearly fulfilled in this case as well.
+
+Finally, suppose
+\[B_1 = (x_1 - r_1,x_1 + r_1) \in \mathcal{B}_1,
+  B_2 = (-\infty,-a) \cup (-r,r) \cup (a,\infty) \in \mathcal{B}_2.\]
+Then, for
+\[B_3 = (x_1 - r_1,-a) \cup (\max(x_1 - r_1,-r),\min(x_1 + r_1,r)) \cup (a,x_1 + r_1),\]
+(where, if $y \leq x$, $(x,y) = \emptyset$).
+$B_3 = B_1 \cap B_3$, and  $B_3$ is the union of (at most $3$) basis sets in
+$\mathcal{B}$, so that property (iii) is fulfilled in all cases. \qed
+
+Clearly, any set $B \in \mathcal{B}$ can be written as a union of open
+intervals, so that $\tau$ is no finer than the standard topology.
+iFurthermore, if $0 \in B \in \mathcal{B}$, then $B$ is unbounded, so that
+$(-1,1)$ is not the union of sets in $\mathcal{B}$, and thus $\tau$ is
+strictly coarser than the standard topology.
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item Suppose that $U_i \in \tau$, for all $i$ in some index set $I$. If
+$x \in U := \bigcup_{i \in I} U_i$, then $x \in U_i$ for some $i \in I$, so
+that,in any given direction $U_i$ contains an open segment $S$ through $x$.
+Then, $S \subseteq U$, so that $U \in \tau$.
+
+Suppose that $U_1,U_2,\ldots,U_k \in \tau$, for some $k \in \mathbb{N}$. If
+$x \in U := \bigcap_{i = 1}^k U_k$, then, for each $i$, $x \in U_i$, so that,
+in any given direction $D$, there is an open segment $S_i \subseteq U_i$
+through $x$. Since the finite intersection of open segments in the same
+direction is an open segment, for $S := \bigcap_{i = 1}^k S_i$, $S$ is an open
+segment through $x$ in direction $D$, with $S \subseteq U$. Thus,
+$U \in \tau$.
+
+Since, trivially, $\emptyset,\mathbb{R} \in \tau$, and since $\tau$ is closed
+under arbitrary unions and finite intersections, $\tau$ is a topology on
+$\mathbb{R}^2$. \qed
+
+Since any open set $U$ in the standard topology contains a ball of some radius
+$\delta > 0$ around $x$, so that $U$ contains open the segments of length
+$\delta$ through $x$ in every direction, every set that is open in the
+standard topology is radially open.
+
+On the other hand, suppose $U = B((0,0),1) \sminus S \subseteq \R^2$, where
+\[S = \{(x,y) : x > 0, x^2 = y\}.\]
+Then, $U$ is not open (any open ball around $(0,0)$ contains points in $S$),
+but $U$ is radially open, since, in no direction $D$, are there points in $S$
+arbitrarily close to $(0,0)$ (indeed, no open segment through $(0,0)$
+contains more that $1$ point in $S$).
+
+Thus, the topology of radially open sets is strictly stronger than the
+standard topology. \qed
+
+If $L \subseteq \R^2$ is a line, then, since every set that is open under the
+standard topology is open under $\tau$, every open segment $S \subseteq L$ is
+in the topology $\tau_L$ induced on $L$. Furthermore, if $U \in \tau$, then
+$\forall x \in U \cap L$, $U$ contains an open segment through $x$ in $L$, so
+that $\tau_L$ contains only open ``intervals'' in $L$. $\tau_L$ is then
+homeomorphic to the standard topology on $\mathbb{R}$, where a homeomorphism
+is the composition of rotations and translations which maps $L$ to the line
+$y = 0$. \qed
+
+If $C \subseteq \R^2$ is a (nondegenerate) circle, then, $\forall x \in C$, if
+$U_x = (U) \sminus C) \cup \{x\}$ (where $U$ is any open set (under the
+standard topology) containing $x$), then $U_x$ is radially open and
+$U_x \cap C = \{x\}$. Therefore, if $\tau_C$ is the topology induced on $C$ by
+$\tau$, then, $\forall x \in C$, $\{x\} \in \tau_C$. Thus, $\tau_C$ is the
+discrete topology on the circle. \qed
+
+\item If $C$ is the unit circle centered at the origin, then, as explained in
+part (a), the topology $\tau_C$ induced on $C$ is the discrete topology on
+$C$. Furthermore, $C$ is uncountable (the function
+$(x,y) \in C\sminus\{(0,\pm 1)\} \mapsto \tan(y/x)$ is a surjection from a
+subset of $C$ to $\R$), and $C$ is closed (since the Euclidean norm is a
+continuous function, any sequence of points in $C$ converges to a point in
+$C$, and in $\R^2$, all sequentially closed sets are closed). Thus, $C$ has
+the desired properties. \qed
+
+Since $C$ is discrete, any base of $(C,\tau_C)$ must be countable. For suppose
+$\R^2,\tau)$ had a countable base $\mathcal{B}$, then, $\forall x \in C$,
+$\exists B_x \in \mathcal{B}$ such that $B_x \cap C = \{x\}$. Then, however,
+$x \mapsto B_x$ is an injection, implying $C$ is countable, a contradiction.
+Thus, $(\R,\tau)$ is no second countable. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(i)]
+\item By definition of the closure and some basic set arithmetic,
+\[\overline{E}\sminus E^{\circ}
+ = (X\sminus((X\sminus E)^{\circ}))\sminus E^{\circ}
+ = X\sminus((X\sminus E)^{\circ} \cup E^{\circ}),
+\]
+so that $\overline{E}\sminus E^{\circ}$ is the set of points in neither
+$E^{\circ}$ nor $(X \sminus E)^{\circ}$.
+
+Suppose $x \in \partial E$. Then, $\not\exists U \in \tau$ with $x \in U$
+such that $U \cap (X \sminus E) = U \sminus E = \emptyset$, and
+$\not \exists U \in \tau$ with $x \in U$ such that $U \cap E = \emptyset$.
+Therefore, $x \not \in E^{\circ}$ and $x \not \in (X \sminus E)^{\circ}$, so
+that $x \in \overline{E}\sminus E^{\circ}$.
+
+Suppose, on the other hand, that $x \in \overline{E}\sminus E^{\circ}$. Then,
+$x \not \in E^{\circ}$ and $x \not \in (X \sminus E)^{\circ}$, so that, if
+$x \in U \in \tau$, then $U \sminus E = U \cap (X \sminus E) \neq \emptyset$
+and $U \cap E \neq \emptyset$. Therefore, $x \in \partial E$. \qed
+
+
+\item Since $E$ is arbitrary and $X \sminus (X \sminus E) = E$, it suffices to
+show that $\partial E \subseteq \partial(X \sminus E)$, as, then,
+$\partial(X \sminus E) \subset \partial(X \sminus (X \sminus E)) = \partial E$.
+Suppose $x \in \partial E$, and suppose $U \in \tau$ with $x \in U$. Since
+$x \in \partial E$,
+\begin{eqnarray*}
+U \cap (X \sminus E)    = U \sminus E \neq \emptyset
+& \quad \mbox{and} \quad &
+U \sminus (X \sminus E) = U \cap E \neq \emptyset,
+\end{eqnarray*}
+so that, since $U$ is arbitrary, $x \in \partial (X \sminus E)$. \qed
+
+\item It is sufficient to show that
+$\partial(A \cup E) \subseteq \partial E \cup \partial A$ and
+$\partial(A \cap E) \subseteq \partial E \cup \partial A$.
+
+Suppose $x \not\in \partial A \cup \partial E$. Then, there exist sets $U_E$
+and $U_A$ with $x \in U_A,U_E$ such that $U_A \cap A = \emptyset$ or
+$U_A \sminus A = \emptyset$, and $U_E \cap E = \emptyset$ or
+$U_E \sminus E = \emptyset$.
+
+If $U_A \sminus A = \emptyset$ or $U_E \sminus E = \emptyset$, then
+$U_A \sminus (A \cup E) = \emptyset$ or $U_E \sminus (A \cup E) = \emptyset$,
+so that $x \not \in \partial (A \cup E)$. Otherwise, $U_A \cap A = \emptyset$
+and $U_E \cap E = \emptyset$, so that, for
+$U = U_A \cap U_E$, $U \cap (A \cup E) = \emptyset$. Thus,
+$x \not\in \partial(A \cup E)$, so that
+$\partial (A \cup E) \subseteq \partial A \cup \partial E$.
+
+Suppose $x \in \partial(A \cap E)$. Then, for $U \subseteq A \cap E$ with
+$x \in U$,
+\[U \cap A,U \cap E \supseteq U \cap (A \cap E) \neq \emptyset,\]
+and
+\[(U \sminus A) \cup (U \sminus E) = U \sminus(A \cap E) \neq \emptyset,\]
+so that $x \in \partial E$ or $x \in \partial A$, and thus
+$\partial(A \cap E) \subseteq \partial E \cup \partial A$. \qed
+
+Suppose $A = (0,1]$ and $E = (1,2)$ under the standard topology on
+$\mathbb{R}$. Then, $1 \in \partial A \cup \partial E$. However, since
+$A \cup E = (0,2)$ and $A \cap E = \emptyset$,
+$1 \not \in \partial(A \cup E) \cup \partial(A \cap E)$. Thus, equality does
+not hold in general. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+It suffices to show that $d(x,y) = 0$ if and only if $x = y$, that $d$ is
+symmetric in its arguments, and that $d$ obeys the triangle inequality.
+
+Since each $d_i$ is a metric, $\forall x \in X$, $d_i(x_i,x_i) = 0$, so that
+$(d_1(x_1,x_1),d_2(x_2,x_2),\ldots,d_N(x_N,x_N)) = \bzero$. Thus, by property
+(i) of $\Phi$, $d(x,x) = 0$.
+Also since each $d_i$ is a metric, $\forall x,y \in X$ ($x \neq y$), since
+some $x_i \neq y_i$, $d_i(x_i,y_i) \neq 0$, so that
+$(d_1(x_1,x_1),d_2(x_2,x_2),\ldots,d_N(x_N,x_N)) \neq \bzero$. Thus, by
+property i) of $\Phi$, $d(x,x) \neq 0$.
+
+Since each $d_i$ is a metric, it is symmetric in its arguments. Thus,
+$\forall x,y \in X$,
+\begin{align*}
+d(x,y)
+ & = \Phi(d_1(x_1,y_1),d_2(x_2,y_2),\ldots,d_N(x_N,y_N)) \\
+ & = \Phi(d_1(y_1,x_1),d_2(y_2,x_2),\ldots,d_N(y_N,x_N))
+ = d(y,x),
+\end{align*}
+so that $d$ is symmetric in its arguments.
+
+Suppose $x,y,z \in X$. Since each $d_i$ is a metric,
+$d_i(x_i,z_i) \leq d_i(x_i,y_i) + d(y_i,z_i)$.
+Since $\Phi$ is nondecreasing in each of its variables,
+\begin{align*}
+d(x,z)
+ & =    \Phi(d_1(x_1,z_1),d_2(x_2,z_2),\ldots,d_N(x_N,z_N)) \\
+ & \leq \Phi(d_1(x_1,y_1) + d_1(y_1,z_1),
+          d_2(x_2,y_2) + d_2(y_2,z_2),
+          \ldots,
+          d_n(x_N,y_N) + d_n(y_N,z_N)).
+\end{align*}
+Then, since $\Phi$ is subadditive,
+\begin{align*}
+d(x,z)
+ & \leq \Phi(d_1(x_1,y_1),d_2(x_2,y_2),\ldots,d_N(x_N,y_N))     \\
+ & +    \Phi(d_1(y_1,z_1),d_2(y_2,z_2),\ldots,d_N(y_N,z_N))
+ =    d(x,y) + d(y,z),
+\end{align*}
+so that $d$ obeys the triangle inequality.
+Thus, $d$ is a metric, so that $(X,d)$ is a metric space. \qed
+
+Suppose $\Phi: [0,\infty)^N \rightarrow [0,\infty)$ is the function
+\[(x_1,x_2,\ldots,x_N) \mapsto \sqrt{x_1^2 + x_2^2 + \ldots + x_N^2}.\]
+Since, $\forall x_i \in [0,\infty)$, $x_i^2 \geq 0$ and $x_i^2 = 0$ if and
+only if $x_i = 0$, $\Phi(x) = 0$ if and only if $x = \bzero$. Since $\Phi$ can
+be written as the sum and composition of nondecreasing functions, $\Phi$ is
+nondecreasing.
+
+Suppose $\Phi: [0,\infty)^N \rightarrow [0,\infty)$ is the function
+\[(x_1,x_2,\ldots,x_N) \mapsto x_1 + x_2 + \ldots + x_N.\]
+Since, $\forall x_i \in [0,\infty)$, $x_i \geq 0$, $\Phi(x) = 0$ if and only
+if $x = \bzero$. Clearly $\Phi$ is nondecreasing. Since $\Phi$ is linear, it
+is additive and thus subadditive.
+
+Suppose $\Phi: [0,\infty)^N \rightarrow [0,\infty)$ is the function
+\[(x_1,x_2,\ldots,x_N) \mapsto \max\{x_1,x_2,\ldots,x_N\}.\]
+Clearly, $\forall x_i \in [0,\infty)$, $\Phi(x) \geq x_i \geq 0$ and $x_i = 0$
+if and only if $x = \bzero$. Clearly $\Phi$ is nondecreasing and
+$\Phi(x + y) \leq \Phi(x) + \Phi(y)$.
+
+Thus, it follows from the first part of this problem that, for each of the
+above definitions of $d$, $d$ is a metric and thus $(X,d)$ is a metric space.
+\qed
+\end{question}
+
+\begin{question}{Problem 5}
+Clearly, if $U = V  \in X$, $d_H(U,V) = 0$, and clearly $d_H(U,V)$ is
+symmetric in $U$ and $V$. Since $d_A$ is a metric, if $U \subseteq V$, then
+$\sup_{x \in U} \inf_{y \in V} d_A(x,y) = 0$, and, if $V \subseteq U$, then
+$\sup_{y \in V} \inf_{x \in u} d_A(x,y) = 0$, so that, $d_H(U,U) = 0$. Thus,
+it remains only to show that $d_H$ obeys the triangle inequality.
+
+Note that, since $(A,d_A)$ is bounded and $\emptyset \not\in X$, all of the
+below suprema and infima are finite.
+
+Let $U,V,W \in X$. Since $d_A$ is a metric,
+$\forall x \in U, y \in V, z \in W$,
+$d_A(x,z) \leq d_A(x,y) + d_A(y,z)$.\\
+Taking the infimum over $z \in W$ gives
+\begin{align*}
+\inf_{z \in W} d_A(x,z)
+ & \leq \inf_{z \in W} \left(d_A(x,y) + d_A(y,z)\right)                      \\
+ & \leq d_A(x,y) + \inf_{z \in W} d_A(y,z).
+\end{align*}
+Taking the infimum over $y \in V$ gives
+\begin{align*}
+\inf_{z \in W} d_A(x,z)
+  =    \inf_{y \in V} \inf_{z \in W} d_A(x,z)                              
+ & \leq d_A(x,y) + \inf_{z \in W} d_A(y,z)                                   \\
+ & \leq \inf_{y \in V} \left(d_A(x,y) + \inf_{z \in W} d_A(y,z)\right)       \\
+ & \leq \inf_{y \in V} d_A(x,y) + \sup_{y \in V} \inf_{z \in W} d_A(y,z).
+\end{align*}
+Then, taking the supremum over $x \in U$,
+\begin{align*}
+\sup_{x \in W} \inf_{z \in W} d_A(x,z)
+ & \leq \sup_{x \in W} \left(d_A(x,y) + \sup_{y \in V} \inf_{z \in W} d_A(y,z)\right)       \\
+ & \leq \sup_{x \in W} d_A(x,y) + \sup_{y \in V} \inf_{z \in W} d_A(y,z).
+\end{align*}
+Since $\sup_{x \in U} \inf_{y \in V} d(x,y)$ is symmetric in $U$ and $V$, this
+implies that
+\[d_H(U,W) \leq d_H(U,V) + d_H(V,W),\]
+so that $d_H$ obeys the triangle inequality. Therefore, $d_H$ is a
+pseudometric. \qed
+
+Suppose $A = [0,1]$. Then, if $V = [0,1],U = [0,1)$, $V \neq U$, but
+$d_H(U,V) = 0$ Thus, $d_H$ is not always a metric.
+\end{question}
+
+\begin{question}{Problem 6}
+As shown in problem 5, $d_H$ is symmetric in its arguments.
+For every metric $d_1$ on $X \sqcup Y$, there exists another metric $d_2$ on
+$Y \sqcup X$ such that $d_1(x,y) = d_2(y,x)$. Thus, the term
+$\sup_{d \in \mathcal{C}}$ is symmetric in $(X,d_X)$ and $(Y,d_Y)$, and thus
+$D$ is symmetric in $(X,d_X)$ and $(Y,d_Y)$.
+
+Since, for any metric $d$ over $x \sqcup Y$, $d(x,x) = 0$i,
+for any $d \in \mathcal{C}$, $d_H(U \times \{1\},U \times \{2\}) = 0$.
+Therefore, $D(X \times \{1\},X \times \{1\}) = 0$. Thus, it remains only to
+show that $D$ obeys the triangle inequality.
+
+For any metric $d \in \mathcal{C}$, as shown in problem 5, $d_H$ obeys the
+triangle inequality, so that
+\begin{align*}
+d_H(X \times \{1\},Z \times \{2\})
+ & \leq d_H(X \times \{1\},Y \times \{2\})
+   +    d_H(Y \times \{2\},Z \times \{2\}) \\
+ & \leq d_H(X \times \{1\},Y \times \{2\})
+   +    d_H(Y \times \{1\},Z \times \{2\}).
+\end{align*}
+Taking the infimum on both sides gives
+\[\inf_{d \in \mathcal{C}} d_H(X \times \{1\},Z \times \{2\})
+ \leq \inf_{d \in \mathcal{C}} d_H(X \times \{1\},Y \times \{2\})
+ +    \inf_{d \in \mathcal{C}} d_H(Y \times \{1\},Z \times \{2\}),
+\]
+so that 
+\[D((X,d_X),(Z,d_Z)) \leq D((X,d_X),(Y,d_Y)) + D((Y,d_Y),(Z,d_Z)). \mqed\]
+\end{question}
+
+\begin{question}{Problem 7} For notational convenience, $\forall n \in \N$,
+$f,g \in C((0,1))$, let $F_n(f,g) = \max_{x \in K_n} |f(x) - g(x)|,$ so that
+\[d(f,g) = \max_{n \in \N} \frac{1}{2^n} \frac{F_n(f,g)}{1 + F_n(f,g)}.\]
+Note that, $\forall n \in \N$, $F_n$ is everywhere non-negative, and that it
+obeys the triangle inequality.
+
+Since, $\forall f,g \in C((0,1))$, $\forall x \in (0,1)$,
+$|f(x) - g(x)| = |g(x) - f(x)|$, $d$ is symmetric.
+
+If $f = g$, then, clearly, $\forall n \in \N$,
+$F_n(f,g) = 0$, so that $d(f,g) = 0$. If,
+$f \neq g$, then $|f(x) - g(x)| > 0$ for some $x \in (0,1)$. Since
+$\bigcup_{i = 1}^{\infty} K_i = (0,1)$, $x \in K_i$ for some $i$, so that
+\[d(f,g)
+ = \max_n \frac{1}{2^n} \frac{F_n(f,g)}
+                            {1 + F_n(f,g)}
+ \geq \frac{1}{2^i} \frac{F_i(f,g)}
+                         {1 + F_i(f,g)}
+ \geq F_i(f,g) > 0.
+\]
+
+Thus, it remains only to show that $d$ obeys the triangle inequality.
+Note first that, $\forall x \in [0,\infty)$, if $x \leq y$, then
+\[\frac{x}{1 + x} \leq \frac{y}{1 + y}.\]
+Thus, $\forall f,g,h \in C((0,1)), \forall n \in \N$,
+since,
+\[F_n(f,g) + F_n(g,h) + F_n(f,g)F_n(g,h)
+ \geq F_n(f,g) + F_n(g,h)
+ \geq F_n(f,h)\]
+(because $F_n$ is nonnegative and obeys the triangle inequality),
+\begin{align*}
+\frac{F_n(f,g)}{1 + F_n(f,g)} + \frac{F_n(g,h)}{1 + F_n(g,h)}
+ & =     \frac{F_n(f,g) + F_n(g,h) + 2F_n(f,g)F_n(g,h)}
+           {1 + F_n(f,g) + F_n(g,h) + F_n(f,g)F_n(g,h)} \\
+ & \geq  \frac{F_n(f,g) + F_n(g,h) + F_n(f,g)F_n(g,h)}
+           {1 + F_n(f,g) + F_n(g,h) + F_n(f,g)F_n(g,h)} \\
+ & \geq  \frac{F_n(f,h)}
+           {1 + F_n(f,h)}.
+\end{align*}
+
+Dividing by $2^n$ and taking the $\max$ over all $n \in \N$ gives
+\[d(f,g) + d(g,h) \geq d(f,h). \mqed\]
+\end{question}
+\end{document}

@@ -1,0 +1,15 @@
+\section{Mastery set [25 points] (Aaditya)}
+
+\paragraph{A1 [2]}
+
+\paragraph{A2 [3]}
+
+\paragraph{B1 [2+2]}
+
+\paragraph{B2 [2+2]}
+
+\paragraph{B3 [2]}
+
+\paragraph{C [2+3]}
+
+\paragraph{D [3+2]}

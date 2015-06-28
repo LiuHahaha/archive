@@ -1,0 +1,286 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+\usepackage{amsmath,amsfonts,graphicx}
+
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+\newcommand{\lecture}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#1}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf 15-859: Information Theory and Applications in TCS
+		\hfill Carnegie Mellon University} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill Lecture #1: #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\hfill April 11, 2013 \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it Lecturer: #3 \hfill Scribe: #4} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Lecture #1: #2}{Lecture #1: #2}
+}
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure #1:~#3
+			\end{center}
+	}
+
+\newcounter{tnum}
+\newtheorem{theorem}{Theorem}[tnum]
+\newtheorem{lemma}[tnum]{Lemma}
+\newtheorem{proposition}[tnum]{Proposition}
+\newtheorem{claim}[tnum]{Claim}
+\newtheorem{corollary}[tnum]{Corollary}
+\newtheorem{definition}[tnum]{Definition}
+\newtheorem{remark}[tnum]{Remark}
+\newtheorem{example}[tnum]{Example}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+
+\newcommand\ul{\underline}
+\newcommand\inv{^{-1}}
+\newcommand\pow[1]{\mathcal{P} \left( #1 \right)}
+\newcommand\pr{\operatornamewithlimits{\mathsf{P}}}
+\newcommand\E{\operatornamewithlimits{\mathbb{E}}}
+\newcommand\disj{\operatorname{DISJ}}
+\newcommand\nand{\operatorname{NAND}}
+\newcommand\supp{\operatorname{supp}}
+\newcommand\Hel{\operatorname{Hel}}
+
+\begin{document}
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{21}{Set Disjointness lower bound via product distribution}
+        {Venkatesan Guruswami}{Shashank Singh}
+%\footnotetext{These notes are partially based on those of Nigel Mansell.}
+\vspace{-0.2in}
+\section{Recap}
+\begin{itemize}
+\item Showed $R(IP) = \theta(n)$ using the Discrepancy Method
+\item Indexing Problem: showed Alice must sent $\geq \Omega(n)$ bits using
+Information Theory
+\end{itemize}
+
+\vspace{-0.3in}
+\section{Set Disjointness lower bound via product distribution}
+\vspace{-0.1in}
+Today we lower bound $R(\disj)$, where
+\[\disj(x,y) = \bigwedge_{i = 1}^n \nand(x_i,y_i).\]
+\vspace{-0.4in}
+\subsection{Preliminary Observations}
+Our goal is choose $\mu$ such that $D^\mu_{1/100}(\disj)$ is large. Notice that
+if, for example, $\mu$ is uniform, then $p(\disj(x,y)) = (3/4)^n$, and so Alice
+and Bob can correctly guess ``not disjoint'' with high probability.
+
+Thus, $\mu$ should be ``balanced'' in the sense that
+\[\mu(\disj\inv(0)), \mu(\disj\inv(1)) = \Omega(1).\]
+
+\begin{remark}
+Consider $\mu$ with $x_1,\dots,x_n,y_1,\dots,y_n \sim$
+i.i.d. Bernoulli$(1/\sqrt n)$. This $\mu$ is ``balanced'', since
+\[\lim_{n \to \infty} \pr(\disj(x,y))
+    = \lim_{n \to \infty} (1 - \pr(x_i \wedge y_i))^n
+    = \lim_{n \to \infty} \left( 1 - \frac1n \right)^n
+    = 1/e.
+\]
+\end{remark}
+\vspace{-0.1in}
+\begin{proposition}
+(Babai, Frankl, Simon, 1986)
+Consider $\mu$ with $x_1,\dots,x_n,y_1,\dots,y_n \sim$
+i.i.d. Bernoulli$(1/\sqrt n)$. Then, $D^\mu_{1/100}(\disj) = \Omega(\sqrt n)$
+(in fact, $D^\mu_{1/100}(\disj) = \Theta(\sqrt n)$).
+\label{BFS}
+\end{proposition}
+\vspace{-0.2in}
+\begin{corollary}
+$R(\disj) \geq \Omega(\sqrt n)$.
+\end{corollary}
+\vspace{-0.2in}
+\subsection{Proof of Proposition \ref{BFS}}
+\vspace{-0.1in}
+Suppose $\Pi_0$ is a deterministic protocol such that
+\[\pr_{(x,y) \sim \mu}
+    \left( \disj(x,y) = \Pi_0(x,y) \right)
+    \geq 0.99.
+\]
+Let the random variable $\Pi$ denote the transcript (log of bits sent) of
+$\Pi_0$ on $(x,y) \sim \mu$. We know
+\begin{align*}
+CC(\Pi_0)
+ & \geq \log_2 \big| \supp (\Pi) \big|             \\
+ & \geq H(\Pi(X,Y)) = I(X,Y \, ; \, \Pi)           \\
+ & =    I(x_1,\dots,x_n,y_1,\dots,y_n \, ; \, \Pi) \\
+ & \geq \sum_{i = 1}^n I(x_i,y_i \, ; \, \Pi).
+\end{align*}
+\begin{definition}
+\normalfont
+\[\Pi_{a,b}^i
+    \buildrel\triangle\over = \Pi
+        \mbox{ conditioned on } x_i = a, y_i = b.
+\]
+\end{definition}
+In Problem 6 of Problem Set 1, we showed
+\[I(x_i,y_i \, ; \, \Pi)
+    \geq \E_{(a,b)\sim (\operatorname{Ber}(1/\sqrt n))^2}
+    \left[ \Delta_{TV}^2 \left( \Pi_{a,b}^i, \Pi \right) \right],
+\]
+where
+\[\Delta_{TV}(A,B)
+    \buildrel\triangle\over = \frac12
+        \sum_\ell \big| \pr(A = \ell) - \pr(B = \ell) \big|.
+\]
+Thus, noting
+$\frac1{\sqrt n}\left( 1 - \frac1{\sqrt n} \right) \geq \frac{1}{2\sqrt n}$,
+\begin{align*}
+I(x_i,y_i \, ; \, \Pi)
+ & \geq \frac1{\sqrt n}\left( 1 - \frac1{\sqrt n} \right)
+    \left[ \Delta_{TV}^2 \left( \Pi^i_{1,0}, \Pi \right)
+            + \Delta_{TV}^2 \left( \Pi^i_{0,1}, \Pi \right) \right] \\
+ & \geq \frac1{4 \sqrt n}
+    \left[ \Delta_{TV} \left( \Pi^i_{1,0}, \Pi \right)
+            + \Delta_{TV} \left( \Pi^i_{0,1}, \Pi \right) \right]^2 \\
+ & \geq \frac1{4 \sqrt n}
+    \left[ \Delta_{TV} \left( \Pi^i_{1,0}, \Pi^i_{0,1} \right) \right]^2,
+\end{align*}
+where the last inequality is by the Triangle Inequality, since $\Delta_{TV}$ is
+a metric. Thus, we've shown so far that
+\begin{align*}
+CC(\Pi_0)
+ & \geq n\E_i \left[ I(x_i,y_i ; \Pi) \right]   \\
+ & \geq \frac{n}{4\sqrt n} \E_i
+        \left[ \Delta_{TV}^2 \left( \Pi_{1,0}^i, \Pi_{0,1}^i \right) \right] \\
+ & \geq \frac{\sqrt n}{4} \E_i
+        \left[ \Delta_{TV} \left( \Pi_{1,0}^i, \Pi_{0,1}^i \right) \right]^2.
+\end{align*}
+Now, it suffices to show that
+\[ \E_i \left[ \Delta_{TV} \left( \Pi_{1,0}^i, \Pi_{0,1}^i \right) \right]^2
+    \geq \Omega(1).\]
+We break the proof of this into two lemmas:
+\begin{lemma}
+Since $\Pi_0$ computes $\disj$ with high accuracy,
+\[\E_i \left[ \Delta_{TV} \left( \Pi_{0,0}^i, \Pi_{1,1}^i \right) \right]
+    = \Omega(1).\]
+\label{ACC}
+\end{lemma}
+\vspace{-0.5in}
+\begin{lemma}
+If $\Delta_{TV} \left( \Pi_{0,0}^i, \Pi_{1,1}^i \right) \geq \Omega(1)$,
+then
+$\Delta_{TV} \left( \Pi_{0,1}^i, \Pi_{1,0}^i \right) \geq \Omega(1)$.
+\label{RP}
+\end{lemma}
+\begin{proof}
+(of Lemma \ref{ACC})
+Since $\pr\left( \disj(X,Y) = 1 \, | \, X_i = Y_i = 0 \right) \geq 1/4$,
+\[\pr \left( \Pi_0(\Pi_{0,0}^i) = 1 \right) \geq 1/5,\]
+where $\Pi_0(\Pi_{0,0}^i)$ is the output of $\Pi_0$ given the transcript
+$\Pi_{0,0}^i$. Since $X_i = Y_i = 1 \Rightarrow \disj(X,Y) = 0$,
+\[\pr \left( \Pi_0(\Pi_{1,1}^i) = 1 \right) \leq 1/6.\]
+Thus, \[\Delta_{TV} (\Pi_{0,0}^i, \Pi_{1,1}^i) \geq 1/5 - 1/6 = 1/30.\]
+Hence, $\Pi_0$ is, on average, a good distinguisher of $\Pi_{0,0}^i$ and
+$\Pi_{1,1}^i$.
+\end{proof}
+\newpage
+\begin{proof}
+(of Lemma \ref{RP}) We make use of the Hellinger distance:
+\begin{definition}
+The Hellinger distance between two random variables $A$ and $B$ is
+\[\Delta_{\Hel}
+    \buildrel\triangle\over =
+        \sqrt{1 - \sum_\ell \sqrt{\pr(A = \ell) \pr(B = \ell)}}
+    = \sqrt{1 - Z(A,B)},
+\]
+where $Z(A,B)$ denotes the Bhattacharya coefficient.
+\end{definition}
+{\bf Exercise} Use Cauchy-Schwarz to show
+\[\Delta^2_{\Hel}(A,B) \leq \Delta_{TV}(A,B) \leq \sqrt2\Delta_{\Hel}(A,B).\]
+By this Exercise, it suffices to show that
+\[
+\Delta_{\Hel}^2(\Pi_{0,0}^i,\Pi_{1,1}^i)
+ = \Delta_{\Hel}^2(\Pi_{0,0}^i,\Pi_{1,1}^i),
+\]
+and hence it suffices to show, for each $i$,
+\[\pr \left( \Pi_{0,0}^i = \tau \right) \pr \left( \Pi_{1,1}^i = \tau \right)
+  = \pr \left( \Pi_{0,1}^i = \tau \right) \pr \left( \Pi_{1,0}^i = \tau \right)
+.\]
+Fix $i$ and recall the following Rectangle Property:
+\vspace{-0.1in}
+\begin{itemize}
+\item  \emph{Inputs $X^{-i} := (X_1, \dots, X_{i - 1}, X_{i + 1}, X_n),
+Y^{-i} := (Y_1, \dots, Y_{i - 1}, Y_{i + 1}, Y_n)$ leading to a transcript
+$\tau$ form a rectangle $R_\tau = S_\tau \times T_\tau$. Since $X \perp Y$,}
+\begin{align*}
+\pr \left( \Pi_{a,b}^i = \tau \right)
+    = \pr\left( X^{-i} \in S_\tau \wedge Y^{-i} \in T_\tau \right)
+    = \pr\left( X^{-i} \in S_\tau \right) \pr \left( Y^{-i} \in T_\tau \right)
+    = A_a(\tau)B_b(\tau).
+\end{align*}
+\end{itemize}
+\vspace{-0.1in}
+Importantly, $\pr \left( \Pi_{a,b}^i = \tau \right)$ factors into non-negative
+functions $A_0,A_1,B_0,B_1$. Thus,
+\begin{align*}
+\pr \left( \Pi_{0,0}^i = \tau \right)
+    \pr \left( \Pi_{1,1}^i = \tau \right)
+ & = A_0(\tau)B_0(\tau)A_1(\tau)B_1(\tau)   \\
+ & = A_0(\tau)B_1(\tau)A_1(\tau)B_0(\tau)   \\
+ & = \pr \left( \Pi_{0,1}^i = \tau \right)
+        \pr \left( \Pi_{1,0}^i = \tau \right).
+\end{align*}
+\end{proof}
+
+\begin{remark}
+Babai, Frankl, and Simon (1986) also showed that, for any $\mu$ which can be
+factored as a product distribution (meaning
+$\mu(x,y) = \mu_{A}(x) \cdot \mu_B(y)$),
+\[D^\mu(\disj) = O(\sqrt n \log n).\]
+Thus, getting a substantially better lower bound requires adding correlation
+between $X$ and $Y$.
+\end{remark}
+\vspace{-0.2in}
+\section{Next Time}
+Next time, we will show $R(\disj) = \Omega(n)$.
+\begin{itemize}
+\item This result was first shown by Kalyanasundaram and Schnitger (1987).
+\item Razborov (1990) ``simplified'' the proof.
+\item We'll see an Information Theory based proof by Bar-Yossef, Jayram,
+Kumar, Sivakumar (2004).
+\end{itemize}
+\end{document}

@@ -1,0 +1,338 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-470 Calculus of Variations}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Monday, March 3, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+\renewcommand{\Re}{\operatorname{Re}}   % real part of a complex number
+\newcommand{\tT}{\widetilde{T}}         % for P3
+\newcommand{\A}{\mathcal{A}}            % for P3
+\renewcommand{\S}{\mathscr{S}}          % constraint set
+\newcommand{\X}{\mathscr{X}}            % entire linear space
+\newcommand{\Y}{\mathscr{Y}}            % domain of objective functional
+\newcommand{\V}{\mathscr{V}}            % set of admissible variations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+Suppose $y$ minimizes $J$ on $\Y$. Define $C := \int_0^1 y(x) \, dx$ and
+$\V := \{v \in C^1[0,1] : v(0) = v(1) = 0\}$. Then, for any $v \in \V$,
+\begin{align*}
+0
+    = \delta J(y,v)
+ &  = \int_0^1 f_{,3}(x,y(x),y'(x))v'(x) + \frac{d}{d\e} \bigg|_{\e = 0}
+                            \left( \int_0^1 y(x) + \e v(x) \, dx\right)^2    \\
+ &  = \int_0^1 2y'(x)v'(x) \, dx
+    + 2 \left( \int_0^1 y(x) \, dx \right)\left( \int_0^1 v(x) \, dx \right)
+    = \int_0^1 y'(x)v'(x) + Cv(x) \, dx,
+\end{align*}
+where $f : [0,1] \times \R \times \R \to \R$ is defined by $f(x,y,z) = z^2$
+(since $f_{,2} = 0$). Integrating by parts gives
+\[0 = \int_0^1 (y'(x) - Cx) v'(x) \, dx.\]
+since $v(0) = v(1) = 0$, and it follows by the du Bois-Reymond Lemma that, for
+some $c_1 \in \R$, $y'(x) = Cx + c_1, \forall x \in [0,1]$.
+Hence, there exists $c_0 \in \R$ such that
+\[y(x) = \frac{C}{2} x^2 + c_1 x + c_0, \forall x \in [0,1].\] The boundary
+condition $y(0) = 0$ implies $c_0 = 0$. The conditions
+\[C
+    = \int_0^1 y(x) \, dx
+    = \int_0^1 \frac{C}{2} x^2 + c_1 x \, dx
+    = \frac{C}{6} + \frac{c_1}{2}
+\quad \mbox{ and } \quad
+1
+    = y(1)
+    = \frac{C}{2} + c_1
+\]
+together give $C = \frac{6}{13}, c_1 = \frac{10}{13}$, and so
+\[y(x) = \frac{3}{13} x^2 + \frac{10}{13} x, \quad \forall x \in [0,1].\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item Put $\Y_B := \{y \in \Y : y(b) = B\}$ for any $B \in \R$. Then,
+finding each optimizer $y_B$ of $J$ over $\Y_B$ is simply the basic problem in
+the Calculus of Variations. If we are able to solve this problem using the
+standard machinery, then, optimizing the function $B \mapsto J(y_B)$ is a
+one-dimensional problem, which may again be solved with standard machinery in
+many cases.
+
+\item
+First note that $J$ is unbounded above on $\Y$. For $n \in \N$, defining
+$y_n \in \Y$ by $y_n(x) = nx + 1, \forall x \in [0,1]$, we clearly have
+$J(y_n) \to +\infty$ as $n \to \infty$.
+
+For $f : [0,1] \times \R \times \R \to \R$, defined by
+\[f(x,y,z) := y^2 + z^2 \quad \forall x \in [0,1], y,z \in \R,\]
+$J(y) = \int_0^1 f(x,y(x),y'(x)) \, dx + y(1)^2$, for all $y \in \Y$.
+Since
+\[f_{,2}(x,y,z)
+    = 2y
+\quad \mbox{ and } \quad
+f_{,3}(x,y,z)
+    = 2z, \quad \forall x \in [0,1], y,z \in \R,
+\]
+if $y$ minimizes $J$ on $\Y$, as discussed in part (a), the $1^{st}$
+Euler-Lagrange Equation gives
+\[y(x) = \frac{d}{dx} y'(x) = y''(x), \quad \forall x \in [0,1],\]
+so that $y = c_1 \cosh + c_2 \sinh$ for some $c_1,c_2 \in \R$. Since $y(0) =
+1$, $c_1 = 1$. Hence,
+\begin{align*}
+J(y)
+ &  = \int_0^1 (\cosh(x) + c_2\sinh(x))^2 + (\sinh(x) + c_2\cosh(x))^2
+        \, dx
+    + (\cosh(1) + c_2\sinh(1))^2    \\
+ &  = \frac{1}{2} (c_2^2 + 1)\sinh(2) + c_2(\cosh(2) - 1)
+    + (\cosh(1) + c_2\sinh(1))^2
+\end{align*}
+This is simply a second-order polynomial in $c_2$, with a positive leading
+coefficient, and hence can be minimized by differentiating with respect to
+$c_2$.
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+First note that $J$ is unbounded above on $\S$. For $n \in \N$, define
+$y_n \in \S$ by
+\[y_n(x) := \frac{2}{e - 1} \sin\left( \frac{2\pi n}{e - 1}(x - 1) \right).\]
+Then,
+\[J(y_n)
+    = \int_1^e x^2 y_n'(x)^2 \, dx
+    = \int_1^e x^2 \left( \frac{4\pi n}{(e - 1)^2}
+            \cos\left( \frac{2\pi n}{e - 1}(x - 1) \right) \right)^2 \, dx
+    \to +\infty
+\]
+as $n \to \infty$.
+
+Put $\Y := \{y \in C^1[1,e] : y(1) = y(e) = 0\}$ and $\V := \Y$, and let
+$G : \Y \to \R$ defined by
+\[G(y) = \int_1^e y(x)^2 \, dx, \quad \forall y \in \Y.\]
+Then, for
+$\forall y  \in \Y, v \in \V$,
+\[\delta G(y;v)
+    = \int_1^e 2y(x)v(x) \, dx
+    \quad \mbox{ and } \quad
+  \delta J(y;v)
+    = \int_1^e 2x^2 y'(x)v'(x) \, dx.
+\]
+$\delta G(y;v) = 0$ for all $v \in \V$ only if $y = 0 \notin \S$ and hence,
+if $y$ minimizes $J$ on $\S$, $\exists \lambda \in \R$ such that,
+$\forall v \in \V$,
+\[2\int_1^e x^2y'(x)v'(x) \, dx
+    = J(y;v)
+    = \lambda G(y;v)
+    = 2\lambda\int_1^e y(x)v(x) \, dx
+\]
+Let $Y \in C^2[0,2\pi]$ such that $Y' = y$. Rearranging and integrating by
+parts gives
+\[0
+    = \int_1^e \left( x^2y'(x) + \lambda Y(x) \right) v'(x) \, dx,
+        \quad \forall v \in \V.
+\]
+Hence, by the du Bois-Reymond Lemma,
+$x^2y'(x) + \lambda Y(x)$ is a constant in $x$. Since $x \in [1,e]$, it follows
+that $y' \in C^2[1,e]$, and, differentiating, we have that
+\[x^2y''(x) + 2xy'(x) + \lambda y(x) = 0.\]
+General solutions to this equation are of the form
+\[y(x) = c_1x^{C - 1/2} + c_2 x^{-C - 1/2}, \quad \forall x \in [1,e],\]
+for some $c_1,c_2,C \in \R$ ($C = \sqrt{1 - 4\lambda}$).
+The condition $y(1) = y(e) = 0$ gives
+\begin{align*}
+0 & = c_1 + c_2 \quad \Rightarrow \quad c_2 = -c_1 \\
+0 & = c_1e^{C - 1/2} + c_2e^{-C - 1/2}
+    = c_1 \left( e^{C - 1/2} - e^{-C - 1/2} \right),
+%1 & = \int_1^e \left( c_1x^{C - 1/2} + c_2 x^{-C - 1/2} \right)^2 \, dx
+\end{align*}
+so that either $c_1 = c_2 = 0$ or $C - 1/2 = -C - 1/2$ (since the exponential
+function is injective). In the first case, clearly $y = 0$. In the second
+case, $C = 0$, and hence, again,
+$\forall x \in [1,e]$, $y(x) = (c_1 + c_2)x^{-1/2} = 0$. Then, however,
+$G(y) = 0$, and so $J$ has no minimizer on $\S$.
+\end{question}
+
+\begin{question}{Problem 4}
+First note that $J$ is unbounded above on $\S$. For $n \in \N$, define
+$y_n \in \S$ by $y_n(x) := \sin(nx)$. Then,
+\[J(y_n)
+    = \int_0^{2\pi} y_n'(x)^2 - y_n(x)^2 \, dx
+    = \int_0^{2\pi} n^2\cos^2(nx) - \sin^2(nx) \, dx
+    = (n^2 - 1)\pi
+    \to +\infty
+\]
+as $n \to \infty$. 
+
+Put $\Y := \{y \in C^1[0,2\pi] : y(0) = y(2\pi) = 0\}$ and $\V := \Y$, and let
+$G : \Y \to \R$ defined by
+\[G(y) = \int_0^{2\pi} y(x) \, dx, \quad \forall y \in \Y.\]
+Then, for
+$\forall y  \in \Y, v \in \V$,
+\[\delta G(y;v)
+    = \int_0^{2\pi} v(x) \, dx
+    \quad \mbox{ and } \quad
+  \delta J(y;v)
+    = \int_0^{2\pi} 2y'(x)v'(x) - 2y(x)v(x) \, dx.
+\]
+Since it is not the case that $\delta G(y;v) = 0$ for all $v \in \V$, if $y$
+minimizes $J$ on $\S$, $\exists \lambda \in \R$ such that,
+$\forall v \in \V$,
+\[2\int_0^{2\pi} y'(x)v'(x) - y(x)v(x) \, dx
+    = J(y;v)
+    = \lambda G(y;v)
+    = \lambda\int_0^{2\pi} v(x) \, dx
+\]
+Let $Y \in C^2[0,2\pi]$ such that $Y' = y$. Rearranging and integrating by
+parts gives
+\[0
+    = \int_0^{2\pi} y'(x)v'(x)
+        - \left(y(x) + \frac{\lambda}{2}\right) v(x) \, dx
+    = \int_0^{2\pi} \left( y'(x)
+        + Y(x) + \frac{\lambda}{2}x\right) v'(x) \, dx
+\]
+since $v(0) = v(2\pi) = 0$. Hence, by the du Bois-Reymond Lemma,
+$y'(x) + Y(x) + \frac{\lambda}{2}x$ is a constant in $x$. It follows that
+$y \in C^2[0,2\pi]$ and $y''(x) + y(x) + \frac{\lambda}{2} = 0$,
+$\forall x \in [0,2\pi]$. Solutions to this differential equation are of the
+form
+\[y(x) = c_1 \cos(x) + c_2\sin(x) - \frac{\lambda}{2}\]
+for some $c_1,c_2 \in \R$. The constraint $\int_0^{2\pi} y(x) \, dx = 0$
+implies $\lambda = 0$, and hence the boundary condition $y(0) = 0$ implies
+$c_1 = 0$. Thus, $y$ is any multiple of $\sin$, since
+\[J(y) = c_2^2\int_0^{2\pi} \cos^2(x) - \sin^2(x) \, dx = 0.\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item
+Let $\Y := \{y \in C^1[-1,1] : y(-1) = y(1) = 0\}$ and $\V := \Y$, and let
+$G : \Y \to \R$ defined by
+\[G(y) = \int_{-1}^1 \sqrt{1 + y'(x)^2} \, dx, \quad \forall y \in \Y.\]
+Then, for
+$\forall y  \in \Y, v \in \V$,
+\[\delta G(y;v)
+    = \int_{-1}^1 \frac{y'(x)v'(x)}{\sqrt{1 + y'(x)^2}} \, dx
+    \quad \mbox{ and } \quad
+  \delta J(y;v)
+    = \int_{-1}^1 \sqrt{1 + y'(x)^2}v(x)
+    + \frac{y(x)y'(x)v'(x)}{\sqrt{1 + y'(x)^2}} \, dx.
+\]
+
+If, $\forall v \in \V$, $\delta G(y;v) = 0$, then the du Bois-Reymond Lemma
+gives that $\frac{y'(x)}{\sqrt{1 + y'(x)^2}}$ is constant in $x$. Since this is
+a strictly increasing function of $y'(x)$, $y'(x)$ must be constant in $x$, and
+hence $y$ is an affine function. The boundary conditions then imply that
+$y(x) = 0, \forall x \in [-1,1]$, which breaks the constraint $G(y) = 4$. Thus,
+we have that, if $y$ minimizes $J$ on $\S$, $\exists \lambda \in \R$ such that,
+$\forall v \in \V$,
+\[\int_{-1}^1 \sqrt{1 + y'(x)^2}v(x)
+    + \frac{y(x)y'(x)v'(x)}{\sqrt{1 + y'(x)^2}} \, dx
+    = J(y;v)
+    = \lambda G(y;v)
+    = \lambda \int_{-1}^1 \frac{y'(x)v'(x)}{\sqrt{1 + y'(x)^2}} \, dx.
+\]
+Let $Y \in C^2[-1,1]$ such that $Y'(x) = -\sqrt{1 + y'(x)^2}$ for all
+$x \in [-,1,1]$. Integrating the first term on the left by parts and
+rearranging gives
+\[\int_{-1}^1 \left( Y(x)
+    + \frac{y(x)y'(x)}{\sqrt{1 + y'(x)^2}}
+    - \lambda \frac{y'(x)}{\sqrt{1 + y'(x)^2}} \right)v'(x) \, dx
+    = 0,
+\]
+since $v(-1) = v(1) = 0$. By the du Bois-Reymond Lemma, $\exists C \in \R$ such
+that, $\forall x \in [-1,1]$,
+\[C
+    = Y(x)
+    + \frac{y(x)y'(x)}{\sqrt{1 + y'(x)^2}}
+    - \lambda \frac{y'(x)}{\sqrt{1 + y'(x)^2}}
+    = Y(x)
+    + (y(x) - \lambda)\frac{y'(x)}{\sqrt{1 + y'(x)^2}}.
+\]
+Since the function $z \mapsto \frac{z}{\sqrt{1 + z^2}}$ has a differentiable
+inverse, it follows that, if $y(x) \neq \lambda$, $y'$ is differentiable at
+$x$. Differentiating gives
+\[0
+    = -\sqrt{1 + y'(x)^2} + \frac{y'(x)^2}{\sqrt{1 + y'(x)^2}}
+    + \frac{(y(x) - \lambda)y''(x)}{(1 + y'(x)^2)^{3/2}}.
+\]
+Multiplying by $\sqrt{1 + y'(x)^2}$ and simplifying gives
+\[1 + y'(x)^2
+    = (y(x) - \lambda)y''(x).
+\]
+I wasn't sure how to proceed further, as I couldn't characterize solutions to
+this ODE in a useful manner.
+
+\item I wasn't able to finish this part.
+
+\end{enumerate}
+\end{question}
+\end{document}

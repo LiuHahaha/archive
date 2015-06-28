@@ -1,0 +1,4 @@
+For 10% extra credit, solve the following problem:
+
+Two servers, $\mu_1 \neq \mu_2$, how should you distribute load to minimize
+mean response time.

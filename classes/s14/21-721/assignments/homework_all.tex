@@ -1,0 +1,647 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-721 Probability}
+\newcommand{\duedate}{Wednesday, Janury 29}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\F}{\mathcal{F}} %
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework} \\
+\myclass \\
+Name: \myname \\
+
+\begin{question}{EG.1}
+Consider the points as pair $(P_1,P_2)$ distributed uniformly over the unit
+square $[0,1]^2$. It is easy to see that the three segments can form a triangle
+if and only if the length of the longest is at most the sum of the shorter two,
+i.e., all three segments have length at most $1/2$. Thus, if $P_1 \leq P_2$
+(resp., $P_1 > P_2$), we have a triangle if and only if
+\begin{enumerate}
+\item $P_1 < 1/2$ (resp., $P_1 > 1/2$)
+\item $P_2 > 1/2$ (resp., $P_2 < 1/2$)
+\item and $P_2 - P_1 < 1/2$ (resp., $P_1 - P_2 < 1/2$).
+\end{enumerate}
+Drawing these areas in a square, it becomes clear that satisfying area is
+\fbox{$1/4$} the area of the square.
+\end{question}
+
+\begin{question}{EG.2}
+Let $E$ denote the event that the spaceships can communicate. Then,
+\[\P[E]
+    = \P[E | A \mbox{ both}] \P[A \mbox{ both}]
+    + \P[E | A \mbox{ one}] \P[A \mbox{ one}]
+    = (1)(1/4)
+    + \P[E | A \mbox{ one}] \P[A \mbox{ one}].
+\]
+Thus, it remains to show that
+\[\P[E | A \mbox{ one}] \P[A \mbox{ one}]
+    = \frac{1}{2\pi}.
+\]
+It is easy to see that $\P[A \mbox{ one}] = 1/2$ and, by symmetry,
+\[\P[E | A \mbox{ one}]
+    = 2 \P[B \mbox{ both} | A \mbox{ one}],
+\]
+and so a simple illustration shows that
+\[\P[E | A \mbox{ one}] \P[A \mbox{ one}]
+    = \int_0^{\pi/2} \frac{\area(\theta \mbox{ lune})}{4\pi}
+                                    \frac{2\pi\sin\theta}{2\pi}   \, d\theta
+    = \int_0^{\pi/2} \frac{2\theta}{4\pi} \sin\theta \, d\theta
+    = \mbox{\fbox{$\displaystyle \frac{1}{2\pi}$,}}
+\]
+where the last line follows from a simple integration by parts.
+\end{question}
+
+%TODO
+\begin{question}{EG.3}
+\end{question}
+
+%TODO
+\begin{question}{EG.4}
+\end{question}
+
+%TODO
+\begin{question}{E1.1: `Probability' for subsets of $\N$}
+\end{question}
+
+%TODO
+\begin{question}{E4.1}
+\end{question}
+
+%TODO
+\begin{question}{E4.2}
+\end{question}
+
+%TODO
+\begin{question}{E4.3}
+\end{question}
+
+%TODO
+\begin{question}{E4.4}
+\end{question}
+
+%TODO
+\begin{question}{E4.5}
+\end{question}
+
+%TODO
+\begin{question}{E4.6: Converse to SLLN}
+\end{question}
+
+\begin{question}{E4.7: What's Fair about a Fair Game}
+Each $\E[X_n] = n^{-2}(n^2 - 1) - (1 - n^{-2}) = 0$. However, notice that,
+if
+\[\P[X_n \neq -1 \mbox{ ev.}] = \P[X_n = n^2 - 1 \mbox{ i.o.}] = 0,\]
+then $S_n/n \to -1$ a.s. The $1^{st}$ Borel-Cantelli Lemma confirms that this is
+the case, since
+\[\sum_{n = 1}^\infty \P[X_n  = n^2 - 1]
+    = \sum_{n = 1}^\infty n^{-2}
+    < +\infty. \qed
+\]
+\end{question}
+
+%TODO
+\begin{question}{E4.8: Blackwell's Test of Imagination}
+\end{question}
+
+%TODO
+\begin{question}{E4.9: Tail $\sigma$-algebras}
+\end{question}
+
+%TODO
+\begin{question}{E5.1}
+Trivially, $\forall s \in S$, $f_n(s) \to 0$ as $n \to \infty$, but each
+$\mu(f_n) = n \left( \frac{1}{n} \right) = 1$. Notice that,
+$\forall x \in [0,1]$,
+\[g(x) = \left\lfloor \frac{1}{x} \right\rfloor \geq \frac{1}{x} - 1.\]
+Hence,
+\[\int_S |g(x)| \, d\mu
+    \geq \int_S \left| \frac{1}{x} \right| + 1 \, d\mu
+    = +\infty.
+\]
+\end{question}
+
+\begin{question}{E5.2: Inclusion-Exclusion Formulae}
+\end{question}
+
+%TODO
+\begin{question}{E7.1: Inverting Laplace Transforms}
+\end{question}
+
+%TODO
+\begin{question}{E7.2: The Uniform Distribution on the Sphere
+                                                    $S^{n - 1} \subseteq \R^n$}
+\end{question}
+
+%TODO
+\begin{question}{E9.1}
+\end{question}
+
+%TODO
+\begin{question}{E9.2}
+\end{question}
+
+%TODO
+\begin{question}{E10.1: P\'olya's Urn}
+\end{question}
+
+\begin{question}{E10.2: Martingale Formulation of Bellman's Optimality
+                                                                    Principle}
+Note first that, if, $y \in (0,x)$,
+\[0
+    = \frac{d}{dy} p\log(x + y) + q\log(x - y)
+    = (p - q)x - y,
+\]
+then $y = (p - q)x$, and, since the appropriate second derivative is negative,
+this is a global maximum.
+\begin{align*}
+\E_n[\log Z_{n + 1} - (n + 1)\alpha]
+ &  = p\log \left( Z_n + C_{n + 1} \right)
+                    + q\log \left( Z_n - C_{n + 1} \right) - (n + 1)\alpha  \\
+ &  = p\log \left( (1 + p - q) Z_n \right)
+                + q\log \left( (1 - (p - q)) Z_n \right) - (n + 1)\alpha    \\
+ &  = \log Z_n + p\log (2p) + q\log (2q) - (n + 1)\alpha
+    = \log Z_n - n\alpha
+\end{align*}
+for the optimal strategy $C_{n + 1} = (p - q) Z_n$. Hence,
+$n\alpha \geq \E[\log Z_n - \log Z_0] = \E[\log Z_n/Z_0]$, with equality for
+this strategy.  \qed
+\end{question}
+
+\begin{question}{E10.3: Stopping Times}
+Since
+\[\{S \wedge T \leq n\} = \{S \leq n\} \cup \{T \leq n\} \in \F_n,\]
+\[\{S \vee T \leq n\} = \{S \leq n\} \cap \{T \leq n\} \in \F_n,\]
+and
+\[\{S + T \leq n\} = \bigcup_{k = 1}^n \{S \leq k\} \cap \{T \leq n - k\}
+    \in \F_n,\]
+$S \wedge T$, $S \vee T$, and $S + T$ are stopping times.
+\end{question}
+
+%TODO
+\begin{question}{E10.4}
+\end{question}
+
+%TODO
+\begin{question}{E10.5}
+\end{question}
+
+\begin{question}{E10.6: ABRACADABRA}
+For $n \in \N$, let $S_n$ denote the total amount of money possessed by the
+first $n$ gamblers at time $n$. Notice that, necessarily,
+$S_T = 26^{11} + 26^4 + 26$ (examine the suffixes of `ABRACADABRA'). Also,
+$\forall n \in \N$, each of the first $n$ gamblers expects to have $\$1$ at
+time $n$, so that $\E[S_n] = n$. Hence,
+\[\E[T] = \E[S_T] = 26^{11} + 26^4 + 26.\]
+Since the probability the monkey spells out `ABRACADABRA' in any particular
+sequence of $11$ letters is $26^{-11} > 0$, by a previous result,
+$\E[T] < \infty$. Let $C_n = 1$ for all $n \in \N$, and note that each
+\[|S_n - n - (S_{n - 1} - (n - 1))| = 26^{11} + 26^4 + 26 + 1.\]
+Then, by the result 10.10(c),
+\[\E[S_n - n]
+    = \E\left[\sum_{k = 1}^n (S_n - n) - (S_{n - 1} - (n - 1))\right]
+    = \E[C \cdot M]_T = 0,\]
+so that $\E[S_n] = n$. \qed
+\end{question}
+
+\begin{question}{E10.7}
+At any time, a sequence of $b$ consecutive cases of $X = +1$ will result in
+stopping. Hence, $\forall n \in \N$,
+\[\P(T \leq n + b | \mathcal{F}_n) > p^b > 0,\]
+so that $T$ satisfies the conditions in Questions E10.5.
+\[\E_n[M_{n + 1}]
+    = M_n \E_n \left( \frac{q}{p} \right)^{X_{n + 1}}
+    = M_n \left( p\frac{q}{p} + q\frac{p}{q} \right)
+    = M_n(p + q) = M_n
+\]
+\[\mbox{and} \quad 
+\E_n[N_{n + 1}]
+    = N_n + \E[X_{n + 1}] - (p - q)
+    = N_n + (p - q) - (p - q)
+    = N_n
+\]
+so that $M_n$ and $N_n$ are martingales.
+Define $P := \P\left( S_T = 0 \right), Q := \P\left( S_T = b \right)$. Then,
+\[P + Q = 1\]
+\[\mbox{ and } \quad
+\left( \frac{q}{p} \right)^a
+    = M_0
+    = \E[M_T]
+    = P + Q\left( \frac{q}{p} \right)^b
+    = 1 + Q\left( \left( \frac{q}{p} \right)^b - 1 \right),
+\]
+giving
+\[Q
+    = \frac {\left( \frac{q}{p} \right)^a - 1}
+            {\left( \frac{q}{p} \right)^b - 1}
+    = p^{b - a}\frac {q^a - p^a}{q^b - p^b}
+    \quad \mbox{ and } \quad
+P
+    = 1 - Q.
+\]
+Hence,
+\[\E[S_T]
+    = Qb
+    = p^{b - a}\frac {q^a - p^a}{q^b - p^b}b. \qed
+\]
+\end{question}
+
+\begin{question}{E10.8}
+$\forall k \in [n]$, since $\Theta \sim$ Unif$(0,1)$, integrating by parts $k$
+times gives
+\[P(B_n = k)
+    = \int_0^1 P(B_n = k | \theta = t) \, dt
+    = \binom{n}{k} \int_0^1 t^k(1 - t)^{n - k} \, dt
+    = \frac{1}{n + 1}.
+\]
+Bayes Rule gives
+\begin{align*}
+f_\Theta(\theta | B_1,\dots,B_n)
+ &  = \frac{\P(B_1,\dots,B_n | \Theta = \theta)f_\Theta(\theta)}{\P(B_1,\dots,B_n)}   \\
+ &  = \frac{\binom{n}{B_n} \theta^{B_n}(1 - \theta)^{n - B_n}}{\frac{1}{n + 1}}
+    = \frac{(n + 1)!}{B_n!(n - B_n)!}\theta^{B_n}(1 - \theta)^{n - B_n}.
+\end{align*}
+\end{question}
+
+\begin{question}{E10.9}
+\begin{align*}
+\E[X_T; T < \infty]
+    = \E[\liminf_n X_{n \wedge T}; T < \infty]
+ &  \leq \liminf_n \E[X_{n \wedge T}; T < \infty]   & \mbox{(Fatou's Lemma)}\\
+ &  \leq \E[X_0; T < \infty]                        & \mbox{(E10.4)}        \\
+ &  \leq \E[X_0].                                   & \mbox{($X_0 \geq 0$)}
+\end{align*}
+For $\e \in (0,c)$, define a stopping time $T_\e := \inf\{n : X_n > c - \e\}$
+(with $T_\e = \infty$ if all $X_n \leq c - \e$).
+\[(c - \e) \P\left( \sup_n X_n \geq c \right)
+    \leq (c - \e)\P(T_\e < \infty)
+    \leq \E[X_{T_\e}; T_\e < \infty]
+    \leq \E[X_0]. \qed
+\]
+\end{question}
+
+%TODO
+\begin{question}{E10.10}
+\end{question}
+
+%TODO
+\begin{question}{E10.11}
+\end{question}
+
+\begin{question}{E12.1: Branching Process}
+\[\E_n\left[ \frac{Z_{n + 1}}{\mu^{n + 1}} \right]
+    = \E_n\left[ \sum_{k = 1}^{Z_n} \frac{X_k^{(n + 1)}}{\mu^{n + 1}} \right]
+    = \sum_{k = 1}^{Z_n}
+            \frac{\E_n[X_k^{(n + 1)}]}{\mu^{n + 1}}
+    = \sum_{k = 1}^{Z_n} \frac{1}{\mu^n}
+    = \frac{Z_n}{\mu^n}.
+\]
+Since $(X_n)$ is independent,
+\begin{align*}
+\E_n\left[ Z_{n + 1}^2 \right]
+ &  = \E_n \left[ \sum_{k = 1}^{Z_n} \left( X_k^{(n + 1)} \right)^2
+    + 2\sum_{1 \leq i < j \leq Z_n} X_i^{(n + 1)}X_j^{(n + 1)}\right]       \\
+ &  = \sum_{k = 1}^{Z_n} \E_n \left( X_k^{(n + 1)} \right)^2
+    + 2\sum_{1 \leq i < j \leq Z_n} \E_n[X_i^{(n + 1)}]\E_n[X_j^{(n + 1)}]  \\
+ &  = \left( \sigma^2 + \mu^2 \right)Z_n + \mu^2\left( Z_n^2 - Z_n \right)
+    = \mu^2 Z_n^2 + \sigma^2 Z_n.
+\end{align*}
+Note that, since $(M_n)$ is a martingale, each $\E[M_n] = \E[M_0] = 1$.
+Inducting on $n$, we see that
+\begin{align*}
+\E[M_n^2]
+    = \E\left[ \frac{\mu^2 Z_{n - 1}^2 + \sigma^2 Z_{n - 1}}{\mu^{2n}} \right]
+ &  = \E\left[ M_{n - 1}^2 + \frac{\sigma^2 M_{n - 1}}{\mu^{n + 1}} \right] \\
+ &  = \E[M_{n - 1}^2] + \frac{\sigma^2}{\mu^{n + 1}}                        \\
+ &  = \E[M_0^2] + \frac{\sigma^2}{\mu^2} \sum_{k = 0}^{n - 1} \mu^{-k}
+    \uparrow 1 + \frac{\sigma^2}{\mu^2} \left( \frac{1}{1 - 1/\mu} \right)
+    = 1 + \frac{\sigma^2}{\mu(\mu - 1)}.
+\end{align*}
+for all $n \in \N$ if and only if $\mu > 1$. Since $(M_n)$ is bounded in
+$\L_2$, $\lim_{n \to \infty} \E[M_n^2] = \E[M_\infty^2]$, and so
+\[\Var[M_\infty]
+    = \E[M_\infty^2] - \E[M_\infty]^2
+    = 1 + \frac{\sigma^2}{\mu(\mu - 1)} - 1^2
+    = \frac{\sigma^2}{\mu(\mu - 1)}. \qed
+\]
+\end{question}
+
+\begin{question}{E12.2: Use of Kronecker's Lemma}
+Define $X_k := \frac{Y_k - 1/k}{\log k}$ for $k \geq 2$. Note that each
+\[\E[X_k]
+    = \frac{\E[Y_k] - 1/k}{\log k}
+    = \frac{1/k - 1/k}{\log k}
+    = 0,
+\]
+and
+\[\Var[X_k]
+    = \E[X_k^2]
+    = \frac{(1/k)(1 - 1/k)^2 - (1 - 1/k)(1/k)^2}{\log^2 k}
+    \in O \left( \frac{1}{k\log^2 k} \right).
+\]
+Noting that
+\[\int_2^n \frac{1}{x\log^2 x} \, dx
+    = -\frac{1}{\log x} \bigg|_{x = 2}^{x = n}
+    \to \frac{1}{\log 2}
+\]
+as $n \to \infty$, we see that $\sum_k \Var[X_k]$ converges, by
+the integral test. Hence, $\sum_k \frac{Y_k - 1/k}{\log k} = \sum_k X_n$
+converges a.s. Recalling that the sum of the first $n$ harmonic numbers
+approaches $\gamma + \log n$,
+\[\lim_{n \to \infty} \frac{N_n}{\log n} - 1
+    = \lim_{n \to \infty} \frac{N_n - \log n}{\log n}
+    = \lim_{n \to \infty} \frac{N_n - (\log n + \gamma)}{\log n}
+    = \lim_{n \to \infty} \frac{\sum_{k = 1}^n Y_k - 1/k}{\log n}
+    = 0,
+\]
+by Kronecker's Lemma. \qed
+\end{question}
+
+%TODO
+\begin{question}{E12.3}
+\end{question}
+
+\begin{question}{EA13.1: Modes of Convergence}
+\begin{enumerate}[(a)]
+\item Let $\e > 0$. Then,
+\begin{align*}
+\P[|X_n - X| > \e]
+ &  \leq \P \left[ \bigcup_{m \geq n} \{ |X_m - X| > \e \} \right]  \\
+ &  \downarrow \P \left[ \bigcap_{n = 1}^\infty
+                                \bigcup_{m \geq n} \{ |X_m - X| > \e \} \right]
+    = \P[|X_m - X| > \e \mbox{ i.o.}]
+    = 0,
+\end{align*}
+since $X_n \to X$ a.s. \qed
+\item Suppose $(X_n)$ are independent Bernoulli RV's with $\P[X_n = 1] = 1/n$.
+Then, $\forall \e > 0$,
+\[\P[|X_n| > \e] \leq 1/n \to 0\]
+as $n \to \infty$, but, by the $2^{nd}$ Borel-Cantelli Lemma,
+$\P[X_n = 1 \mbox{ i.o.}] = 1$, and so $X_n \not\to 0$ a.s. \qed
+\item By the $1^{st}$ Borel-Cantelli Lemma,
+\[\P[X_n \not\to X]
+    = \P\left[ \bigcup_{k \in \N} \{|X_n - X| \geq 1/k \mbox{ i.o.} \} \right]
+    = 0. \qed
+\]
+\item Since, $\forall \e > 0$, $\P[|X_n - X| > \e] \to 0$ as $n \to \infty$,
+there is a subsequence $(X_{n_k})$ of $(X_n)$ such that each
+$\P[|X_{n_k} - X| > 1/k] \leq 1/k^2$. Hence, by part (c), $X_{n_k} \to X$ a.s.
+as $k \to \infty$. \qed
+\item $\Rightarrow$ follows immediately from part (d). If $X_n \not\to X$ in
+$\P$, then there exists $\e > 0$ and a subsequence $(X_{n_k})$ such that
+each $\P[|X_{n_k} - X| > \e] > \e$. Clearly, no subsequence of this can
+converge almost surely to $X$.  \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{EA13.2}
+Recall the Law of the Iterated Logarithm we proved: almost surely,
+\[\limsup_n \frac{S_n}{\sqrt{2n \log \log n}} = 1.\]
+Notice that
+\[\P[X_n \not\to X]
+    = \P\left[ \bigcup_{k \in \N} \{ X_n > 1/k \mbox{ i.o.}\} \right]
+    = \P\left[ \bigcup_{k \in \N} \{ aS_n > bn - \log k \mbox{ i.o.}\} \right]
+\]
+Hence, if $b > 0$, then $\P[X_n \not\to X] = 0$, whereas, if $b \leq 0$, then
+$\P[X_n \not\to X] = 1$. On the other hand,
+\begin{align*}
+\E[X_n^r]
+    = \E \left[ \exp \left( ra\sum_{k = 1}^n \xi_k - rbn \right) \right]
+ &  = e^{-rbn}\E \left[ \left( \prod_{k = 1}^n e^{ra\xi_k} \right) \right]  \\
+ &  = e^{-rbn} \prod_{k = 1}^n \E[e^{ra\xi_k}]
+    = e^{-rbn} \prod_{k = 1}^n e^{(ra)^2/2}
+    = e^{((ra)^2/2 - rb)n}.
+\end{align*}
+Hence,
+\[\lim_{n \to \infty} \E[X_n^r] \to 0
+    \quad \Leftrightarrow \quad (ra)^2/2 - rb < 0
+    \quad \Leftrightarrow \quad r < 2b/a^2. \qed\]
+\end{question}
+
+\begin{question}{E13.1}
+($\Rightarrow$) If $k \in \N$ such that
+\[\sup_{X \in \C} \E \left[ |X|1_{|X| > k} \right] \leq 1,\]
+then, $\forall X \in \C$,
+\[\E[|X|]
+    = \E[|X|1_{\{|X| > k\}}] + \E[|X|1_{\{|X| \leq k\}}]
+    \leq 1 + kE[1_{\{|X| \leq k\}}]
+    \leq 1 + k,
+\]
+and so $\C$ is bounded in $\L_1$. If $\e > 0$, for $k \in \N$ such that
+\[\sup_{X \in \C} \E \left[ |X|1_{|X| > k} \right] \leq \e/2,\]
+and $\delta = \frac{\e}{2k}$, if $\forall F \in \F$ with $\P[F] < \delta$, then
+\[\E[X1_F]
+    = \E[|X|1_{F \cap \{|X| > k\}}] + \E[|X|1_{F \cap \{|X| \leq k\}}]
+    \leq \e/2 + k\P[F]
+    < \e. \qed
+\]
+($\Leftarrow$) Let $\e > 0$. Pick $\delta > 0$ such that, $\forall F \in \F$
+with $\P[F] < \delta$,
+\[\sup_{X \in \C} \E[|X|1_F] < \e.\]
+By Markov's Inequality, for $k := 2A/\delta$,
+\[\P[|X| > k] \leq \E[|X|]/k \leq A/k = \delta/2
+    \quad \Rightarrow \quad
+    \sup_{X \in \C} \E[|X|1_{\{|X| > k\}}] < \e. \qed
+\]
+\end{question}
+
+\begin{question}{E13.2}
+\newcommand{\D}{\mathcal{D}}
+By the triangle inequality, if $A,B \in \R$ such that $\E[|X|] < A$ and
+$\E[|Y|] < B$ for all $X \in \C, Y \in \D$, then $\E[X + Y] < A + B$
+for all $X + Y \in \C + \D$.
+
+Let $\e > 0$. If $\exists \delta_1,\delta_2 > 0$ such that, $\forall F \in \F$
+with $\P[F] < \delta_1$, $\sup_{X \in \C} \E|X|1_F < \e/2$ and
+$\forall F \in \F$ with $\P[F] < \delta_1$, $\sup_{Y \in \D} \E|Y|1_F < \e/2$,
+then, for $\delta := \min\{\delta_1,\delta_2\}$, $\forall F \in \F$ with
+$\P[F] < \delta$, $\sup_{X + Y \in \C + \D} \E|Y|1_F < \e$. Hence, by the
+result of Exercise 13.1, $\C + \D$ is UI. \qed
+\end{question}
+
+%TODO
+\begin{question}{E13.3}
+\end{question}
+
+%TODO
+\begin{question}{E14.1}
+\end{question}
+
+\begin{question}{E14.2}
+\begin{enumerate}[(a)]
+\item
+Since the function $x \mapsto e^{\theta x}$ is convex, as secant bound
+gives
+\[e^{\theta Y}
+    \leq \frac{c - Y}{2c}e^{-\theta c} + \frac{c + Y}{2c}e^{\theta c}
+    = \cosh(\theta c) + Y\sinh(\theta c).
+\]
+Hence,
+\[\E\left[ e^{\theta Y} \right]
+    \leq \E\left[ \cosh(\theta c) + Y\sinh(\theta c) \right]
+    = \cosh(\theta c),
+\]
+since $Y \in [-c,c]$ and $\E[Y] = 0$. Also note that, $\forall x \in \R$,
+\[\cosh(x)
+    = \sum_{k = 0}^\infty \frac{x^{2k}}{(2k)!}
+    \leq \sum_{k = 0}^\infty \frac{(x^2/2)^k}{k!}
+    = e^{x^2/2}. \qed
+\]
+\item By Doob's Maximal Inequality, $\forall \theta > 0$,
+\begin{align*}
+\P\left[ \sup_{k \leq n} M_k \geq x \right]
+    = \P\left[ \sup_{k \leq n} e^{\theta M_k} \geq e^{\theta x} \right]
+ &  \leq \E\left[ e^{\theta M_n} \right] e^{-\theta x}                      \\
+ &  = \E\left[ \prod_{k = 1}^n e^{\theta (M_k - M_{k - 1})} \right]
+                                                            e^{-\theta x}   \\
+ &  = \E\left[ \prod_{k = 1}^n \cosh(\theta c_k)
+                + (M_k - M_{k - 1})\sinh(\theta c_k) \right] e^{-\theta x}  \\
+ &  = e^{-\theta x} \prod_{k = 1}^n \cosh(\theta c_k)                       \\
+ &  \leq e^{-\theta x} \prod_{k = 1}^n e^{\frac12\theta^2 c_k^2}
+    = \exp \left(\frac12 \theta^2 \sum_{k = 1}^n c_k^2 - \theta x  \right).
+\end{align*}
+Let $c := \sum_{k = 1}^n c_k^2$. To minimize over $\theta > 0$, we minimize
+$\frac12\theta^2 c - \theta x$ (which is clearly convex),
+for which we use $\theta = x/c$, giving
+\[\P\left[ \sup_{k \leq n} M_k \geq x \right]
+    \leq \exp \left( -\frac12x^2/c \right). \qed
+\]
+\end{enumerate}
+\end{question}
+
+\begin{question}{E16.1}
+For $0 < \e < T$, integrate $e^{iz}/z$ around the contour composed of the
+intervals $[-T,-\e]$ and $[\e,T]$ and the semicircles spanning them. The
+integrals along the intervals approach
+$2i\int_0^\infty \frac{\sin(x)}{x} \, dx$. The integral along the outer
+semicircle approaches $0$. The integral along the inner semicircle approaches
+$-\pi i$ (using a first order Taylor approximation of $e^{iz}$).
+\end{question}
+
+\begin{question}{E16.2}
+\[\phi_Z(\theta)
+    = \frac12 \int_{-1}^1 e^{i\theta Z} \, dz
+    = \frac12 \int_{-1}^1 \cos(\theta z) + i\sin(\theta z) \, dz
+    = \frac12 \int_{-1}^1 \cos(\theta z) \, dz
+    = \frac12 (\sin(\theta) - \sin(-\theta))/\theta
+    = \frac{\sin(\theta)}{\theta}.
+\]
+If $X$ and $Y$ are IID RV's, then
+\[\phi_{X - Y}
+    = \phi_X\phi_{-Y}
+    = \phi_X\overline{\phi_Y}
+    = \phi_X\overline{\phi_X}
+    = |\phi_X|^2 \geq 0,
+\]
+and so $\phi_{X - Y} \neq \frac{\sin(\theta)}{\theta}$. \qed
+\end{question}
+
+%TODO
+\begin{question}{E16.3}
+\end{question}
+
+%TODO
+\begin{question}{E16.4}
+\end{question}
+
+%TODO
+\begin{question}{E16.5}
+Use the definition of $\phi$ to show the LHS is the expectation of a modulus.
+\end{question}
+
+%TODO
+\begin{question}{E16.6}
+\end{question}
+
+%TODO
+\begin{question}{E18.1}
+\end{question}
+
+%TODO
+\begin{question}{E18.2}
+\end{question}
+
+%TODO
+\begin{question}{E18.3}
+\end{question}
+
+%TODO
+\begin{question}{E18.4}
+\end{question}
+
+%TODO
+\begin{question}{E18.5}
+\end{question}
+
+%TODO
+\begin{question}{E18.6}
+\end{question}
+
+%TODO
+\begin{question}{E18.7}
+\end{question}
+\end{document}

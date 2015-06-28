@@ -1,0 +1,212 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\mydate}{Sunday, April 30, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}           % QED square (text mode)
+\newcommand{\mqed}{\quad \blacksquare}              % QED square (math mode)
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\Z}{\mathbb{Z}}                         % integers
+\newcommand{\Q}{\mathbb{Q}}                         % rational numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % domain
+\newcommand{\tr}{\operatorname{tr}}                 % trace
+\newcommand{\dist}{\operatorname{dist}}                 % set distance
+\renewcommand{\div}{\operatorname{div}}                 % divergence operator
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+\begin{center}
+{\Large 21-630 Final Exam Reference Sheet} \\
+\mydate
+\end{center}
+\begin{center}
+\line(1,0){400}\\
+{\large Existence of Solutions}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Contraction Mapping Theorem:} (p. 14)\\
+$B \subset \R^N$ be closed, $\F : \C_B \to \C_B$ a contraction. Then, $\F$ has
+a unique fixed point in $\C_B$.\\
+{\bf Cauchy-Lipschitz Theorem (Part I):} (p. 21)\\
+$\e > 0$, $f$ continuous, Lipschitz in $x$ on
+$[t_0,t_0 + \delta_0] \times [x_0 - \e,x_0 + \e]$. Then, $\dot x = f(t,X),
+X(t_0) = x_0$ has a solution on $[t_0,t_0 + \delta_0]$.\\
+{\bf Cauchy-Peano Theorem:} (p. 22)\\
+$f$ continuous
+$[t_0,t_0 + \delta_0] \times [x_0 - \e,x_0 + \e]$. Then,
+$\exists \delta \in (0,\delta_0]$ so that $\dot x = f(t,X), X(t_0) = x_0$ has a
+solution on $[t_0,t_0 + \delta]$.\\
+{\bf Ascola-Arzela Theorem:} (p. 25)\\
+$\{X^{(n)}\}$ pointwise-bounded, equicontinuous in $\C_{\R^N}[t_0,t_1]$. Then,
+$\{X^{(n)}\}$ uniformly bounded with a uniformly convergent subsequence.\\
+{\bf Extension Theorem:} (p. 35)\\
+$D = I_t \times D_x$, $I_t$ open interval, $D_x \subset \R^N$ open,
+$f : D \to \R^N$ continuous. Then, any solution of $\dot X = f(t,X),
+X(t_0) = x_0$ has a right-maximal extension, and, for any compact
+$S \subset D_x$, right-maximal solutions eventually leave $S$. Note, if $f$
+bounded, every solution can be extended to $\R$.
+\begin{center}
+\line(1,0){400}\\
+{\large Uniqueness}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Gronwall's Inequality (Simple Version):} (p. 39)\\
+$A \in \R, B \geq 0$, $X$ continuous on $I = [t_0,t]$ or $I = [t_0,\infty)$,
+\[X(t) \leq A + B\int_{t_0}^t X(s) \, ds, \quad \forall t \in I.\]
+Then, $X(t) \leq Ae^{B(t - t_0)}, \forall t \in I$.\\
+{\bf Gronwall's Inequality (Full Version):} (p. 40)\\
+$a,b \in \C_{\R}(I), b \geq 0$, $X$ continuous on $I = [t_0,t]$ or
+$I = [t_0,\infty)$,
+\[X(t) \leq a(t) + \int_{t_0}^t b(s)X(s) \, ds, \quad \forall t \in I.\]
+Then, $\forall t \in I$,
+\[X(t) \leq a(t) + \int_{t_0}^t a(s)b(s)e^{\int_s^t b(\tau) \, d\tau} \, ds.\]
+{\bf Cauchy-Lipschitz Theorem (Part II):} (p. 44)\\
+Assumptions as in Cauchy-Lipschitz Theorem (Part I).
+$\exists \delta \in (0,\delta]$ solution unique on $[t_0,t_0 + \delta]$.
+\newpage
+\begin{center}
+\line(1,0){400}\\
+{\large Smoothness in Initial Conditions}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Continuity in Initial Conditions} (p. 48)\\
+{\bf $C^1$ in Initial Conditions} (p. 51)
+\begin{center}
+\line(1,0){400}\\
+{\large Linear Systems}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Abel-Liouville Theorem:} (p. 60)\\
+If $\psi(t)$ is a matrix solution of $\dot X = A(t)X$, then
+$\det(\psi(t)) = \det(\psi(t_0))e^{\int_{t_0}^t \tr(A(s)) \, ds},
+\forall t_0,t \in I$.\\
+Corollary 4.1 (p. 61) restates the definition of `fundamental matrices' in
+terms of $\det(\psi(t))$.\\
+{\bf Variation of Parameters:} (p. 63)\\
+If $\Phi(t)$ is a fundamental matrix solution of $\dot X = A(t)X$, then
+\[X(t) = \Phi(t)\Phi\inv(t_0)x_0 + \int_{t_0}^t \Phi(t)\Phi\inv(s)b(s) \, ds\]
+solves $\dot X = A(t)X + b(t), X(t_0) = x_0$. Note: if $A(t)$ constant, then
+$\Phi(t)\Phi\inv(s) = \Phi(t - s)$.\\
+{\bf Matrix Norms and Exponentials and Jordan Canonical Form:} (pp. 69-76, 83)\\
+$|A^k| \leq |A|^k$, $|A|_\infty \leq |A| \leq N|A|_\infty$, etc.\\
+{\bf Bounding Solutions by Spectral Radius:} (p. 85)\\
+If $\sigma$ is the largest eigenvalue (by real part) of $A$, then
+$\exists C > 0$ such that $|e^{At}| \leq Ce^{\sigma t}(1 + t^{N - 1})$.\\
+As a corollary, $\forall \e > 0$, $\exists C_\e > 0$ such that
+$|e^{At}| \leq C_\e e^{(\sigma + \e)t}$.
+\begin{center}
+\line(1,0){400}\\
+{\large Stability}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Homogeneous Linear Systems} (p. 89)\\
+The critical point $0$ is stable for $\dot X = AX$ if and only if all first
+order eigenvalues are non-positive and higher order eigenvalues are strictly
+negative (in real part).\\
+Also, $0$ is asymptotically stable if and only if all eigenvalues have strictly
+negative real part.\\
+{\bf Linearization} (pp. 93, 97)\\
+$f(x) = 0$, all eigenvalues of $Df(x)$ have strictly negative real part.
+Then $x$ asymptotically stable.
+$f(x) = 0$, some eigenvalue of $Df(x)$ has strictly positive real part.
+Then $x$ is unstable.\\
+{\bf Lyapunov Functions} (pp. 108, 111, 114)\\
+$f$ cont., $f(t,0) = 0$, $v(t,x) \in C^1$ positive
+definite, $D_*v$ negative semidefinite. Then, $0$ is stable.\\
+$f$ cont., $f(t,0) = 0$, $v(t,x) \in C^1$ positive definite, $D_*v$ negative
+definite, $v$ bounded above in $t$ near $0$. Then, $0$ asymptotically stable.\\
+$f$ cont., $f(t,0) = 0$, $v(t,x) \in C^1$, $D_*v$ negative
+definite, $v$ bounded below in $t$ near $0$. Every nbhd of $0$ has $x$ with
+$v(0,x) > 0$. Then, $0$ unstable.
+\newpage
+\begin{center}
+\line(1,0){400}\\
+{\large Invariance Theory}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Omega Limit Sets} (pp. 124-125)\\
+$\Omega(x_0)$ is positively invariant and closed. If $C^+(x_0)$ is bounded,
+then $\Omega(x_0)$ is nonempty, compact, and connected, and
+\[\dist(Y(t,x_0),\Omega(x_0)) \to 0 \mbox{ as } t \to \infty.\]
+For $S \subseteq \R^N$, there exists a largest positively invariant subset
+$M_S$ of $S$.\\
+{\bf Theorem 5.8} (p. 132)\\
+$0 \in S \supseteq \R^N$ open, $w \in C^1(S)$, $w(0) = 0$, $D_*w \leq 0$ on
+$S$, $\eta \geq 0$, $0 \in H_\eta$ closed bounded connected component of
+$w\inv((-\infty,\eta])$, $M$ largest positvely invariant subset of
+$H_\eta \cap (D_*w)\inv(\{0\})$. Then, $\forall x_0 \in H_\eta$,
+$\dist(Y(t,x_0),M) \to 0$ as $t \to \infty$. Usually, to use this, we want
+$M = \{0\}$.
+\begin{center}
+\line(1,0){400}\\
+{\large Two-Dimensional Systems}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+For autonomous planar systems,
+$\displaystyle \dot r = \dot X \cos \theta + \dot Y \sin \theta$ and
+$\displaystyle \dot \theta
+    = \dot Y \frac{\cos \theta}{r} - \dot X \frac{\sin \theta}{r}$.\\
+{\bf Poincar\'e-Bendixson Theorem} (p. 142)\\
+$f : \R^2 \to \R^2$ $C^1$, $X$ bounded solution of $\dot X = f(X)$,
+$\Omega(X(0))$ contains no critical point. Then, either $X$ is periodic with
+$\Omega(X(0)) = C^+(X(0))$ or $\exists$ periodic solution $Y$ with
+$\Omega(X(0)) = C^+(Y(0))$.
+{\bf Jordan Curve Theorem} (p. 146)\\
+$C \subseteq \R^2$, $\psi$ bijective, cont. mapping from unit circle into $C$.
+Then, we can partition $\R^2$ into $3$ pathwise connected components, $C$,
+$O_E$, and $O_I$.\\
+If $C$ is the image of a periodic solution, then $O_I$ contains a critical
+point.\\
+{\bf Transversals} (pp. 147-153)\\
+{\bf Corollary of Divergence Theorem} (p. 160)\\
+$Y$ nonconstant periodic solution. Then,
+\[\iint_{O_I} \div f \, dy \, dx = 0.\]
+{\bf Orbital Stability} (p. 162)
+\begin{center}
+\line(1,0){400}\\
+{\large Boundary Value Problems}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+Separate inhomogeneities due to boundary conditions and differential
+equation.\\
+{\bf Green's Functions} (pp. 183, 190)
+\begin{center}
+\line(1,0){400}\\
+{\large Examples}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+{\bf Circuit Theory} (p. 164)\\
+{\bf Predator-Prey Model} (p. 174)\\
+{\bf Rigid Body Motion} (p. 177)\\
+\end{document}

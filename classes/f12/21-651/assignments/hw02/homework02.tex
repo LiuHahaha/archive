@@ -1,0 +1,289 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Friday, September 28, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Let $x \in \R^2$, and suppose, for sake of contradiction, that
+$\beta \subseteq \tau$ is a countable local base of $\tau$ at $x$ ($\tau$ is
+the radially open set topology). $\forall \theta \in [0,2\pi)$, let
+$P_{\theta}$ be the parabola with vertex at $x$, rotated counterclockwise by
+$\theta$, without the point $x$ itself. For any given $B \in \beta$,
+$T_B := \{\theta : P_\theta \cap B = \emptyset\}$ cannot be dense in
+$[0,2\pi)$, since each $B$ is radially open. Thus, by the Baire Category
+Theorem, $\bigcup_{B \in \beta} T_B$ is not dense in $[0,2\pi)$, so that some
+$P_{\theta} \cap \bigcup_{B \in \beta} B = \emptyset$. Thus, if
+$U := B(x,1) \sminus P_{\theta}$, $U$ is radially open, but there is no
+$B \in \beta$ with $B \subseteq U$, contradicting the choice of $\beta$ as a
+countable local base of $\tau$ at $x$. \qed
+
+\item Let $(X,\tau_X)$ and $(Y,\tau_Y)$ be topological spaces, and let
+$(X \times Y,\tau)$ be the product topology. Suppose $(x,y) \in X \times Y$
+($x \in X$,$y \in Y$). Then, there exist countable local bases
+$\beta_x \subseteq \tau_X$ and $\beta_y \subseteq \tau_Y$ of $x$ and $y$
+respectively. Let $f: \N \rightarrow \beta_X$ and $g: \N \rightarrow \beta_Y$
+be bijections, and let
+$\beta_{xy} := \{\bigcap_{i = 2}^i f(i) \times g(i) : i \in \N\} \subseteq \tau$.
+
+We show that the set
+\[\tau_{xy}
+  := \{U \in \pow{X \times Y} :
+    x \in U \mbox{ implies } \exists B \in \beta_{xy}, B \subseteq U\}
+\]
+is a topology containing
+$\mathcal{F} := \{U \times V : U \in \tau_X, V \in \tau_Y\}$, so that, by
+definition of the product topology, $\tau \subseteq \tau_{xy}$, implying that
+$(X \times Y,\tau)$ is first countable.
+
+Vacuously, $\emptyset \in \tau_{xy}$, and, trivially,
+$X \times Y \in \tau_{xy}$.
+
+Suppose $(x,y) \in U_1,U_2,\ldots,U_k \in \tau_{xy}$. Since there exist
+$B_1,B_2,\ldots,B_k \in \beta_{xy}$ with
+$B_1 \subseteq U_1,\ldots B_k \subseteq U_k$, there is some $B \in \beta_{xy}$
+with $B \subseteq \bigcap_{i = 1}^{k} B_i \subseteq \bigcap_{i = 1}^{k} U_i$,
+so that $\bigcap_{i = 1}^{k} U_i \in \tau_{xy}$ and $\tau_{xy}$ is closed
+under finite intersections (if there is some $U_i$ not containing $x$, then
+$x$ is not in the intersection, so the intersection is vacuously in
+$\tau_{xy}$).
+
+Suppose $U_i \in \tau_{xy}$, $\forall i \in I$, with $x \in U_i$ for some
+$i \in I$. Then, since $\exists B \in \beta_{xy}$ with $B \subseteq U_i$,
+$B \subseteq \bigcup_{i \in I} U_i$, so that
+$\bigcup_{i \in I} U_i \in \tau_{xy}$, and $\tau_{xy}$ is closed under
+arbitrary unions (if there is no $U_i$ with $x \in U_i$, then $x$ is not in
+the union, so the intersection is vacuously in $\tau_{xy}$).
+
+Thus, $\tau_{xy}$ is a topology. Since $U \in \tau_X, V \in \tau_Y$
+implies $\exists f(i) \times g(i) \subseteq U \times V$,
+$\mathcal{F} \subseteq \tau_{xy}$. \qed
+
+\item Suppose $(X,\tau)$ is a first countable topological space and
+$A \subseteq X$ (and let $\tau_A$ be the topology induced on $A$ by $\tau$).
+Let $x \in A$. Since $x \in X$ and $(X,\tau)$ is first countable, there exists
+a countable local base $\beta_x \subseteq \tau$ of $x$. Let
+\[\beta^{\prime}_x := \{B \cap A : B \in \beta_x\} \subseteq \tau_A.\]
+By construction of the induced topology, $\forall U_A \in \tau_A$ with
+$x \in U_A$, $U_A = A \cap U$, for some $U \in \tau$. By definition of a local
+base, $\exists B \in \beta_x$ such that $B \subseteq U$, so that
+$B \cap A \subseteq U_A$. Thus, $\beta_x^{\prime}$ is a local base of
+$\tau_A$ at $x$.
+
+Thus, since $\beta_x^{\prime}$ is countable ($B \mapsto B \cap A$ is a
+surjection from $\beta_x$), $(A,\tau_A)$ is first countable. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+Suppose $(X,\tau)$ is a second countable topological space, and let
+$\beta$ be a countable base for $(X,\tau)$. By the Axiom of Choice,
+$\forall B \in \beta$, we can pick some $x_B \in B$. Then, let
+$E := \{x_B : B \in \beta\}$.
+
+Since $\beta$ is countable, $E$ is countable as well ($B \mapsto x_B$ is a
+surjection).
+
+Suppose $C$ is a closed set with $E \subseteq C$. Then, $U := X \sminus C$ is
+open, so that, for some $A \subseteq \beta$, $U = \bigcup_{B \in A} B$. If $U$
+is nonempty, $\exists B \in A$, so that $x_B \in U$, contradicting the fact
+that $E \subseteq C = X \sminus U$. Therefore, $C = X$.
+
+Thus, $X$ is the intersection of all closed sets containing $E$, so that, by
+Proposition 26 (ii) in the notes, $\overline{E} = X$, and so $E$ is dense.
+Since $E$ is countable and dense, $X$ is separable. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+By the result of problem 2, it suffices to show that $(A,d)$ is second
+countable.
+
+Since $(X,d)$ is separable, there exists a countable dense set
+$S \subseteq X$. Then, let $f: \N \rightarrow S$ be a bijection. Define
+\[\beta := \{B(f(i),1/n) : i,n \in \N\},\] where $B(x,r)$ denotes the
+ball of radius $r > 0$ centered at $x \in X$. Suppose $U \subseteq X$ is open
+and $x \in U$. Since $U$ is open, for some $n \in \N$, $B(x,1/n) \subseteq U$.
+Since $S$ is dense, $\exists i \in \N$ such that $d(x_i,x) < \frac{1}{2n}$,
+and thus, by the triangle inequality, $\forall y \in B(x_i,\tfrac{1}{2n})$,
+$d(x,y) \leq d(x,x_i) + d(x_i,y)$, implying
+$B(x_i,\tfrac{1}{2n}) \subseteq B(x,1/n)$. Thus, for any open set
+$U \subseteq X$, $\forall x \in U$, $\exists B_x \in \beta$ with
+$B_x \subseteq U$,
+so that $U = \bigcup_{x \in U} B_x$, implying that $\beta$ is a base for
+$(X,d)$. Since there is an obvious bijection between $\beta$ and $\N^2$,
+$\beta$ is countable, and so $(X,d)$ is second countable.
+
+Clearly, second countability is heritable (the set
+$\beta^{\prime} := \{A \cap B : B \in \beta\}$ is a countable base
+for $(A,d)$), so that $(A,d)$ is second countable. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+Since, $\forall n \in \N$, $C([-n,n])$ is separable with respect to the
+$d_{\infty}$ metric, there exists a set $S_n$ which is countable and dense in
+$[-n,n]$ with respect to the $d_{\infty}$ metric. Let $S := \bigcup_{i = 1}^{\infty} S_n \subseteq C(\R,\R)$.
+Let $f \in C(\R,\R)$, and let $\epsilon > 0$. $\forall n \in \N$,
+by choice of $S_n$, $\exists f_n \in S_n$ such that
+$d_{\infty}(f, f_n) < \epsilon$. Thus, $f_n \rightarrow f$ uniformly on
+$[-n,n]$. As given in Example 34 of the notes, this implies that
+$d(f, f_n) \rightarrow 0$ on $\R$. Thus, $\exists f_n$ such that
+$d(f, f_n) < \epsilon$, so that $S$ is dense in $\R$.
+
+Since $S$ is a countable union of countable sets, $S$ is countable, so that
+$(C(\R,\R),d)$ is separable. \qed
+\end{question}
+
+\begin{question}{Problem 5}
+The following Lemma is used in the proofs of parts (i) and (ii) of this
+problem:
+
+{\bf Lemma:} Suppose $x_0,x_1,x_2 \in X \subseteq \R^n$ and there exists a
+polygonal path with endpoints $x_0,x_1$ and range in $X$. If the line segment
+$S(x_1,x_2)$ between $x_1$ and $x_2$ is contained in $X$, then there exists a
+polygonal path with endpoints $x_0,x_2$ and range in $X$.
+
+{\bf Proof of Lemma:} Let $\gamma: [a,b] \rightarrow \R^n$ be a polygonal path
+with endpoints $x_0,x_1$ and range in $X$, and let
+$\varphi: [a,b + 1] \rightarrow \R^n$ be the following function:
+\[
+   \varphi(t) = \left\{
+     \begin{array}{lr}
+       \gamma(t)                       & : t \in [a,b]      \\
+       (b + 1)x_1 - bx_2 + t(x_2 - x_1)& : t \in [b,b + 1]
+     \end{array}
+   \right.
+\]
+Since $\varphi([b,b + 1]) = S(x_1,x_2) \subseteq X$ and
+$\gamma([a,b]) \subseteq X$, $\varphi$ has range in $X$. Thus, since
+$\varphi([a,b + 1])$ is piecewise affine (the partition of the domain is the
+same as that for $\gamma$, with the additional segment $(b,b + 1]$) and
+$\varphi(a) = \gamma(a) = x_0$ and $\varphi(b + 1) = x_2$, $\varphi$ is
+polygonal path with the desired properties, proving the lemma. \qed
+
+\begin{enumerate}[(i)]
+\item Since clearly $x_0 \in U$, $U$ is nonempty.
+Suppose $x_1 \in U$. Since $O$ is open, there exists an open ball $B$ of
+radius $r > 0$ centered at $x_1$ with $B \subseteq O$. Let $x_2 \in B$. Since
+balls in $\R^n$ are convex, the segment $S(x_1,x_2) \subseteq O$. Thus, by
+the above Lemma, $x_2 \in U$, so that $B \subseteq U$. Then, since every point
+in $U$ is the center of some open ball contained in $U$, $U$ is open. \qed
+
+\item Let $x_1 \in V$. Since $O$ is open, there exists an open ball $B$ of
+radius $r > 0$ centered at $x_1$ with $B \subseteq O$. Let $x_2 \in B$. Since
+balls in $\R^n$ are convex, the segments $S(x_2,x_1) \subseteq O$. If it were
+the case that $x_2$ is not in $V$, then, by the above lemma, $x_1$ is not in
+$V$, which is a contradiction. Thus, $x_2 \in V$, so that $B \subseteq U$.
+Then, since every point in $V$ is the center of some open ball contained in
+$V$, $V$ is open. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6}
+Suppose, for sake of contradiction, that $Y$ is not connected. Then, there
+exists some set $U_1 \in \tau_X$ (the topology on $X$) such that
+$V_1 := U_1 \cap Y$ is clopen in the topology $\tau_Y$ on $Y$ (and $V_1$ is
+neither $Y$ nor $\emptyset$). Since $V_1$ is closed in $\tau_Y$, there is some
+$U_2 \in \tau_X$ such that $V_2 := U_2 \cap Y = Y \sminus U_1$ is open in
+$\tau_X$.
+
+Since $S := \bigcap_{i \in I} Y_i$ is nonempty, let $x \in S$. Since $V_1$ and
+$V_2$ partition $Y$, $x \in V_1$ or $x \in V_2$; without loss of generality,
+$x \in V_1$ (the proof is identical up to variable names when $x \in V_2$).
+Let $y \in V_2$ (since $V_2$ is nonempty), so that, for some $i \in I$,
+$y \in Y_i$. Since $x,y \in Y_i$, $W_1 := U_1 \cap Y_i = V_1 \cap Y_i$ and
+$W_2 := U_2 \cap Y_i = V_2 \cap Y_i$ are nonempty. Furthermore, $W_1$ and
+$W_2$ are open in $\tau_{Y_i}$, the topology induced on $Y_i$ by $\tau_X$.
+Thus, since $W_2 = Y_i \sminus W_1$, $W_1$ is clopen in $\tau_{Y_i}$,
+contradicting the fact that $Y_i$ is connected. \qed
+\end{question}
+
+\begin{question}{Problem 7}
+Let $G$ be the given graph, and suppose $f:[a,b] \rightarrow G$, with
+$f(a) = (0,1), f(b) = (1/\pi, 1)$.
+Let $c := \sup \{x : f(x) = (0,1)\}$, and let $\delta > 0$. $\exists n \in \N$
+such that $frac{1}{2\pi n} < f_1(d + \delta)$, the first component of
+$f(d + \delta)$. Then, since $\sin(2\pi n) = 0$, so that by the Intermediate
+Value Theorem, $\exists x \in (c,c + \delta)$ such that
+$f(x) = (frac{1}{2\pi n}, 0)$, and thus $\|f(x) - f(c)\| > 1$, despite
+$|c - x| < \delta$, implying $f$ is not continuous. Thus, $G$ is not pathwise
+connected.
+
+Suppose, for sake of contradiction, that $G$ is not connected, so that there
+exists a clopen set $S \in \tau_G$ (where $\tau_G$ is the topology induced on
+$G$ by the standard topology $\tau$ on $\R^2$) that is neither $\emptyset$ nor
+$G$. Let $T := G \sminus S$. Either $(1/\pi, 1) \in S$ or $(1/\pi,1) \in T$;
+without loss of generality, $(1/\pi, 1) \in S$ (the proof is identical in the
+case $(1/\pi, 1) \in T$, up to some variable names). It must be the case that
+$T \sminus \{(0,1)\} = \emptyset$, since the alternative would imply that
+$G\sminus\{(0,1)\}$ is disconnected, contradicting the fact that the function
+$x \mapsto (x,f(x))$ is continuous on $(0,1]$, which is a convex and thus
+connected set.
+
+Thus, since $T$ is nonempty, $T = \{(0,1)\}$. Since $T \in \tau_G$,
+$\exists U \in \tau$ such that $T = G \cap U$. Since $U$ is open,
+$\exists \delta > 0$ such that the ball $B := B((0,1),\delta) \subseteq U$,
+so that $B \cap G \subseteq T$. However, if we pick
+$x = \frac{1}{2\pi n} < \delta$, then $(x,1) \in T$, which is a contradiction.
+Therefore, $T = \emptyset$, so that the only clopen sets $S \subseteq G$ are
+$S = \emptyset$ and $S = G$, and thus $G$ is connected. \qed
+
+\end{question}
+\end{document}

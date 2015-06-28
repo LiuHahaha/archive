@@ -1,0 +1,242 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Thursday, October 2, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item Let \fbox{$T := (X_{(1)}, X_{(n)})$,} where $X_{(i)}$ denotes the
+$i^{th}$ order statistic. Note that
+\[p(x^n; \theta)
+    = \prod_{i = 1}^n 1_{\{x_i \in (\theta, \theta + 1)\}}
+    = 1_{\{\theta < x_{(1)}\}}1_{\{x_{(n)} < \theta + 1\}}
+\]
+(where $1_A$ denotes the indicator function of and event $A$), which is a
+function only of $T$ and $\theta$. Hence $T$ is sufficient. Suppose $S$ is a
+sufficient statistic. Then, there exist functions $h_S$ and $g_S$ such that
+$p(x^{n}; \theta) = h(x^n)g(S;\theta)$. As long as $h(x^n) > 0$ (which happens
+almost surely)
+\[x_{(1)}
+    = \sup \{\theta \in \R : g(S;\theta) > 0\}
+    \quad \mbox{ and } \quad
+    x_{(n)} = 1 + \inf\{\theta \in \R : g(S; \theta) > 0\}.
+\]
+Hence $T$ is a function of $S$, and so $T$ is minimal. \qed
+
+\item Since $T := (X_{(1)}, X_{(n)})$ is a minimal sufficient statistic and $T$
+is clearly not a function of $X_3$, $X_3$ is not sufficient. \qed
+
+\end{enumerate}
+
+\item Since
+\[\E[\hat\lambda]
+    = \frac{1}{n} \sum_{i = 1}^n \E[X_i]
+    = \frac{1}{n} \sum_{i = 1}^n \lambda
+    = \lambda,
+\]
+\fbox{$\mathsf{bias}(\hat\lambda) = 0$.}
+\[\mathsf{se}(\hat\lambda)
+    = \sqrt{\frac{1}{n^2} \sum_{i = 1}^n \Var [X_i]}
+    = \sqrt{\frac{1}{n^2} \sum_{i = 1}^n \lambda}
+    = \mbox{\fbox{$\displaystyle \sqrt{\frac{\lambda}{n}}$.}}
+\]
+Hence,
+$\mathsf{bias}(\hat\lambda)
+    = \mathsf{bias}^2(\hat\lambda) + \mathsf{se}^2(\hat\lambda)
+    = $\fbox{$\lambda/n$.}
+
+\newpage
+\item
+\begin{enumerate}
+\item $\E[X_i] = \frac{a + b}{2}$ and
+\[\E[X_i^2]
+    = \Var[X_i] + \E^2[X_i]
+    = \frac{1}{12}(b - a)^2 + \frac{1}{4}(a + b)^2
+    = \frac{1}{3}(a^2 + ab + b^2).\]
+Solving for $a$ and $b$ gives
+\[a = \E[X_i] - \sqrt{3(\E[X^2] - \E^2[X])}
+    \quad \mbox{ and } \quad
+    b = \E[X_i] + \sqrt{3(\E[X^2] - \E^2[X])}.
+\]
+Hence, the method of moments estimators for $a$ and $b$ are
+\[\mbox{\fbox{$\displaystyle
+    \tilde a = \ol X - \sqrt{3(\ol{X^2} - \ol{X}^2)}$}}
+    \quad \mbox{ and } \quad
+    \mbox{\fbox{$\displaystyle
+    \tilde b = \E[X_i] + \sqrt{3(\ol{X^2} - \ol{X}^2)}$.}}
+\]
+
+\item Since
+\[p(X_1,\dots,X_n | a,b) = (b - a)^{-n} 1_{a < X_1,\dots,X_n < b},\]
+the likelihood is maximized when $b - a$ is minimized, subject to
+$a < X_{(1)}$ and $X_{(n)} < b$. Hence, the MLEs of $a$ and $b$ are
+\fbox{$\hat a = X_{(1)}$} and \fbox{$\hat b = X_{(n)}$.}
+
+\item Since $\tau = (a + b)/2$, the MLE of $\tau$ is
+\[\hat\tau
+    = \frac{\hat a + \hat b}{2}
+    = \frac{X_{(1)} + X_{(n)}}{2},
+\]
+where $\hat a$ and $\hat b$ denote the MLEs of $a$ and $b$, respectively.
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Since the normal is its own conjugate prior,
+\[\mu | X^n
+    \sim \mathcal{N}
+        \left( \frac{b^2}{b^2 + \sigma^2/n}\ol X
+            + \frac{\sigma^2/n}{b^2 + \sigma^2/n}a,
+            \frac{b^2\sigma^2}{\sigma^2 + b^2n} \right)
+\]
+(this is a pretty standard result, but is really algebraically messy). Hence,
+\[\hat\mu
+    = \E[\mu | X^n]
+    = \frac{b^2}{b^2 + \sigma^2/n}\ol X + \frac{\sigma^2/n}{b^2 + \sigma^2/n}a.
+\] 
+
+\item Under squared error loss, the risk is
+$R(\mu,\hat\mu) = \E^2[\hat\mu - \mu] + \Var[\hat\mu]$, where
+\[\E[\hat\mu - \mu]
+    = \frac{b^2}{b^2 + \sigma^/n}\E[\ol X]
+    + \frac{\sigma^2/n}{b^2 + \sigma}a - \mu
+    = \left( \frac{b^2}{b^2 + \sigma^/n} - 1 \right) \mu
+    + \frac{\sigma^2/n}{b^2 + \sigma}a
+\]
+and
+\[\Var[\hat\mu]
+    = \frac{b^2}{b^2 + \sigma^/n} \Var[\ol X]
+    = \frac{b^2\sigma^2/n}{b^2 + \sigma^/n}.
+\]
+
+\item As can be seen from part (b),
+$R(\mu,\hat\mu) \geq \E^2[\mu - \hat\mu] \to \infty$ as $\mu \to \infty$.
+
+\item Note that, for the Bayes estimator, the posterior risk is
+\[r(\hat\mu | X^n)
+    = \Var[\mu | X^n]
+    = \frac{b^2\sigma^2}{\sigma^2 + nb^2}.
+\]
+Since this does not depend on $X^n$,
+\[B_\pi(\hat\mu)
+    = \int_{\R^n} r(\hat\mu | X^n) m(X^n) \, dX^n
+    = \mbox{\fbox{$\displaystyle \frac{b^2\sigma^2}{\sigma^2 + nb^2}$.}}
+\]
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Define $S := \sum_{i = 1}^n X_i$. Then,
+\[\pi(p | X^n)
+    = \frac{\pi(X^n | p) \pi(p)}{\pi(X^n)}
+    \propto \left( p^S(1 - p)^{n - S} \right)
+            \left( p^{\alpha - 1}(1 - p)^{\beta - 1} \right)
+    = p^{S + \alpha - 1}(1 - p)^{n - S + \beta - 1},
+\]
+which is proportional to the pdf of Beta$(S + \alpha, n - S + \beta)$, so that
+$p | X^n \sim$ Beta$(S + \alpha, n - S + \beta)$. Hence, the Bayes estimator is
+\[\hat p
+    = \E[p | X^n]
+    = \frac{S + \alpha}{S + \alpha + n - S + \beta}
+    = \mbox{\fbox{$\displaystyle \frac{S + \alpha}{n + \alpha + \beta}$.}}
+\]
+
+\item Under squared error loss, the risk is
+$R(p,\hat p) = \E^2[\hat p - p] + \Var[\hat p]$, where
+\[\E[\hat p - p]
+    = \frac{\E[S] + \alpha}{n + \alpha + \beta} - p
+    = \frac{pn + \alpha - pn - p\alpha - p\beta}{n + \alpha + \beta}
+    = \frac{(1 - p)\alpha - p\beta}{n + \alpha + \beta}
+\]
+and
+\[\Var[\hat p]
+    = \frac{\Var[S]}{(n + \alpha + \beta)^2}
+    = \frac{np(1 - p)}{(n + \alpha + \beta)^2}
+\]
+(since $S \sim$ Binomial$(n,p)$).
+
+\item The Bayes risk is
+\[B_\pi(\hat p)
+    = \int_0^1 R(p,\hat p)\pi(p) \, dp
+    = \frac{\int_0^1 (((1 - p)\alpha - p\beta)^2 + np(1 - p))
+                                p^{\alpha - 1}(1 - p)^{\beta - 1} \, dp}
+           {(n + \alpha + \beta)^2},
+\]
+which looks like an awfully nasty integral.
+
+\item Setting \fbox{$\alpha = \beta = \sqrt n/2$,}
+\[R(p,\hat p)
+    = \frac{((1 - p)\alpha - p\beta)^2 + np(1 - p)}{(n + \alpha + \beta)^2}
+    = \frac{(n/4)(1 - 4p + 4p^2) + np - np^2}{(n + \alpha + \beta)^2}
+    = \frac{n}{4(n + \sqrt n)^2},
+\]
+which does not depend on $p$ and is hence minimax optimal.
+
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,337 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, March 29, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Midterm \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+We show $\L(l^2,l^2)$ is not separable by finding an uncountable subset
+with discrete induced topology.
+
+Let $\pow{\N}$ denote the set of subsets of $\N$. $\forall K \in \pow{N}$,
+define $T_K : l^2 \rightarrow l^2$ by
+\[(T_K(x))_i =
+    \left\{
+        \begin{array}{cl}
+            x_i & : \mbox{ if } i \in K \\
+            0   & : \mbox{ else }
+        \end{array}
+    \right.,
+\forall i \in \N, x \in l^2.\]
+Let $S := \{T_K : K \in \pow{\N} \sminus \{\emptyset\}\}$. Clearly, $S$ is
+uncountable. $\forall T \in S$, linearity is clear, and, furthermore,
+$\forall x \in l^2$, $\|T(x)\|_2 \leq \|x\|_2$, so that $T$ is bounded. Thus,
+$S \subseteq \L(l^2,l^2)$. Also, for each $T \in S$, it is easy to
+find $x \in l^2$ with $T_K(x) = x$, and so $\|T_K\| \geq 1$.
+
+If $K_1,K_2 \in \pow{\N}$ are distinct, then, since
+$K_3 := (K_1 \sminus K_2) \sminus (K_2 \sminus K_1) \neq \emptyset$,
+$\|T_{K_1} - T_{K_2}\| = \|T_{K_3}\| \geq 1$. Hence, for $T,R \in S$ distinct,
+$B_{\frac12}(T) \cap B_{\frac12}(S) = \emptyset$.
+
+If there were a dense set $A \subseteq \L(l^2,l^2)$, then, $\forall T \in S$,
+$B_{\frac12}(T) \cap A \neq \emptyset$. However, a countable set cannot have
+non-empty intersection with uncountably many disjoint sets, so $A$ is
+uncountable. \qed
+\end{question}
+
+\begin{question}{Problem 2}
+We prove the contrapositive statement. Suppose $T$ is discontinuous and
+hence unbounded on $B_1(0)$. Then, there is a sequence
+$\{x_n\}_{n = 1}^{\infty}$ such that, $\forall n \in \N$,
+$\|T(x_n)\| \geq n^2$. $\forall n \in \N$,
+$\left\| \frac{x_n}{n} \right\| \leq n$, so that, as $n \rightarrow \infty$,
+$x_n \rightarrow 0$, but
+$\left \|T\left( \frac{x_n}{n} \right) \right\| \geq n \rightarrow \infty$.
+\qed
+\vspace{-0.1in}
+\end{question}
+
+\begin{question}{Problem 3}
+If $x_1,x_2 \in X$ with $x_1 = y_1 + z_1, x_2 = y_2 + z_2$, $y_1, y_2 \in Y$,
+$z_1,z_2 \in Z$, then, $\forall a,b \in \K$,
+\vspace{-0.1in}
+\[ax_1 + bx_2 = ay_1 + by_2 + az_1 + bz_2.\]
+Since $Y$ is a linear manifold, $ay_1 + by_2 \in Y$ so that
+\vspace{-0.1in}
+\[T(ax_1 + bx_2) = ay_1 + by_2 = aT(x_1) + bT(x_2).\]
+Thus, $T$ is linear. Since $\forall x \in X, T(x) \in Y$, $T^2 = T$. Thus, by
+the result of Problem 5, to show that $T$ is continuous, it suffices to show
+that $\Nul(T)$ and $\Ran(T)$ are closed.
+
+Since $x = 0 + x$, it follows from the uniqueness assumption that $T(x) = 0$ if
+and only if $x \in Z$, and so $\Nul(T) = Z$, which is closed. Also, clearly,
+$\Ran(T) = Y$, which is closed.
+
+Since $T$ is linear and continuous, $T \in \L(X,X)$. The proof that
+$L \in \L(X,X)$ is identical. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item By Theorem 7.15, $\|x_n\|$ is bounded by some $B \in \R$. Since
+$\|x_n^* - x^*\|_*, \|x^*(x_n) - x^*(x)\|\rightarrow 0$,
+\[\|x_n^*(x_n) - x^*(x)\|
+    \leq \|x_n^*(x_n) - x^*(x_n)\| + \|x^*(x_n) - x^*(x)\|
+    \leq \|x_n^* - x^*\|_*B + \|x^*(x_n) - x^*(x)\|
+    \rightarrow 0
+\]
+as $n \rightarrow 0$. \qed
+
+\item By Theorem 7.24, $x_n^*$ is bounded by some $B \in \R$. Since
+$\|x_n^*(x) - x_n^*(x)\|, \|x_n - x\| \rightarrow 0$,
+\[\|x_n^*(x_n) - x^*(x)\|
+    \leq \|x_n^*(x_n) - x_n^*(x)\| + \|x_n^*(x) - x^*(x)\|
+    \leq B\|x_n - x\| + \|x_n^*(x) - x^*(x)\|
+    \rightarrow 0
+\]
+as $n \rightarrow 0$. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+We first note that, since $T^2 = T$, $\forall y \in \Ran(T), y = T(y)$.
+
+($\Rightarrow$) Suppose $T$ is continuous. Since the singleton $\{0\}$ is
+closed, $\Nul(T) = T\inv[\{0\}]$ is closed.
+
+Suppose $\exists y_n \in \Ran(T)$ with
+$\lim_{n \rightarrow \infty} y_n = y \in X$. Then,
+\[y
+    = \lim_{n \rightarrow \infty} y_n
+    = \lim_{n \rightarrow \infty} T(y_n)
+    = T\left(\lim_{n \rightarrow \infty} y_n\right)
+    = T(y) \in \Ran(T),
+\]
+since $T$ is continuous. Thus, $\Ran(T)$ is closed. \qed
+
+($\Leftarrow$) Suppose that $\Nul(T),\Ran(T)$ are closed. $\forall n \in \N$,
+let $(x_n,y_n) \in \Gr(T)$ with $(x_n,y_n) \rightarrow (x,y)$ as
+$n \rightarrow \infty$. Since $\Ran(T)$ is closed,
+$y = \lim_{n \rightarrow \infty} y_n \in \Ran(T)$, so that $y = T(y)$. Since
+each $y_n = T(y_n)$, $x_n - y_n \in \Nul(T)$, so that, since $\Nul(T)$ is
+closed, $x - y = \lim_{n \rightarrow \infty} (x_n - y_n) \in \Nul(T)$, and so
+$T(x) = T(y) = y$. Thus, $(x,y) \in \Gr(T)$, so $\Gr(T)$ is closed. Then, by
+the Closed Graph Theorem, $T$ is continuous. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+\begin{enumerate}[(a)]
+\item Since $|||x||| \leq K\|x\|$, $\forall x \in X$,
+$\L((X,|||\cdot|||),\K) \subseteq \L((X,\|\cdot\|),\K)$, and, similarly,
+$\L((X^*,|||\cdot|||_*),\K) \subseteq \L((X^*,\|\cdot\|_*),\K)$, where $X^*$ is
+defined in terms of the associated norm. Thus, since the canonical embedding
+$J$ of $X$ into $X^{**}$ under $\|\cdot\|$, it is also a surjection under
+$|||\cdot|||$. Hence, $(X,|||\cdot|||)$ is also reflexive, and thus complete.
+It follows from Corollary 3.24 that $\|\cdot\|$ and $|||\cdot|||$ are in fact
+equivalent norms on $X$.
+
+Thus, since $Z$ is closed under the topology induced by $\|\cdot\|$, it is also
+closed under the topology $|||\cdot|||$. Then, since any closed subspace of a
+complete metric space is itself complete, $(Z,\rho)$ is complete. \qed
+
+\item I wasn't able to come up with a counterexample for this one. Assuming a
+counterexample lies in one of the spaces we've discussed, I did make the
+following observations that should narrow the space of possible counterexamples
+to very few possibilites:
+\begin{enumerate}
+\item The only non-reflexive Banach spaces we've discussed are
+$l^1,c_0,c,l^{\infty}$.
+\item Of these spaces, $c_0,c,l^{\infty}$ have only one well-defined norm
+($\|\cdot\|_{\infty}$, up to scaling), so the counterexample should be in
+$l^1$.
+\item In order for $(l^1,\|\cdot\|)$ to be a Banach space,
+$\|\cdot\| = \|\cdot\|_1$.
+\item The only norm that $\|\cdot\|_1$ bounds by a constant multiple is
+$\|\cdot\|_{\infty}$, so $|||\cdot||| = \|\cdot\|_{\infty}$.
+\end{enumerate}
+I wasn't able to find a counterexample beyond this though\dots
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 7}
+Let $X := (C[0,1],\|\cdot\|_{\infty})$ (so that $X$ is a Banach space), and
+define, $\forall n \in \N$,
+\[
+K_n := K \cap B_n,
+\quad \mbox{ where } \quad
+K := \left\{ f \in X :
+        f(0) = 0 \mbox{ and }
+        \int_0^1 f(x) \, dx \geq 1 \right\}
+\]
+and $B_n = \{f \in X : \|f\|_{\infty} \leq 1 + 1/n\}$. $B_n$ is clearly
+bounded, convex and closed.
+
+I showed in my solution to Problem 9 on Assignment 4 that $K$ is
+convex and closed, so that, as the intersection of two convex and closed sets,
+each $K_n$ is also convex and closed. I also demonstrated a family
+$\{f_n\} \in K$ with each $f_n \in B_n$, so that $f_n \in K_n$. Thus,
+$\{K_n\}_{n = 1}^{\infty}$ satisfies condition (i).
+
+I also showed that, $\forall f \in K$, $\|f\|_{\infty} > 1$, so that
+\[\bigcap_{n = 1}^{\infty} K_n
+    = K \cap \bigcap_{n = 1}^{\infty} B_n
+    = K \cap \{f \in X : \|f\|_{\infty} \leq 1\}
+    = \emptyset,
+\]
+and so $\{K_n\}_{n = 1}^{\infty}$ satisfies condition (iii).
+
+Finally, $\forall n \in \N$, since
+$K_{n + 1} = K \cap B_{n + 1} \subseteq K \cap B_n = K_n$,
+$\{K_n\}_{n = 1}^{\infty}$ satisfies condition (ii). \qed
+
+In principle, $K$ could be any set satisfying the properties in Problem 9 on
+Assignment 4.
+\vspace{-0.1in}
+\end{question}
+
+\begin{question}{Problem 8}
+We construct a closed subspace $Z \subseteq X$ such that the restriction of $T$
+to $Z$ bijection into $Y$, allowing us to use the Bounded Inverse Theorem to
+obtain the desired result.
+
+By Proposition 1.21, we can construct a Hamel basis $(x_i | i \in I)$ for $X$
+such that, for some $J \subseteq I$, $(x_i | i \in J)$ is a Hamel basis for
+$\Nul(T)$. $\forall i \in I$, let $\alpha_i$ denote the projection onto $x_i$.
+
+Define
+\[Z
+    := \{x \in X \, | \, \forall j \in J, \alpha_j(x) = 0\}
+    = \bigcap_{j \in J} \Nul(\alpha_j)
+.\]
+By definition of the product topology, each $\alpha_i$ is continuous. Then,
+since projections are continuous, each $\Nul(\alpha_i)$ is closed, so that $Z$
+is a closed linear manifold in $X$, and hence $Z$ is a Banach space.
+
+Let $T_Z : Z \rightarrow Y$ denote the restriction of $T$ to $Z$. It follows
+from the construction of $J$ and $Z$ that $Z \cap \Nul(T) = \{0\}$, so that
+$T_Z$ is injective.
+
+Let $x \in X$, and choose finite sets $J_x \subseteq J,
+I_x \subseteq I \sminus J$ by
+\[x = \sum_{j \in J_x} \alpha_j(x) x_j + \sum_{i \in I_x} \alpha_i(x) x_i
+\quad \mbox{ and } \quad
+\alpha_i(x) \neq 0, \forall i \in J_x \cup I_x.\]
+Then,
+\[T(x)
+    = T\left( \sum_{j \in J_x} \alpha_j(x) x_j
+    + \sum_{i \in I_x} \alpha_i(x) x_i \right)
+    = \sum_{j \in J_x} \alpha_j(x) T(x_j)
+    + T\left( \sum_{i \in I_x} \alpha_i(x) x_i \right)
+    = T(x'),
+\]
+for $x' := \sum_{i \in I_x} \alpha_i(x) x_i$. Furthermore, $x' \in Z$, and it
+follows that $T_Z$ is surjective.
+
+By the Bounded Inverse Theorem, $T_Z$ has a bounded linear inverse $T_Z\inv$.
+Thus, given a convergent sequence $\{y_n\}_{n = 1}^{\infty}$ in $Y$ for
+$x_n := T_Z\inv(y_n)$, by continuity of $T_Z$,
+$\{x_n\}_{n = 1}^{\infty}$ is convergent, and, furthermore,
+\[\forall n \in \N, \mbox{ we have } y_n = T(x_n) \mbox{ and }
+\|x_n\| \leq \left\| T_Z\inv \right\|_*\|y_n\|. \mqed\]
+\end{question}
+
+\begin{question}{Problem 9}
+($\Rightarrow$) If $p^K$ is continuous, then, since $p^K(0) = 0$, for some
+$\delta > 0$, $p^K < 1$ on $B_{\delta}(0)$. If $x \in B_{\delta}(0)$, then
+by definition of $p^K$, $\exists s \in (0,1)$ with $s\inv x \in K$. Then, since
+$K$ is convex and $0 \in K$, $x = s(s\inv x) + (1 - s)(0) \in K$, and so
+$B_{\delta}(0) \subseteq K$. \qed
+
+($\Leftarrow$) Suppose $B_{\delta}(0) \subseteq K$, for some $\delta > 0$. Note
+that, $\forall x \in X$, since $\frac{\delta x}{2\|x\|} \in B_{\delta}(0)$, by
+definition of $p^K$, $p^K(x) \leq 2\delta\inv\|x\|$. By part (c) of Lemma 5.32,
+$\forall x, h \in X$,
+\begin{align*}
+p^K(x + h)
+ &  \leq p^K(x) + p^K(h)
+    \leq p^K(x) + 2\delta\inv \|h\| \\
+\mbox{ and } 
+p^K(x)
+    =    p^K(x + h - h)
+ &  \leq p^K(x + h) + p^K(-h)
+    \leq p^K(x + h) + 2\delta\inv \|h\|.
+\end{align*}
+Thus, $|p^K(x + h) - p^K(x)| \leq 2\delta\inv \|h\| \rightarrow 0$ as
+$h \rightarrow 0$, and so $p^K$ is (Lipschitz) continuous at $x$. \qed
+\end{question}
+
+\begin{question}{Problem 10}
+We disprove the given statement.
+
+Let $x_n^* = x^{(n)}$ and $x^* = x$, as defined in part (b) of Example 7.23 of
+the notes. As shown in the example, $x_n^* \stackrel{*}{\rightharpoonup} x^*$
+(weakly*), but $x_n^*$ does not converge weakly to $x^*$ as
+$n \rightarrow \infty$, so that there exists $x^{**} \in X^{**}$ such that
+$x^{**}(x_n^*)$ does not converge to $x^{**}(x^*)$ as $n \rightarrow \infty$.
+\qed
+\end{question}
+\end{document}

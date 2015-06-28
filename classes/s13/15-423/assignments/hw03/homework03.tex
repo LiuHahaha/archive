@@ -1,0 +1,165 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage[]{graphicx}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-423 Digital Signal Processing for CS}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Friday, March 8, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\sinc}{\operatorname{sinc}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{enumerate}[I.]
+\item Square Wave \\
+Since the square wave is anti-symmetric, \fbox{$a_n = 0$, $\forall n \in \N$.}
+$\forall$ positive $n \in \N$,
+\begin{align*}
+b_n
+   = \frac2T \int_0^T x(t) \sin\left( \frac{2n\pi t}{T} \right) \; dt
+ & = \frac4T \int_0^{T/2} \sin\left( \frac{2n\pi t}{T} \right) \; dt    \\
+ & = -\frac{2}{\pi n} \cos\left( \frac{2n\pi t}{T} \right)
+        \bigg|_{t = 0}^{t = T/2}                                        \\
+ & = \frac{2}{\pi n} \left( 1 - \cos\left( n\pi \right) \right)
+   = \mbox{\fbox{$\displaystyle
+        \left\{
+            \begin{array}{cl}
+                \frac{2}{\pi n} & : \mbox{ if $n$ is odd} \\
+                0               & : \mbox{ else}
+            \end{array}
+        \right.$.}}
+\end{align*}
+
+\item Triangle Wave \\
+Since the triangle wave is anti-symmetric,
+\fbox{$a_n = 0$, $\forall n \in \N$.} $\forall$ positive $n \in \N$, since the
+triangle wave is the integral of the square wave, dividing the series from
+problem I. by $\frac{2\pi n}{T}$ gives
+\begin{align*}
+\mbox{\fbox{$\displaystyle b_n = \frac{T}{\pi^2 n^2}$.}}
+\end{align*}
+
+%TODO
+\item Amplitude-Modulated Sine Wave \\
+Since the modulated sine wave is symmetric,
+\fbox{$b_n = 0$, $\forall$ positive $n \in \N$.}
+By a trigonometric identity, $\forall t \in \R$,
+\[sin(\omega t)\sin(\omega_1 t)
+ = \frac12(\cos((\omega - \omega_1) t) + \cos((\omega - \omega_1) t)).
+\]
+Thus, \fbox{$a_{\omega - \omega_n} = a_{\omega + \omega_n} = \frac12$,} and,
+for all other \fbox{$n \in \N$, $a_n = 0$.}
+
+\item Gaussian \\
+By definition of the Fourier Transform, $\forall \Omega \in \R$,
+\begin{align*}
+F(\Omega)
+ & :=   \frac{1}{\sqrt{2\pi}} \int_{\R} \exp\left( -t^2 \right)
+            \cdot \exp\left( -2\pi it\Omega \right) \, dt               \\
+ & =    \frac{\exp \left( (\pi i \Omega)^2 \right)}{\sqrt{2\pi}}
+            \int_{\R} \exp\left( -t^2 \right)
+                \cdot \exp\left( -2\pi it\Omega \right)
+                    \cdot \exp\left( -(\pi i \Omega)^2 \right) \, dt    \\
+ & =    \frac{\exp \left( -\pi^2 \Omega^2 \right)}{\sqrt{2\pi}}
+            \int_{\R} \exp\left( -(t + \pi i \Omega)^2 \right) \, dt
+   =    \mbox{\fbox{$\displaystyle
+            \frac{\exp \left( -\pi^2 \Omega^2 \right)}{\sqrt{2}}
+        $,}}
+\end{align*}
+since
+$\displaystyle
+   \int_{\R} \exp\left( -(t + \pi i \Omega)^2 \right) \, dt
+ = \int_{\R} \exp\left( -t^2 \right) \, dt
+ = \sqrt{\pi}
+$.
+
+\item Triangle \\
+Since the triangle is symmetric, its Fourier transform is given by
+\begin{align*}
+X(\Omega)
+ & = 2\int_0^{\infty} x(t) \cos(2\pi\Omega t) \; dt \\
+ & = 2\int_0^{T/2} x(t) \cos(2\pi\Omega t) \; dt    \\
+ & = \int_0^{T/2} T \cos(2\pi\Omega t) \; dt
+        - 2\int_0^{T/2} t \cos(2 \pi\Omega t) \; dt    \\
+ & = \frac{t}{2\pi\Omega} \sin(2\pi\Omega t) \bigg|_{t = 0}^{t = T/2}
+        - 2\frac{2\pi\Omega t \sin(2\pi\Omega t) + \cos(2\pi\Omega t)}
+            {4\pi^2\Omega^2} \bigg|_{t = 0}^{t = T/2} \\
+ & = -\frac{\cos(2\pi\Omega t)} {2\pi^2\Omega^2} \bigg|_{t = 0}^{t = T/2}
+   = \frac{1 - \cos(\pi\Omega T)} {2\pi^2\Omega^2}
+   = \mbox{\fbox{$(T\sinc(\pi\Omega))^2$,}}
+\end{align*}
+where the last equality follows from a trigonometric inequality.
+
+\item Triangle Wave Again \\
+Since the triangle wave $y(t)$ is the convolution over $t$ of $x(t)$ (as
+defined in part V.) and the impulse train
+$\sum_{i \in \Z} \delta\left( t - iT \right)$, whose Fourier transform is
+$\frac1T\sum_{i \in \Z} \delta\left( \Omega - \frac{i}{T} \right)$, by the
+Convolution Theorem,
+\begin{align*}
+Y(\Omega)
+   = X(\Omega)
+        \cdot \frac1T\sum_{i \in \Z} \delta\left( \Omega - \frac{i}{T} \right)
+ & = T\sinc^2(\pi\Omega)
+        \cdot \sum_{i \in \Z} \delta\left( \Omega - \frac{i}{T} \right) \\
+ & = \mbox{\fbox{$\displaystyle
+      \left\{
+          \begin{array}{cl}
+              T\sinc^2(\pi\Omega)   & : \mbox{ if $\Omega = iT, i \in \Z$} \\
+              0                     & : \mbox{ else}
+          \end{array}
+      \right.$.}}
+\end{align*}
+\end{enumerate}
+\end{document}

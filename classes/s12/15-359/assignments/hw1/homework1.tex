@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% This is here, so that you can make your homework look %%
+%% pretty when you compile it.                           %%
+%%     DO NOT PUT YOUR NAME ANYWHERE ELSE!!!!            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{1}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{January 27, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+%DONE
+\begin{question}{Problem 1: Chain Gang}
+Let $E_1, E_2, E_3, \ldots$ be events, each with positive probability.
+For $n = 1$, clearly \[P(E_1 \cap E_2 \cap \ldots \cap E_n) = P(E_1)\]
+\[ = P(E_1) \cdot P(E_2 | E_1) \cdot \ldots \cdot
+                    P(E_n | E_1 \cap E_2 \cap \ldots \cap E_{n - 1}).\]
+Suppose that, for some $n \in \mathbb{N} \backslash \{0\}$, 
+\[P(E_1 \cap E_2 \cap \ldots \cap E_n) = P(E_1) \cdot P(E_2 | E_1) \cdot
+              \ldots \cdot P(E_n | E_1 \cap E_2 \cap \ldots \cap E_{n - 1}).\]
+Then, by definition of conditional probability, for any event $E_{n + 1}$,
+\[P(E_1 \cap E_2 \cap \ldots \cap E_n \cap E_{n + 1})
+= P(E_1 \cap E_2 \cap \ldots \cap E_n) \cdot
+                              P(E_{n + 1} | E_1 \cap E_2 \cap \ldots \cap E_n)\]
+\[= P(E_1) \cdot P(E_2 | E_1) \cdot \ldots \cdot
+  P(E_n | E_1 \cap E_2 \cap \ldots \cap E_{n - 1}) \cdot
+  P(E_{n + 1} | E_1 \cap E_2 \cap \ldots \cap E_n).\]
+Thus, by the Principle of Mathematical Induction, the identity holds for all
+$n \in \mathbb{N}$. \qquad $\blacksquare$
+
+\end{question}
+
+%DONE
+\begin{question}{Problem 2: Me and you}
+The implication holds.
+
+Since $P(A | B) > P(A)$, \[\frac{P(A | B) P(B)}{P(A)} > P(B).\] Thus,
+by Bayes' Theorem, \[P(B | A) = \frac{P(A | B) P(B)}{P(A)} > P(B).\]
+\qquad $\blacksquare$
+\end{question}
+
+%DONE
+\begin{question}{Problem 3: Fool me once, shame on you. Fool me twice...}
+\begin{enumerate}[A.]
+%DONE
+\item Let $S$ be the event that the laboratory test returns ``success,'' and
+let $V$ be the event that the vaccine is effective. The law of total
+probability gives \[P(S) = P(S | V) P(V) + P(S | V^c) P(V^c) = \]
+\[P(S | V) P(V) + P(S | V^c) (1 - P(V)) = 0.6*0.5 + 0.4*0.5 =
+                                                        \mbox{\fbox{$0.5$.}}\]
+
+%DONE
+\item Let $S$ and $V$ be as in the solution to part A. above. Then, by the
+result of part A., Bayes' Theorem gives
+\[P(V | S) = \frac{P(S | V) P(V)}{P(S)}
+ = \frac{0.6*0.5}{0.6 + 0.4} = \mbox{\fbox{$0.6$.}}\]
+
+%DONE
+\item Let $S$ and $V$ be as in the solution to part A. above, and let $T$ be
+the event that the second test returns ``success.'' Then, since $S$ and $T$
+are independent,
+\[P(V | S \cap T) = \frac{P(S \cap T | V) P(V)}{P(S \cap T)}
+ = \frac{P(S \cap T | V) P(V)}{P(S \cap T | V)P(V) + P(S \cap T | V^c)P(V^c)}\]
+\[ = \frac{0.6*0.8*0.5}{0.6*0.8*0.5 + 0.4*0.2*0.5}
+ \approx \mbox{\fbox{$0.86$.}}\]
+Thus, adding the second test was fairly useful.
+\end{enumerate}
+\end{question}
+
+%DONE
+\begin{question}{Problem 4: Wrapping up Miller-Rabin}
+\begin{enumerate}[A.]
+%DONE
+\item Let $E$ be the event that the Miller-Rabin test always returns YES?
+after $m$ iterations, and, for $i \in \{1, \ldots, m\}$, let $E_i$ denote the
+event that the $i^{th}$ iteration of the Miller-Rabin test returns YES?, so
+that $E = E_1 \cap \ldots \cap E_m$. Assuming, the result of each iteration of
+the Miller-Rabin test is conditionally independent given of the results of all
+previous iterations of the test given $C$,
+\[P(E | C) = P(E_1 \cap E_2 \cap \ldots \cap E_m | C)
+ = P(E_1 | C) P(E_2 | C) \ldots P(E_m | C)
+ \leq \mbox{\fbox{$\displaystyle \frac{1}{2^m}$.}}\]
+
+%DONE
+\item $P(C) \approx 1 - \frac{\ln n}{n}$.
+
+%DONE
+\item By Bayes' Theorem, \[P(C | Y_m) = \frac{P(Y_m | C) P(C)}{P(Y_m)},\]
+where the event $Y_m$ is identical to the event $E$ used in the solution to
+part A. Thus, Bayes' Theorem and the result of part B., \[P(C | Y_m)
+ \leq \frac{1}{2^m \left(1 - \frac{\ln n}{n} \right)}
+ = \mbox{\fbox{$\displaystyle \frac{n}{2^m (n - \ln n)}.$}}\]
+
+\end{enumerate}
+\end{question}
+
+%DONE
+\begin{question}{Problem 5: Last Die}
+Choose $4$ of the $5$ die rolls and call them ``the first four die rolls'';
+let the remaining die roll be the ``fifth die roll''.
+
+Let $A$ denote the event that the sum of the five die rolls is divisible by
+$6$, let $E$ denote the set of all possible rolls of the five dice (i.e., the
+entire sample space), and, for $k \in \{0,1,2,3,4,5\}$, let $E_k$ denote the
+event that the sum of the first four die rolls is congruent to $k \pmod 6$ and
+let $A_k$ denote the probability that the fifth die roll is $6 - k$.
+By the Law of Total Probability, since $\{E_0,E_1,\ldots,E_5\}$ partitions $E$,
+\[P(A) = \sum_{k = 0}^5 P(A | E_k) P(E_k).\]
+Clearly, for $k \in \{0,1,\ldots,5\}$, $P(A | E_k) = P(A_k)$, and,
+furthermore, $P(A_0) = P(A_1) = \ldots = P(A_5) = \frac{1}{6}$. Thus, 
+\[P(A) = \sum_{k = 0}^5 \frac{1}{6}P(E_k) = \frac{1}{6}\sum_{k = 0}^5 P(E_k)
+ = \frac{1}{6}\sum_{k = 0}^5 P(E) P(E_k),\]
+so that, by the Law of Total Probability, \[P(A) = \frac{1}{6} P(E)
+ = \mbox{\fbox{$\displaystyle \frac{1}{6}$.}}\]
+\end{question}
+
+%DONE
+\begin{question}{Problem 6: If ya like it, ya shoulda put a probability mass
+                                                                        on it}
+\begin{enumerate}[A.]
+%DONE
+\item Since, using the prescribed algorithm, you will never, marry any of the
+first $m$ prospects, for $i \leq m$, $P(E_i) = \mbox{\fbox{$0$.}}$
+
+%DONE
+\item For $i > m$, let $A_i$ be the event that you marry the $i^{th}$
+prospect, and let $B_i$ be the event that the $i^{th}$ prospect is the best,
+so that $P(E_i) = P(A_i \cap B_i) = P(A_i | B_i) P(B_i)$, by definition of
+conditional probability. Clearly, $P(B_i) = \frac{1}{i}$. Since, if the
+$i^{th}$ prospect is the best, you will marry the $i^{th}$ prospect if you
+have not already married a previous prospect, $P(A_i | B_i)$ is the probabilty
+that $s$ is greater than the $(i - 1 - m)$ prospects between the first $m$
+prospects and the $i^{th}$ prospect, or, equivalently, the probability that
+the best of the first $(i - 1)$ propects is among the first $m$ prospects, or
+$\frac{m}{i - 1}$. Thus, \fbox{$P(E_i) = \frac{m}{n(i - 1)}$.}
+
+%DONE
+\item By the Law of Total Probability,
+\[P(E) = \sum_{i = 0}^n P(E | E_i) P(E_i).\]
+Since $E_i \subseteq E$, $P(E | E_i) = 1$. Thus, by the results of parts A.
+and B. above, \[P(E) = \sum_{i = m + 1}^n \frac{m}{n(i - 1)}
+ = \frac{m}{n}\sum_{i = m + 1}^n \frac{1}{(i - 1)}.
+ \mbox{ \qquad } \blacksquare\]
+\end{enumerate}
+\end{question}
+\end{document}

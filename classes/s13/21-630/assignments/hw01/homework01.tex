@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, January 23, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+If $p > 2$, then
+\[f_n(t)
+ = \frac{t^p}{1 + nt^2}
+ = \frac{1}{t^{-p} + nt^{2 - p}}
+ \geq \frac{1}{nt^{2 - p}}.
+\]
+Since $2 - p < 0$, $\forall n \in \N$, $\exists t \in [0,\infty)$ such that
+$t^{2 - p} < 1/n$, so that $f_n(t) > 1$, and thus $f_n$ does not converge
+uniformly to $0$.
+
+If $p = 2$, then
+\[f_n(t) = \frac{t^2}{1 + nt^2} = \frac{1}{t^{-2} + n} \leq \frac{1}{n},\]
+so that $f_n$ clearly converges uniformly to zero.
+
+I wasn't able to show the case $0 < p < 2$.
+\end{question}
+
+\begin{question}{Problem 2}
+Consider the infinite family of functions
+\[\F := \left\{X : \R \rightarrow \R \left|
+ X(t) = \left\{ \begin{array}{lc}
+       0 & \mbox{ if } t \leq c \\
+       ((1 - p)(t - c))^{\frac{1}{1 - p}} & \mbox{ if } c < t <
+\frac{1}{1 - p} + c \\
+       t + 1 - \left( \frac{1}{1 - p} + c\right) & \mbox{ if } \frac{1}{1 - p} + c \leq t
+     \end{array} \right. \right., \mbox{ for some } c \in [0,\infty) \right\}.
+\]
+Suppose $X \in \F$. \\
+If $X(t) \leq 0$, then $t \leq c$, so $\frac{dX}{dt}(t) = 0$, as desired. \\
+If $0 < X(t) < 1$, then $c < t < \frac{1}{1 - p} + c$, so
+$\frac{dX}{dt}(t) = ((1 - p)(t - c))^{\frac{p}{1 - p}} = X^p$, as desired. \\
+If $1 \leq X(t)$, $\frac{1}{1 - p} + c \leq t$, so $\frac{dX}{dt}(t) = 1$,
+as desired. \\
+Finally, $X(0) = 0$.
+
+Thus, $\F$ is an infinite family of solutions to the given initial value
+problem. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+Suppose, for sake of contradiction, that $f$ satisfies a Lipschitz condition in
+$x$ on $D$, so that, $\exists C > 0$ such that, $\forall (t,x),(t,y) \in D$,
+\[|f(t,x) - f(t,y)| \leq C|x - y|.\]
+Then, for $y = 0$, $x = e^{-(C + 1)} \in (0,e\inv]$,
+\[|x\ln(x)| = |f(t,x) - f(t,y)| \leq C|x - y| = C|x|,\]
+implying $C + 1 = |\ln(x)| \leq C$, which is a contradiction. \qed
+
+By the given fact, $\forall \alpha \in (0,1)$, $\exists C_{1 - \alpha}$ such
+that, $\forall x \in (0,1)$, $|\ln(x)| \leq C_{1 - \alpha}x^{\alpha - 1}$.
+Multiplying both sides by $x$ gives $|x\ln(x)| \leq C_{1 - \alpha}x^{\alpha}$.
+I wasn't able to get further in showing the Holder condition.
+\end{question}
+
+\begin{question}{Problem 4}
+Suppose, for sake of contradiction, that $f$ satisfies a Lipschitz condition in
+$x$ on $D$, so that $\exists C > 0$ such that, $\forall (t,x),(t,y) \in D$,
+\[|f(t,x) - f(t,y)| \leq C|x - y|.\]
+Then, for $t = 1/C, x = t^2, y = 0$,
+\[4/C = |4t| = |f(t,x) - f(t,y)| \leq C|x - y| = C|t^2| = 1/C,\]
+which is impossible, since $C > 0$.
+
+$\forall t \in [0,\infty)$, if $0 \leq x \leq y \leq t^2$, then,
+\[|f(x) - f(y)|
+ = 4\left|\frac{x - y}{t}\right|
+ \leq 4\left|\frac{x - y}{\sqrt{xy}}\right|
+ \leq 4\left|\sqrt{x} - \sqrt{y}\right|
+ \leq C_1\sqrt{x - y}, \mbox{ for $C_1 = 4$.}
+\]
+
+$\forall t \in [0,\infty)$, if $x \leq 0 \leq t^2 \leq y$, then
+$|f(t,x) - f(t,y)| = 4|t| \leq C_2\sqrt{x - y}$, for $C_2 = 4$.
+
+$\forall t \in [0,\infty)$, if $x, y \leq 0$ or $t^2 \leq x, y$, then
+$|f(t,x) - f(t,y)| = 0 \leq C_3\sqrt{x - y}$, for $C_3 = 1$.
+
+$\forall t \in [0,\infty)$, if $x \leq 0 \leq y \leq t^2$, then
+$|f(t,x) - f(t,y)| = 4|y/t| \leq 4\sqrt{y} \leq C_4\sqrt{y - x}$, for $C_4 = 4$.
+
+$\forall t \in [0,\infty)$, if $0 \leq x \leq t^2 \leq y$, then
+$|f(t,x) - f(t,y)| = 4|t - x/t| \leq C_5\sqrt{y - x}$, for $C_5 = 4$.
+
+It follows that $f$ satisfies a Holder condition in $x$ on $D$, with exponent
+$\alpha = 1/2$ and constant $C = \max\{C_1,C_2,C_3,C_4, C_5\} = 4$.
+\qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+$\forall n \in \N$, define $f_n : \R \rightarrow \R$ by
+\[f_n(x)
+  = \sum_{k = 1}^{n} \frac{x^k\sin(e^{kx})}{k^k},
+  \forall x \in \R.
+\]
+Since continuity is defined pointwise, it suffices to show that, $\forall B >
+0$, $f$ is continuous when restricted to $[-B,B]$. To do this, it suffices to
+show that the sequence $\{f_n\}_{n = 1}^{\infty}$ of continuous functions
+converges uniformly to $f$ when restricted to $[-B,B]$, $\forall B > 0$.
+$\forall m \in \N, x \in [-B,B]$,
+\begin{align*}
+|f(x) - f_{n - 1}(x)|
+ & = \left| \sum_{k = m}^{\infty} \frac{x^k\sin(e^{kx})}{k^k} \right| \\
+ & \leq \sum_{k = m}^{\infty} \left| \frac{x^k\sin(e^{kx})}{k^k} \right|
+   \leq \sum_{k = m}^{\infty} \left| \frac{B}{k} \right|^k \\
+ & \leq \sum_{k = m}^{\infty} \left| \frac{B}{B + 1} \right|^k
+ & \mbox{(assuming $m > |x|$, since we will take $m \rightarrow \infty$)} \\
+ & =    \frac{    \left| \frac{B}{B + 1} \right|^m}
+             {1 - \left| \frac{B}{B + 1} \right|}
+   \rightarrow 0,
+ & \mbox{(geometric series)}
+\end{align*}
+as $m \rightarrow \infty$, so that $\{f_n\}_{n = 1}^{\infty}$ indeed converges
+uniformly to $f$. \qed
+\end{question}
+
+\end{document}

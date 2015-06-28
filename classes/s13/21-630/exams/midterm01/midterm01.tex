@@ -1,0 +1,264 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, March 6, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Midterm \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+%TODO
+\begin{question}{Problem 1}
+$\forall t \geq 0$, define $F_t : \R^4 \rightarrow \R^4$ by
+\[F_t
+    \begin{pmatrix}
+        x_1 \\
+        x_2 \\
+        v_1 \\
+        v_2 \\
+    \end{pmatrix}
+ =
+    \begin{pmatrix}
+        X_1(t,x,v) \\
+        X_2(t,x,v) \\
+        V_1(t,x,v) \\
+        V_2(t,x,v) \\
+    \end{pmatrix}
+ =
+    \begin{pmatrix}
+x_1 + \int_0^t V_1(s,x,v) \, ds \\
+x_2 + \int_0^t V_2(s,x,v) \, ds \\
+v_1 + \int_0^t E_1(s,X(s,x,v)) \, ds \\
+v_2 + \int_0^t E_2(s,X(s,x,v)) \, ds
+    \end{pmatrix},
+\]
+so that $J(t)$ is the Jacobian of $F_t$. Thus, for $t = 0$,
+\[
+F_t
+    \begin{pmatrix}
+        x_1 \\
+        x_2 \\
+        v_1 \\
+        v_2 \\
+    \end{pmatrix}
+ =
+    \begin{pmatrix}
+        x_1 \\
+        x_2 \\
+        v_1 \\
+        v_2 \\
+    \end{pmatrix},
+\mbox{ so that }
+\det(J(t)) = \det
+    \begin{pmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+    \end{pmatrix}
+ = 1
+.\]
+I wasn't sure where to go from here; since $E$, and hence the system, are not
+necessarily linear, we can't use the Abel/Liouville Theorem or similar
+results to show that $\det(J(t))$ is constant.
+\end{question}
+
+\begin{question}{Problem 2}
+Let $T = (4|x_0|)^{-2} > 0$, $B = [-2|x_0|, 2|x_0|]$,
+$\C_B := \{X : [0,T] \rightarrow B : X \mbox{ is continuous}\}$, and
+$\F : \C_B \rightarrow \C_B$ defined by
+\[\F(X)(t) = x_0 + \int_0^{t/2}2\cos(t)X^3(s) \, ds + \int_0^t X^3(s) \, ds,
+ \quad \forall X \in \C_B, t \in [0,T].\]
+
+We show that the range of $\F$ is indeed contained in $\C_B$ and then that $\F$
+is a contraction, so that, by the Contraction Mapping Theorem, $\F$ has a fixed
+point (which clearly has the desired properties).
+
+Suppose that $X \in \C_B$. Then, $\forall t \in [0,T]$,
+\begin{align*}
+|\F(X)(t)|
+ & \leq |x_0| + \int_0^{t/2}|2\cos(t)X^3(s)| \, ds + \int_0^t |X^3(s)| \, ds \\
+ & \leq |x_0| + 2\int_0^{t/2} |X^3(s)| \, ds + \int_0^t |X^3(s)| \, ds \\
+ & \leq |x_0| + 2\int_0^{T/2} 8|x_0|^3 \, ds + \int_0^T 8|x_0|^3 \, ds \\
+ & =    |x_0| + 8\frac{|x_0|^3}{(4|x_0|)^2} + 8\frac{|x_0|^3}{(4|x_0|)^2}
+   =    |x_0| + \frac12 |x_0| + \frac12|x_0|
+   =    2|x_0|,
+\end{align*}
+so that $\|\F(X)\| \leq 2|x_0|$ and thus $\F : \C_B \rightarrow \C_B$. Suppose
+now that $X,Y \in \C_B$. Then,
+$\forall t \in [0,T]$,
+\begin{align*}
+|\F(X)(t) - \F(Y)(t)|
+ & \leq \int_0^{t/2}|2\cos(t)||X^3(s) - Y^3(s)| \, ds
+   +    \int_0^t|X^3(s) - Y^3(s)| \, ds \\
+ & \leq 2\int_0^{t/2}|X^3(s) - Y^3(s)| \, ds
+   +    \int_0^t|X^3(s) - Y^3(s)| \, ds \\
+ & =    2\int_0^{t/2}|X^2(s) + XY(s) + Y^2(s)||X(s) - Y(s)| \, ds \\
+ & +    \int_0^t|X^2(s) + XY(s) + Y^2(s)||X(s) - Y(s)| \, ds
+  \quad \mbox{(difference of cubes)} \\
+ & \leq 2\int_0^{T/2}3|x_0|^2\|X - Y\| \, ds 
+   +    \int_0^T3|x_0|^2\|X - Y\| \, ds \\
+ & \leq 3\frac{|x_0|^2\|X - Y\|}{(4|x_0|)^2}
+   +    3\frac{|x_0|^2\|X - Y\|}{(4|x_0|)^2}
+   =    \frac{3}{16}\|X - Y\|,
+\end{align*}
+so that $\|\F(X) - \F(Y)\| \leq \frac{3}{16} \|X - Y\|$, and thus $\F$ is a
+contraction. \qed
+\end{question}
+
+%TODO
+\begin{question}{Problem 3}
+Since $f$ is bounded, $\exists M_f > 0$ with $|f| \leq M_f$ on $\R$.
+Note first that, for all $X : [0,T] \rightarrow \R$ satisfying
+\begin{equation}
+X(t)
+ = x_0 + \int_0^{\min(t + \delta, T)} f(X(s)) \, ds
+    \quad \forall t \in [0,T],
+\label{eq:3.1}
+\end{equation}
+\[\left| X(t) - x_0 \right|
+ \leq \int_0^{\min(t + \delta, T)} M_f \, ds
+ \leq \int_0^T M_f \, ds
+ = M_f T.
+\]
+Since $f'$ is continuous and $I := [x_0 - M_f T, x_0 + M_f T]$ is compact,
+$\exists M_{f'} > 0$ with $|f'| \leq M_{f'}$ on $I$. Thus,
+$\forall t \in [0,T]$, for $X,Y$ satisfying Equation (\ref{eq:3.1}), by the
+Mean Value Theorem, $\exists c \in I$ with
+\[|f(X(t)) - f(Y(t))| = |f'(c)||X(t) - Y(t)| \leq M_{f'}|X(t) - Y(t)|.\]
+Thus,
+\begin{align*}
+\left| X(t) - Y(t) \right|
+ & \leq \int_0^{\min(t + \delta, T)} |f(X(s)) - f(Y(s))| \, ds \\
+ & \leq \int_0^{\min(t + \delta, T)} M_{f'}|X(s) - Y(s)| \, ds.
+\end{align*}
+This is close, but not quite sufficient to use Gronwall to get the desired
+result\dots
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+\begin{enumerate}[A)]
+\item Since $f$ is continuous and $D := [t_0,t_1] \times [-C,C]^N$ is compact,
+for some $M \in \R$, $|f| \leq M$ on $D$. Note that $C$ bounds $\{X^{(k)}\}$
+uniformly on $[t_0,t_1]$. Furthermore, letting $\e > 0$, for
+$\delta := \frac{\e}{M}$, $\forall k \in \N, s,t \in [t_0,t_1]$ with
+$|t - s| < \delta$, using the integral equation form of $(ODE)$,
+\[|X^{(k)}(t) - X^{(k)}(s)|
+ \leq \int_s^t |f(u,X^{(k)}(u))| \, du
+ \leq \int_s^t M \, du
+ = M(t - s)
+ < \e.
+\]
+Thus, $\{X^{(k)}\}$ is equicontinuous on $[t_0,t_1]$, so, by the Ascoli-Arzela
+Theorem, some subsequence $\{X^{(n_k)}\}$ converges uniformly to some
+continuous $X : [t_0,t_1] \rightarrow \R^N$.
+
+Since $f$ is continuous, and $D := [t_0,t_1] \times [-C,C]$ is compact, $f$ is
+uniformly continuous on $D$, so that the sequence
+$\{t \mapsto f(t,X^{(n_k)}(t))\}$ converges uniformly to the function
+$t \mapsto f(t,X(t))$, allowing us to pass the limit into the integral in the
+following equality:
+\begin{align*}
+X(t)
+ & = \lim_{k \rightarrow \infty} X^{(n_k)}(t)
+   = \lim_{k \rightarrow \infty} \left( X^{(n_k)}(t_0)
+   + \int_{t_0}^t f(s,X^{(n_k)}(s)) \, ds \right) \\
+ & = X(t_0) + \int_{t_0}^t \lim_{k \rightarrow \infty} f(s,X^{(n_k)}(s)) \, ds
+   = X(t_0) + \int_{t_0}^t f(s,X(s)) \, ds,
+\end{align*}
+$\forall t \in [t_0,t_1]$, so that $X$ is a solution to $(ODE)$. \qed
+
+\item Let $\e > 0$. Since, $f$ is continuous on the compact set
+$D := [t_0,t_1] \times [-C,C]$, $f$ is uniformly continuous on $D$. Thus,
+$\exists \delta > 0$, such that, $\forall x_1,x_2 \in [-C,C]$
+\[|x_1 - x_2| < \delta
+    \quad \mbox{implies} \quad
+   |f(t,x_1) - f(t,x_2)| < \frac{\e}{2(t_1 - t_0)}.
+\]
+
+From part A and the uniqueness of solutions with the same initial
+conditions, we have a subsequence $\{X^{(n_k)}\}$ converging uniformly to $X$.
+Thus, we can take $n \in \N$ such that,
+$\forall t \in [t_0,t_1], |X^{(n)}(t) - X(t)| < \delta$, and then, since
+$X^{(k)}(t_0) \rightarrow X(t_0)$ as $k \rightarrow \infty$, we can take
+$k_0 \in \N$ such that, $\forall k \geq k_0$,
+$|X^{(k)}(t_0) - X(t_0)| < |X^{(n)}(t_0) - X(t_0)|$.
+
+Then, $\forall t \in [t_0,t_1]$,
+\begin{align*}
+|X^{(k)}(t) - X(t)|
+ & \leq |X^{(k)}(t_0) - X(t_0)|
+ +      \int_{t_0}^t |f(s,X^{(k)}(s)) - f(s,X(s))| \, ds \\
+ & \leq |X^{(k)}(t_0) - X(t_0)|
+ +      \int_{t_0}^t |f(s,X^{(n)}(s)) - f(s,X(s))| \, ds \\
+ & <    \frac{\e}{2} + \int_{t_0}^t \frac{\e}{2(t_1 - t_0)}\, ds
+   =    \frac{\e}{2} + \frac{\e(t - t_0)}{2(t_1 - t_0)}\, ds
+   =    \frac{\e}{2} + \frac{\e(t - t_0)}{2(t_1 - t_0)}\, ds
+   \leq \e,
+\end{align*}
+so that $X^{(k)} \rightarrow X$ uniformly as $k \rightarrow \infty$. \qed
+
+\end{enumerate}
+\end{question}
+\end{document}

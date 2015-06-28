@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage[margin=1in]{geometry}
+\setlength\topmargin{0.1in}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{setspace}
+
+\onehalfspacing
+\pagestyle{fancyplain}
+\renewcommand{\headrulewidth}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myemail}{sss1@andrew.cmu.edu}
+\newcommand{\myclassnum}{15-221}
+\newcommand{\mysem}{Summer 2013}
+\newcommand{\mysection}{Section M}
+\newcommand{\theassignment}{Homework 2}
+\newcommand{\thetitle}{Writing Assignment 1 Reflection}
+\newcommand{\thedate}{05/30/2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\lhead{\myname\\\myemail\\\thedate}
+\rhead{\myclassnum\\\mysem\\\mysection}
+
+\begin{center}
+\theassignment
+
+\thetitle
+\end{center}
+
+\begin{enumerate}
+\item 
+I found the non-technical explanation easier to write, because I felt less
+compelled to cover technical details of the definition. I felt it necessary to
+give the technical audience some explanation of how mathematicians consider
+manifolds and how manifolds depend on not only their own structure but also the
+structure of the space into which they are embedded (extrinsic dimension).
+A mathematician's definition of a manifold might be:\\\\
+{\bf Definition:} If $n,k \in \N$ with $k \leq n$, $M \subseteq \R^n$ is a
+{\bf $k$-manifold} iff, $\forall x \in M$, $\exists$ open sets
+$U_x \subseteq \R^n$ (with $x \in U_x$) and $V_x \subseteq \R^k$ and a
+continuous bijection $f_x : V_x \to M \cap U_x$ with $f\inv_x$ continuous.\\\\
+A technical reader has some exposure to mathematical notation, and might have
+seen some rigorous mathematical definitions. Thus, I struggled for quite a
+while with how much of the true definition to include.
+
+For the non-technical audience, it seemed sufficent to explain manifolds
+visually, without referencing their mathematical context, because a more
+thorough explanation would have to be unreasonably long.
+
+\item
+The results claim that both my definitions `should be easily
+understood by' 15 to 16 year olds, suggesting that both definitions were
+written at an appropriate level in terms of word complexity and sentence
+length. This isn't too surprising, since most of my definitions are visual in
+nature, and describe simple images. I think the primary difficulty in
+understanding my definitions is in generalizing the examples and in
+understanding (especially for the technical definition) how and why manifolds
+in general serve as interesting mathematical objects. I think, therefore, that
+I may have oversimplified the technical definition, at the cost of making the
+definition less interesting and useful. It does surprise me slightly that the
+readability statistics are so similar for the two definitions, since I had
+thought that I had been using slightly more complex vocabulary for the
+technical definition (I suppose this is reflected in the 5\% difference in the
+percentages of complex words).
+\end{enumerate}
+
+Readability statistics are tabulated on the next page.
+
+\begin{tabular}{|l|c|l|c|}
+\hline
+Non-technical Audience          &           &
+Technical Audience              &           \\
+\hline
+Flesch Kincaid Reading Ease     &   69.3    &
+Flesch Kincaid Reading Ease     &   65.1    \\
+\hline
+Flesch Kincaid Grade Level      &   8.1     &
+Flesch Kincaid Grade Level      &   9       \\
+\hline
+Gunning Fog Score               &   11.9    &
+Gunning Fog Score               &   14.3    \\
+\hline
+SMOG Index                      &   8.6     &
+SMOG Index                      &   10.3    \\
+\hline
+Coleman Liau Index              &   9       &
+Coleman Liau Index              &   9.4     \\
+\hline
+Automated Readability Index     &   7.5     &
+Automated Readability Index     &   8.4     \\
+\hline
+No. of sentences                &   12      &
+No. of sentences                &   23      \\
+\hline
+No. of words                    &   219     &
+No. of words                    &   443     \\
+\hline
+No. of complex words            &   26      &
+No. of complex words            &   73      \\
+\hline
+Percent of complex words        &   11.87\% &
+Percent of complex words        &   16.48\% \\
+\hline
+Average words per sentence      &   18.25   &
+Average words per sentence      &   19.26   \\
+\hline
+Average syllables per word      &   1.41    &
+Average syllables per word      &   1.44    \\
+\hline
+\end{tabular}
+\end{document}

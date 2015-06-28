@@ -1,0 +1,156 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-484A Graph Theory}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Wednesday, March 28, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diam}{\operatorname{diam}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+\begin{question}{Problem 1}
+Let $C$ be the set of columns of the board, and let $R$ be the set of rows of
+the board. Construct an undirected graph $G$ (with vertex set $C \cup R$)
+such that there is an edge between two vertices $u$ and $v$ if and only if
+there is a rook on a square shared by $u$ and $v$.
+
+Since no pair of rows and no pair of columns can share a square, $G$ is
+bipartite. Since each row and each column contains $k$ rooks, $G$ is
+$k$-regular. Thus, since all regular, bipartite graphs have perfect matchings,
+$G$ has a perfect matching $M$. Let $S$ be the set of rooks corresponding to
+edges in $M$. Since each row is paired with exactly one column and each column
+is paired with exactly one row, no two rooks in $S$ are in the same row or
+column. Since $|C \cup R| = 2n$, $|S| = n$. Therefore, $S$ is a set of $n$
+rooks with the desired properties. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+Suppose that, for some $k \in \mathbb{N}$, $\|G\| < {k \choose 2}$, and
+consider a proper $k$ coloring of $G$. Since each edge connects at most $2$
+vertices (so that $k \choose 2$ edges are required to have an edge between
+vertices of each possible pair of colors), there exist two colors $b$ and $r$
+such that there is no edge between any vertex colored $b$ and any vertex
+colored $r$. Thus, all the vertices of color $b$ can be recolored with color
+$r$ to give a proper $k - 1$ coloring, so that $\chi(G) < k$. Therefore, if
+$\|G\| < {k \choose 2}$, then $\chi(G) < k$, so that the contrapositive, that,
+if $\chi(G) \geq k$, then $\|G\| \geq {k \choose 2}$, also holds. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+Note that we discuss only connected graphs here, since disconnected graphs can
+be colored one component at a time.
+Let $G$ be a graph which neither an odd cycle nor a complete graph. Suppose
+$G$ is not $\Delta(G)$-regular, so that there exists a vertex $v$ of degree
+$d < \Delta(G)$. Consider a breadth-first search tree rooted at $v$ (since $G$
+is connected, this tree includes every vertex in $G$). Color the tree from the
+bottom up by repeatedly coloring the lowest uncovered vertex in the tree,
+until $v$ has been colored. This can be done with $\Delta(G)$ colors, since
+each vertex is colored before its parent (so that it has at most
+$\Delta(G) - 1$ colored neighbors (it children)), with the exception of $v$,
+which, by choice, has degree at most $\Delta(G) - 1$, so that it can be
+colored with one of the $\Delta(G)$ colors. Therefore, any graph that is not
+$\Delta(G)$-regular is $\Delta(G)$-colorable, so that Brooks' theorem holds
+for all graphs that are not $\Delta(G)$-regular, or are $\Delta(G)$-regular
+and $2$-connected, leaving only those graphs which are $k$-regular but not
+$2$-connected.
+\newpage
+Name: \myname \\
+Email: \myandrew \\
+
+Let $K$ be a graph which is neither an odd cycle nor a complete graph. By the
+previous result, we can color each biconnected component of $K$ with
+$\Delta(K)$ colors. Let $\sigma$ be a cyclic permutation of the the
+$\Delta(G)$ colors. Let $A$ and $B$ be two biconnected components thus
+colored. As distinct biconnected components, $A$ and $B$ share at most $1$
+vertex $v$ or are connected by at most one edge $e$. In the first case, we can
+construct a proper coloring of $A \cup B$ (the subgraph of $K$ induced by
+those vertices in either $A$ or $B$) by using colorings of $A$ and $B$, and,
+in the case that $v$ is colored differently in the two colorings, repeatedly
+permuting the colors of the vertices in $A$ by $\sigma$ until $v$ is the same
+color in both the coloring of $A$ and the coloring of $B$. In the second case,
+we can construct a proper coloring of $A \cup B$ by using the colorings of $A$
+and $B$, and permuting the colors of $A$ once if the vertices to which $e$ is
+incident are the same color. Furthermore, we can connect an arbitrary number
+of biconnected components of $K$ in this manner, so that we can construct a
+proper $\Delta(K)$-coloring of $K$ in this manner. Thus, Brooks' Theorem holds
+for graphs which are not $2$-connected.
+
+Therefore, Brooks' theorem holds for all graphs. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+Let $K$ be the graph whose vertices are the edges of $G$, with edges between
+vertices in $K$ if and only if those vertices are adjacent edges in $G$. Since
+$G$ contains $4k + 1$ vertices, no independent set of edges in $G$ contains
+more than $2k$ edges (since $2$ vertices are required for each independent
+edge). Thus, since a set of edges in $G$ is independent if and only the
+corresponding set of vertices in $K$ is independent, is $\alpha(K)$ is the
+maximum size of an independent of vertices in $K$, $\alpha(K) \leq 2k$. The
+number of edges in $H$ is half the sum of the degres of the vertices in $H$,
+$\frac12\frac{2k}{4k + 1} = 4k^2 + k$. Thus, the number of edges in $G$ is
+$4k^2 + k - (k - 1) = 4k^2 + 1$, so that the number of vertices in $K$ is
+$4k^2 + 1$.
+By Theorem 10.5, then,
+\[\chi(K)
+ \geq \frac{|V(K)|}{\alpha(K)}
+ = \frac{4k^2 + 1}{2k}
+ > \frac{4k^2}{2k} = 2k
+.\]
+Thus, since a proper vertex coloring of $K$ corresponds exactly to a proper
+edge coloring of $G$, $\chi_1(G) > 2k$. Thus, since Vizing's Theorem implies
+that $\chi_1(G) = \Delta(G)$ or $\chi_1(G) = \Delta(G) + 1$ and
+$\Delta(G) = 2k$, $\chi_1(G) = 2k + 1 = \Delta(G) + 1$. \qed
+\end{question}
+
+\begin{question}{Problem 7}
+Suppose, for sake of contradiction that $G$ is planar. Let $H$ be a plane
+drawing of $G$. Suppose $v$ and $u$ are vertices in $H$ that are also in $K_5$
+or $K_{3,3}$ (as appropriate). Replace the vertices and edges in the path from
+$u$ to $v$ (i.e., the path that was added in the subdivision) with a single
+edge that traverses that path. Doing this for each pair of vertices $u$ and
+$v$ that were in $K_5$ or $K_{3,3}$ (as appropriate) gives a plane drawing of
+either $K_5$ or $K_{3,3}$, respectively. However, since both $K_5$ and
+$K_{3,3}$ are not planar, this is a contradiction. \qed
+\end{question}
+\end{document}

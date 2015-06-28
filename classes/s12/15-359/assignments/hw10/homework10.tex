@@ -1,0 +1,272 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{10}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{Wednesday, April 16, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Geo}{\operatorname{Geometric}}
+\newcommand{\Var}{\operatorname{Var}}
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Assignment \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+
+\begin{question}{Problem 9.2 Practice with Balance Equations and Time-Reversibility Equations}
+\begin{enumerate}[(a)]
+\item The given Markov chains are as follows:
+%Insert Markov chain here
+\vspace{3cm}
+
+\item It is fairly clear by symmetry that, if $\vec{\pi}$ is the limiting
+distribution of $\mathbf{P}^{(1)}$, then
+\[\vec{\pi}
+  = \mbox{\fbox{$\displaystyle
+    \begin{bmatrix}
+      1/4 \\
+      1/4 \\
+      1/4 \\
+      1/4
+    \end{bmatrix}$
+.}}\]
+
+$\mathbf{P}^{(2)}$ is time reversible, with $x_1 = \frac{1}{15}$,
+$x_2 = \frac{2}{15}$, $x_3 = \frac{4}{15}$, $x_4 = \frac{8}{15}$, so that,
+if $\vec{\pi}$ is the limiting distribution of $\mathbf{P}^{(2)}$, then
+\[\vec{\pi}
+  = \mbox{\fbox{$\displaystyle
+    \begin{bmatrix}
+      1/15 \\
+      2/15 \\
+      4/15 \\
+      8/15
+    \end{bmatrix}$
+.}}\]
+
+\item If $\mathbf{P}^{(1)}$ were time reversible, then there would have to
+exist $x_1,x_2,x_3,x_4 \in [0,1]$ such that
+$\frac23x_1 = \frac13x_2$, $\frac23x_2 = \frac13x_3$,
+$\frac23x_3 = \frac12x_4$, $\frac23x_4 = \frac12x_1$.
+Then, however, $x_1 = 16x_1$, $x_2 = 16x_2$, $x_3 = 16x_3$, $x_4 = 16x_4$, in
+which case $x_1 + x_2 + x_3 + x_4 = 0 \neq 1$, so that $\mathbf{P}^{(1)}$
+cannot be time reversible. However, as shown in part (b) above,
+$\mathbf{P}^{(2)}$ is time reversible. \qed
+\item
+The rate of transitions from a state $i$ to a state $j$ is the probability of
+being in state $i$ times the probability of transitioning to state $j$ given
+that one is at state $i$. Thus, if a Markov chain is time reversible, if
+$\vec{\pi}$ is the limiting distribution of the Markov chain, since
+$x_i = \pi_i$ so that $\pi_iP_{ij} = x_iP_{ij} = x_jP_{ji} = \pi_jP_{ji}$,
+and, therefore the rates are the same. \qed
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 9.6 Expected time until k failures}
+Consider the following Markov chain:
+%Insert Markov chain here
+\vspace{3cm}
+
+This Markov chain accurately models the failure rate because, for $i < k$,
+after $i$ consecutive failures, another failure occurs with probability $p$,
+and a success occurs with probability $1 - p$ (in which case we restart the
+count), and we are not concerned with what occurs after $k$ consecutive
+failures.
+
+Let $\vec{\pi}$ be the limiting distribution of this Markov chain. Then,
+$\pi_0 = \pi_k + (1 - p)\sum_{i = 0}^{k - 1} \pi_i$, and,
+$\forall i \in \{1,2,\ldots,k\}$, $\pi_i = p\pi_{i - 1}$, so that
+$\pi_i = p^i \pi_0$. Thus, since
+\[1
+ = \sum_{i = 0}^k \pi_i
+ = \sum_{i = 0}^k p^i\pi_0
+ = \frac{1 - p^{k + 1}}{1 - p}\pi_0,\]
+$\pi_0 = \frac{1 - p}{1 - p^{k + 1}}$, and so,
+$\forall i \in \{1,2,\ldots,k\}$, $\pi_i = p^i\frac{1 - p}{1 - p^{k + 1}}$.
+
+Note that, since, from state $k$, one moves to state $0$ with probability $1$,
+if $m_{k,k}$ is the expected time to return to state $k$ from state $k$ and
+$m_{0,k}$ is the expected time to reach state $k$ from state $0$ (the quantity
+in question), $m_{0,k} = m_{k,k} - 1$. Since $m_{k,k} = \frac{1}{\pi_k}$,
+\[m_{0,k} = \frac{1}{\pi_k} - 1 = \mbox{\fbox{$ \displaystyle \frac{1 - p^{k + 1}}{p^k(1 - p)}$.}}\]
+\end{question}
+
+\begin{question}{Problem 9.10 Symmetric Random Walk}
+\begin{enumerate}[(a)]
+\item $m_{00} = E[T_{00}]$.
+
+\item Clearly, $n$ must be even. Since we must stay to the right of $0$,
+$\forall k \in \{1,2,\ldots,n - 2\}$, for the first $k$ moves, the number of
+moves to the right must be at least the number of moves to the left.
+
+\item As a result of the properties described in part (b) above, for even $n$,
+the set of valid sequences of $n - 2$ middle steps can be mapped bijectively
+to the set of length $n - 2$ strings with $(n - 1)/2$ $0$'s and $(n - 2)/2$
+$1$'s such that no prefix of the string contains more $0$'s than $1$'s by
+identifying moves to the left with $0$'s and moves to the right with $1$'s. By
+observation that
+$P\{T_{00} = n\} = P\{T_{00} = n | \mbox{First step is Right}\}$, we may
+assume that the first move of any valid path is to the right. Thus, since the
+number of all possible walks beginning with a step to the right is
+$2^{n - 2}$,
+\[P\{T_{00} = n\}
+ = \mbox{\fbox{$\displaystyle \frac{C\left(\frac{n - 2}{2}\right)}{2^{n - 2}}$
+.}}\]
+
+\item By Misha's Lemma, $\forall n \in \mathbb{N}$,
+\[\frac{4^n}{2n + 1} < {2k \choose k} < 4^n.\] Thus, by the result of part (c)
+above, $\forall n \in \mathbb{N}$ with $n$ even, for $k = \frac{n - 2}{2}$,
+\[\frac{1}{2k + 1}
+ = \frac{4^k}{(2k + 1)(4^k)}
+ < P\{T_{00} = n\}
+ < \frac{4^k}{4^k}
+ = 1
+.\]
+
+\item By the results of parts (a) and (d) above,
+\[m_{00}
+ = E[T_{00}]
+ = \sum_{i = 0}^{\infty} 2i P\{T_{00} = 2i\}
+ > \sum_{i = 0}^{\infty} \frac{2i}{2i - 3}
+ > \sum_{i = 0}^{\infty} 1
+  = \infty
+.\mqed\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 9.14 Finite State DTMCs} %Part (a) only
+\begin{enumerate}[(a)]
+\item Suppose $i$ is a state in a finite, aperiodic, irreducible DTMC.
+Since the Markov chain is irreducible, for every state $j$ there is some
+$n_j > 0$ such that $P^n_{ji} > 0$. Let $n = \prod_{j \in S} n_j$, where $S$
+is the set of states in the Markov chain. Then, regardless of the start state
+of the Markov chain, there is some $p > 0$ such that $p$ is the probability of
+visiting state $i$ after at most $n$ transitions. Then, the probability of not
+visiting state $i$ after $kn$ transitions is at most $(1 - p)^k$, so that the
+probability of visiting state $i$ after $kn$ transitions is at least
+$1 -(1 - p)^k \rightarrow 1$ as $k \rightarrow \ infty$. \qed
+
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 10.1 Caching}
+\begin{enumerate}[(a)]
+\item The state of the cache and the current web page can is modeled by the
+following Markov chain (where the numbers are the cached pages, and the
+current page is listed first):
+%Insert Markov chain here
+\vspace{3cm}
+Note that the states with pages $1$ and $2$ cached are not accessible from any
+other states, so that the Markov chain can be reduced to the following:
+%Insert Markov chain here
+\vspace{3cm}
+If $\vec{\pi}$ is the limiting distribution of this Markov chain, then
+\[\pi_{23} = \pi_{32} + \pi_{31} + x\pi_{13},\]
+\[\pi_{32} = (1 - y) \pi_{23},\] \[\pi_{13} = y\pi_{23},\] and
+\[\pi_{13} + \pi_{23} + \pi_{31} + \pi_{32} = 1.\]
+The solution
+\begin{enumerate}[(i)]
+\item The probability of having $1$ and $2$ in the cache is $0$.
+
+\item The probability of having $2$ and $3$ in the cache is
+ $\pi_{23}$ (see above).
+
+\item The probability of having $1$ and $3$ in the cache is
+$\pi_{13}$ (see above).
+
+\end{enumerate}
+
+\item Conditioning on the pages currently cached shows that the probability
+that a requested page is cached is
+\[\pi_{13}(1 - x) + \pi_{23}(1 - y) + \pi_{32},\]
+where $\pi_{13},\pi_{23}$, and $\pi_{32}$ are as defined above.
+
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 10.3 Time to Empty}
+\begin{enumerate}[(a)]
+\item Let $T_{2,0}$ be a random variable denoting the time to travel from state
+$2$ to state $0$. Then, by Linearity of Expectation and symmetry,
+$E[T_{2,0}] = 2E[T_{1,0}]$. Thus, conditioning of whether the first move is to
+the left or to the right,
+\[E[T_{1,0}]
+ = 0.6\cdot1 + 0.4\cdot(1 + E[T_{2,0}])
+ = 0.6\cdot1 + 0.4\cdot(1 + 2E[T_{1,0}])
+ = 1 + 0.8 \cdot E[T_{1,0}]
+,\]
+so that \[E[T_{1,0}] = \mbox{\fbox{$5$.}}\]
+
+\item Let $T_{10}$, $T_{21}$ be as defined in part (a).
+
+Conditioning in whether the first transition is to the right or to
+the left, by Linearity of Expectation, and the result of part (a) above,
+\begin{eqnarray*}
+E[T_{10}^2]
+ & = & 0.6\cdot1 + 0.4\cdot(E[(1 + T_{20})^2] \\
+ & = & 0.6 + 0.4 + 0.8E[T_{20}] + 0.4E[T_{20}^2] \\
+ & = & 1 + 0.8(10) + 0.4E[T_{20}^2] \\
+ & = & 9 + 0.4E[(T_{10} + T_{21})^2] \\
+ & = & 9 + 0.4(E[T_{10}^2] + 2E[T_{10}T_{21}] + E[T_{21}^2]) \\
+ & = & 9 + 0.8(E[T_{10}^2] + E[T_{10}T_{21}]).
+\end{eqnarray*}
+Since $T_{10}$ and $T_{21}$ are independent, this gives
+\[E[T_{10}^2]
+ = 9 + 0.8(E[T_{10}^2] + E[T_{10}]^2)
+ = 9 + 0.8(E[T_{10}^2] + 25)
+ = 29 + 0.8E[T_{10}^2]
+,\]
+so that $E[T_{10}] = 145$. Therefore, by the result of part (a) above,
+\[\Var(T_{10})
+ = E[T_{10}^2] - E[T_{10}]^2
+ = 145 - 25
+ = \mbox{\fbox{$120$
+.}}\]
+
+\end{enumerate}
+\end{question}
+\end{document}

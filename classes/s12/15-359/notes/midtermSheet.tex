@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{tikz}
+\usepackage{multirow}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\begin{document}
+%\thispagestyle{plain}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Name                          & Distribution                                                                   & $E[X]$                  & Var$[X]$
+& z-transform\\
+\hline
+Bernoulli$(p)$, $p \in [0,1]$ & $p_X(k) = \left\{\begin{array}{cc}p & k = 1\\ 1 - p & k = 0\end{array}\right.$ & $p$                     & $p(1 - p)$
+& $1 - p + zp$ \\
+\hline
+Binomial$(n,p)$               & $p_X(k) = {n \choose k}p^k(1 - p)^{n - k} $                                    & $np$                    & $np(1 - p)$
+& $(zp + (1 - p))^n$ \\
+\hline
+Geometric$(p)$                & $p_X(k) = (1 - p)^{k - 1}p$                                                    & $\displaystyle \frac1p$ & $\displaystyle \frac{1 - p}{p^2}$
+& $\displaystyle \frac{zp}{1 - z(1 - p)}$ \\
+\hline
+Poisson$(\lambda)$            & $p_X(k) = \frac{e^{- \lambda} \lambda^k}{k!}$                                  & $\lambda$               & $\lambda$
+& $e^{(z - 1)\lambda}$ \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Name                   & p.d.f. ($f_X$)                                                                  & c.d.f. ($F_X$) & $E[X]$    & Var$[X]$            \\
+\hline
+Uniform$(a,b)$, $a < b$
+                       & $\begin{array}{cc} \frac{1}{b - a} & a \leq x \leq b, \\ 0 & otherwise \end{array}$
+                       & $\begin{array}{cc} 0 & x \leq a, \\ \frac{x - a}{b - a} & a \leq x \leq b, \\ 1 & x \geq b \end{array}$
+                       & $\displaystyle \frac{a + b}{2}$
+                       & $\displaystyle \frac{(b - a)^2}{12}$ \\
+\hline
+Exponential$(\lambda)$, $0 < \lambda$
+                       & $\begin{array}{cc} \lambda e^{- \lambda x} & 0 \leq x, \\ 0 & x < 0 \end{array}$
+                       & $\begin{array}{cc} 1 - e^{- \lambda x}     & 0 \leq x, \\ 0 & x < 0 \end{array}$
+                       & $\displaystyle \frac{1}{\lambda}$
+                       & $\displaystyle \frac{1}{\lambda^2}$\\
+\hline
+Pareto$(\alpha)$, $0 < \alpha < 2$
+                       & $\begin{array}{cc} \alpha x^{-\alpha - 1} & 1 \leq x, \\ 0 & x < 1 \end{array}$
+                       & $\begin{array}{cc} 1 - x^{-\alpha}         & 1 \leq x, \\ 0 & x < 1 \end{array}$
+                       & $\displaystyle \begin{array}{cc} \infty & \alpha \leq 1, \\ \frac{\alpha}{\alpha - 1} & 1 < \alpha \end{array}$
+                       & $\infty$ \\
+\hline
+Normal$(\mu,\sigma^2)$,
+                       & $\displaystyle \frac{1}{\sigma \sqrt{2 \pi}}e^{-\frac{(x - \mu)^2}{2 \sigma^2}}$
+                       & GROSS
+                       & $\mu$
+                       & $\sigma^2$ \\
+\hline
+\end{tabular}
+
+3 axioms ($E$, $F$ mutually exclusive):
+1) $P(E)\geq 0$, 2) $P(E\cup F)=P(E)+P(F)$, 3) $P(\Omega)=1$
+
+Bayes' Law (discrete): $P(F|E)=\frac{P(F\cap E)}{P(E)}=\frac{P(E|F)\cdot P(F)}{P(E)}$ \;\; (cont.): $f_X(x|Y=y)=\frac{P(Y=y|X=x)f_X(x)}{P(Y=y)}$
+
+Two events are independent if $P(E|F)=P(E)$ or $P(E\cap F)=P(E)P(F)$, they are conditionally independent if $P(E\cap F|G)=P(E|G)P(F|G)$
+
+If $X$ and $Y$ are independent, then $E[XY]=E[X]E[Y]$.
+
+Memorilessness: $P(X>s+t|X>s)=P(X>t)$.
+
+$X$ and $Y$ are independent if $f_{X,Y}(x,y)=f_X(x)\cdot f_Y(y)$.
+
+$Z$-transform of $X$ is: $\widehat X(z)=E[z^X]=\sum_{i=0}^\infty p_X(i)z^i$. \qquad $\widehat X'(1)=E[X]$, $\widehat X''(1)=E[X(X-1)]$.
+
+If $X,Y$ are independent, and $Z=X+Y$, then $\widehat Z(z)=\widehat X(z)\cdot\widehat Y(z)$.
+
+Also $\widehat X(z)=p\cdot\widehat A(z)+(1-p)\cdot\widehat B(z)$ if $X=A$ with probability $p$ and $X=B$ with probability $1-p$.
+
+Var$(X)=E[(X-E[X])^2]=E[X^2]-(E[X])^2$
+
+If $X,Y$ independent, then $Var(X+Y)=Var(X)+Var(Y)$.
+
+The $k^\text{th}$ moment is $E[X^k]=\sum_ip_X(i)i^k$, and the $k^\text{th}$ central moment is defined as $E[(X-E[X])^k]$.
+
+If $\{X\}_n$ are independent and identically distributed random variables, where $N$ is the random variable indicating how many there are and $S=\sum_{i=1}^NX_i$, then $E[S]=E[N]E[X]$, $E[S^2]=E[N]Var(X)+E[N^2](E[X])^2$ and $Var(S)=E[N]Var(X)+Var(N)(E[X])^2$
+
+{\bf Yao's:} Let $\mathcal{A}$ be a class of deterministic algorithms, and let
+$\mathcal{I}$ be a class of all inputs. Then,
+$\min_{A \in \mathcal{A}} E[T_A(I_{\tau})]
+ \leq \max_{I \in \mathcal{I}} E[T_{A_{\sigma}} (I),]$ where $\tau$ and
+$\sigma$ are distributions on $\mathcal{I}$ and $\mathcal{A}$.
+
+{\bf Chebyshev:} If $X$ has finite expected value $\mu$ and variance
+$\sigma^2 \neq 0$, then, $\forall k > 0$, $P(|X - \mu| \geq \frac{1}{k^2}$.
+
+{\bf Markov:} If $a > 0$, the $P(|X| \geq a) \leq \frac{E[|X|]}{a}$.
+
+If $X \sim \mathcal{N}(\mu,\sigma^2)$ and $Y = aX + b$, then $Y \sim \mathcal{N}(a\mu + b, a^2\sigma^2)$.
+\end{document}

@@ -1,0 +1,169 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{9}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{Friday, April 13, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Geo}{\operatorname{Geo}}
+
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Assignment \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+
+\begin{question}{Problem 4.1}
+Sample two random variables $X,Y \sim \operatorname{Uniform}(0,1)$.
+Note that $c := \max_{x \in [0,1]} f(x) = f\left(\frac12\right) = 15/8$
+and that, $\forall x \in [0,1]$, $f(x) \geq 0$. Thus, $\forall x \in [0,1]$,
+$f(x)/c \in [0,1]$, so that we can use the accept/reject method
+(accepting if $f(X) > Y$ and rejecting otherwise) to generate the desired
+probability distribution. \quad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 4.3}
+Consider the following Java program \texttt{Simulation}:
+\begin{verbatim}
+public static void main(String[] args)
+{
+    double mean = 0;
+    for(int i = 0; i < 200; i++)
+        mean += trial(Double.parseDouble(args[0]));
+    System.out.println(mean/200);
+}
+private static double trial(Double lambda) //one trial of 2000 runs
+{
+    //qLoad is the total work in the queue immediately after adding the
+    //ith element
+    double qLoad = 0;
+    for(int i = 0; i < 2001; i++)
+        qLoad = expDist(1) + Math.max(qLoad - expDist(lambda), 0);
+    return qLoad;
+}
+private static double expDist(double lambda)
+{
+    double u = new Random().nextDouble();
+    return -((Math.log(1 - u))/lambda);
+}
+\end{verbatim}
+\texttt{Simulation 0.5} outputs $\approx 1.6$.
+
+\texttt{Simulation 0.7} outputs $\approx 2.6$.
+
+\texttt{Simulation 0.9} outputs $\approx 6.5$.
+\end{question}
+
+\begin{question}{Problem 8.1}
+The stationary equations are:
+\[
+  \begin{bmatrix}
+    \pi_C & \pi_M & \pi_U \\
+    \pi_C & \pi_M & \pi_U \\
+    \pi_C & \pi_M & \pi_U \\
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    \pi_C & \pi_M & \pi_U \\
+    \pi_C & \pi_M & \pi_U \\
+    \pi_C & \pi_M & \pi_U \\
+  \end{bmatrix}
+  \begin{bmatrix}
+    0.7 & 0.2 & 0.1 \\
+    0.8 & 0.1 & 0.1 \\
+    0.9 & 0.1 & 0   \\
+  \end{bmatrix}
+\]
+and $\pi_C + \pi_M + \pi_U = 1$.
+The solution to this system of equations is
+\[\vec{\pi} = (\pi_C,\pi_M,\pi_U)
+ = \mbox{\fbox{$\displaystyle \left(\frac{89}{121},\frac{21}{121},\frac{1}{11}\right)$.}}\]
+\end{question}
+
+\begin{question}{Problem 8.2}
+Let $P$ be an $m \times m$ transition matrix, and let $n \in \mathbb{N}$.
+$\forall i,j \in \{1,2,\ldots,m\}$, let
+$p_{i,j}$ be the entry in the $i^{th}$ row of the $j^{th}$ column of $P^n$.
+Let $i \in \{1,2,\ldots,m\}$, and, $\forall j \in \{1,2,\ldots,n\}$, let $E_j$
+be the event that we end at state $j$ after $n$ transitions given that we are
+initially at state $i$, so that $E_j = p_{i,j}$.
+Thus, \[\sum_{j = 1}^m p_{i,j} = \sum_{j = 1}^m E_j = 1,\]
+since $E_1,E_2,\ldots,E_n$ partition the probability space of end states
+given that we start at state $i$. Therefore, $\forall n \in \mathbb{N}$, the
+sum of the elements in each row of $P^n$ is $1$. \quad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 8.3}
+Suppose $A$ be an $m \times m$ transition matrix with the given properties,
+and let
+\[P := \lim_{n \rightarrow \infty} \left(A^n\right)
+ = \begin{bmatrix}
+     \vec{\pi} \\
+     \vec{\pi} \\
+     \vdots    \\
+     \vec{\pi}
+ \end{bmatrix}
+\]
+be its limiting distribution.
+Since, $\forall k \in \mathbb{N}$,
+$\left(A^k\right)^T = \left(A^T\right)^k$ (where $^T$ denotes the transpose
+operator),
+\[P^T = \lim_{n \rightarrow \infty} \left(\left(A^T\right)^n\right)
+                              = (\vec{\pi}^T,\vec{\pi}^T,\ldots,\vec{\pi}^T)
+,\]
+so $P^T$ is the limiting distribution for the Markov chain with transition
+matrix $A^T$. Thus, since the rows of any limiting distribution are identical,
+\[\pi_1 = \pi_2 = \ldots = \pi_m. \quad \blacksquare\]
+\end{question}
+
+\begin{question}{Problem 8.4}
+Consider a Markov chain with one state for each $i \in \mathbb{N}$, where the
+state representing $i$ transitions to the state representing $0$ with
+probability $b$, the state representing $i + 1$ with probability $p$, and the
+state representing $i$ (itself) with probability $s$. Let $\vec{pi}$ be the
+limiting distribution of for this Markov chain. Then, $\pi_0 = s\pi_0 + b$,
+and, $\forall i \geq 1$, $p_i = p\pi_{i - 1} + s\pi_i$,
+yielding the recurrence
+\[\pi_0 = \frac{b}{1 - s},
+ \pi_i = \frac{p\pi_{i - 1}}{1 - s}, \forall i \geq 1.\]
+The solution to this recurrence is
+\[\pi_i = \mbox{\fbox{$\displaystyle b\frac{p^i}{(1 - s)^{i + 1}}$.}}\]
+When $s = 0$, this reduces to $\pi_i = bp^i = b(1 - b)^i$, so that the limiting
+distribution is $\Geo(b)$.
+\end{question}
+\end{document}

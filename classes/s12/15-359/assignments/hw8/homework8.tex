@@ -1,0 +1,145 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\newcommand*\mycirc[1]{%
+  \begin{tikzpicture}
+    \node[draw,circle,inner sep=1pt] {#1};
+  \end{tikzpicture}}
+
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{7}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{Friday, March 30, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Assignment \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+
+\begin{question}{Problem 1: Upper tail (10 pts.)}
+Clearly, examining the Taylor series expansion of $\ln(1 + \delta)$,
+$\forall \delta \in (0,1]$,
+\[\delta^2/3 + \delta
+ \leq (1 + \delta)(\delta - \delta^2/2 + \delta^3/3 - \delta^4/4 \ldots )
+ = (1 + \delta)\ln(1 + \delta).\]
+Thus, since $x \mapsto e^x$ is an increasing function,
+$\frac{e^{\delta}}{(1 + \delta)^{1 + \delta}} < e^{-\delta^2/3}$
+Therefore,
+\[\left(\frac{e^{\delta}}{(1 + \delta)^{1 + \delta}}\right)^{\mu}
+ < = e^{- \mu\delta^2/3},\]
+so that the strong Chernoff bound implies the simplified bound
+\[P(X \geq (1 + \delta)\mu) < e^{- \mu \delta^2/3} \quad \blacksquare.\]
+\end{question}
+
+\begin{question}{Problem 2: The $\frac12$-th moment (10 pts.)}
+Suppose $X \sim$ Exp$(1)$. Then, substituting $u = \sqrt{x}$ gives
+\[E\left[\sqrt{X}\right]
+ = \int_0^{\infty} \sqrt{X} f_X(x) \; dx
+ = \int_0^{\infty} \sqrt{X} e^{-x} \; dx
+ = \int_0^{\infty} 2u^2 e^{-u^2}   \; du
+.\]
+Integration by parts then gives
+\[E\left[\sqrt{X}\right]
+ = -0*e^{-0} - \lim_{x \rightarrow \infty}\left(-xe^{-x}\right)
+                                             - \int_0^{\infty} -e^{-u^2} \; dx
+ = \int_0^{\infty} e^{-u^2} \; dx
+ = \frac12 \int_{-\infty}^{\infty} e^{-u^2} \; dx
+,\]
+(since $e^{-{x^2}}$ is even in $x$). This integral is well-known to be
+$\sqrt{\pi}$, so that
+\[E\left[\sqrt{X}\right] = \mbox{\fbox{$\displaystyle \frac{\sqrt{\pi}}{2}$.}}\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 3: Sorting our loose ends (20 pts.)}
+\begin{enumerate}[A.]
+\item $\sum_{i = 1}^t X_i$ is the number of times, in the first $t$ steps,
+that $a$ ended up in the smaller of the two pieces of the array after
+partitioning around the pivot. Each time an array is partitioned into two
+pieces, the size of the smaller piece is at most half the size of the initial
+array. Thus, if $a$ ended up in the smaller of the two pieces of the array
+partitioned $X = \sum_{i = 1}^t X_i$ times, then it is in a part that is of
+size at most $\frac{n}{2^X}$, so that, when $X$ exceeds $\log_2 n$, $a$ is in
+a part of size $1$, so that it must be in its correct position in the sorted
+array. \quad $\blacksquare$
+
+\item Since each $X_i$ is $1$ with probability $\frac12$ and $0$ otherwise,
+$X \sim$ Binomial$(\frac12,t)$, so that $\mu := E[X] = \frac12 C \log_2 n$.
+For $\delta = \frac{C - 2}{2}$, then, by the simplified Chernoff bound for the
+Lower Tail,
+\[P(X < \log_2 n) = P(X < (1 - \delta)\mu) < e^{-\mu \delta^2/2}. \quad \blacksquare\]
+
+\item If $A$ is the event that the array is not sorted, and $A_i$ is the event
+that $a_i$ is not sorted, then, after $t = C \log_2 n$ iterations of
+quicksort, by the Union Bound,
+\[P(A) \leq \sum_{i = 1}^t P(A_i) \leq te^{-\mu \delta^2/2}.\]
+For $C \leq 4.6$, $c(c - 2)^2/16 \geq 2$, so that
+$p(A_i) \leq \frac{1}{n^2}$. \quad $\blacksquare$
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5: Predictions are guesses anyway (8 pts.)}
+Suppose $f(h) \in \{0,1\}$. Then, $F(h)$ is distributed according to
+Binomial$(P(f(h) = 1),n)$, so that, since $F(\Lambda) = E[F(h)]$ we can apply
+Hoeffding's Inequality to give that, $\forall \epsilon > 0$,
+\[P(F(h) - F(\Lambda) > \epsilon) < e^{-2\epsilon^2n}. \quad \blacksquare\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 6: PB wrap (15 pts.)}
+Let $s = F_m(h)$ and $d = F(h)$.
+\begin{eqnarray*}
+E_s(Z)
+ & = & E_s\left(E_{h \sim \Pi}\left(\exp\left(m\left(s\ln\left(\frac{s}{d}\right) + (1 - s)\ln\left(\frac{1 - s}{1 - d}\right)\right)\right)\right)\right) \\
+ & = & E_s\left(E_{h \sim \Pi}\left(\left(\frac{s}{d}\right)^{m\cdot s} \left(\frac{1 - s}{1 - d}\right)^{m(1 - s)}\right)\right).
+\end{eqnarray*}
+$s$ can take $m + 1$ values: $\{0/m,1/m,\ldots,m/m\}$ and has a binomial
+distribution with parameter(s) $d$ and $m$. Thus,
+\begin{eqnarray*}
+E_s\left(\left(\frac{s}{d}\right)^{m\cdot s} \left(\frac{1 - s}{1 - d}\right)^{m(1 - s)}\right)
+ & = & \sum_{k = 0}^m {m \choose k} d^k(1 - d)^{m - k}\left(\frac{k/m}{d}\right)^k\left(\frac{1 - k/m}{1 - d}\right)^{m - k} \\
+ & = & \sum_{k = 0}^m {m \choose k} \left(\frac{k}{m}\right)^k \left(1 - \frac{k}{m}\right)^{m - k}.
+\end{eqnarray*}
+Since each term of this summation is a probability (e.g., of getting $k$ heads
+out of $m$ flips of a biased coin with $k/m$ chance of getting heads), each of
+the $m + 1$ terms is at most $1$. Thus, $E_s(Z) \leq m + 1$.
+\quad $\blacksquare$
+\end{question}
+\end{document}

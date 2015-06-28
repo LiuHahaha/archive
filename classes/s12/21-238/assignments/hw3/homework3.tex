@@ -1,0 +1,208 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-238 Mathematical Studies Algebra II}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Wednesday, February 29, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Exercise 11}
+\begin{enumerate}[i)]
+%TODO
+\item Note that $\forall A \in L(\mathbb{R}^n,\mathbb{R}^n)$,
+$\forall v \in \mathbb{C}^n, j \in \{1,2,\infty\}$,
+\[\frac{\|Av\|_j}{\|v\|_j} =
+\frac{\|Av\|_j}{\|v\|_j}\cdot\frac{\|v\|_j}{\|v\|_j}
+= \frac{\|A\frac{v}{\|v\|_j}\|_j}{\|\frac{v}{\|v\|_j}\|_j},\] so that,
+in computing $\||A\||_j$, we need only consider vectors $v \in B_j$, the unit
+ball determined by the norm $\|\cdot\|_j$.
+
+Computing $|||A|||_1$:
+
+Let $A \in L(\mathbb{R}^n,\mathbb{R}^n)$, and let $v \in B_{\infty}$.
+Then, letting $M = \max_
+{i \in \{1,2,\ldots,n\}} \sum_{j = 1}^n |a_{j,i}|,$
+\[\|Av\|_1 = \sum_{i = 1}^n \sum_{j = 1}^n |A_{j,i}v_i| = \sum_{i = 1}^n |v_i| \sum_{j = 1}^n |A_{i,j}|
+ \leq \sum_{i = 1}^n |v_i| M = M \|v\|_1 = M.\]
+
+Furthermore, if $v \in B_1$ is such that,
+for $i = \arg \max_{i \in {1,2,\ldots,n}} \sum_{j = 1}^n A_{j,i}$, $v_i = 1$ and,
+$\forall j \in \{1,2,\ldots,n\}\backslash\{i\}$, $v_j = 0$, then $AV = M$, so that
+\[|||A|||_1
+ = \displaystyle \max_{i \in \{1,2,\ldots,n\}} \left(\sum_{j = 1}^n |a_{j,i}|\right). \qquad \blacksquare\]
+
+Computing $|||A|||_{\infty}$:
+
+Let $A \in L(\mathbb{R}^n,\mathbb{R}^n)$, let $v \in B_{\infty}$,
+and let $b = Av$, with components $b_1,b_2,\ldots,b_n$. Then,
+$\forall i \in \{1,2,\ldots,n\}$, $b_i = A_i \cdot v$, where $A_i$ is the
+$i^{th}$ row vector of $A$. $b_i$ is maximized over $B_{\infty}$ by the vector
+$v$ with $j^{th}$ component $v_i = \frac{A_{i,j}}{|A_{i,j}|}$, so that
+$\max_{v \in B_{\infty}} b_i = \sum_{j = 1}^n |A_{i,j}|$. Thus, we find the
+induced matrix norm by maximizing this sum over $i \in \{1,2,\ldots,n\}$, so that
+\[|||A|||_{\infty}
+ = \max_{i \in \{1,2,\ldots,n\}} \left(\sum_{j = 1}^n |a_{i,j}|\right).\]
+
+Suppose that, for some $A \in L(\mathbb{R}^n,\mathbb{R}^n)$, $\lambda$ is an
+eigenvalue of $A$. Let $v$ be the eigenvector corresponding to $\lambda$, with
+components $v_1,v_2,\ldots,v_n$. Then, $\forall i \in \{1,2,\ldots,n\}$, %TODO
+
+%TODO
+\item
+
+%TODO
+\item
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 12} Let $V$ be a Euclidean space.
+\begin{enumerate}[i)]
+\item Let $n = \dim V$, and suppose $n \geq 2$.
+
+Let $M_1, M_2 \in L(V,V)$ such that $M_1 = 0$ and
+
+\[M_2 =
+\begin{bmatrix}
+   0   &    1   &    0   &    0   & \ldots &    0   \\
+  -1   &    0   &    0   &    0   & \ldots &    0   \\
+   0   &    0   &    0   &    0   & \ldots &    0   \\
+   0   &    0   &    0   &    0   & \ldots &    0   \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+   0   &    0   &    0   &    0   & \ldots &    0   \\
+\end{bmatrix}.\]
+Then, $\forall v = (v_1,v_2,\ldots,v_n) \in V$,
+$(M_1v,v) = 0 = v_1v_2 - v_1v_2 = (M_2v,v)$, but $M_1 \neq M_2$. Thus, $\geq$
+is not antisymmetric $L(V,V)$ when $\dim V \geq 2$, so it is not a partial
+order on $L(V,V)$.
+
+Since $\forall M \in L_s(V,V)$, $\forall v \in V$ $(Mv,v) \geq (Mv,v)$, so
+$\geq$ is reflexive. For $M_1,M_2,M_3 \in L(V,V)$, if, $\forall v \in V$,
+$(M_1v,v) \geq (M_2v,v)$ and $(M_2v,v) \geq (M_3v,v)$, then, since $\geq$ is
+transitive on $\mathbb{R}$, $(M_1v,v) \geq (Mv_3,v)$, so that $\geq$ is
+transitive on $L_s(V,V)$. Let $M_1,M_2 \in L_s(V,V)$ such that $M_1 \geq M_2$
+and $M_2 \geq M_1$. Then, $\forall v \in V$, since the inner product is linear
+in its first argument, $((M_1 - M_2)v,v) = (M_1v,v) - (M_2v,v) = 0$. Since
+$M_1$ and $M_2$ are symmetric, $(M_1 - M_2)$ is also symmetric, so that it has
+$n$ eigenvalues, and is diagonalizable, so that $(M_1 - M_2) = SDS^{-1}$ for
+some invertible $S$ and some diagonal matrix $D$. Furthermore, since,
+$\forall v \in V, ((M_1 - M_2)v,v) = 0$, all eigenvalues of $(M_1 - M_2)$ are
+$0$. Since the non-zero entries of $D$ are the eigenvalues of $(M_1 - M_2)$,
+$D = 0$. Therefore, $M_1 - M_2 = 0$, so $M_1 = M_2$. Therefore, $\geq$ is
+antisymmetric on $L_s(V,V)$, so that it is a partial order on $L_s(V,V)$.
+\qquad $\blacksquare$
+
+%TODO
+\item
+
+%TODO
+\item
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 13}
+\begin{enumerate}[i)]
+%TODO
+\item Since $M$ is diagonalizable, it can be diagonalized on an orthogonal
+basis, so that $M = SDS^{-1} = SDS^T$, where $D$ is diagonal and $S$ is
+orthogonal. Let $v \in V$, and let $w = Sv$, so that $v = S^Tw$. Then,
+$(Mv,v) = (SDS^Tv,v) = v^TSDS^Tv = w^TDw$, and, since the identity commutes
+with all matrices, $(aIv,v) = v^TaIv = w^TSaIS^Tw = aw^TSS^Tw = aw^Tw$. Thus,
+$aI \leq M$ if and only if $aI \leq D$. Similarly, $M \leq bI$ if and only if
+$D \leq bI$.
+
+%TODO
+\item Let $n$ be the degree of $P$, and, $\forall i \in \{0,1,\ldots,n\}$,
+Suppose $P_i(x) = x^i$, where $a_i \in \mathbb{R}$ is the coefficient of
+$x^i$ in $P$. Then, for some $C \in L(V,V)$,
+\begin{eqnarray*}
+\lim_{\epsilon \rightarrow 0} \frac{P_i(A + \epsilon B) - P_i(A)}{\epsilon}
+ & = & \lim_{\epsilon \rightarrow 0} \frac{A^i +
+   \epsilon \sum_{j = 1}^i A^jBA^{i - j - 1} + \epsilon^2 C - A^i}{\epsilon} \\
+ & = & \lim_{\epsilon \rightarrow 0}
+   \sum_{j = 1}^i A^jBA^{i - j - 1} + \epsilon C \\
+ & = & \sum_{j = 1}^i A^jBA^{i - j - 1}.
+\end{eqnarray*}
+
+Since the limit is additive and multiplicative where it exists, and
+$P = \sum_{i = 0}^n a_i P_i$ for some $a_i \in \mathbb{R}$,
+$\lim_{\epsilon \rightarrow 0} \frac{P(A + \epsilon B) + P(A)}{\epsilon}$
+exists. \qquad $\blacksquare$
+
+Since we consider an orthonormal basis eigenvectors of $A$, $A$ can be written
+as diagonal matrix, so that $A_{i,i} = \lambda_i$, the $i^{th}$ eigenvalue of
+$A$. $\forall i \in \{1,2,\ldots,n\}$ let $P_i$ be as above. Then, for
+$i = 0$, clearly $DP_i(A) : B = 0$, so that, since
+$P_i^{\prime}(\lambda_i) = 0$ and $P(\lambda_i) - P(\lambda_j) = 0$,
+$DP_i(A) : B$ has the desired form.
+
+Suppose that, for some $i \in \mathbb{N}$, $C = DP_i (A) : B$ has the desired form.
+
+As computed previously,
+\[DP_{i + 1} (A) : B
+ = \sum_{j = 1}^iA^jBA^{i - j - 1}
+ = A^n \sum_{j = 1}^iA^jBA^{i - j - 1}\]
+
+Again, since the limit is additive, since $DP_i(A) : B$ has the desired form
+$\forall i \in \{1,2,\ldots,n\}$, 
+
+\end{enumerate}
+\end{question}
+
+
+\begin{question}{Exercise 14}
+\begin{enumerate}[i)]
+%TODO
+\item
+
+%TODO
+\item
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 15}
+Trivially, $B_0 \in L_s(V,V)$. Suppose, as an induction hypothesis, that, for
+some $n \in \mathbb{N}$, $B_n \in L_s(V,V)$. Since $B_n$ must commute with
+itself, $B_n^2$ is symmetric, so that, since a sum of symmetric matrices and a
+multiple of symmetric matrices must both be symmetric,
+\[B_{n + 1} = \frac{A + B^2}{2}\]
+must also be symmetric, since $A$ is symmetric. Therefore, by induction on
+$n$, $\forall n \in \mathbb{N}$, $B_n \in L_s(V,V)$.
+\end{question}
+\end{document}

@@ -1,0 +1,168 @@
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\setcounter{MaxMatrixCols}{30}
+\allowdisplaybreaks
+\begin{document}
+
+\begin{center}
+\textbf{Shashank Singh}
+
+\textbf{sss1@andrew.cmu.edu}
+
+\textbf{21-355C \quad Real Analysis, Fall 2011}
+
+\textbf{Assignment 10}
+
+\textbf{Due: Wednesday, Novemeber 23}
+\end{center}
+
+%DONE
+\textbf{Lemma 0.1.} Let $f_1, f_2 : X \rightarrow \mathbb{R}$, for some
+non-empty set $X$, be bounded.
+
+Let $S = \sup_{x \in X} \left(f_1(x) + f_2(x)\right)$.
+By definition of supremum, $\forall c \in X$, $f_1(c) \leq \sup_{x \in X}
+f_1(x)$ and $f_2(c) \leq \sup_{x \in X} f_2(x)$. Thus, $\forall c \in X$,
+$f_1(c) + f_2(c) \leq \sup_{x \in X} f_1(x) + \sup_{x \in X} f_2(x)$, so that
+$\sup_{x \in X} f_1(x) + \sup_{x \in X} f_2(x)$ is an upper bound of
+$A = \{f_1(x) + f_2(x) | x \in X\}$. Since $S = \sup A$ and the supremum is
+the \emph{least} upper bound, $S \leq \sup_{x \in X} f_1(x) +
+\sup_{x \in X} f_2(x)$.
+
+Let $I = \inf_{x \in X} \left(f_1(x) + f_2(x)\right)$.
+By definition of infimum, $\forall c \in X$, $f_1(c) \geq \inf_{x \in X}
+f_1(x)$ and $f_2(c) \geq \inf_{x \in X} f_2(x)$. Thus, $\forall c \in X$,
+$f_1(c) + f_2(c) \geq \inf_{x \in X} f_1(x) + \inf_{x \in X} f_2(x)$, so that
+$\inf_{x \in X} f_1(x) + \inf_{x \in X} f_2(x)$ is a lower bound of
+$A = \{f_1(x) + f_2(x) | x \in X\}$. Since $I = \inf A$ and the infimum is
+the \emph{greatest} lower bound, $S \geq \inf_{x \in X} f_1(x) +
+\inf_{x \in X} f_2(x)$. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Question 0.2.} Let $f$ be a real, uniformly continuous function on a
+bounded domain $E \subset R$. Since $E$ is bounded, $\exists m > 0$ such that
+$E \subseteq (-m, m)$. Let $\epsilon = 1$. Since $f$ is uniformly continuous,
+$\exists \delta > 0$ such that, $\forall x, y \in E$, if $|x - y| < \delta$,
+then $|f(x) - f(y)| < \epsilon$. Let $F$ be the family of sets
+\[\{S_{-n}, S_{-(n - 1)}, \ldots, S_{-1} S_0, S_1, \ldots, S_{n - 1}, S_n\},\]
+where $n = \lceil \frac{m}{\delta} \rceil$ and, $\forall i \in \mathbb{Z}$
+with $-n \leq i \leq n$, $S_i = [i\delta - \frac{\delta}{2},
+i\delta + \frac{\delta}{2}]$. It is then easily shown by induction on
+$|i - j|$ that, $i, j \in \mathbb{Z}$ with $-n < i, j < n$, then,
+$\forall x \in E \cap S_i, \forall y \in E \cap S_j$, $|f(x) - f(y)|
+ < |i - j| + 1$. Thus, $\forall x, y \in E \cap \left( \cup F \right)$,
+$|f(x) - f(y)| < 2n + 1$. Furthermore, $E \subseteq \cup F$ so that
+$E \cap \left( \cup  F \right)$. Let $x \in E$. Then,
+$f(E) \subseteq [-(|f(x)| + 2n + 1), |f(x)| + 2n + 1]$, so that $f$ is bounded
+on $E$. \qquad $\blacksquare$
+
+
+Clearly, the condition of a bounded domain is necessary; suppose, for
+instance, that $f$ is the identity function on $\mathbb{R}$. Then, $\forall
+\epsilon > 0$, for $\delta = \epsilon$, $\forall x, y \in \mathbb{R}$ with
+$|x - y| < \delta$, $|f(x) - f(y)| = |x - y| < \delta = \epsilon$, so that $f$
+is uniformly continuous. However, $\forall M \in \mathbb{R}$, $f(M + 1) > M$,
+so that $f$ is unbounded. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Question 0.3.} Let $f: \mathbb{R} \rightarrow \mathbb{R}$ such that,
+$\forall x \in \mathbb{R}$ with $x \neq 1$, $f(x) = 0$, and $f(1) = 1$. Then,
+clearly, since, $\forall x, y \in \mathbb{R}$ with $x, y \neq 1$,
+$f(x) - f(y) = 0$, $f$ is uniformly continuous and differentiable on $(0,1)$,
+with $f^{\prime}(x) = 0$, $\forall x \in (0,1)$. Then, there does not exist
+$c \in (0,1)$ such that $f(1) - f(0) = (1 - 0) f^{\prime}(c)$, since
+$1 \neq 0$. Thus, the condition that $f$ be continuous on a \emph{closed}
+interval is crucial to the Mean Value Theorem (in particular, to Theorem
+5.10). \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Question 0.5.} Let $a, b \in \mathbb{R}$, and let $f, g: (a,b)
+\rightarrow \mathbb{R}$ be differentiable on $(a,b)$, with
+$f^{\prime}(x) = g^{\prime}(x), \forall x \in (a,b)$. Then, $\forall x \in
+(a,b)$, $\left(f - g\right)^{\prime} (x) = 0$. By Theorem 5.11, $(f - g)$
+is a constant function. Thus, for some $c \in \mathbb{R}$, $\forall x \in
+(a,b)$, $f(x) = g(x) + c$. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Lemma 0.6.} Taking $\alpha$ to be the identity on $\mathbb{R}$, this
+follows immediately from Theorem 6.12 (c). \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Lemma 0.7.} For some $a, b \in \mathbb{R}$, let $f: \mathbb{R}
+\rightarrow \mathbb{R}$ be continuous and non-negative on $[a,b]$, with
+$f(x_0) > 0$ for some $x \in [a,b]$. Since $f$ is continuous, for
+$\epsilon = \frac{f(x_0)}{2} > 0$, $\exists \delta > 0$ such that,
+$\forall x \in \mathbb{R}$ with $|x - x_0| < \delta$,
+$|f(x) - f(x_0)| < \epsilon$. Let $x_1 = \max
+\{x_0 - \delta, a\}$, and let $x_2 = \min \{x_0 + \delta, b\}$.
+
+Thus, $\forall x \in
+(x_0 - x_1, x_0 + \delta)$, $f(x) > \frac{f(x_0)}{2} > 0$. Note that, since
+$f$ is continuous on $[a,b]$, it is integrable on $[a,b]$, by Theorem 6.8.
+Let $P = \{a,x_1,x_2,b\}$, so that $P$ is partition of $[a,b]$. Then, since
+$f \geq 0$, taking $\alpha$ to be the identity on $\mathbb{R}$,
+$L(P,f,\alpha) > 0$ (as $(x_2 - x_1) \sup \{f(x) | x_1 < x < x_2\} > 0$.
+Therefore, since $L(P,f,\alpha) \leq \int_a^b f(x) dx$, $\int_a^b f(x) dx
+ > 0$. \qquad $\blacksquare$ \\
+
+
+%DONE
+\textbf{Question 0.8.} Let $f: \mathbb{R} \rightarrow \mathbb{R}$ be
+continuous on $[a,b]$, with $\int_a^b f(x) dx = 0$. By the previous lemma
+(Lemma 0.7), if there exists $x_0 \in [a,b]$ such that $f(x_0) > 0$, then
+$\int_a^b f(x) dx > 0$, contradicting the given that $\int_a^b f(x) dx = 0$.
+Thus, $f \leq 0$, so that, since $f \geq 0$, $\forall x \in [a,b]$,
+$f(x) = 0$. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Question 0.9.} Let $a, b \in \mathbb{R}$ with $a < b$.
+Let $f: \mathbb{R} \rightarrow \mathbb{R}$ such that,
+$\forall x \in \mathbb{Q}$, $f(x) = 1$, and, $\forall x \in \mathbb{R}
+\backslash \mathbb{Q}$, $f(x) = 1$. Let $\epsilon = \frac{b - a}{2} > 0$, and,
+for some $n \in \mathbb{N}$, let $P = \{a, x_1, x_2, \ldots, x_n, b\}$ be a
+partition of $[a,b]$, with $a < x_1 < x_2 < \ldots < x_n < b$.
+Since $\mathbb{Q}$ and $\mathbb{R} \backslash \mathbb{Q}$ are both dense
+in $\mathbb{R}$, $\forall i \in \mathbb{N}$ with $1 \leq i \leq n$,
+$\exists p_i \in \mathbb{Q}$, $q_i \in \mathbb{R} \backslash
+\mathbb{Q}$, such that $x_{i - 1} < p_i, q_i < x_i$. Thus, for $M_i = \sup
+\{f(x) | x \in \mathbb{R}, x_{i - 1} < x < x_i\}$, $S \geq 1$
+(as $f(p_i) = 1$), and, for $I = \inf \{f(x) | x \in \mathbb{R},
+x_{i - 1} < x < x_i\}$, $I \leq 0$ (as $f(q_i) = 0$). Thus, taking $\alpha$
+to be the identity in $\mathbb{R}$, $U(P,f,\alpha) \geq (b - a)$, and
+$L(P,f,\alpha) \leq 0$. By Theorem 6.6, then, since for any partition $P$ of
+$[a,b]$, $U(P,f,\alpha) - L(P,f,\alpha) > \epsilon$ (as $b - a > 0$, so that
+$b - a > \frac{b - a}{2}$), by Theorem 6.6, $f \not \in \mathcal{R}(\alpha)$
+on $[a,b]$. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Lemma 0.10.} Let $f, g: \mathbb{R} \rightarrow \mathbb{R}$ be
+everywhere differentiable, such that $f = f^{\prime}$, $g = g^{\prime}$.
+By Theorem 5.3 (c), $\left(\frac{f}{g}\right)^{\prime}
+ = \frac{f^{\prime}g - fg^{\prime}}{g^2} = \frac{f^{\prime} - f}{g} =
+\frac{0}{g} = 0$. Thus, by Theorem 5.11, then $\frac{f}{g} = C_0$ for some
+$C_0 \in \mathbb{R}$, so that $f = C_0g$. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Lemma 0.11.} Let $f,g$ be as in Lemma 0.10, with the additional
+hypothesis that $\exists x_0 \in \mathbb{R}$ such that $f(x) = g(x)$. By the
+result of Lemma 0.10, $f(x_0) = C_0g(x_0)$, so that $C_0 = 1$. Therefore,
+$\forall x \in \mathbb{R}$, $f(x) = g(x)$. \qquad $\blacksquare$ \\
+
+%DONE
+\textbf{Lemma 0.12.} Let $f$ be as in Lemma 0.11, with the additional
+hypothesis that $f(0) = 1$. Let $y \in \mathbb{R}$, and let $g: \mathbb{R}
+\rightarrow \mathbb{R}$ such that, $\forall x \in \mathbb{R}$,
+$g(x) = f(x + y)$. Then, since $\forall x \in \mathbb{R}$, $g$ is
+differentiable at $x$, and $g^{\prime}(x) = f^{\prime}(x + y)(x + y)^{\prime}
+ = f^{\prime}(x + y) = f(x + y)$, so that $g = g^{\prime}$. Thus, $g$
+satisfies the conditions of Lemma 0.10, so that $f = C_0g$, for some
+$C_0 \in \mathbb{R}$. Since $g(0) = f(y)$ and $f(0) = 1$, $f = f(y) g$. Thus,
+$\forall x, y \in \mathbb{R}$, $f(x + y) = f(y)g(x + y) = f(x)f(y)$. 
+\qquad $\blacksquare$ \\
+\end{document}

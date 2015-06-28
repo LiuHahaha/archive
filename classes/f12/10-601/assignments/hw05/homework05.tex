@@ -1,0 +1,325 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{10-601 Machine Learning}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Friday, November 30, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\bTheta}{\boldsymbol{\Theta}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\sminus}{\backslash} % asymmetric set difference
+
+% probability related macros
+\newcommand{\pr}[1]{\mathsf{P}\left( #1 \right)} % probability of event #1
+\newcommand{\E}[1]{\mathbb{E}\left[ #1 \right]} % expected value of r.v. #1
+\newcommand{\Bern}[1]{\operatorname{Bernoulli}\left( #1 \right)} % Bernoulli distribution of parameter p
+\newcommand{\giv}{\, | \,} % \pr{A \giv B} probability of A given B
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use alphabetic enumeration for subsections
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+\section{Bayes Net questions}
+\subsection{Legal Bayes Nets [10 points]}
+Let $G$ be a graph underlying a Bayesian network, so that $G$ is directed and
+acyclic, and suppose, for sake of contradiction, that every vertex in $G$ has
+an incoming edge. Let $P := v_1,v_2,\ldots,v_k$ be a path of maximum length in
+$G$ (such a path exists, since there are finitely many paths in $G$). Since
+$v_1$ has an incoming edge, let $v$ be the source of that edge. $v$ must be in
+$P$ (say $v = v_i$, $i > 1$), since, otherwise, adding $v$ to the beginning of
+$P$ would create a path longer than $P$. Then, $v,v_1,v_2,\ldots,v_i$ is a
+cycle in $G$, contradicting the fact that $G$ is acyclic. \qed
+
+\subsection{Stochastic Inference [10 points]}
+Let $G$ be a graph underlying a Bayesian network, and let $H$ be the subgraph
+of $G$ induced by those vertices which have not yet been sampled in some
+iteration of stochastic inference. As a subgraph of a directed acyclic graph,
+$H$ is directed and acyclic. It follows from the result of part a. that $H$
+has a node $v$ with no incoming edge. Then, by construction of $H$, either $v$
+has no parents in $G$, or every parent of $v$ in $G$ has been sampled. \qed
+
+\section{Hidden Markov Models [30 points]}
+\subsection{The Full Likelihood of a Data Set}
+\begin{enumerate}[1.]
+\item Since each emission is independent,
+\[
+   \pr{\bX \giv \bZ, \bTheta}
+ = \prod_{t = 1}^T \phi_{x_tz_t}.
+\]
+
+By the Chain Rule and the Markov Property,
+\[
+   \pr{\bZ \giv \bTheta}
+ = \prod_{t = 1}^T \pr{z_t = k \giv z_1,z_2,\ldots,z_{t - 1}, \bTheta}
+ = \pi_{z_1} \prod_{t = 2}^T a_{z_tz_{t - 1}}.
+\]
+
+By definition of conditional probability,
+\[
+   \pr{\bX, \bZ \giv \bTheta}
+ = \pr{\bX \giv \bZ, \bTheta} \pr{\bZ \giv \bTheta}
+ = \mbox{\fbox{$\displaystyle \left( \prod_{t = 1}^T \phi_{x_tz_t} \right)
+   \left( \pi_{z_1} \prod_{t = 2}^T a_{z_tz_{t - 1}} \right).$}}
+\]
+
+\item By the Law of Total Probability and the result of part 1.,
+\begin{align*}
+     \pr{\bX \giv \bTheta}
+ & = \sum_{\bZ} \pr{\bX \giv \bZ, \bTheta} \pr{\bZ \giv \bTheta} \\
+ & = \sum_{\bZ} \left( \prod_{t = 1}^T \phi_{x_tz_t} \right)
+     \left( \pi_{z_1} \prod_{t = 2}^T a_{z_tz_{t - 1}} \right)
+     \left( \pi_{z_1} \prod_{t = 2}^T a_{z_tz_{t - 1}} \right)   \\
+ & = \mbox{\fbox{$ \displaystyle
+           \sum_{\bZ} \left( \prod_{t = 1}^T \phi_{x_tz_t} \right)
+   \left( \pi_{z_1} \prod_{t = 2}^T a_{z_tz_{t - 1}} \right)^2.$}}
+\end{align*}
+\end{enumerate}
+
+\subsection{Expectation-Maximization (EM) for Maximum Likelihood Learning}
+\begin{enumerate}[1.]
+\item The runtime of the E step is $O(K^2T)$, since we can compute the
+posterior distribution using dynamic programming (compute each $\alpha_t(k)$ 
+and $\beta_t(k)$ recursively). The runtime of the M step is $O(K^T)$, since
+we have to compute a sum over every possible path. Thus, the overall runtime
+of the algorithm is $O(IK^T)$, where $I$ is the number of iterations till
+convergence, since the $K^T$ term vastly dominates the $K^2T$ term.
+In terms of $K$ and $T$, the runtime is $O(K^T)$.
+
+\item
+By the Law of Total Probability, conditioning on the state $z_t$, for time
+step $t \in \{1,2,\ldots, T\}$,
+\[
+\pr{\bX} = \sum_k\alpha_t(k)\beta_t(k).
+\]
+Thus, the desired result follows immediately from a derivation given in
+lecture (see slide 15 of the lecture ``Learning in HMM's'' from November 8).
+\qed
+
+In the particular case that $t = T$, since each $\beta_t(k) = 1$ (as the
+probability of an empty conjunction), $\pr{\bX} = \sum_k\alpha_T(k)$, so that
+we can use only $\alpha$'s.
+
+\item The following notation is adapted from the slides for the lecture
+``Learning in HMM's'' from November 8.
+
+If, initially, $a_{ij} = \pr{z_{t + 1} = i \giv z_t = j} = 0$, then
+$S_t(i,j) = 0$. Thus, $\hat{n}(i,j) = \sum_t S_t(i,j) = 0$, so that the updated
+value $a_{ij} = \frac{\hat{n}(i,j)}{\sum_k \hat{n}(k,j)} = 0$. Therefore, any
+entries in $A$ which are initially $0$ will remain $0$. A similar argument
+shows that the same is true for the entries of $\pi$. \qed
+\end{enumerate}
+
+\newpage
+\subsection{A coin game [10 points]}
+\begin{enumerate}[1.]
+\item The HMM is illustrated below with its transition fucntion. The state $B$
+emits $H$ with probability $0.5$, the state $SH$ emits $H$ with probability
+$1$, whereas the state $ST$ emits $T$ with probability $1$.
+\vspace{2in}
+
+\item Using, say, Viterbi's algorithm, we can find the most probable sequence
+of states. Then, the most probable winner is Brendan if the last estimated
+state $z_T$ is $B$, and is Selen if the last state is $ST$ (the last state can
+never be $SH$, since the emission probability of $T$ from state $SH$ is $0$,
+and the last observation in any game must be $x_T = T$).
+
+The most probable
+flips for Brendan are those $x_t$ observed at time steps when the estimated
+state is $z_t = B$, and those for Selen are those oberved at time steps when
+the estimated state is $z_t = SH$ or $z_t = ST$.
+\end{enumerate}
+
+\section{HMM Programming}
+\begin{enumerate}
+\item The most likely path is \fbox{$\vec{z} = [1, 1, 1, 1, 1, 2, 2]$,} where
+$1$ denotes Cold and $2$ denotes Hot. 
+
+\item For the dataset \fbox{$\vec{x} = [3,1,3,1,2,3,3]$,} the exhaustive
+best-path algorithm gives, as the most likely path,
+$\vec{z} = [2, 2, 2, 2, 2, 2, 2]$, where $2$ denotes Hot.
+
+\item For the path \texttt{smallX}, the log probability is \fbox{$-11.6394$.}
+When, the first observation is changed to $3$, the log probability becomes
+\fbox{$-12.8922$.}
+
+\item Viterbi's algorithm gives, as the most likely path,
+\[\mbox{\fbox{$\vec{z}
+ = [2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2]$,}}
+\]
+where $1$ denotes Cold and $2$ denotes Hot. The exhaustive algorithm takes
+about $3$ seconds on an input of $15$ observations. It has runtime $O(2^T)$
+(as there are $2$ states), so one can extrapolate that the algorithm would
+take about $2$ days (although the code for \texttt{allpaths} could easily be
+re-written to be many times faster by pre-allocating space rather than
+using cells and concatenation; also, the algorithm would parallelize very
+well, so I could probably get it to run in under couple of hours :p).
+\end{enumerate}
+
+\newpage
+\subsection{Submitting your code}
+{\small
+\begin{verbatim}
+function lp = logjointprob(Z, X, A, phi, prior)
+
+  lp = log(prior(Z(1)) * phi(X(1),Z(1))); % log(P(initial state/emission))
+
+  for t=2:length(X) % add log(P(transition/emission)) for each time step
+    lp = lp + log(A(Z(t),Z(t - 1)) * phi(X(t), Z(t)));
+  end
+  
+  lp = lp + log(A(end,Z(end))); % add log(P(termination))
+end
+
+function bestZ = exhaustive_bestpath(X, A, phi, prior)
+
+  allZ = allpaths(length(X),size(phi,2));
+  best_lp = -Inf;
+  bestZ = ones(size(X));
+
+  for z=1:length(allZ)
+    lp = logjointprob(allZ{z}, X, A, phi, prior); % compute log probability
+
+    if(best_lp < lp) % if we've found a more likely path
+      bestZ = allZ{z};
+      best_lp = lp;
+    end
+  end
+end
+
+function Z = viterbi_bestpath(X, A, phi, prior)
+
+  T = length(X);   K = size(phi,2);
+
+  delta = zeros(K,T);   prev = zeros(K,T); % preallocate space for tables
+  Z = zeros(1,T);
+
+  delta(:,1) = (phi(X(1),:) .* prior(1:K))'; % delta values for t = 1
+
+  for t=2:T % fill up the table of delta values
+    for state=1:K
+      [prev_probs prev(state,t)] = max(A(state,1:K) .* delta(:,t-1)');
+      delta(state, t) = phi(X(t), state) .* prev_probs;
+    end
+  end
+
+  % backtrack to find the optimal path, given the delta values
+  [~, Z(T)] = max(delta(:,T));
+  for t=T:-1:2
+    Z(t-1) = prev(Z(t), t);
+  end
+end
+\end{verbatim}
+}
+
+\newpage
+\section{Markov Decision Processes [20 points]}
+\begin{enumerate}[1.]
+\item $S^{\prime} = S^k$.
+
+From any state
+$(s_k,s_{k-1},\ldots,s_1) \in S^{\prime}$ and for every action in $A$ from
+state $s_1$ to a state $s \in S$, there is an action in $A^{\prime}$ from
+$(s_k,s_{k-1},\ldots,s_1)$ to the state $(s_{k-1},s_{k-2},\ldots,s_1,s)$.
+
+For every pair of states
+$(s_k,s_{k-1},\ldots,s_1)$, $(t_k,t_{k-1},\ldots,t_1) \in S^{\prime}$ and
+every action $a \in A^{\prime}$ from $(s_k,s_{k-1},\ldots,s_1)$ to 
+$t_k,s_{k-1},\ldots,t_1)$, the transition function $T^{\prime}$ is
+$T(s_k,s_{k-1},\ldots,s_1,b,t_k,t_1)$ if $s_{i-1} = t_i$ for
+each $i \in \{2,3,\ldots,k\}$ (where $b$ is the action in $A$ corresponding
+to $a$), and $T^{\prime} = 0$ otherwise.
+
+The reward function is $R^{\prime}(s_k,s_{k-1},\ldots,s_1) = R(s_1)$. 
+
+This works because each new state in $M^{\prime}$ corresponds to the last
+$k$ states of $M$, so that the history of the last $k$ transitions in $M$ are
+``stored'' in the current state in $M^{\prime}$. The transition function
+$T^{\prime}$ accounts for this history appropriately, the actions available
+from a state in $M^{\prime}$ correspond to the actions available from the last
+state in $M$, and the reward function $R^{\prime}$ gives the immediate reward
+of the current state in $M$.
+
+\item
+\begin{enumerate}[a.]
+\item Since, for each state $S_k$, $J^1(S_k)$ is simply the immediate reward
+at $S_k$, \fbox{$J^1(S_2) = 5$,} $J^1(S_3) = 4, J^1(S_4) = 6$. Thus, since
+$J^2(S_2)$ is the sum of the immediate reward $S_2$ and the discounted maximum
+expected reward after $1$ transition,
+\begin{align*}
+J^2(S_2)
+ & = 5 + \gamma\max\{0.2J^1(S_2) + 0.8J^1(S_4), 0.3J^1(S_2) + 0.7J^1(S_3)\} \\
+ & = 5 + 0.8\max\{0.2\cdot5 + 0.8\cdot6, 0.3\cdot5 + 0.7\cdot4\}
+   = \mbox{\fbox{$9.64$.}}
+\end{align*}
+
+\item Since the only action state $S_4$ is to remain at $S_4$, the optimal
+value of $S_4$ is
+\[J^*(S_4)
+ = \sum_{i = 0}^{\infty} 6 \gamma^i
+ = \frac{6}{1 - \gamma}
+ = 30.
+\]
+Since an optimal action from $S_2$ is to attempt a transition to $S_4$ (there
+is no benefit from moving to $S_3$, and transitioning from $S_2$ to $S_4$
+cannot reduce the reward), $J^*(S_2)$ is the sum of the immediate reward at
+$S_2$ and the future reward, conditioned on whether the transition to state
+$S_4$ is successful:
+\[J^*(S_2)
+ = 5 + 0.2\gamma J^*(S_2) + 0.8\gamma J^*(S_4).\]
+Solving for $J^*(S_2)$ gives
+\[J^*(S_2)
+ = \frac{5 + 0.8\gamma J^*(S_4)}{1 - 0.2\gamma}
+ = \mbox{\fbox{$\displaystyle \frac{24.2}{0.84}
+ \approx 28.8$.}}
+\]
+
+\end{enumerate}
+\end{enumerate}
+
+
+\end{document}

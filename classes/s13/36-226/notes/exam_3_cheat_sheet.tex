@@ -1,0 +1,214 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\mydate}{Sunday, April 30, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}           % QED square (text mode)
+\newcommand{\mqed}{\quad \blacksquare}              % QED square (math mode)
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\Z}{\mathbb{Z}}                         % integers
+\newcommand{\Q}{\mathbb{Q}}                         % rational numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\operatorname{Var}}                 % variance
+\newcommand{\Cov}{\operatorname{Cov}}               % covariance
+\newcommand{\ol}{\overline}
+\newcommand{\bz}{\hat \beta_0}
+\newcommand{\bo}{\hat \beta_1}
+\newcommand{\No}{\mathcal{N}}                       % normal distribution
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+\begin{center}
+{\Large 36-226 Exam 3 Reference Sheet} \\
+\mydate
+\end{center}
+
+
+
+
+
+
+
+\begin{center}
+\line(1,0){400}\\
+{\large General Hypothesis Testing}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+$\alpha = P(\mbox{Type I Error})$ is the probability of rejecting $H_0$ when
+$H_0$ is true.  \\
+$\beta = P(\mbox{Type II Error})$ is the probability of accepting $H_0$ when
+$H_a$ is true.   \\
+
+$Z$-Test:
+$H_0 : \theta = \theta_0$ \quad
+$Z = \frac{\hat\theta - \theta_0}{\sigma}
+   \approx \frac{\hat\theta - \theta_0}{s/\sqrt n}$
+\quad
+$RR = \left\{
+\begin{array}{cl}
+Z > z_\alpha            & \mbox{ if } H_a : \theta > \theta_0    \\
+Z < z_\alpha            & \mbox{ if } H_a : \theta < \theta_0    \\
+|Z| > z_{\alpha/2}   & \mbox{ if } H_a : \theta \neq \theta_0
+\end{array}
+    \right.$
+
+$T$-Tests are the same for $n - 1 \leq 30$ df.
+
+For proportions: $H_0 : p = p_0$,
+$\displaystyle Z = \frac{\hat p - p_0}{\sqrt{p_0(1 - p_0)/n}}$
+
+For two populations: $H_0: \mu_1 - \mu_2 = D_0$,
+\begin{align*}
+\displaystyle Z = \frac{(\ol Y_1 - \ol Y_2) - D_0}
+                    {\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}
+\quad \quad &
+\displaystyle T = \frac{(\ol Y_1 - \ol Y_2) - D_0}
+                    {S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}
+\quad \quad & \mbox{ where }
+S_p = \sqrt{\frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}}
+\end{align*}
+\begin{center}
+\line(1,0){400}\\
+\end{center}
+Testing hypotheses about variances (with independent samples from normal
+distributions):\\
+$H_0 : \sigma^2 = \sigma_0^2$
+
+\[RR = \left\{
+\begin{array}{cl}
+\chi^2 > \chi^2_\alpha            & \mbox{ if } H_a : \theta > \theta_0    \\
+\chi^2 < \chi^2_{1 - \alpha}            & \mbox{ if } H_a : \theta < \theta_0    \\
+\chi^2 > \chi^2_{\alpha/2} OR \chi^2 < \chi^2_{1 - \alpha/2} & \mbox{ if } H_a : \theta \neq \theta_0
+\end{array}
+    \right.,\]
+where $\chi^2 = \frac{(n - 1)S^2}{\sigma_0^2}$ and $\chi_\alpha^2$ is chosen so
+that, for $\nu = n - 1$ df, $P(\chi^2 > \chi_\alpha^2) = \alpha$.
+
+Test of the hypothesis $\sigma^2_1 = \sigma^2_2$ (with independent samples from
+normal distributions):\\
+$H_0 : \sigma^2_1 = \sigma^2_2$ \quad $H_a : \sigma^2_1 > \sigma^2_2$
+\[RR = \{F > F_\alpha\},\]
+where $F = \frac{S_1^2}{S_2^2}$, $F_\alpha$ chosen with $P(F > F_\alpha) =
+\alpha$ if $S_1$ has $\nu_1 = n_1 - 1$ df and $S_2$ has $\nu_2 = n_2 - 1$ df.
+\begin{center}
+\line(1,0){400}\\
+{\large Neyman-Pearson Lemma}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+The most powerful test $H_0 : \theta = \theta_0$ versus
+$H_a : \theta = \theta_a$ at a given $\alpha$ has a rejection region determined
+by \[\frac{L(\theta_0)}{L(\theta_a)} < k,\] where $k$ depends on $\alpha$.
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\begin{center}
+\line(1,0){400}\\
+{\large Linear Regression}\\
+\vspace{-0.1in}
+\line(1,0){400}
+\end{center}
+\begin{align*}
+S_{xx}
+    = \sum_{i = 1}^n (x_i - \ol x)^2
+    = \left( \sum_{i = 1}^n x_i^2 \right) - n \ol x^2
+\quad \quad &
+S_{xy}
+    = \sum_{i = 1}^n (x_i - \ol x)(y_i - \ol y)
+    = \left( \sum_{i = 1}^n x_iy_i \right) - n \ol x \, \ol y   \\
+\bo = \frac{S_{xy}}{S_{xx}} = r\sqrt{\frac{S_{yy}}{S_{xx}}}
+\quad \quad &
+\bz = \ol y - \bo \cdot \ol x   \\
+SSE = S_{yy} - \bo \cdot S_{xy}
+\quad \quad &
+S = \sqrt{\frac{SSE}{n - 2}}
+\end{align*}
+\begin{center}
+\line(1,0){400}
+\end{center}
+If each $\e_i \sim \No(0,\sigma^2)$, then
+\begin{align*}
+\bz \sim \No\left(\beta_0, \frac{\sigma^2\sum_{i = 1}^n x_i^2}{nS_{xx}}\right)
+\quad \quad &
+\bo \sim \No\left(\beta_1, \frac{\sigma^2}{S_{xx}}\right)
+\quad \quad &
+\Cov(\bz,\bo) = \frac{-\ol x \sigma^2}{S_{xx}}  \\
+\frac{(n - 2)S^2}{\sigma^2} \sim \chi^2 \quad \mbox{with $n - 2$ df}
+\quad \quad &
+S^2 \perp \bz, \bo  \\
+H_0 : \beta_i = \beta_{i0}
+\quad \quad &
+RR = \left\{
+\begin{array}{cl}
+T > t_\alpha            & \mbox{ if } H_a : \beta_i > \beta_{i0}    \\
+T < t_\alpha            & \mbox{ if } H_a : \beta_i < \beta_{i0}    \\
+|T| > t_{\alpha/2}   & \mbox{ if } H_a : \beta_i \neq \beta_{i0}
+\end{array}
+    \right.
+&
+\mbox{ ($t_{\alpha}$ has $n - 2$ df)}    \\
+T = \frac{\hat \beta_i - \beta_{i0}}{S\sqrt{c_{ii}}}
+\quad \quad &
+\mbox{ where } c_{00} = \frac{\sum_{i = 1}^n x_i^2}{nS_{xx}}
+\quad \quad &
+c_{11} = \frac{1}{S_{xx}}
+\end{align*}
+\begin{center}
+\line(1,0){400}
+\end{center}
+\begin{align*}
+\mbox{$100(1 - \alpha)\%$ CI for $\beta_i$:}
+\quad \quad &
+\hat\beta_i \pm t_{\alpha/2}S\sqrt{c_{ii}}  \\
+\mbox{$100(1 - \alpha)\%$ CI for $E(Y) = \beta_0 + \beta_1x^*$:}
+\quad \quad &
+\bz + \bo x^* \pm t_{\alpha/2}S\sqrt{\frac{1}{n}
+                                    + \frac{(x^* - \ol x)^2}{S_{xx}}}   \\
+\mbox{$100(1 - \alpha)\%$ CI for $Y$ when $x = x^*$:}
+\quad \quad &
+\bz + \bo x^* \pm t_{\alpha/2}S\sqrt{1 + \frac{1}{n}
+                                    + \frac{(x^* - \ol x)^2}{S_{xx}}}
+\end{align*}
+\begin{center}
+\line(1,0){400}
+\end{center}
+\begin{align*}
+r = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}} = \bo\sqrt{\frac{S_{xx}}{S_{yy}}}
+\quad \quad &
+\rho = \beta_1\frac{\sigma_X}{\sigma_Y}
+\quad \quad &
+T = \frac{\bo}{S/\sqrt{S_{xx}}} = \frac{r\sqrt{n - 2}}{\sqrt{1 - r^2}}
+\sim t_{n - 2}  \\
+r^2 = 1 - \frac{SSE}{S_{yy}}
+\end{align*}
+\end{document}

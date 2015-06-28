@@ -1,0 +1,319 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{nips14submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+
+% For bibliography
+\usepackage{natbib}
+\renewcommand{\bibsection}{}
+
+\title{11-745 Advanced Statistical Learning Seminar\\Final Paper}
+
+\author{
+Shashank Singh \\
+Statistics \& Machine Learning Departments \\
+Carnegie Mellon University \\
+Pittsburgh, PA 15213 \\
+\texttt{sss1@andrew.cmu.edu} \\
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\vx}{\vec{x}}                           % vector x
+\newcommand{\vy}{\vec{y}}                           % vector y
+\newcommand{\vz}{\vec{z}}                           % vector z
+\newcommand{\vv}{\vec{v}}                           % vector v
+\newcommand{\vu}{\vec{u}}                           % vector u
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\C}{\mathcal{C}}                        % cannot-link set
+\newcommand{\M}{\mathcal{M}}                        % must-link set
+\newcommand{\B}{\mathcal{B}}                        % border region of [0,1]^d
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We review some advances over the past decade in four topics in large scale
+machine learning: Unsupervised Clustering, Classification with Structured
+Learning, Semi-Supervised Clustering/Metric Learning, and Non-negative Matrix
+Factorization.
+\end{abstract}
+
+% \section{Introduction}
+% \subsection*{Organization}
+% 
+\section{Large-Scale Unsupervised Clustering}
+Papers:
+    \cite{gopal14VMF,
+          banerjee05VMF,
+          blei03LDA}
+\quad
+Background:
+          \cite{bishop06machinelearning}
+
+These papers study large-scale unsupervised learning, primarily in the context
+of organizing a large document corpus without supervision (topic modeling),
+especially in a hierarchical manner that facilitates user exploration of large
+datasets.
+
+Early work (\cite{blei03LDA}) proposed a generative model (Latent Dirichlet
+Allocation) describing the following generation procedure for each document:
+\begin{enumerate}
+\item A topic mixture $\theta$ is sampled from a $k$-dimensional Dirichlet
+prior.
+\item For each word $w_n$, a topic $z_n$ is drawn according to the weights of
+$\theta$.
+\item Each word $w_n$ is then sampled from a multinomial distribution
+depending on $z_n$ according to a prior distribution $\beta_{z_n}$.
+\end{enumerate}
+To learn the prior parameters $\alpha$ and $\beta$, \cite{blei03LDA} uses a
+variational inference procedure which maximizes a lower bound on the likelihood
+(or, equivalently, minimizes the KL-divergence between the estimated posterior
+and an approximation of the true posterior).
+
+It has been fairly well-established that normalizing documents to lie on a unit
+sphere via Term frequency-Inverse Document frequency (Tf-Idf) normalization
+significantly improves the performance of many text-mining algorithms. The
+two-parameter von Mises-Fisher (vMF) distribution plays the role of a Gaussian
+distribution (a smooth, unimodal, symmetric distribution decaying exponentially
+away from its mean) on the unit sphere, and hence serves as a natural basis for
+generative clustering models of documents. \cite{gopal14VMF} studies three
+increasingly expressive vMF clustering models: a basic Bayesian vMF mixture
+model, a hierarchical augmentation of this, and a temporal vMF model for
+time-varying cluster centers. All three models are learned via variational
+inference. Two schemes are proposed for estimating the posterior distribution
+of the vMF concentration parameters: an MCMC sampling approach and a bounding
+approach, which uses an asymptotic normality approximation (empirically, the
+MCMC approach performs better). Empirical results also show that the
+variational inference approach consistently outperforms a similar EM approach
+for likelihood maximization.
+
+General conclusions/observations:
+\begin{itemize}
+\item Variational Bayesian inference provides a powerful alternative to EM in
+many settings.
+\item von Mises-Fisher distributions are useful for modeling data distributed
+on the unit sphere, and hence for modelling documents in combination with
+Tf-Idf normalization.
+\end{itemize}
+
+\section{Web-Scale Classification with Structured Learning}
+Papers:
+    \cite{gopal12hierarchicalclass,
+          gopal13recursiveregularization}
+\quad
+Background:
+          \cite{bishop06machinelearning}
+
+These papers study classification in the context that some classes arr subsets
+or supersets of other classes; i.e., the classes form a heirarchy. This is
+natural for web-scale classification, where, for example, topic or image labels
+mined from text lie at different levels of the hierarchy.
+
+\cite{gopal12hierarchicalclass} models hierarchies by using a Gaussian
+distribution centered at the parameters of a class as a prior distribution for
+the parameters of the of child nodes of that class. This encourages nearby
+classes in the hierarchy to have similar parameters, and also naturally solves
+the general problem of hyperparameter selection inherent in Bayesian models
+(only the parameters for the root node must be set manually). Within each level
+of the hierarchy, \cite{gopal12hierarchicalclass} propose to use (multi-class)
+logistic regression and call the resulting model Hierarchical Bayesian Logistic
+Regression. Empirically, HBLR significantly outperforms both non-Bayesian
+hierarchical models, as well as flat (non-hierarchical) methods. As with the
+hierarchical clustering models above, the model can be learned efficiently via
+variational inference, and can also be parallelized by alternating iterations
+between even and odd layers of the hierarchy.
+
+\cite{gopal13recursiveregularization} follows up on
+\cite{gopal12hierarchicalclass} with two main modeling differences. Firstly,
+rather than a Bayesian model with the hierarchical relationships used to define
+the priors of the parameters, they use the hierarchical dependencies to define
+regularization terms for the parameters in a manner that still encourages
+classes nearby in the hierarchy to share similar model parameters. Secondly,
+they generalize to the case where dependencies between class-labels can be an
+arbitrary graph rather than specifically a hierarchy. Within each layer of the
+hierarchy, \cite{gopal13recursiveregularization} propose to use either an SVM
+(HR-SVM) or logistic regression (HR-LR). As opposed to previous hierarchical
+classification models, incorporating dependencies into the regularization term
+rather than constraints reduces the dependency between the parameters, which in
+turn allows produces a highly parallelizable optimization problem. For general
+graphs, the algorithm can be parallelized up to the chromatic number of the
+graph, which reduces to alternatively optimizing odd and even layers, in the
+case of hierarchial models. Empirically, HR-SVM consistently outperforms HR-LR,
+as well as several established benchmarks on some of the largest datasets that
+have been studied.
+
+General conclusions/observations:
+\begin{itemize}
+\item Hierarchies are effective, efficient organizational structures for basic
+supervised and unsupervised machine learning problems, and can make even simple
+(e.g., linear) models quite powerful.
+\item Again, variational Bayesian inference provides a powerful alternative to
+EM.
+\item Regularization/priors are very important in large-scale
+clustering/classification tasks where many (or even the majority) of classes
+have only a few instances.
+\end{itemize}
+
+\section{Semi-Supervised Clustering and Metric Learning}
+Papers:
+    \cite{xing02metriclearning,
+          bilenko04metriclearning,
+          gopal14supervisedclust}
+
+These papers study the problem of learning an appropriate metric (for
+$K$-means clustering or otherwise) using information about the similarity of
+a small number of given data points (i.e., limited supervision). They all
+operate on $n$ data points in $\R^d$, and take in supervision in the form of
+two sets, a ``must-link'' set $\M$ of pairs of points that should lie in the
+same cluster and a ``cannot-link'' set $\C$ of pairs of points that should lie
+in different clusters.
+
+Older work largely follows one of two approaches to using supervision to
+improve clustering: Probabilistic Constrained Clustering (PCC) and Distance
+Metric Learning (DML). The first two papers, \cite{xing02metriclearning} and
+\cite{bilenko04metriclearning}, are of the latter (DML) approach, which
+attempts to learn a metric under which the distances are reduced between pairs
+in $\M$ and increased between pairs in $\C$. Specifically,
+\cite{xing02metriclearning} learns the correlation matrix $A$ of a metric
+of the form $d_A(x,y) = \sqrt{(x - y)^TA(x - y)}$ by solving the optimization
+problem
+\begin{align*}
+\min_A                      & \sum_{(x,y) \in \M} d_A^2(x,y)        \\
+\mbox{ such that } \quad    & \sum_{(x,y) \in \C} d_A^2(x,y) \geq 1 \\
+\mbox{ and }       \quad    & A \succeq 0.
+\end{align*}
+This step is performed as a preprocessing step, and $K$-means is then run on
+the data with the resulting metric. \cite{bilenko04metriclearning} modifies
+this by combining the metric learning and clustering steps. Specifically, in
+each iteration, for each pair $(x,y) \in \M$ that are placed in different
+clusters, the objective includes a penalty increasing with $d_A(x,y)$, and,
+similarly, for each pair $(x,y) \in \C$ that are placed in the same cluster,
+the objective includes a penalty which decreases with $d_A(x,y)$. Their
+algorithm then alternates between optimizing the objective over the clustering
+assignments and the covariance $A$ of the metric.
+
+The third paper, \cite{gopal14supervisedclust}, argues that DML approaches lead
+to overfitting, because even well clustered data will be transformed so as to
+exaggerate certain distances, and also that, because the metric learning step
+is typically ignorant of the clustering objective
+(\cite{bilenko04metriclearning} notwithstanding), it need not learn a metric
+that is necessarily optimal for clustering. Their approach is to learn a
+transformation of the data that maps points in $\M$ and $\C$ in naturally
+well-separated clusters according to a specified clustering objective. Their
+framework is general, but is worked out for the case of Gaussian or vMF models.
+
+% Empirically, both \cite{xing02metriclearning} and
+% \cite{bilenko04metriclearning} both test their methods on (several) relatively
+% small datasets from the UCI repository, whereas \cite{gopal14supervisedclust}
+% runs experiments on comparatively large datasets.
+% 
+General conclusions/observations:
+\begin{itemize}
+\item Metric learning is strongly dependent on the task at hand; e.g., it is
+difficult to define a ``good'' metric without a goal, such as clustering, in
+mind.
+\item Even more specifically, in the case of semi-supervised clustering, it
+helps to know the rough form of the clusters, or at least of the clustering
+objective or model (e.g., Gaussians Mixture, von Mises-Fisher, etc.) being
+used.
+% \item Metric learning is only useful when it learns aspects of the data that
+% cannot be learned by the learning algorithms into which it feeds. For example,
+% $K$-means benefits from learning a metric $d_A$ where $A$ is diagonal, but does
+% not benefit much more from learning a full matrix $A$.
+\end{itemize}
+
+
+\section{Large-Scale Matrix Factorization}
+Papers:
+    \cite{hoyer04NMFwithsparseness,
+          jenatton10structuredsparsePCA,
+          gemulla11matrixfactorization}
+
+Given an data matrix $X \in \R^{n \times d}$, these papers seek factor
+matrices $W \in \R^{n \times k}$ and $H \in \R^{k \times d}$ such that
+$X \approx WH$. Typically, $k < d$, so that the factorization implicitly
+performs dimension reduction, and it is also desirable for $W$ and $H$ to be
+sparse.
+
+One approach is non-negative matrix factorization (NMF), where $X$ has
+non-negative entries, and we want $W$ and $H$ to also have non-negative
+entries. In principle, this gives an additive parts-based decomposition of
+components (e.g. decomposing portrait pictures into face and hair). Because it
+gives a parts-based decomposition, NMF tends naturally to give sparse
+solutions, but this sparsenss is intrinsic rather than being controlled by a
+predefined parameter. Hence, defining sparseness as in terms of the $\ell_1$
+and $\ell_2$ norms,
+\[\text{sp}(x) = \frac{\sqrt{n} - \|x\|_1/\|x\|_2}{\sqrt{n} - 1},\]
+\cite{hoyer04NMFwithsparseness} studies NMF with constraints on the sparseness
+$\text{sp}(w_i)$ and $\text{sp}(h_i)$ of the columns of $W$ and the rows of
+$H$. They use a multiplicative optimization procedure studied previously for
+NMF and project in each iteration to satisfy the desired sparsity constraint.
+
+A second approach is Structured Sparse Principal Component Analysis (SSPCA)
+\cite{jenatton10structuredsparsePCA}. PCA can be thought of as learning an
+orthogonal basis, or dictionary, which explains the data with low
+reconstruction error. As in LASSO and group LASSO, this dictionary can be
+sparsified by adding an appropriate regularization term (e.g., an $\ell_1$
+norm), and structured sparsity can be enforced with a grouped regularization
+term (e.g., an $\ell_1$ norm of $\ell_2$ norms of the appropriate groups).
+\cite{jenatton10structuredsparsePCA} propose an optimization scheme which
+cycles through optimizing over $W$, $H$, and the groups weights.
+While NMF finds a sparse dictionary, its elements are not necessarity
+structured. On the other hand, given a dataset of face images, SSPCA finds
+elements such as eyes and mouths; that is, in this context, SSPCA identifies
+local features.
+
+Finally, \cite{gemulla11matrixfactorization} studies a general distributed
+scheme, distributed stochastic gradient descent (DSGD), for matrix
+factorization via stochastic gradient descent at very large scale. DSGD can be
+adapted for NMF as well as for other matrix factorization problems. DSGD is
+compatible with MapReduce, and provably converges under certain conditions.
+Furthermore, experiments show DSGD significantly outperforming other
+state-of-the-art algorithms for very large matrix factorization problems (e.g.,
+Netflix dataset).
+
+General conclusions/observations:
+\begin{itemize}
+\item Several basic problems for large datasets can be phrased in terms of
+matrix factorizations (e.g., variants of PCA, NFM, etc.).
+\item Matrix factorization algorithms can be effectively distributed and
+performed very efficiently at a large scale.
+\end{itemize}
+
+\subsubsection*{References}
+\setlength{\bibsep}{0.0pt}
+{
+%\small
+\bibliographystyle{plain}
+\bibliography{biblio}
+}
+
+\end{document}

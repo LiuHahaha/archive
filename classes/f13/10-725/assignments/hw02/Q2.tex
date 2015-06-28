@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,enumerate,comment}
+
+\newcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\prox}{\operatorname{prox}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\op}{{\operatorname{op}}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{1}
+\section{Subgradients of matrix norms [30 points, 8+9+9+4] (Yifei)}
+We use $\langle \cdot, \cdot \rangle$ to denote the dot product and $\Nul$ and
+$\Ran$ to denote the nullspace and range.
+\begin{enumerate}[(a)]
+\item We use a more convenient definition of the operator norm:
+\[\|A\|_\op := \max_{\|x\| = 1} \|Ax\|_2.\]
+It is easy to check that this definition is identical to the given one:
+\[
+\max_{\|x\| = 1} \|Ax\|_2
+ = \sqrt{\max_{\|x\| = 1} \|Ax\|_2^2}
+ = \sqrt{\max_{\|x\| = 1} \langle Ax, Ax \rangle}
+ = \sqrt{\max_{\|x\| = 1} \langle A^TAx, x \rangle}
+ = \|A\|_\op,\]
+where the last equality follows from the Spectral Theorem, since $A^TA$ is
+symmetric.
+
+Since $U^TW = 0$, $\Ran(U)$ and $\Ran(W)$ are orthogonal. Since $WV = 0$,
+$\Ran(V) \subseteq \Nul(W)$, so that $\Nul(V^T) + \Nul(W) = \R^n$ (i.e.,
+any $x \in \R^n$ has a decomposition $x = x_1 + x_2$ with $x_2~\in~\Nul(V^T)$,
+$x_1~\in~\Nul(W), \langle x_1, x_2 \rangle = 0$).
+Since $U$ and $V$ are orthogonal, $\|UV^T\|_\op = 1$.
+Thus, by the
+Pythagorean Theorem,
+$\forall x \in \R^n$,
+\begin{align*}
+\|(UV^T + W)x\|_2^2
+   =    \|UV^Tx\|_2^2 + \|Wx\|_2^2
+ & =    \|UV^Tx_1\|_2^2 + \|Wx_2\|_2^2                          \\
+ & \leq \|UV^T\|_\op^2\|x_1\|_2^2 + \|W\|_\op^2\|x_2\|_2^2      \\
+ & \leq \|x_1\|_2^2 + \|x_2\|_2^2
+   =    \|x\|_2^2,
+\end{align*}
+so that $\|UV^T + W\|_\op \leq 1$. \qed
+
+\item Since $U$ and $V$ are orthogonal and $\Sigma$ is diagonal,
+\[VU^TA
+    = VU^TU\Sigma V^T
+    = V\Sigma V^T
+    = \Sigma.
+\]
+Since $U^TW = 0$,
+\[W^TA
+    = W^TU\Sigma V^T
+    = (U^TW)^T\Sigma V^T
+    = 0.
+\]
+Thus,
+\[\tr( (UV^T + W)^T A)
+    = \tr(VU^TA + W^TA)
+    = \tr(\Sigma). \qed\]
+
+\item Suppose $W \in \R^{m \times n}$ with $\|W\|_\op \leq 1$, $U^TW = 0$, and
+$WV = 0$. Then, by parts (a) and (b),
+
+\begin{align*}
+\tr( (UV^T + W)^T (B - A) )
+ &  = \tr( (UV^T + W)^T B ) - \tr( (UV^T + W)^T A )         \\
+ &  \leq \max_{\|C\|_\op \leq 1} \tr(C^TB) - \tr(\Sigma)
+    = \|B\|_* - \|A\|_*,
+\end{align*}
+where the last equality follows from duality of the trace and operator norms
+and the definitions of $\Sigma$ and the trace norm. Thus,
+$UV^T + W \in \partial\|A\|_*$. \qed
+
+\item Suppose $G = u_jv_j^T$, where $j$ satisfies $\Sigma_{jj} = \Sigma_{11}$.
+
+We first prove two lemmas, analogous to parts (a) and (b) above.
+
+{\bf Lemma 1:} $\|G\|_* = 1$.
+
+\emph{Proof:}
+\[G^TG
+    = (u_jv_j^T)^T u_jv_j^T
+    = v_ju_j^Tu_jv_j^T
+    = \|u\|_2^2v_jv_j^T
+    = v_jv_j^T.
+\]
+Thus, $\|G\|_* = \tr(G^TG) = \|v_j\|_2^2 = 1$, proving the lemma.
+
+{\bf Lemma 2:} $\tr(G^TA) = \|A\|_\op$.
+
+\emph{Proof:} $G^TA = v_ju_j^TU\Sigma V^T$. Using the fact that $U$ and $V$ are
+orthogonal, it can be checked that this reduces to the matrix $\Sigma[1_{jj}]$,
+where $[1_{jj}] \in \R^{r \times r}$ denotes the matrix with
+$\|u\|_2^2\|v\|_2^2 = 1$ in the index $(j,j)$ and zeros elsewhere. Thus,
+$\tr(G^TA) = \sigma_j(A) = \|A\|_\op$, proving the lemma.
+
+By these lemmas and the duality of the trance and operator norms,
+\begin{align*}
+\tr( G^T (B - A) )
+ &  = \tr( G^T B ) - \tr( G^T A )         \\
+ &  \leq \max_{\|C\|_* \leq 1} \tr(C^TB) - \|A\|_\op
+    = \|B\|_\op - \|A\|_\op,
+\end{align*}
+Thus, $G \in \partial\|A\|_*$. The desired result follows, since
+$\partial\|A\|_\op$ is convex. \qed
+
+\item If the result in (d) is an equality, then $\partial\|A\|_\op$ contains
+exactly one element (and hence $\|\cdot\|_\op$ is differentiable at $A$)
+precisely when there is a unique $j$ such that $\Sigma_{jj} = \Sigma_{11}$
+(i.e., the largest singular value of $A$ is not repeated). \qed
+\end{enumerate}
+\end{document} 

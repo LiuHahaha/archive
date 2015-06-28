@@ -1,0 +1,203 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Tuesday, February 5, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Problem 2}
+Assuming the Axiom of Choice, let $(x_i | i \in I)$ be a Hamel basis of unit
+vectors for $X$ (given a Hamel basis, we can divide each vector by its norm to
+create such a basis).
+Let $J \subseteq I$ be countably infinite, and let $\sigma: \N \rightarrow J$
+be a bijection. Define $L: X \rightarrow \mathbb{K}$, by 
+\[
+L x = \sum_{i \in \N}i\alpha_{\sigma(i)},
+\quad \forall x = \sum_{i \in \N}\alpha_{\sigma(i)}x_{\sigma(i)} \in 
+span(x_i | i \in J)\]
+(noting at most finitely many $\alpha_{\sigma(i)} \neq 0$,
+so $L$ is well-defined), and $L x = 0$ for all other $x \in X$.
+Note that $L$ is clearly linear. However, $L$ is unbounded on the unit ball,
+since, for any $n \in \N$, $L x_{\sigma(n)} = n$. By Proposition 2.8, $L$ is
+discontinuous. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+Assuming the Axiom of Choice, let $(x_i | i \in I)$ be a Hamel basis for $X$.
+Since each $x \in X$ can be written uniquely in the form
+\[
+ x = \sum_{i \in J_x} \alpha_i x_i,
+\]
+where $J_x \subseteq I$ is finite, and each $\alpha_i$ is non-zero, we can
+define the norms
+\[
+ \|x\|_1 := \sum_{i \in J_x} |\alpha_i|
+ \quad\mbox{ and }\quad
+ \|x\|_{\infty} := \max\{\alpha_i : i \in J_x\}.
+\]
+Let $J \subseteq I$ be countably infinite, and let $\sigma : \N \rightarrow J$
+be a bijection.
+For each $n \in \N$, define $x_n := \sum_{i = 1}^{n} x_{\sigma(i)}$.
+Then, $\forall n \in \N$, $\|x_n\|_1 = n$, but $\|x_n\|_{\infty} = 1$.
+Thus, there is no $M \in \N$ with $\|x\|_1 \leq M\|x\|_{\infty}$, so that
+$\|\cdot\|_1$ and $\|\cdot\|_{\infty}$ are not equivalent norms. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+Suppose, for sake of contradiction, that $L$ is discontinuous. Then, by
+Proposition 2.8, $L$ is unbounded on the unit ball, so that $\exists f$ in the
+unit ball with $Lf > Lg$, where $g = 1$ is the constant function that is
+identically $1$ on $[0,1]$. Since $f$ is in the unit ball (and thus is bounded
+above by $g$, $g - f \in K$. However, since $L$ is linear, $L(g - f) = Lg - Lf
+< 0$, which is a contradiction. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 9}
+($\Rightarrow$) Suppose first that $X$ is complete, and let
+$x = \{x_n\}_{n = 1}^{\infty}$ be an absolutely summable sequence in $X$.
+It suffices to show that $x$ is Cauchy. For any $n,k \in \N$, by the Triangle
+Inequality,
+\[
+\|x_{n+k} - x_n\| \leq \sum_{i = n}^{\infty}\|x_{n + 1} - x_n \| \leq 2\sum_{i
+= n}^{\infty}\|x_n\| \rightarrow 0
+\]
+as $n \rightarrow \infty$, since $x$ is absolutely summable, and a series
+converges only if its tail goes to zero. Thus, $x$ is Cauchy. 
+
+($\Leftarrow$) Suppose now that every absolutely summable sequence in $X$ is
+summable, and let $x = \{x_n\}_{n = 1}^{\infty}$ be a Cauchy sequence in $X$.
+It suffices to show that $x$ converges to some $y \in X$.
+
+Since $x$ is Cauchy, $\forall k \in \N, \exists n \in \N$ such that for every
+$m \in \N, \|x_{n + m} - x_n\| < 2^{-k}$. Thus, we can take a subsequence
+$\{x_{n_k}\}_{k = 1}^{\infty}$ of $x$ such that, for each $k \in \N$, $\|x_{n_{k
++ 1}} - x_{n_k}\| < 2^{-k}$. Thus, the sequence
+$\{x_{n_{k + 1}} - x_{n_k}\}_{k = 1}^{\infty}$ is absolutely summable, and so,
+it is summable. However, $\forall k \in \N$, $\sum_{i = 1}^k x_{n_{i + 1}} -
+x_{n_i} = x_{n_{k + 1}} - x_{n_1}$, so that, since the limit of this sum is in
+$X$, $y := x_{n_1} + \sum_{i = 1}^{\infty} x_{n_{i + 1}} - x_{n_i} =
+\lim_{k \rightarrow \infty}x_{n_k} \in X$.  
+
+It remains only to state that any Cauchy sequence with a convergent
+subsequence is itself convergent, although we show this explicitly here.
+Let $\e > 0$. Since, $x$ is Cauchy and $\{x_{n_k}\}_{k = 1}^{\infty}$
+converges to $y$, $\exists n \in \N$ such that, $\forall m \in \N$, $\|x_n -
+x_{n + m}\| < \e/2$, and $\|y - x_n\| < \e/2$. Then, $\forall m \in \N$,
+\[
+ \|y - x_{n + m}\| 
+ \leq \|y - x_n\| + \|x_n - x_{n + m}\|
+ < \e/2 + \e/2
+ = \e.
+\]
+Therefore, $x$ converges to $y$. \qed
+\end{question}
+
+\begin{question}{Problem 11}
+Let $X = c$, the space of convergent real sequences, equipped with the norm
+$\|\cdot\| = \|\cdot\|_{\infty}$. As done in the proof that the unit ball in any infinite
+dimensional non-linear space is not compact, using Riesz's Lemma and induction,
+we can construct a sequence $\{x_n\}_{n = 1}^{\infty}$ in $c$ such that each
+$\|x_n\| \leq 1$ and, $\forall n, m \in \N$ distinct $\|x_n - x_m\| > \frac12$.
+For each $n \in \N$, let $B_n := B_{\frac12} (x_n)$ be the ball of radius
+$\frac12$ centered at $x_n$. Note that, by construction, the $B_n$'s are
+disjoint. Define, for each $n \in \N$, $f_n : X \rightarrow
+\R$ by
+\[
+ f_n(x) = \left\{
+    \begin{array}{cl}
+    1 - 2\|x - x_n\| & : \mbox{if $x \in B_n$}, \\
+    0 & : \mbox{otherwise}
+    \end{array}
+\right.,
+\]
+$\forall x \in X$. Define $f : X \rightarrow \R$ by $f(x) := \sum_{n =
+1}^{\infty}nf_n(x)$, $\forall x \in X$.
+
+$\forall n \in \N$, define $S_n := X \sminus \bigcup_{i = n + 1}^{\infty}
+B_n$. On each $S_n$, $f$ is a finite sum of continuous functions, and is thus
+continuous. Thus, since $X = \bigcup_{n = 1}^{\infty}S_n$, $f$ is
+continuous on $X$.
+
+However, $\forall n \in \N$, $f(x_n) = n$, so that $f$ is unbounded on
+$B_1(0)$. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 13}
+It is immediate, from the definition of continuity, that, if a linear function
+$T$ is continuous, then $\mathcal{N}(T)$ is closed.
+
+However, the converse is not true. Suppose, for example, that $X$ is a linear
+space, and $\|\cdot\|_1$ and $\|\cdot\|_2$ are two norms on $X$ that are not
+equivalent (we have already shown the existence of such norms for some spaces;
+see Problem 4). Then, by Remark 2.14, the identity map $Id : (X,\|\cdot\|_1)
+\rightarrow (X,\|\cdot\|_2)$ is discontinuous, but $Id$ is clearly linear, and
+$\mathcal{N}(Id) = \{0\}$ is closed. \qed
+\end{question}
+
+\begin{question}{Problem 14}
+I wasn't able to complete this problem.
+\end{question}
+\end{document}

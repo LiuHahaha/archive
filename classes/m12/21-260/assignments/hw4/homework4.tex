@@ -1,0 +1,204 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{7b}
+\newcommand{\duedate}{Tuesday, July 17, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Section 7.3, Problem 8}
+The vectors are linearly dependent:
+\[-2\bx^{(3)} + 5\bx^{(2)} = \bx^{(1)}.\]
+\end{question}
+
+\begin{question}{Section 7.3, Problem 22}
+If $A$ is the given matrix, then characteristic polynomial of $A$ (computed by
+cofactor expansion about the first row) is
+\[\left|A - \lambda I\right|
+ = (1 - \lambda)((1 - \lambda)^2 + 4)
+ = (1 - \lambda)(\lambda^2 - 2\lambda + 5).
+\]
+Aside from the obvious root $\lambda = 1$, the quadratic formula gives the two
+roots
+\[\lambda = \frac{2 \pm \sqrt{4 - 4\cdot5}}{2} = 1 \pm 2i,\]
+so that the eigenvalues of $A$ are
+\[\lambda \in \mbox{\fbox{$\displaystyle\left\{1,1 + 2i, 1 - 2i\right\}$.}}\]
+Solving for the eigenvector $\bx_1$ associated with the eigenvalue
+$\lambda = 1$ gives the system of equations (the first line does not constrain
+$\bx_1$)
+\begin{eqnarray*}
+ x_1               & = & x_1 \\
+2x_1 +  x_2 - 2x_3 & = & x_2 \\
+3x_1 + 2x_2 +  x_3 & = & x_3,
+\end{eqnarray*}
+whose solutions are multiples the first eigenvector,
+\[\bx_1
+ = \mbox{\fbox{$\displaystyle \begin{bmatrix}
+    \frac{2}{3} \\
+    -1          \\
+    \frac{2}{3} 
+   \end{bmatrix}$.}}
+\]
+Solving for the eigenvectors $\bx_2$ and $\bx_3$ associated with the
+eigenvalues $\lambda = 1 + 2i$ and $\lambda = 1 - 2_i$, respectively,
+gives the systems of equations
+\begin{eqnarray*}
+ x_1              & = & (1 \pm 2i)x_1 \\
+2x_1 + x_2 - 2x_3 & = & (1 \pm 2i)x_2 \\
+3x_1 + 2x_2 + x_3 & = & (1 \pm 2i)x_3,
+\end{eqnarray*}
+which have the solutions which are multiples of
+\[\bx_2
+ = \mbox{\fbox{$\displaystyle \begin{bmatrix}
+    0  \\
+    1  \\
+    -i
+   \end{bmatrix}$,}} \quad
+\bx_3
+ = \mbox{\fbox{$\displaystyle \begin{bmatrix}
+    0  \\
+    1  \\
+    i
+   \end{bmatrix}$.}}
+\]
+\end{question}
+
+
+\begin{question}{Section 7.3, Problem 31}
+The cleanest proof is immediate from the fact that the determinant of a matrix
+is the product of its eigenvalues, but this fact doesn't appear to be at our
+disposal.
+
+It suffices however to observe that, if a square matrix $A$ with $0$ as an
+eigenvalue were invertible, then, for some associated non-zero eigenvector
+$\bx$,
+\[\bx = I\bx = (A^{-1}A)\bx = A^{-1}(A\bx) = A(0\cdot\bx) = A\bzero = \bzero,\]
+which is impossible. Therefore, any matrix with $0$ as an eigenvalue is not
+invertible, so that it has determinant $0$. \qed
+\end{question}
+
+\begin{question}{Section 7.4, Problem 6}
+\begin{enumerate}[(a)]
+\item By definition of the Wronskian,
+\[W\left[\bx^{(1)},\bx^{(2)}\right]
+ =  \left|
+        \begin{bmatrix}
+            t & t^2 \\
+            1 & 2t
+        \end{bmatrix}
+    \right|
+ = 2t^2 - t^2
+ = \mbox{
+    \fbox{
+        $t^2$.
+        }
+    }
+\]
+
+\item Since the $2 \times 2$ matrix with columns $\bx^{(1)}$ and $\bx^{(2)}$
+as columns has determinant $0$ if and only if its columns are linearly
+dependent and its determinant is the Wronskian computed in part (a),
+$\bx^{(1)}$ and $\bx^{(2)}$ are linearly independent if and only if
+$t^2 \neq 0$. Thus, the solutions are linearly independent on
+\fbox{$(-\infty,0)$} and on \fbox{$(0,\infty)$.}
+
+\item Since $\bx^{(1)}$ and $\bx^{(2)}$ are linearly independent on the
+intevals given in part (b), by Theorem 7.4.2, all solutions of the set of
+homogeneous differential equations satisfied by $\bx^{(1)}$ and $\bx^{(2)}$
+are of the form
+\[\bx(t) = c_1\bx^{(1)}(t) + c_2\bx^{(2)}(t),\]
+for some $c_1, c_2 \in \mathbb{R}$
+(i.e., they are linear combinations of $\bx^{(1)}$ and $\bx^{(2)}$).
+
+\item The system of equations is 
+\[\bx^{\prime} = \bx_2\]
+and
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 7.5, Problem 12}
+If $A$ is the matrix such that $\bx^{\prime} = A\bx$, then the eigenvalues of
+$A$ are $\lambda \in \{-1,8\}$, where the eigenvalue $\lambda = -1$ has
+algebraic multiplicity $2$. The eigenvectors associated with the eigenvalues
+$(-1)$, $(-1)$, and $8$, respectively, are
+\[\bxi_1
+ = \begin{bmatrix}
+        -0.4941 \\
+        -0.4720 \\
+         0.7301
+   \end{bmatrix}, \quad
+\bxi_2
+ = \begin{bmatrix}
+        -0.5580 \\
+        -0.8161 \\
+         0.1500
+   \end{bmatrix}, \quad
+\bxi_3
+ = \begin{bmatrix}
+        -0.6667 \\
+        -0.3333 \\
+         0.6667
+   \end{bmatrix}.
+\]
+
+Thus, solutions to the homogeneous system of linear, first-order
+differential equations are functions of the form
+\[\bx(t)
+ = \mbox{
+    \fbox{
+        $\displaystyle
+            c_1\bxi_1e^{-t} + c_2\bxi_2e^{-t} + c_3\bxi_3e^{8t}
+        $,
+    }
+   }
+\]
+with $c_1,c_2,c_3 \in \mathbb{R}$.
+\end{question}
+\end{document}

@@ -1,0 +1,182 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{8}
+\newcommand{\duedate}{Thursday, November 6, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item By definition of $C_n$,
+$\P[ \theta_0 \notin C_n | \theta = \theta_0] = \alpha$, and hence the test has
+type I error $\alpha$. \qed
+\item By definition of $C_n$,
+\[\pr_\theta[\theta \in C_n]
+    = \pr_\theta[\phi(\theta,X_1,\dots,X_n) = 0]
+    = 1 - \pr_\theta[\phi(\theta,X_1,\dots,X_n) = 1]
+    = 1 - \alpha. \qed
+\]
+\end{enumerate}
+\item
+\begin{enumerate}
+\item For $j \in \{1,\dots,m\}$, define $p_j := \int_{B_j} p(x) \, dx$.
+Then, each $n_j \sim$Binomial$(n,p_j)$, and so, for $x \in B_j$,
+\[\E[\hat p(x)]
+    = \frac{\E[n_j]}{nh}
+    = \frac{np_j}{nh}
+    = \mbox{\fbox{$\displaystyle \frac{p_j}{h}$,}}
+\]
+and
+\[\Var[\hat p(x)]
+    = \frac{\Var[n_j]}{n^2h^2}
+    = \frac{np_j(1 - p_j)}{n^2h^2}
+    = \mbox{\fbox{$\displaystyle \frac{p_j(1 - p_j)}{nh^2}$.}}
+\]
+\item For any $x$ and $y$ in the same bin, since $|x - y| \leq h$, by the
+Lipschitz condition, $p(y) = p(x) + c$, for some $|c| \leq Lh$. Integrating a
+constant over a interval of measure gives $h$, $p_j = h(p(x) + c)$.
+Hence, $|\E[\hat p(x)] - p(x)| = |p(x) + c - p(x)| \leq Lh$, and also, for
+$x \in B_j$, 
+\begin{align*}
+\Var[\hat p(x)]
+    = \frac{p_j(1 - p_j)}{nh^2}
+ &  \leq \frac{h(p(x) + Lh)(1 - p(x) + Lh)}{nh^2} \\
+ &  = \frac{p(x) - p(x)^2}{nh} + \frac{p(x)L + L - Lp(x) + L^2h}{n}
+    \leq 2\frac{p(x)}{nh},
+\end{align*}
+for large $n$ (since $h \leq 1$). Decomposing MSE into squared bias and
+variance,
+\begin{align}
+\notag
+R_n(h)
+ &  = \int_0^1 \left( \E[\hat p(x) - p(x)] \right)^2 + \Var[\hat p(x)] \, dx \\
+\label{ineq:risk_bnd}
+ &  \leq \int_0^1 L^2h^2 + 2\frac{p(x)}{nh} \, dx
+    = \mbox{\fbox{$\displaystyle L^2h^2 + \frac{2}{nh}$.}}
+\end{align}
+\item Note that (\ref{ineq:risk_bnd}) differentiable and convex in $h$. Hence,
+\[0
+    = \frac{d}{dh} L^2h^2 + \frac{2}{nh} \bigg|_{h = h_n}
+    = 2L^2h_n - \frac{2}{nh_n^2},
+\]
+so $h_n = (L^2n)^{-1/3}$. Plugging this into (\ref{ineq:risk_bnd}) gives
+$R_n(h_n) \leq 3(L/n)^{2/3} \in O(n^{-2/3})$. \qed
+\end{enumerate}
+\item
+\begin{enumerate}
+\item Applying the Lipschitz condition followed by the Glivenko-Cantelli
+Theorem,
+\[|\theta_n - \theta|
+    \leq L\sup_x |F_n(x) - F(x)|
+    \to 0
+\]
+almost surely, and hence $\theta_n \to \theta$ in probability. \qed
+\item Consider Bernoulli CDFs
+\[F(x) =
+    \left\{
+        \begin{array}{ll}
+            0 & : x < 0 \\
+            1 & : 0 \leq x
+        \end{array}
+    \right.
+    \quad \mbox{ and } \quad
+F_n(x) =
+    \left\{
+        \begin{array}{ll}
+            0       & : x < 0           \\
+            1 - 1/n & : 0 \leq x < 1    \\
+            1       & : 1 \leq x
+        \end{array}
+    \right.
+\]
+for $n \in \N$. Then, $T(F) = 0$ and $T(F_n) = 1$, but
+$\sup_x |F(x) - F_n(x)| = 1/n$, and so
+\[\frac{|T(F) - T(F_n)|}{\sup_x |F(x) - F_n(x)|} = n \to \infty
+    \quad \mbox{ as } n \to \infty. \qed
+\]
+\end{enumerate}
+\item
+\begin{enumerate}
+\item By definition of the bootstrap distribution, each
+\[\E[X_i^* | X_1,\dots,X_n] = \sum_{j = 1}^n \frac{X_i}{n} = \ol X_n.\]
+Hence,
+\[\E[\ol X_n^* | X_1,\dots,X_n]
+    = \frac{1}{n} \sum_{i = 1}^n \E[X_i^*]
+    = \frac{1}{n} \sum_{i = 1}^n \ol X_n
+    = \ol X_n. \qed
+\]
+
+\item By definition of the bootstrap distribution, each
+\[\Var[X_i^* | X_1,\dots,X_n]
+    = \frac{(X_i - \ol X_n)^2}{n}
+    = s^2.
+\]
+Hence, since, $X_1^*,\dots,X_n^*$ are conditionally independent given
+$X_1,\dots,X_n$,
+\[\Var[\ol X_n^* | X_1,\dots,X_n]
+    = \frac{1}{n^2} \sum_{i = 1}^n \Var[X_i^* | X_1,\dots,X_n]
+    = \frac{1}{n^2} \sum_{i = 1}^n s^2
+    = s^2/n. \qed
+\]
+\end{enumerate}
+\end{enumerate}
+\end{document}

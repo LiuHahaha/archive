@@ -1,0 +1,249 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Thursday, July 19, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Section 7.5, Problem 4}
+\begin{enumerate}[(a)]
+\item If $A$ is the matrix of constant coefficients of the given system, then,
+if $\lambda$ is an eigenvalue of $A$, then,
+\[0
+ = (1 - \lambda)(-2 - \lambda) - 4
+ = (\lambda + 3)(\lambda - 2),
+\]
+so that $\lambda \in \{-3,2\}$. Thus, the eigenvectors of $A$ associated with
+eigenvalues $\lambda = -3$ and $\lambda = 2$ are, respectively,
+\[\bxi^{(1)}
+ = \begin{bmatrix}
+        1  \\
+        -4
+   \end{bmatrix}, \quad
+ \bxi^{(2)}
+ = \begin{bmatrix}
+        1 \\
+        1
+   \end{bmatrix}.
+\]
+Thus, solutions to the system of differential equations are of the form
+\[\bx = \mbox{\fbox{$c_1\bxi^{(1)}e^{-3t} + c_2\bxi^{(2)}e^{2t}$.}}\]
+Since the eigenvalues of $A$ have different signs, the solution will approach
+multiples a basis vector of the general solution (in particular,
+$\bxi^{(2)}$) as $t \rightarrow \infty$.
+
+\item Figure 1 below shows a direction field as well as some sample
+trajectories for $\bx$.
+\vspace{2in}
+
+\newpage
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 7.6, Problem 6}
+\begin{enumerate}[(a)]
+\item
+If $A$ is the matrix of constant coefficients of the given system of
+differential equations, then, if $\lambda$ is an eigenvalue of $A$, then
+$\lambda = \pm 3i$. Thus, the eigenvectors of $A$ associated with eigenvalues
+$\lambda = 3i$ and $\lambda = -3i$, respectively, are
+\[\bxi^{(1)}
+ = \mbox{\fbox{$\begin{bmatrix}
+        2     \\
+        -1 + 3i
+   \end{bmatrix}$,}} \quad
+ \bxi^{(2)}
+ = \mbox{\fbox{$\begin{bmatrix}
+        2     \\
+        -1 - 3i
+   \end{bmatrix}$.}}
+\]
+For
+$\ba = \begin{bmatrix} 2 \\ -1 \end{bmatrix}$,
+$\bb = \begin{bmatrix} 0 \\ 3  \end{bmatrix}$, since $\bxi = \ba + i\bb$, for
+\begin{eqnarray*}
+\bx^{(1)}& = & e^{0\cdot t}(\ba\cos(3 t) - \bb\sin(3 t))
+            = \ba\cos(3 t) - \bb\sin(3 t) \\
+\bx^{(2)} & = & e^{0\cdot t}(\ba\sin(3 t)+ \bb\cos(3 t))
+ = \ba\sin(3 t)+ \bb\cos(3 t),
+\end{eqnarray*}
+$\{\bx^{(1)},\bx^{(2)}\}$ is a fundamental set of real-valued solutions, so
+that solutions to the given system of differential equations are of the form
+\[\bx = \mbox{\fbox{$c_1\bx^{(1)} + c_2\bx^{(2)}$,}}\]
+for some $c_1,c_2 \in \mathbb{R}$.
+
+\item Since the eigenvalues of $A$ have no real part, motion of $\bx$ over
+time is purely elliptical and there is no limit in $\bx$ as
+$t \rightarrow \infty$. Figure 2 below shows a direction field as well as
+some sample trajectories for $\bx$.
+\vspace{2in}
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Section 7.8, Problem 4}
+\begin{enumerate}[(a)]
+\item Figure 3 below shows a direction field as well as some sample
+trajectories for $\bx$.
+\vspace{2in}
+
+\item If $A$ is the matrix of constant coefficients of the given system of
+differential equations, then, since (as shown in part (c)), the only
+eigenvalue of $A$ is negative, all solutions to the system of differential
+equations approach $\bzero$ as $t \rightarrow \infty$.
+
+\item If $\lambda$ is an eigenvalue of $A$, then
+\[0
+ = (-3 - \lambda)(2 - \lambda) + 25/4
+ = \left(\lambda + \frac12\right)^2,
+\]
+so that $\lambda = -\frac12$. The only eigenvector of $A$ is
+\[\bxi
+ = \begin{bmatrix}
+        1     \\
+        1
+   \end{bmatrix}.
+\]
+Thus,
+\[\bx^{(1)} = \bxi e^{-\frac12t}\]
+is one solution to the system of differential equations. For $\boldeta$
+satisfying $(A + \frac12I)\boldeta = \bxi$, another linearly independent
+solution to the system of differential equations is
+\[\bx^{(2)} = \bxi te^{-\frac12t} + \boldeta e^{-\frac12t}.\]
+
+One such value for $\boldeta$ is $\begin{bmatrix} 2/5 \\ 0 \end{bmatrix}$.
+
+Thus, solutions to the given system of differential equations are of the form
+\[\bx
+ = \mbox{
+    \fbox{
+        $\displaystyle
+            c_1\begin{bmatrix} 1 \\ 1 \end{bmatrix}e^{-\frac12t}
+            + c_2\left(
+                \begin{bmatrix} 1 \\ 1 \end{bmatrix}te^{-\frac12t}
+                + \begin{bmatrix} 2/5 \\ 0 \end{bmatrix} e^{-\frac12t}
+            \right)
+        $.
+    }
+   }
+\]
+
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Section 9.1, Problem 8}
+\begin{enumerate}[(a)]
+\item If $A$ is the matrix of constant coefficients of the given system of
+differential equations, then, if $\lambda$ is an eigenvalue of $A$, then
+\[0
+ = (-1 - \lambda)(-0.25 - \lambda)
+\]
+so that \fbox{$\lambda \in \{-1,-0.25\}$.} Thus, the eigenvectors of $A$
+associated with eigenvalues $\lambda = -3$ and $\lambda = 2$, respectively,
+are
+\[\bxi^{(1)}
+ = \mbox{\fbox{$\begin{bmatrix}
+        1     \\
+        0
+   \end{bmatrix}$,}} \quad
+ \bxi^{(2)}
+ = \mbox{\fbox{$\begin{bmatrix}
+        -0.75 \\
+        1
+   \end{bmatrix}$.}}
+\]
+
+\item Since both eigenvalues of $A$ are negative, the origin is an
+\fbox{asymptotically stable} equilibrium point.
+
+\item Figure 4 below shows several sample trajectories of $\bx$, as well as
+some typical graphs of $x_1$ versus $t$.
+\vspace{2in}
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Section 9.1, Problem 10}
+\begin{enumerate}[(a)]
+\item As found in the solution to part (a) of Problem 6 in chapter 7.6, if $A$
+is the matrix of constant coefficients of the given system of differential
+equations, then, if $\lambda$ is an eigenvalue of $A$, then
+\fbox{$\lambda = \pm 3i$,} and the eigenvectors of $A$ associated with
+eigenvalues $\lambda = 3i$ and $\lambda = -3i$, respectively, are
+\[\bxi^{(1)}
+ = \mbox{\fbox{$\begin{bmatrix}
+        2     \\
+        -1 + 3i
+   \end{bmatrix}$,}} \quad
+ \bxi^{(2)}
+ = \mbox{\fbox{$\begin{bmatrix}
+        2     \\
+        -1 - 3i
+   \end{bmatrix}$.}}
+\]
+
+\item As explained in the solution to part (a) of Problem 6 in chapter 7.6,
+all solutions to the given system of differential equations are elliptical,
+so that the origin is a \fbox{stable (but not asymptotically}
+\fbox{stable)} equilibrium point.
+
+\item Figure 5 below shows several sample trajectories of $\bx$, as well as
+some typical graphs of $x_1$ versus $t$.
+\vspace{2in}
+\end{enumerate}
+\end{question}
+\end{document}

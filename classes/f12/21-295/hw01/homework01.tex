@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-295 Putnam Seminar}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, September 7, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Putnam 1964/B6}
+Suppose, for sake of contradiction, that there exist congruent sets $A$ and
+$B$ with $A \cup B = D$ and $A \cap B = \emptyset$, and let
+$f:A \rightarrow B$ be a geometric transformation between $A$ and $B$.
+Since $O := (0,0) \in D$, $O$ is in exactly one of $A$ and $B$; without loss
+of generality, we suppose $O \in A$. Let $Y = f(O) \in B$. Since
+$O$ is center of the disk and $Y \neq O$ (as $Y \not \in A$),
+there is a unique diameter $L$ of $D$ going through both $O$ and $Y$.
+Furthermore, there is a unique diameter $L^{\prime}$ of $D$ that is
+perpendicular to $L$. Let $P$ and $Q$ be the endpoints of $L^{\prime}$ (i.e.,
+$P$ and $Q$ are the intersection points of $L^{\prime}$ and the boundary of
+$D$).
+
+Since $L^{\prime}$ is a diameter, $PQ = 2$. Note that any geometric
+transformation is an isometry (i.e., it preserves the distance between any two
+points). Since $PO = OQ = 1$, and $PY$ and $YQ$ are hypotenuses of
+nondegenerate triangles having either $PO$ or $OQ$ as a leg, $PY, YQ > 1$.
+Thus, every point $X$ on the half-circle with endpoints $P$ and $Q$ (including
+$P$ and $Q$) has $XY > 1$, so that $X \not \in B$. $PQ = 2$, so that
+$f(P),f(Q) \in B$ are the endpoints of some diameter of $D$ (as they have
+distance $2$). But this is impossible if $B$ contains no points on the
+aforementioned half-circle, providing the desired contradiction. \qed
+\end{question}
+
+\begin{question}{Putnam 1962/A6.}
+Since either $1 \in X$ or $-1 \in X$ and $X$ is closed under multiplication,
+$1 \cdot 1 = (-1) \cdot (-1) = 1 \in X$. Since $X$ is closed under addition
+and any postive integer can be constructed by adding $1$ a finite number of
+times, the set of positive integers $\mathbb{Z}^+ \subseteq X$.
+
+Therefore, if, for some $a,b \in \mathbb{Z}^+$, $-\frac{a}{b} \in X$ (i.e., if
+there were a negative rational number in $X$), then, since $X$ is closed under
+multiplication $-a = b \cdot \left(-\frac{a}{b}\right) \in X$. However, this
+contradicts the fact that $a \in X$, so no negative rational number is in $X$.
+Therefore, every postive rational number is in $X$, so that, since
+$X \subseteq \mathbb{Q}$, $X$ is the set of positive rationals. \qed
+\end{question}
+\end{document}

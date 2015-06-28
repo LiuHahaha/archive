@@ -1,0 +1,54 @@
+
+
+
+\section{Nonnegative matrix factorization with gradient descent [25 points] (Yifei)}
+
+ Let $\mathbf{V} \in \mathbb{R}^{m\times n}$ be a given matrix, and $0<k<min(m,n)$ be a given positive integer.
+ 
+ The goal of nonnegative matrix factorization (NMF) is to solve
+ \begin{equation}
+ \label{eq:nmf}
+ J=\min_{\mathbf{W} \geq 0, \mathbf{H}\geq 0}\|\mathbf{V} - \mathbf{WH}\|^2_F
+ \end{equation}
+ where  $\mathbf{W}\in \mathbb{R}^{m\times k}$, $\mathbf{H} \in \mathbb{R}^{k \times n}$, and $\mathbf{A}\geq 0$ denotes that $A_{ij} \geq 0$ for all $i,j$.
+ 
+ The NMF problem is a nonconvex problem, and therefore it is difficult to solve. 
+ However, if we fix $\mathbf{W}$, then the problem is convex in $\mathbf{H}$, and similarly if $\mathbf{H}$ is fixed, then the problem is convex in $\mathbf{W}$. Therefore a commonly used approach is to do alternating minimization:
+ Fix $\mathbf{W}$, optimize $J$ in $\mathbf{H}$, then fix $\mathbf{H}$ optimize $J$ in $\mathbf{W}$ and repeat this process until convergence. 
+ 
+ Interestingly, there is an elegant gradient descent algorithm (GDA) for this approach where the learning rate can be set such that GDA always generates feasible solutions, i.e. after the updates the $\mathbf{W}$ and $\mathbf{H}$ matrices remain nonnegative.
+  The update rule is given in this paper Lee \& Seung (2001)
+ \url{http://hebb.mit.edu/people/seung/papers/nmfconverge.pdf} .
+More information about NMF can be found in
+\url{http://www.nature.com/nature/journal/v401/n6755/abs/401788a0.html} .
+
+Your task is to implement this NMF algorithm on the CBCL FACE database 
+\url{http://cbcl.mit.edu/software-datasets/FaceData2.html} . A sample of the original faces look like 
+%
+\includegraphics[width=.4\linewidth]{h3q5_1.eps}
+
+(a. 5 points) Take the original faces from face.txt , apply the following preprocessing: 
+
+For every face that is stored in a column of $\mathbf{V}_i$, normalize it such that the median $\mathbf{m}_i=0.5$ and the median of the deviation from the median is 0.25, i.e. $\underset{j}{median}(|\mathbf{V}_{ji}-\mathbf{m}_i|)$=0.25. Truncate values above 1 or below $1e-4$ (because we do not want exact zeros either). Now, we have a $\mathbf{V}$ that looks like (sampled columns): 
+
+\includegraphics[width=.4\linewidth]{h3q5_2.eps}
+
+(b. 10 points) Apply the algorithm Eq(4) in the paper Lee\&Seung (2001) to optimize \eqref{eq:nmf}. $k=49$. Initialize every entry in your $\mathbf{W}$ and $\mathbf{H}$ as a random draw from uniform(0,1). Run 300 iterations. Plot the columns of $\mathbf{W}$ similar to the bellow. Also plot the objective value in every iteration. What columns of $\mathbf{W}$ are more important? 
+
+\includegraphics[width=.4\linewidth]{h3q5_3.eps}
+
+(c. 5 points) Show, following the arguments in Lee \& Seung (2001), that the algorithm you have implemented is indeed performing gradient
+descent steps, with a cleverly chosen step size that ensures the matrices $W,H$ will have nonnegative entries at each step.  What is an alternative,
+still using gradient descent, to ensure that the entries of $W,H$ are nonnegative?  
+
+(d. 5 points) Now load face\_test.txt , reconstruct the faces by optimizing $\mathbf{H}$ with your learned $\mathbf{W}$ fixed. What is the mean mean-squared-error of each reconstructed images (the objective value normalized by the number of images)? Do your reconstructed faces look similar to test faces? 
+
+\textbf{To submit for (b) and (d)} Submit the plots for parts (b) and (d) to answer the questions asked. Please also submit the following functions (or similar functions if you are using another language) in a zip file. 
+\begin{verbatim}
+(a)  function [V_normalized] = normalize_faces(V)
+(b)  function [W, H, objective_val_history] = nmf(V_normalized, k)
+(c)  function [objective_val_history, H] = test_faces(W, testV_normalized)
+\end{verbatim}
+
+[Hint: the function compact\_canvas.m may come handy to plot the faces. You may find $\mathbf{V}$ and $\mathbf{V}_{test}$ in face.txt and face\_test.txt]
+

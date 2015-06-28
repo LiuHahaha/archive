@@ -1,0 +1,62 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+%\usepackage{mysymbols}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\newenvironment{qpart}[1]%
+{\begin{enumerate}\item[(#1)]}%
+{\end{enumerate}}
+
+\newenvironment{qpartp}[2]%
+{\begin{enumerate}\item[(#1)] [#2 points] }%
+{\end{enumerate}}
+
+\title{Convex Optimization 10-725/36-725 \\Homework 5, due Nov 26}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+{\bf Instructions}: 
+\begin{itemize}
+\item
+You must complete Problems 1--3 and {\bf either
+Problem 4 or Problem 5} (your choice between the two). 
+\item When you
+submit the homework, upload a single PDF (e.g., produced by LaTeX,
+or scanned handwritten exercises) for the solution of each problem 
+separately, to blackboard. You should your name at the top of each 
+file, except for the first problem. {\bf Your solution to Problem 1
+(mastery set) should appear completely anonymous to a reader.}
+\end{itemize}
+
+%% \bigskip
+%% {\bf N.B.} A few problems may appear quite long, but really, there
+%% is just a lot of text setting up and motivating the problem. This does not
+%% mean more work for you! It's simply trying to give you an idea of where 
+%% the problem is coming from, and why you'd want to solve it in the first 
+%% place.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{Q1.tex}
+\input{Q2.tex}
+\input{Q3.tex}
+\input{Q4.tex}
+\input{Q4b.tex}
+\input{Q5.tex}
+
+\end{document}

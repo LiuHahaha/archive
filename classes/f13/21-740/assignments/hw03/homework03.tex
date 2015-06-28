@@ -1,0 +1,363 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-740 Introduction to Functional Analysis II}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Friday, November 8, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}} % distance from or between sets
+\newcommand{\area}{\operatorname{area}} % area of a polygon
+\newcommand{\Gr}{\operatorname{Gr}}     % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\bdry}{\operatorname{bdry}} % boundary of a set
+\newcommand{\sminus}{\backslash}        % set difference
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\C}{\mathbb{C}}             % complex numbers
+\newcommand{\D}{\mathcal{D}}            % domain of an operator
+\newcommand{\Cmp}{\mathcal{C}}          % space of compact linear operators\s
+\newcommand{\K}{\mathbb{K}}             % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}}          % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}}          % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}}          % space of bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)}    % power set of #1
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\newcommand{\wto}{\rightharpoonup}      % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}}   % weak-* convergence
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+A composition of closed linear operators is not, in general, closed.
+
+Consider the Banach space $X := C([0,1];\R)$ of continuous function from
+$[0,1]$ to $\R$, under the supremum norm $\|f\| := \sup_{x \in [0,1]} |f(x)|$.
+
+Let $\D(B) = C^1([0,1];\R) \subseteq X$ and let $B : \D(B) \to X$ be the
+differentiation operator $Bf := f'$, $\forall f \in \D(B)$. It is a well-known
+result that if a sequence $\{f_n\}_{n = 1}^\infty$ of differentiable functions
+converges uniformly to $f$ and $\{f_n'\}_{n = 1}^\infty$ converges uniformly to
+$g$, then $f \in C^1([0,1];\R)$ and $g = f'$. It follows that $B$ is closed.
+
+Now define $A : X \to X$ by $(Af)(x) := f(0)$, $\forall f \in X, x \in [0,1]$.
+$A$ is continuous and hence closed.
+
+For all $n \in \N$, define $f_n \in \D(B)$ by
+\[f_n(x) := \frac{e^{-nx}}{n}, \quad \forall x \in [0,1].\]
+Then, $\|f_n\| = f_n(0) = 1/n$ and $f'(0) = -1$, $\forall n \in \N$, so that, as
+$n \to \infty$, $f_n \to 0$ and $ABf_n \to -1 \neq 0 = AB(0)$. Thus, $AB$ is
+not closed.
+\end{question}
+
+\begin{question}{Problem 2}
+($\Rightarrow$) Suppose $A$ is closable and $(0,y) \in cl(\Gr(A))$. If $\bar A$
+denotes the closure of $A$, then $(0,y) \in \Gr(\bar A)$. Since $\bar A$ is a
+linear operator $(0,0) \in \Gr(\bar A)$, and it follows that $y = 0$.
+
+($\Leftarrow$) Suppose that
+\[\forall (x,y) \in cl(\Gr(A)), \quad x = 0 \Rightarrow y = 0.\]
+First note that $cl(\Gr(A))$ is a linear manifold. Define
+\[\D(\bar A) := \{x : (x,y) \in cl(\Gr(A)) \mbox{ for some } y \in X\}.\]
+It is easily checked that $\D(\bar A)$ is a linear manifold. If
+$(x,y_1),(x,y_2) \in cl(\Gr(A))$, then
+\[(0,y_1 - y_2) = (x - x, y_1 - y_2) \in cl(\Gr(A)),\] and hence $y_1 = y_2$ by
+the given condition. Thus, we can define an operator
+$\bar A : \D(\bar A) \to Y$ by $(x, \bar Ax) \in cl(\Gr(A))$ for each
+$x \in cl(\D(A))$ and have that $cl(\Gr A) = \Gr(\bar A)$, so that $\bar A$ is
+closed. Thus, $A$ is closable (and $\bar A$ is the closure of $A$). \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item $A$ is not closed. Define the sequence $\{x_n\}_{n = 1}^\infty$ in
+$\K^{(\N)}$ by
+\[x_n^{(k)} = \left\{
+        \begin{array}{ll}
+            k^{-3}  & \mbox{if } k \leq n   \\
+            0       & \mbox{if } k > n
+        \end{array}
+    \right., \quad \forall n,k \in \N.
+\]
+Then, defining $x = (1^{-3},2^{-3},3^{-3},\dots)$, $x_n \to x$ as
+$n \to \infty$. Also,
+\[(Ax_n)^{(k)} = \left\{
+        \begin{array}{ll}
+            \sum_{i = 1}^n i^{-2}   & \mbox{if } k = 1          \\
+            k^{-3}                  & \mbox{if } 1 < k \leq n   \\
+            0                       & \mbox{if } k > n
+        \end{array}
+    \right., \quad \forall n,k \in \N,
+\]
+so $Ax_n \to (\pi^2/6,2^{-3},3^{-3},\dots)$ as $n \to \infty$. Since
+$x \notin \K^{(\N)}$, $\Gr(A)$ is not closed. \qed
+
+\item $A$ is not closable. Define the sequence $\{x_n\}_{n = 1}^\infty$ in
+$\K^{(\N)}$ by
+\[x_n^{(k)} = \left\{
+        \begin{array}{ll}
+            (nk)^{-1}  & \mbox{if } k \leq n   \\
+            0       & \mbox{if } k > n
+        \end{array}
+    \right., \quad \forall n,k \in \N.
+\]
+Then, $\|x_n\|_p \leq \frac{H_n}{n} \to 0$ as $n \to \infty$ (where $H_n$
+denotes the $n^{th}$ harmonic number). Also, noting
+$\sum_{i = 1}^n k(nk)^{-1} = 1$ for all $n \in \N$,
+\[(Ax_n)^{(k)} = \left\{
+        \begin{array}{ll}
+            1           & \mbox{if } k = 1          \\
+            (nk)^{-1}   & \mbox{if } 1 < k \leq n   \\
+            0           & \mbox{if } k > n
+        \end{array}
+    \right., \quad \forall n,k \in \N,
+\]
+so, $Ax_n \to (1,0,0,\dots) \neq 0$ as $n \to \infty$. By the result of Problem
+2, $A$ is not closable. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+As the following translation semigroup shows, it may be the case that
+$T(t) = 0$ for some $t \geq 0$.
+
+Let
+\[X := \left\{ f \in C([0,1];\R) : f(1) = 0 \right\}\]
+and consider the mapping $T : [0,\infty) \to \L(X;X)$ given by
+\[(T(t)f)(x)
+    = \left\{
+        \begin{array}{ll}
+        0           & \mbox{ if } x + t > 1\\
+        f(x + t)    & \mbox{ else }
+        \end{array}
+    \right., \forall f \in X, t \geq 0, x \in [0,1]
+\]
+
+Since $T$ simply applies a left-shift, clearly $T(0) = I$ and,
+$\forall s,t \geq 0$, $T(s + t) = T(s)T(t)$. Since $[0,1]$ is compact, every
+$f \in X$ is uniformly continuous, and hence (since each $f(1) = 0$), $T$ is
+strongly continuous, so that $T$ is a linear $C_0$-semigroup. Furthermore, it
+is clear that, $\forall t \geq 1$, $T(t) = 0$.
+
+It's probably worth noting that this is not possible with $T$ continuous in the
+uniform operator topology, since $T$ is then the exponential of its generator
+and is therefore invertible.
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item By definition of $T$, $\forall t \geq 0, x \in X_0$, $T(t)x \in X_0$.
+Suppose that, for some $n \in \{1,\dots,N\}$, for all $x \in X_{n - 1}$,
+$T(t)x \in X_{n - 1}$ for all $t \geq 0$. Let $t \geq 0, x \in X_n$. Since
+$X_n \subseteq X_{n - 1}$, $T(t)x \in X_{n - 1}$. Since $Ax \in X_{n - 1}$, by
+part (b) of Lemma 9.2, $AT(t)x = T(t)Ax \in X_{n - 1}$, so $T(t) \in X_n$, and
+the desired result follows by induction. \qed
+
+\item
+Suppose that, for some $n \in \{1,\dots,N\}$, $T$ is continuous in the strong
+operator topology on $(X_{n - 1},\|\cdot\|_{n - 1})$. If $x \in X_n, t \geq 0$,
+then by part (b) of Lemma 9.2
+\[\|T(t)x - x\|_n
+    = \|T(t)x - x\|_{n - 1} + \|A(T(t)x - x)\|_{n - 1}
+    = \|T(t)x - x\|_{n - 1} + \|T(t)Ax - Ax\|_{n - 1}
+    \to 0
+\]
+as $t \downarrow 0$, since $Ax \in X_{n - 1}$. Thus, by induction, $T$ is
+continuous in the strong operator topology on each $(X_n,\|\cdot\|_n)$.
+
+Since $T$ is continuous in the strong operator topology on $(X_n,\|\cdot\|_n)$,
+$u \in C^0([0,\infty);X_N)$.
+
+Suppose that, for some $n \in \{1,\dots,N\}$, we have
+$u \in C^{n - 1}([0,\infty);X_{N - (n - 1)})$ and
+$u^{(n - 1)}(t) = T(t)A^{n - 1}x$. Then, for $t \geq 0$, $x \in X_{N - n}$.
+\[\lim_{h \downarrow 0} \frac{u^{(n - 1)}(t + h) - u^{(n - 1)}(t)}{h}
+    = T(t)\lim_{h \downarrow 0} \frac{T(h)A^{n - 1}x - A^{n - 1}x}{h}
+    = T(t)A^nx
+,\]
+so $u \in C^n([0,\infty);X_{N - n})$ and $u^{(n)} = T(t)A^nx$. The desired
+result follows by induction. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6}
+By the Hille-Yosida Theorem, we have, for some $M > 0,\omega \in \R$,
+\begin{enumerate}[(i)]
+\item $\D(A)$ is dense in $X$ and $A$ is closed.
+\item $\rho(A) \supseteq (\omega,\infty)$.
+\item $\displaystyle \|R(\lambda;A)^n\| \leq \frac{M}{(\lambda - \omega)^n}$,
+$\forall n \in \N, \lambda > \omega$.
+\end{enumerate}
+Furthermore, also by the Hille-Yosida Theorem, it suffices to show
+\begin{enumerate}[(i)]
+\setcounter{enumi}{3}
+\item $\D(A + L)$ is dense in $X$ and $A + L$ is closed.
+\item $\rho(A + L) \supseteq (\omega + \|L\|,\infty)$.
+\item $\displaystyle \|R(\lambda;A + L)^n\|
+            \leq \frac{M}{(\lambda - (\omega + M\|L\|))^n}$,
+$\forall n \in \N, \lambda > \omega$.
+\end{enumerate}
+
+Since $L$ is continuous, $\D(A + L) = \D(A)$ and $A + L$ is closed.
+
+Also, since $L$ is bounded, it can shift the spectrum by at most $\|L\|$, so
+$(\omega + \|L\|,\infty) \subseteq \rho(A + L)$.
+
+It follows from (iii) that, for $\lambda > \omega + M\|L\|$,
+\[\|LR(\lambda;A)\|
+    \leq \frac{M\|L\|}{\lambda - \omega}
+    < \frac{M\|L\|}{M\|L\|}
+    = 1.
+\]
+\paragraph{Lemma 1} For $\lambda > \omega + M\|L\|$ (so
+$\lambda \in \rho(A + L)$),
+\[R(\lambda; A + L)
+    = R(\lambda; A) \left( I - LR(\lambda; A) \right)\inv
+    = \sum_{k = 0}^\infty R(\lambda; A) \left( LR(\lambda; A) \right)^k.
+\]
+\emph{Proof:} Since
+\[
+\left( \lambda I - (A + L) \right) R(\lambda;A)
+    = (\lambda I - A)R(\lambda;A) - LR(\lambda; A)
+    = \left( I - LR(\lambda; A) \right),
+\]
+\[\left( \lambda I - (A + L) \right) R(\lambda;A)
+                                        \left( I - LR(\lambda; A)\right) \inv
+    = I.
+\]
+Since $\lambda \in \rho(A + L)$, $\lambda I - (A + L)$ is bijective, and hence
+its right inverse is its inverse. $\square$
+
+Taking norms and reindexing terms in terms of powers of $\|L\|$,
+\[\|R(\lambda; A + L)^n\|
+    = \left\|\left[ \sum_{k = 0}^\infty R(\lambda; A) \left( LR(\lambda; A) \right)^k \right]^n
+\right\|
+    \leq \sum_{k = 0}^\infty \binom{n}{k} \frac{M^{k + 1}\|L\|^k}
+                                                {(\lambda - \omega)^{n + k}}
+\]
+
+Then, since $\lambda > \omega + M\|L\|$, using the identity
+$\frac{1}{(1 - x)^n} = \sum_{k = 0}^\infty \binom{n}{k} x^k$.
+\begin{align*}
+\|R(\lambda; A + L)^n\|
+ &  \leq \sum_{k = 0}^\infty \binom{n}{k} \frac{M^{k + 1}\|L\|^k}
+                                            {(\lambda - \omega)^{n + k}}    \\
+ &  = \frac{M}{(\lambda - \omega)^n}
+        \sum_{k = 0}^\infty \binom{n}{k} \left( \frac{M\|L\|}
+                                {\lambda - \omega} \right)^k    \\
+ &  = \frac{M}{(\lambda - \omega)^n} \cdot \left(1 - \frac{M\|L\|}
+                                                {\lambda - \omega}\right)^{-n}         \\
+ &  = \frac{M}{(\lambda - (\omega + M\|L\|))^n}. \qed
+\end{align*}
+\end{question}
+
+\newpage
+\begin{question}{Problem 7}
+I wasn't able to prove this on my own. This proof is based on the proof of
+Theorem 1.6 in Engel and Nagel's
+\emph{A Short Course on Operator Semigroups}.
+
+By the Principle of Uniform Boundedness, $\forall t \geq 0$,
+$T(t) \in \L(X;X)$, and hence, again by the Principle of Uniform Boundedness,
+$\exists M, \delta > 0$ such that $\|T(t)\| \leq M$ for all $t \in [0,\delta]$.
+Thus, it suffices to show that the set
+\[E := \left\{ x \in X : \lim_{t \downarrow 0} T(t)x = x \right\}\]
+is dense in $X$. In particular, since $E$ is convex, it suffices to show $E$ is
+weakly dense in $X$.
+
+$\forall x \in X, r > 0$, define $x_r \in X^{**}$ by
+\[x_r(x^*)
+    := \frac{1}{r} \int_0^r x^*(T(t)x) \, dt, \quad \forall x^* \in X^*.
+\]
+Let $x \in X$ and suppose $r > 0$. Since $[0,r]$ is compact and the mapping
+$s \to T(s)x$ is weakly continuous, $S := \{T(s)x : s \in [0,r]\}$ is weakly
+compact. Thus, the closure of the convex hull of $S$, $cl(co(S))$, is weakly
+compact. Since $x_r$ is a limit of Riemann sums, $x_r \in cl(co(S))$, and so
+$x_r \in X$. Since the set $D := \{x_r : r > 0, x \in X\}$ is weakly dense in
+$X$, it suffices to show $D \subseteq E$.
+\begin{align*}
+\|T(t)x_r - x_r\|
+    & = \sup_{\|x^*\| \leq 1} \frac{1}{r}
+            \left| \int_t^{t + r} x^*(T(s)x) \, ds
+                - \int_0^r x^*(T(s)x) \, ds\right|  \\
+    & \leq \sup_{\|x^*\| \leq 1} \frac{1}{r}
+            \left( \left| \int_r^{r + t} x^*(T(s)x) \, ds\right|
+                + \left|\int_0^r x^*(T(s)x) \, ds \right| \right)  \\
+    & \leq \frac{2t}{r} \|x\| \sup_{0 \leq s \leq r + t} \|T(s)\|
+      \to 0 \quad \mbox{ as } t \downarrow 0. \qed
+\end{align*}
+\end{question}
+
+\begin{question}{Problem 8}
+We first note that, $\forall u \in X, t > 0$,
+$T(t)u = k_t * u$, where $k_t(x) = (\pi t)^{-1/2}e^{-x^2/t}$,
+$\forall x \in \R$. Then, $\{k_t\}_{t \geq 0}$ is an approximate identity (that
+is, $\forall t \geq 0$, $\int_\R k_t = 1$ and $\forall \delta > 0$,
+$\int_{\R\sminus(-\delta,\delta)} k_t(y) \, dy \to 0$ as $t \to 0$). We showed
+in Measure Theory that this implies $\|k_t * f - f\|_2 \to 0$ as
+$t \to 0$, $\forall f \in L^2(\R)$. Thus, $T$ is continuous in the strong
+operator topology. If $s,t \geq 0$, changing coordinates,
+\begin{align*}
+(T(s)T(t)u)(x)
+ &  = (\pi st)^{-1/2} \int_{-\infty}^\infty \int_{-\infty}^\infty
+        e^{-\frac{ty^2 + sz^2}{st}} u(x - y - z) \, dy \, dz    \\
+ &  = \left( \frac{st}{s + t} \right)^{1/2} (\pi st)^{-1/2}
+        \int_{-\infty}^\infty e^{-\frac{y^2}{s + t}} u(x - y) \, dy
+    = (T(s + t)u)(x),
+\end{align*}
+so we have the semigroup property. From reading Engel and Nagel's \emph{A Short
+Course on Operator Semigroups}, I understand that the infinitesimal generator
+of $T$ is the second derivative $A : C^2(\R) \cap L^2(\R) \to X$ defined by
+$Au = u''$, $\forall u \in C^2(\R) \cap L^2(\R)$, but I wasn't able to show
+this. It seems to require Fourier transforms, which I'm not too familiar with.
+\end{question}
+\end{document}

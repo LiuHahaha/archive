@@ -1,0 +1,280 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-621 Introduction to Lebesgue Integration}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Wednesday, November 28, 2012}
+\newcommand{\problemlist}{Chapter 2, Page 89, Exercises 1,2,4,6,8,9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\symdif}{\; \triangle \;} % symmetric set difference
+\newcommand{\diam}[1]{\operatorname{diam} \left( #1 \right)} % diameter of set #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\problemlist
+\begin{question}{Exercise 1}
+\newcommand{\F}{\mathcal{F}}
+Let $\F := \{F_1,F_2,\ldots,F_n\}$. Since
+$|\pow{\F}| = 2^n$, we can enumerate the subsets $\F_0,\F_1,\ldots,\F_N$, of
+$\pow{\F}$, with $N = 2^n - 1$, and, without loss of generality,
+$\F_0 = \emptyset$. Then, for $i \in \{1,2,\ldots,N\}$, define
+\[F^*_i
+ := \left( \bigcap_{F \in \F_i} F \right)
+        \left\sminus \left( \bigcup_{F \notin \F_i} F \right) \right.
+\]
+(so that $F^*_i$ is the set of elements in those sets belonging to $\F_i$ and
+not in sets not belonging to $\F_i$).
+
+By construction, for distinct $i,j \in \{1,2,\ldots,N\}$, there is some $F_k$
+such that $F^*_i \subseteq F_k$ and $F^*_j \subseteq F^c_k$ (or vice versa),
+so that $F^*_i$ and $F^*_j$ are disjoint, and thus the collection $\{F^*_j\}$
+is disjoint, as desired.
+
+For any $k \in \{1,2,\ldots,n\}$, $\forall x \in F_k$,
+$\exists j \in \{1,2,\ldots,N\}$ such that $\F^*_j = \{F \in \F : x \in F\}$,
+since there is an $F^*_j$ for every nonempty subset of $\pow{\F}$ (and $x$
+must be in \emph{some} $F_i$). Furthermore, by construction of $F^*_j$,
+$F^*_j \subseteq F_k$ (since, otherwise, $F^*_j \subseteq F^c_j$, which cannot
+be the case, since $x \in F^*_j$). Thus,
+$F_k \subseteq \bigcup_{F^*_j \subseteq F_k} F^*_j$. That
+$F_k \supseteq \bigcup_{F^*_j \subseteq F_k} F^*_j$ is immediate from the
+definition of the latter set.
+
+Since $\bigcup_{j = 1}^{N} F^*_j \subseteq \bigcup_{i = 1}^n F_i$, it follows
+that $\bigcup_{j = 1}^{N} F^*_j = \bigcup_{i = 1}^n F_i$, as desired. \qed
+\end{question}
+
+\begin{question}{Exercise 2}
+It follows from the density of continuous, compactly supported functions in
+$L^1(\R^d)$ that there is a continuous function $g \in L^1(\R^d)$ with compact
+support $G \subseteq \R^d$, such that
+$\|g - f\|_{L^1} < \frac{\epsilon}{4} < \frac{\epsilon}{3}$.
+
+Let $f_{\delta}$ and $g_{\delta}$ be the functions taking $x \in \R^d$ to
+$f(\delta x)$ and $g(\delta x)$, respectively.
+
+Then, $\forall \delta > 0$, by dilation invariance of the Lebesgue Integral,
+\[
+\|f_{\delta} - g_{\delta}\|_{L^1}
+ = \int_{\R^d} |f(\delta x) - g(\delta x)| \; dx
+ = \frac{1}{\delta^d} \int_{\R^d} |f(x) - g(x)| \; dx
+ = \frac{1}{\delta^d} \|g - f\|_{L^1}
+ < \frac{\epsilon}{4\delta^d}.
+\]
+
+Thus, for some $\delta_1 \in (0,1)$, $\forall \delta > \delta_1$,
+$\|f_{\delta} - g_{\delta}\|_{L^1} < \frac{\epsilon}{3}$.
+
+Let $G^{\prime} := G \cup \frac{G}{\delta}$ ($\frac{G}{\delta}$ is the
+dilation of $G$ by $\frac{1}{\delta}$). Since $g$ is continuous and
+$G^{\prime}$ is compact, $g$ is uniformly continuous on $G^{\prime}$. Thus,
+$\exists \delta_0 > 0$ such that, whenever $\|x_1 - x_2\| < \delta_0$,
+$|g(x_1) - g(x_2)| < \frac{\epsilon}{3m(G^{\prime})}$
+($m(G^{\prime}) < +\infty$, since $G^{\prime}$ is compact).
+Since $G^{\prime}$ is compact, $R := \diam{G^{\prime}} < +\infty$. Then, for
+$\delta \in \left( 1 - \frac{\delta_0}{R}, 1 + \frac{\delta_0}{R} \right)$,
+$\forall x \in G^{\prime}$,
+since
+$\|x - \delta x\|
+ = |1 - \delta|\|x\|
+ < |1 - \delta| R
+ < \frac{\delta_0}{R}R
+ = \delta_0$,
+\[
+|g_\delta(x) - g(x)|
+ = |g(\delta x) - g(x)|
+ < \frac{\epsilon}{3m(G^{\prime})},
+\]
+and thus, since $g_\delta(x) = g(x) = 0$ outside of $G^{\prime}$,
+\[
+\|g_\delta - g\|_{L^1}
+ = \int_{\R^d} |g_{\delta}(x) - g(x)| \; dx
+ = \int_{G^{\prime}} |g_{\delta}(x) - g(x)| \; dx
+ < \int_{G^{\prime}} \frac{\epsilon}{3m(G^{\prime})} \; dx
+ = \frac{\epsilon}{3}.
+\]
+Therefore, by the triangle inequality,
+$\forall \delta \in (\delta_1,\infty) \cap
+\left( 1 - \frac{\delta_0}{R}, 1 + \frac{\delta_0}{R} \right)$
+\[\|f_{\delta} - f\|_{L^1}
+ \leq \|f_{\delta} - g_{\delta}\|_{L^1}
+    + \|g_{\delta} - g\|_{L^1}
+    + \|g - f\|_{L^1}
+ < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3}
+ = \epsilon.
+\]
+Thus, $f_{\delta}$ converges to $f$ in the $L^1$-norm as
+$\delta \rightarrow 1$. \qed
+\end{question}
+
+\begin{question}{Exercise 4}
+Define $h: \R^2 \rightarrow \R$ be defined $\forall x,t \in [0,b]$ by
+\[
+h(x,t)
+ := \left\{
+        \begin{array}{cl}
+            \frac{f(t)}{t}  & : 0 < x \leq t \leq b \\
+            0               & : \mbox{otherwise}
+        \end{array}
+    \right..
+\]
+As the quotient of two continuous functions on a measurable set and a constant
+function elsewhere, $h$ is measurable, so that, by Fubini's Theorem, since $g$
+is identical on $[0,b]$ to the function
+$x \in \R \mapsto \int_{\R} h(x,t) \; dt$, $g$ is measurable, and, moreover,
+\[
+\int_0^b g(x) \; dx
+   = \int_0^b \left( \int_x^b \frac{f(t)}{t} \; dt \right) \; dx
+   = \int_{\R^2} h(x,t)
+   = \int_0^b \left( \int_0^t \frac{f(t)}{t} \; dx \right) \; dt
+   = \int_0^b f(t)\; dt.
+\]
+It follows that, since $f$ is integrable, $g$ is integrable. \qed
+\end{question}
+
+\begin{question}{Exercise 6}
+\begin{enumerate}[(a)]
+\item Let $f : \R \rightarrow \R$ be defined such that, $\forall x \in \R$,
+\[
+    f(x)
+ := \left \{
+        \begin{array}{cl}
+            2^n & : x \in \left[ n, n + \frac{1}{2^{2n}} \right], n \in \N\\
+            0   & : \mbox{otherwise}
+        \end{array}
+    \right.
+\]
+Then,
+\[
+   \int_{\R} f(x) \; dx
+ = \sum_{i = 0}^{\infty} \int_n^{n + \frac{1}{2^{2n}}} f(x) \; dx
+ = \sum_{i = 0}^{\infty} \frac{1}{2^n}
+ = 1
+ < \infty,
+\]
+so that $f$ is integrable on $\R$. However, $\forall n_0 \in \N$, $y \in r$,
+$\exists n > n_0$ such that $2^n > y$. Thus,
+$\limsup_{x \rightarrow \infty} f(x) = \infty$, as desired. \qed
+
+Note: I just realized the question requires that $f$ be continuous. I don't
+have time to write up the correction properly, but $f$ should be modified such
+that its graph is is an isosceles triangle of height $2^n$ on each interval
+$\left[ n, n + \frac{1}{2^{2n}} \right]$, and $f = 0$ elsewhere. Then, $f$
+will be continuous and $\int_{\R} f(x) \; dx = \frac12$, so $f$ is integrable,
+but $\limsup_{x \rightarrow \infty} f(x) = \infty$, for the same reason as
+above.
+
+\item If we show the result in the case $f \geq 0$, the general case follows,
+since $f^+,f^- \geq 0$.
+
+Then, if we suppose, for sake of contradiction, that
+the conclusion fails, $\lim_{x \rightarrow \infty} f(x) > 0$ (the case
+$\lim_{x \rightarrow -\infty} f(x) > 0$ is identical). Thus,
+$\exists \epsilon > 0$ such that, $\forall x_0 \in \R$,
+$\exists x \in (x_0,\infty)$ with $f(x) > \epsilon$. Since $f$ is uniformly
+continuous, $\exists \delta > 0$ such that, $\forall x,y \in \R$, if
+$|x - y| < \delta$, then $|f(x) - f(y)| < \frac{\epsilon}{2}$. It follows that
+there are infinitely many disjoint intervals of the form
+$(x - \delta, x + \delta)$ on which $f \geq \frac{\epsilon}{2}$, so that
+$m(f\inv((\frac{\epsilon}{2}, \infty))) = \infty$. However, since $f$ is
+integrable so that $\frac{2}{\epsilon} \int_{\R} f(x) \; dx < \infty$, this
+contradicts the Tchebychev Inequality (Exercise 9). \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 8}
+Let $\epsilon > 0$. By part (ii) of Proposition 1.12 (absolute continuity of
+the Lebesgue integral), $\exists \delta > 0$ such that, whenever
+$E \subseteq \R$ has $m(E) < \delta$, $\int_E f < \epsilon$. Then, for
+$x,y \in \R$ (without loss of generality, with $x \leq y$), if
+$|y - x| < \delta$, then, since $m([x,y]) < \delta$,
+\[
+|F(y) - F(x)|
+ =    \left| \int_{-\infty}^y f - \int_{-\infty}^x f \right|
+ =    \left| \int_x^y f \right|
+ \leq \int_x^y \left| f \right|
+ <    \epsilon.
+\]
+Thus, $F$ is uniformly continuous. \qed
+\end{question}
+
+\begin{question}{Exercise 9}
+Let $f_{\alpha}: \R \rightarrow \R$ be the function defined $\forall x \in \R$
+by
+\[
+f_{\alpha}(x)
+ := \left\{
+        \begin{array}{cl}
+            \alpha & : x \in E_{\alpha} \\
+            0    & : \mbox{otherwise}
+        \end{array}
+    \right.
+\]
+Since $f$ is measurable, $E_{\alpha} = f\inv((\alpha,\infty))$ is measurable.
+Furthermore, $f_{\alpha}$ is simple, so that
+\[
+\int_{\R} f_{\alpha} = \alpha m(E_{\alpha}) + 0 \cdot m(\R \sminus E_{\alpha})
+    \quad \mbox{ and thus } \quad
+\frac{1}{\alpha} \int_{\R} f_{\alpha} = m(E_{\alpha})
+\]
+Thus, since $f_{\alpha} \leq f$ on $\R$, by monotonicity of the Lebesgue
+integral (and since $\alpha > 0$),
+\[
+m(E_{\alpha})
+ \leq \frac{1}{\alpha} \int_{\R} f_{\alpha}
+ \leq \frac{1}{\alpha} \int_{\R} f. \mqed
+\]
+\end{question}
+\end{document}

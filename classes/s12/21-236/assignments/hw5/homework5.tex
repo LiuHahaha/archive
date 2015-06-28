@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Monday, April 2, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+\begin{question}{Problem 1}
+Let $f: [a,b] \rightarrow \mathbb{R}$.
+\begin{enumerate}[(a)]
+\item $\forall \delta > 0$, let $\mathcal{I}_{\delta}$ denote the set of
+finite sets of nonoverlapping intervals $(a_k,b_k) \subseteq [a,b]$ such that
+\[\sum_{k = 1}^l (b_k - a_k) \leq \delta.\]
+
+Suppose that $f$ belongs to $AC([a,b])$, and let $\epsilon > 0$. By
+definition of Absolute Continuity, $\exists \delta > 0$, such that,
+$\forall \{(a_1,b_1),\ldots,(a_l,b_l)\} \in \mathcal{I}_{\delta}$,
+\[\sum_{k = 1}^l |f(b_k) - f(a_k)| \leq \epsilon,\] Then, for this choice of
+$\delta$, by the Triangle Inequality,
+\[\left| \sum_{k = 1}^l f(b_k) - f(a_k) \right|
+    \leq \sum_{k = 1}^l |f(b_k) - f(a_k)| \leq \epsilon\]
+$\forall \{(a_1,b_1),\ldots,(a_l,b_l)\} \in \mathcal{I}_{\delta}$,
+proving the desired condition. \quad $\blacksquare$
+
+Suppose, on the other hand, that, $\forall \epsilon > 0$,
+$\exists \delta > 0$ such that
+\[\left| \sum_{k = 1}^l f(b_k) - f(a_k) \right| \leq \epsilon\]
+$\forall \{(a_1,b_1),\ldots,(a_l,b_l)\} \in \mathcal{I}_{\delta}$.
+Let $\epsilon > 0$, and let $\delta$ be such that
+\[\left| \sum_{k = 1}^l f(b_k) - f(a_k) \right| \leq \frac{\epsilon}{2},\]
+$\forall \{(a_1,b_1),\ldots,(a_l,b_l)\} \in \mathcal{I}_{\delta}$.
+
+Consider any set
+$S := \{(a_1,b_1),\ldots,(a_l,b_l)\} \in \mathcal{I}_{\delta}$. Partition $S$
+into $P$ and $N$, where $P$ contains those intervals $(a,b) \in S$ with
+$f(b) - f(a) \geq 0$, and $N$ contains those intervals $(a,b) \in S$ with
+$f(b) - f(a) < 0$. Then, $P,N \in \mathcal{I}_{\delta}$,
+so that, by choice of $\delta$,
+\begin{eqnarray*}
+\sum_{(a,b) \in S} |f(b) - f(a)|
+ &  =   & \left(\sum_{(a,b) \in P} |f(b) - f(a)|\right) + \left(\sum_{(a,b) \in N} |f(b) - f(a)|\right) \\
+ &  =   & \left|\sum_{(a,b) \in P} f(b) - f(a)\right| + \left|\sum_{(a,b) \in N} f(b) - f(a)\right| \\
+ & \leq & \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon,
+\end{eqnarray*}
+so that $f$ belongs to $AC([a,b])$. \quad $\blacksquare$
+
+\item Let $\epsilon = 1$, and let $\delta$ be such that
+\[\left| \sum_{k = 1}^l f(b_k) - f(a_k) \right| \epsilon\]
+for every finite number of intervals $(a_k,b_k)$, $k \in \{1,\ldots,l\}$,
+with $[a_k,b_k] \subseteq [a,b]$ and
+\[\sum_{k = 1}^l (b_k - a_k) \leq \delta.\]
+Let $x,y \in [a,b]$ (without loss of generality, $x \leq y$.), and let
+$n = \lfloor \frac{y - x}{\delta}\rfloor$. Let
+$\forall i \in \{0,1,\ldots,n\}$, let $a_i = x + i\delta$. Then,
+\[|f(y) - f(x)|
+ = \left|f(y) - f(a_n) + \sum_{i = 2}^{n} f(a_i) - f(a_{i - 1}) \right|
+ = 1 + N - 1 = N \leq \frac{1}{\delta}|y - x|,\]
+so that $f$ is Lipschitz continuous with Lipschitz constant $1/\delta$.
+\quad $\blacksquare$
+\end{enumerate}
+\end{question}
+\newpage
+\begin{question}{Problem 2}
+Define $C = \mathbb{R}^2 \backslash U$ (noting that, since $U$ is open,
+$C$ is closed), and let $f:\mathbb{R}^2 \rightarrow [0,\infty)$ be the
+distance function from $C$ (as defined in Assignment 2). Since $K$ is compact,
+and, as shown in Assignment 2, $f$ is Lipschitz continuous and therefore
+continuous, by the Weierstrass Theorem, $f$ achieves a minimum on $K$ at some
+$\mathbf{x} \in K$. Since $K \subseteq U$ and $U$ is open, for some
+$r > 0$, $B(\mathbf{x},r) \subseteq U$, so that $f(\mathbf{x}) \geq r$.
+Therefore, for
+$t = \inf_{(\mathbf{x},\mathbf{y}) \in K \times C} \|\mathbf{x} - \mathbf{y}\|$,
+$t > 0$.
+
+Let $R \subseteq \mathbb{R}^2$ be a rectangle with $K \subseteq R$
+(such a rectangle exists because $K$ is compact). Cut $R$ into a grid of
+closed squares $S_1,S_2,\ldots,S_k$ of side length $s := \frac{t}{2}$ (we can
+assume $s$ divides the lengths of $R$ because we can make $R$ larger if we
+wish). Then, by choice of $s$, for each $S_i$, $S_i \cap K = \emptyset$ or
+$S_i \cap C = \emptyset$; let $S$ be the set of $S_i$ such that
+$S_i \cap K \neq \emptyset$ (so that $S_i \cap C = \emptyset$). Orient each
+square counterclockwise. For each $S_i \in S$, consider the four curves
+comprising its edges. Call these curves $\gamma_1,\gamma_2,\ldots,\gamma_n$.
+
+Note the following:
+\begin{enumerate}[1.]
+\item If $\mathbf{x} \in K$, the winding number around $\mathbf{x}$ of the
+union of the curves comprising the edges of the square including $\mathbf{x}$
+is $1$.
+\item For every $\gamma_i$ whose range is entirely in $K$, there is a
+corresponding $\gamma_j$ which is the same curve under the opposite
+orientation.
+\item If two curves are identical but have oppositve orientation, then the sum
+of their winding numbers around any point is $0$.
+\end{enumerate}
+Let $G$ be the set of $\gamma_i$'s whose range is in $U \backslash K$,
+and let $\gamma$ be the union of the curves in $G$. Using induction on the
+number of squares surrounded by $\gamma$ and the above three observations, it
+can be shown that, $\forall x \in K$, ind$_{\gamma}(\mathbf{x}) = 1$.
+
+Furthermore, the range of $\gamma$ is in $U := \bigcup_{S_i \in S} S_i$. Since
+$U$ is bounded, $\mathbb{R}^2\backslash U$ is unbounded, so that, since
+$C \subseteq \mathbb{R}^2\backslash U$, by Theorem 155, since the range of
+$\gamma$ is in $U$, ind$_{\gamma}(C) = \{0\}$. Therefore, $\gamma$ is a curve
+with the desired properties \quad $\blacksquare$.
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Define $E :=  \mathbb{R}^2 \backslash ([1,\infty) \times [-1,1])$. Then,
+$E$ is simply connected.
+Let $\gamma$ be a continuous closed curve with range $\Gamma \subseteq E$, and
+let $\phi: [a,b] \rightarrow \mathbb{R}^2$ be a parametric representation of
+$\gamma$ (with components $\phi_1,\phi_2$).
+
+Define $\mathbf{h}: [a,b] \times [0,1] \rightarrow \mathbb{R}^2$ such that,
+$\forall s \in [a,b], \forall t \in [0,1]$,
+\[\mathbf{h}(s,t) = \left\{
+                        \begin{array}{c c}
+                            \begin{bmatrix}
+                                \phi_1(s) - 2t\phi_1(s)    \\
+                                \phi_2(s)
+                            \end{bmatrix}
+                                  & \mbox{ when } t \in [0,\frac12]      \\
+                            \begin{bmatrix}
+                                0 \\
+                                \phi_2(s) - (2t - 1)\phi(s)
+                            \end{bmatrix}
+                                  & \mbox{ when } t \in [\frac12,1]      \\
+                        \end{array}
+                    \right.
+.\]
+Then, $\forall s \in [a,b]$, $\mathbf{h}(s,0) = \phi(s)$ and
+$\mathbf{h}(s,1) = \mathbf{0}$, and, since $\phi(a) = \phi(b)$,
+$\forall t \in [0,1]$, $\mathbf{h}(a,t) = \mathbf{v}(b,t)$. Note that
+$\mathbf{h}([a,b] \times [\frac12, 1]) = \{(0,y) : y \in \mathbb{R}\}$. Thus,
+if there exists $(s,t) \in [a,b] \times [0,1]$ such that
+$\mathbf{h}(s,t) \not \in E$, $t \in [0,\frac12)$. However if this were the
+case, then, $\phi(s) = \mathbf{h}(s,0) = \not \in E$, which is impossible,
+since $\phi([a,b]) \subset E$. Finally, it is easily checked that $\mathbf{h}$
+is linear in $t$ when $t$ is restricted to $[0,\frac12]$ and when $t$ and
+restricted to $[\frac12,1]$, so that, because the domain and range of
+$\mathbf{h}$ have finite dimension, and $\phi$ is continuous, $\mathbf{h}$ is
+continuous on its domain.
+
+Therefore, $\mathbf{h}$ is a homotopy from $\phi$ to the origin, so that $\phi$
+is homotopic to a point, and therefore $E$ is simply connected. \quad
+$\blacksquare$
+
+
+\item Define $E := \mathbb{R}^3\backslash\{(0,0,0)\}$. Then, $E$ is simply
+connected.
+Let $\gamma$ be a continuous closed curve with range $\Gamma \subseteq E$, and
+let $\phi: [a,b] \rightarrow \mathbb{R}^2$ be a parametric representation of
+$\gamma$ (with components $\phi_1,\phi_2,\phi_3$).
+
+Let $\mathbf{h}_1: [a,b] \times [0,1] \rightarrow \mathbb{R}^3$ such that,
+$\forall (s,t) \in [a,b] \times [0,1]$, if $(r,\theta,z)$ is the
+`cylindrical' representation of $\phi(s)$
+(i.e., $\phi(s) = (r \cos \theta, r \sin \theta, z)$, where
+$\theta \in [0,2 \pi)$),
+\[\mathbf{h}_1(s,t) =
+                    \begin{bmatrix}
+                        (r + t(1 - r)) \cos \theta \\
+                        (r + t(1 - r)) \sin \theta \\
+                        z + t(1 - z)
+                    \end{bmatrix}
+.\]
+
+Let $\mathbf{h_2}: [a,b] \times [0,1] \rightarrow \mathbb{R}^3$ such that,
+$\forall (s,t) \in [a,b] \times [0,1]$,
+\[\mathbf{h}_2(s,t) =
+                    \begin{bmatrix}
+                        \phi_1(s) - t\phi_1(s) \\
+                        \phi_2(s) - t\phi_2(s) \\
+                        1
+                    \end{bmatrix}
+.\]
+
+Define $\mathbf{h}: [a,b] \times [0,1] \rightarrow \mathbb{R}^2$ such that,
+$\forall s \in [a,b], \forall t \in [0,1]$,
+\[\mathbf{h}(s,t) = \left\{
+                        \begin{array}{c c}
+                                \mathbf{h}_1(s,2t)
+                                  & \mbox{ when } t \in [0,\frac12]       \\
+                                \mathbf{h}_2(s,2t - 1)
+                                  & \mbox{ when } t \in [\frac12,1] \\
+                        \end{array}
+                    \right.
+.\]
+Then, $\forall s \in [a,b]$, $\mathbf{h}(s,0) = \phi(s)$ and
+$\mathbf{h}(s,1) = (0,0,1)$, and, $\forall t \in [0,1]$,
+$\mathbf{h}(a,t) = \mathbf{h}(b,t)$.
+Since each of $\mathbf{h}_1$ and $\mathbf{h}_2$ is linear on its domain, and
+$\forall s \in [a,b]$, $\mathbf{h}_1(s,\frac12) = \mathbf{h}_2(s,\frac12)$,
+and $\phi$ is continuous on $[a,b]$, $\mathbf{h}$ is continuous on its domain.
+Finally, since
+$\mathbf{h}_1([a,b] \times [0,1]), \mathbf{h}_2([a,b] \times [0,1])
+  \subseteq E$,
+$\mathbf{h}([a,b] \times [0,1]) \subseteq E$.
+Therefore, $\mathbf{h}$ is a homotopy from $\phi$ to a point, so that
+$E$ is simply connected. \quad $\blacksquare$
+
+
+\item $\mathbb{R}^3\backslash$line is not simply connected. First, consider
+$E := \mathbb{R}^3\backslash\{(0,0,z) : z \in \mathbb{R}\}$. Let
+$\mathbf{g} : E \rightarrow \mathbb{R}^3$ such that, $\forall (x,y,z) \in E$,
+\[g(x,y,z) = \left(-\frac{y}{x^2 + y^2}, \frac{x}{x^2 + y^2}, 0\right).\]
+As shown in Example 133,
+\[\frac{\partial g_1}{\partial y} = \frac{\partial g_2}{\partial x}.\]
+Furthermore,
+\[  \frac{\partial g_1}{\partial z}
+  = \frac{\partial g_2}{\partial z}
+  = \frac{\partial g_3}{\partial x}
+  = \frac{\partial g_3}{\partial y} = 0,\] so that $\mathbf{g}$ is
+irrotational.
+
+Let $\gamma$ be the closed curve with parametric representation
+$\phi: [0,2 \pi] \rightarrow \mathbb{R}^3$ such that,
+$\forall t \in [0,2 \pi]$, $\phi(t) = (\cos t, \sin t, 0)$ (i.e., $\gamma$ is
+the unit circle in the $xy$-plane at the origin), so that the range of
+$\gamma$ is in $E$. Since $g_3 = 0$, $\int_{\gamma} \mathbf{g}$ is the same as
+the integral computed in Example 133, so that
+\[\int_{\gamma} \mathbf{g} = 2 \pi \neq 0,\] and thus $\mathbf{g}$ is not
+conservative.
+
+Since $E$ is open, by Theorem 144 (Poincare's Lemma), if $E$ were simply
+connected, then $\mathbf{g}$ would have to be conservative, so that $E$ cannot
+be simply connected. A similar proof, using an appropriately re-oriented field
+$\mathbf{g}$ and unit circle $\gamma$, suffices for proving that
+$\mathbb{R}^3$ minus \emph{any} line is not simply connected.
+\quad $\blacksquare$.
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+Note first that, since $\log(a)$ is defined if and only if $a > 0$, we are
+concerned only with the domain $E := \{(x,y) \in \mathbb{R} : x,y > 0\}$.
+
+Define $\mathbf{g}: E \rightarrow \mathbb{R}^2$ and
+$h: E \rightarrow \mathbb{R}$ such that,
+$\forall (x,y) \in E$, $\mathbf{g}(x,y) = (2 \ln(x,y) + 1, x/y)$ and
+$h(x,y) = x$. Then, $\forall x,y \in E$,
+\[\frac{\partial (hg)_1}{\partial y}
+    = \frac{2x}{y}
+    = \frac{\partial (hg)_2}{\partial x},\]
+so that $h\mathbf{g}$ is irrotational. Since $E$ is open and simply connected,
+and $h\mathbf{g}$ is irrotational, by Theorem 144 (Poincare's Lemma),
+$h\mathbf{g}$ is conservative, so that, for some $f: E \rightarrow \mathbb{R}$,
+$h\mathbf{g} = \nabla f$. By the given differential equation, then,
+\[y^{\prime}
+ = - \frac{h(x,y(x))g_1(x,y(x))}{h(x,y(x))g_2(x,y(x))}
+ = \frac{\frac{\partial f}{\partial x}(x,y(x))}{\frac{\partial f}{\partial y}(x,y(x))},
+\]
+and, consequently,
+\[\frac{\partial f}{\partial x}(x,y(x))
+    + \frac{\partial f}{\partial y}(x,y(x))y^{\prime}(x) = 0.\]
+Then, if $F := (x \mapsto f(x,y(x)))$, by the Chain
+Rule, $\forall x \in \mathbb{R}$,
+\[F^{\prime}(x) = \frac{\partial f}{\partial x}(x,y(x))
+    + \frac{\partial f}{\partial y}(x,y(x))y^{\prime}(x) = 0,\] so that $F$ is
+constant on every connected component of its domain
+($\{x \in \mathbb{R} : x > 0\}$).
+
+Integrating $f$ with respect to $x$ and with respect to $y$ gives
+\[f(x,y) = \int h(x,y(x))g_1(x,y(x)) \; dx = x^2 \ln(xy) + c_x\]
+and
+\[f(x,y) = \int h(x,y(x))g_2(x,y(x)) \; dx = x^2 \ln(y) + c_y,\]
+where $c_x$ is constant with respect to $x$ and $c_y$ is constant with respect
+to $y$. Then, however,
+\[0 = x^2 \ln(xy) + c_x - (x^2 \ln(y) + c_y) = x^2\ln(x) + c_x - c_y,\] so that
+$c_x$ is independent of $y$, and therefore, $f(x,y) = x^2 \ln(xy) + c$, where
+$c$ is constant with respect to both $x$ and $y$. Then,
+\[0 = \frac{\partial F}{\partial y}(x)
+         = \frac{\partial}{\partial y}(x^2 \ln(xy) + c) = x^2y^{\prime}/y.\]
+Since $x,y \neq 0$, $y^{\prime} = 0$, so that
+\[-\frac{2 \ln(xy) + 1}{\frac{x}{y}} = 0,\] and, consequently,
+$\ln(xy) + 1 = 0$. Solving for $y$ in terms of $x$ then gives
+\[\mbox{\fbox{$\displaystyle y = \frac{e^{-1/2}}{x}$.}}\]
+\end{question}
+\end{document}

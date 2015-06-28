@@ -1,0 +1,294 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Wednesday, October 24, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+Let
+\[\mathcal{U}
+    := \left\{\prod_{i \in \N} U_i : U_i = (1/3,1] \mbox{ or } U_i = [0,1/3)\right\}.
+\]
+Suppose $x_1,x_2,\ldots \in [0,1]$. Then, if $\forall i \in \N$,
+$U_i := (1/3,1]$ if $x_i > 1/3$ and $U_i = [0,1/3)$ otherwise,
+$\{x_i\}_{i \in \N} \in \prod_{i \in \N} U_i \in \mathcal{U}$. Since
+$(1/3,1]$ and $[0,1/3)$ are both open in the topology induced on $[0,1]$ by
+the standard topology on $\R$, $\mathcal{U}$ is a subset of the box topology.
+Thus, $\mathcal{U}$ is an open cover of $[0,1]^{\N}$.
+Suppose $U := \prod_{i \in \N} U_i \in \mathcal{U}$. $\forall i \in \N$ define
+$x_i := 1$ if $U_i = (1/3,1]$ and $x_i := 0$ otherwise. Then, $U$ is the
+unique element of $\mathcal{U}$ with $\{x_i\}_{i \in \N} \in U$. Thus, no
+proper subset of $\mathcal{U}$ is a cover of $[0,1]^{\N}$.
+
+Clearly, $\mathcal{U}$ is not finite (the function
+$f: \mathcal{U} \rightarrow \pow{N}$ including $i$ if and only if
+$U_i = (1/3,1]$ is a bijection).
+Thus, $\mathcal{U}$ an open cover of $[0,1]^{\N}$ with no finite
+subcover, so that $[0,1]^{\N}$ cannot be compact. \qed
+\end{question}
+
+\begin{question}{Problem 2}
+Since, by definition of $E$,
+$\displaystyle
+    E \subseteq \prod_{\alpha \in \Lambda} E_{\alpha}$,
+$\displaystyle \overline{E}
+    \subseteq \overline{\prod_{\alpha \in \Lambda} E_{\alpha}}$.
+
+Suppose $f \in \prod_{\alpha \in \Lambda} E_{\alpha}$, and let $U$ be a
+neighborhood of $f$. By Lemma 126, there is some basis element
+\[B = \prod_{\alpha \in \Lambda} U_{\alpha} \subseteq U,\]
+where $f \in B$, $U_{\alpha} \in \tau_{\alpha}$ and $U_{\alpha} = E_{\alpha}$.
+Let $h$ be defined by $h(\alpha) = f(\alpha)$ when $\alpha \in \Lambda_0$, and
+$h(\alpha) = g(\alpha)$ when $\alpha \in \Lambda \sminus \Lambda_0$. By
+definition of $B$, $h \in B$. Since $f,g \in \prod_{\alpha \in \Lambda} E_{\alpha}$,
+$h \in \prod_{\alpha \in \Lambda} E_{\alpha}$, so that, since $\Lambda_0$ is finite, $h \in E$.
+
+Since any neighborhood of $f$ contains elements of $E$, $f \in \overline{E}$.
+Thus,
+$\displaystyle \prod_{\alpha \in \Lambda} E_{\alpha} \subseteq \overline{E}$,
+so that
+$\displaystyle \overline{\prod_{\alpha \in \Lambda} E_{\alpha}}
+    =         \overline{E}$.
+
+Thus,
+\[\overline{E} = \overline{\prod_{\alpha \in \Lambda} E_{\alpha}}.\mqed\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+\begin{enumerate}[(i)]
+\item 
+Let $\{(X_{\alpha},\tau_{\alpha})\}_{\alpha \in \Lambda}$ be a nonempty
+collection of nonempty Hausdorff topological spaces, and let $\tau$ be the
+product topology on $X := \prod_{\alpha \in \Lambda} X_{\alpha}$. Suppose
+$x,y \in X$ are distinct. Then, $\exists \alpha \in \Lambda$ such that
+$x(\alpha),y(\alpha)$ are distinct. Since $X_{\alpha}$ is Hausdorff, there
+exists disjoint $U_x,U_y \in \tau_{\alpha}$ with
+$x(\alpha) \in U_x, y(\alpha) \in U_y$. Then, By definition of the product
+topology, $\pi_{\alpha}\inv(U_x),\pi_{\alpha}\inv(U_y) \in \tau$. By
+definition of the projection function, $x \in \pi_{\alpha}\inv(U_x)$ and
+$y \in \pi_{\alpha}\inv(U_y)$, and, since $U_x \cap U_y = \emptyset$,
+$\pi_{\alpha}\inv(U_x) \cap \pi_{\alpha}\inv(U_y) = \emptyset$. Therefore,
+$(X,\tau)$ is Hausdorff. \qed
+
+
+\item Let $\{(X_{\alpha},\tau_{\alpha})\}_{\alpha \in \Lambda}$ be a nonempty
+collection of nonempty regular topological spaces, and let $\tau$ be the
+product topology on $X := \prod_{\alpha \in \Lambda} X_{\alpha}$. Suppose
+$C$ is closed in $\tau$, $x \in X \sminus C$. Since $X \sminus C$ is open,
+by Lemma 126, there is some some basis element
+\[\bigcup_{\alpha \in \Lambda_0} \pi_{\alpha}\inv(U_{\alpha})
+ \subseteq X \sminus C,
+\]
+containing $x$, where $\Lambda_0 \subseteq \Lambda$ is finite and
+$U_{\alpha} \in \tau_{\alpha}$. $\forall \alpha \in \Lambda_0$, since
+$(X_{\alpha},\tau_{\alpha})$ regular and $X_{\alpha} \sminus U_{\alpha}$ is a
+closed set not containing $x(\alpha)$, there exist disjoint
+$V_{\alpha},W_{\alpha} \in \tau_{\alpha}$ such that
+$X_{\alpha} \sminus U_{\alpha} \subseteq V_{\alpha}$ and $x \in W_{\alpha}$.
+Since
+$W_{\alpha} \subseteq X_{\alpha} \sminus V_{\alpha} \subseteq U_{\alpha}$ and the
+latter is closed, it follows from Proposition 26 that
+$\overline{W_{\alpha}}
+    \subseteq X_{\alpha} \sminus V_{\alpha}
+    \subseteq U_{\alpha}$.
+Thus, by part (ii) of Lemma 135,
+\[x
+    \in \prod_{\alpha \in \Lambda} W_{\alpha}
+    \subseteq \overline{\prod_{\alpha \in \Lambda} W_{\alpha}}
+    \subseteq \prod_{\alpha \in \Lambda} U_{\alpha}
+    \subseteq X \sminus C
+\]
+(if $\alpha \in \Lambda \sminus \Lambda_0$, define
+$W_{\alpha} = U_{\alpha} = X_{\alpha}$). Thus, by Lemma 126,
+for $V := X \sminus \overline{\prod_{\alpha \in \Lambda} W_{\alpha}}$,
+$W := \prod_{\alpha \in \Lambda} W_{\alpha}$, $V,W \in \tau$, $C \subseteq V$,
+$x \in W$, and $V \cap W = \emptyset$. Therefore, $(X,\tau)$ is regular. \qed
+
+\item Let $A := \{(x,-x) : x \in \R\} \subseteq \R^2$. If
+$x \in \R^2 \sminus A$, then, clearly $\exists a,b,c,d \in \R$ such that
+$x \in [a,b) \times [c,d) \subseteq \R^2 \sminus A$. Thus, since such
+half-open rectangles form a base of the Sorgenfrey plane topology $\tau_2$,
+$\R^2 \sminus A$ is open, and thus $A$ is closed.
+
+$\forall x \in \R$,
+$A \cap [x,x + 1) \times [-x,-x + 1) = \{(x,-x)\}$, so that, since
+$[x,x + 1) \times [-x,-x + 1)$ is open in $\tau_2$, the topology induced on
+$A$ by $\tau_2$ is discrete.
+
+Clearly, $A$ is equipotent to $\R$ (the function $x \mapsto (x,-x)$ is a
+bijection).
+
+Since $\Q^2$ is countable and dense in $(\R,\tau_2)$ (clearly, any non-empty
+half-open rectangle contains a point with rational coordinates), $(\R,\tau_2)$
+is separable.
+
+Thus, by Lemma 90, $(\R^2,\tau_2)$ is not normal. \qed
+
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+$\forall i,n \in \N$, define $U_{i,n} := (-n,n)$. Then, by definition of the
+box topology, $\forall n \in \N$, $\prod_{i \in \N} U_{i,n} \in \tau_B$ (the
+box topology on $\R^{\N}$).
+Futhermore, $U = \bigcup_{n = 1}^{\infty} \prod_{i \in \N} U_{i,n}$
+(since $f \in U$ is bounded if and only if it is bounded by some $n \in \N$),
+so that, since $\tau_B$ is closed under arbitrary unions, $U$ is open.
+
+Suppose $f \in \overline{U}$. Let $V := \prod_{i \in \N} (f(i) - 1,f(i) + 1)$.
+Since, $\forall i \in \N$, $(f(i) - 1,f(i) + 1)$ is open in $\R$, $V$ is open
+in the box topology on $\R^{\N}$. Since $f \in \overline{U}$ and $V$ is a
+neighborhood of $f$, $\exists g \in V \cap U$, so that $|g|$ is bounded by
+some $b \in \R$. By definition of $V$, then, $|f|$ is bounded above by
+$|b| + 1$. Therefore, $f \in U$. Thus, $\overline{U} \subseteq U$, so that by
+Proposition 26, $U$ is closed.
+\end{question}
+
+\begin{question}{Problem 5}
+Since $\gamma$ is bounded, $\gamma(\R)$ is bounded, so that
+$\overline{\gamma(\R)}$ is bounded. Since it is a closed and bounded subset of
+$\R^2$, $\overline{\gamma(\R)}$ is compact.
+
+Since $\gamma$ is injective, and,
+by definition surjective onto $\gamma(\R)$, $\gamma$ is bijective.
+Since any open subset $U$ of $\R$ is a union of open intervals and the
+topology on $\gamma(\R)$ must be closed under arbitrary unions,
+$(\gamma\inv)\inv(U) = \gamma(U)$ is open in $\gamma(\R)$, so that
+$\gamma\inv$ is continuous. Thus, since $\gamma$ itself is continuous, by the
+result of Exercise 107, $\gamma$ is a homeomorphism from $\R$ to $\gamma(\R)$.
+
+Since $\overline{\gamma(\R)}$ is compact and $\R$ is homeomorphic to
+$\gamma(\R)$, which is, by definition, a dense in $\overline{\gamma(\R)}$,
+$\overline{\gamma(\R)}$ is a compactification of $\R$. \qed
+
+Let $\gamma: \R \rightarrow \gamma(\R) \subseteq \R^2$ be defined
+$\forall x \in \R$ by
+\[\gamma(x) :=
+    \left\{
+        \begin{array}{cl}
+            \left(
+                r\cos\theta,
+                r\sin\theta
+            \right) & x \geq 0 \\
+            \left(
+                -r\cos\theta,
+                r\sin\theta
+            \right) & x <    0
+        \end{array}
+    \right.,
+    \quad \mbox{where} \quad
+r := \frac{|x|}{|x| + 1},
+    \quad
+\theta := x.
+\]
+Since 
+\[\sqrt{(r\cos\theta)^2 + (r\sin\theta)^2}
+    = r\sqrt{(\cos^2\theta + \sin^2\theta)}
+    = r\sqrt1
+    = r \in (0,1],
+\]
+$\gamma$ is bounded (with respect to the Euclidean metric). Clearly, $\gamma$
+is continuous, since it is piecewise continuous and the pieces agree when
+$x = 0$. If, for some $x_1,x_2 \in \R$, $r(x_1) = r(x_2)$, then, since $r$ is
+even, strictly increasing on $(0,\infty)$, and strictly decreasing
+$(-\infty,0)$, either $x_1 = x_2$, or $x_1 = -x_2$ (and $x_1$ is non-zero). In
+the later case, however $\gamma(x_1) = -\gamma(x_2)$. Thus, $\gamma$ is
+injective. The inverse of $\gamma$ on $\gamma(\R)$ is the function
+$(r\cos\theta,r\sin\theta) \mapsto \theta$, which is also clearly continuous.
+Thus, by the above result, $X := \overline{\gamma(\R)}$ under the topology
+induced by the standard topology on $\R^2$ is a compactification of $\R$.
+
+Note that
+\[X
+ = \gamma(\R) \cup (\gamma(\R))^{\prime}
+ = \gamma(\R) \cup \{(\cos\theta,\sin\theta) : \theta \in \R\}
+\]
+Thus, we can extend $\gamma\inv$ continuously to $X \sminus \gamma(\R)$ by
+defining
+\[\gamma\inv(\cos\theta,\sin\theta) = \theta.\]
+Then, $\cos \circ \gamma\inv$ is a composition of continuous functions on $X$,
+so that $\cos$ can be extended continuous to $X$. \qed
+\end{question}
+
+\begin{question}{Problem 6}
+Since $[0,1]$ is compact, it follows from Tikhonov's theorem that $[0,1]^{\N}$
+is compact.
+
+Since $[0,1]$ is Hausdorff, it follows from the result of part (i) of problem
+3 that $[0,1]^{\N}$ is Hausdorff, and thus $T_1$.
+
+Thus, it remains only to show that $[0,1]^{\N}$ is first countable. Let
+$x = x_1,x_2,\ldots \in [0,1]^{\N}$. Since $[0,1]$ is first countable,
+$\forall n \in \N$, there exists some countable local base
+$\beta_n = \{U_{n,1},U_{n,2},\ldots\}$ at $x_n$.
+Let $\beta := \{\bigcap_{\pi_{n}\inv(U_{n,k}) : k,n \in \N}$. Since there is
+a clear bijection from $\beta$ to $\N^2$, $\beta$ is countable. Suppose $U$ is
+a neighborhood of $x$ in $[0,1]^{\N}$. It is clear from Lemma 126 that $U$
+contains some element of $\beta$, and the $\beta$ contains only open sets of
+$[0,1]^{\N}$, so that $\beta$ is a countable local base of $[0,1]^{\N}$ at
+$x$. Thus, $[0,1]^{\N}$ is first countable.
+
+By Lemma 104, since $[0,1]^{\N}$ is compact, $T_1$, and first countable,
+$[0,1]^{\N}$ is sequentially compact. \qed
+\end{question}
+\end{document}

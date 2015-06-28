@@ -1,0 +1,902 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{21-721 Probability}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Wednesday, Janury 29}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\sgn}{\operatorname{sign}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\A}{\mathcal{A}} %
+\newcommand{\B}{\mathcal{B}} %
+\newcommand{\F}{\mathcal{F}} %
+\newcommand{\G}{\mathcal{G}} %
+\renewcommand{\H}{\mathscr{H}} %
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Notes} \\
+\myclass \\
+Name: \myname \\
+
+\begin{question}{1/13/14 - 1/15/14: Branching Process Example}
+\end{question}
+
+\begin{question}{1/17/14: Measure Theory (Dynkin and Caratheodory)}
+{\bf Lemma:} $\tau \subseteq \pow{S}$ is a $\sigma$-algebra iff it is both a
+$\pi$-system and a $d$-system.
+
+\emph{Proof:} $\Rightarrow$ is trivial. Complement requires finiteness.
+Arbitrary union is an increasing union.
+
+{\bf Lemma:} If $\tau \subseteq \pow{S}$ is a $\pi$-system, then
+$d(\tau) = \sigma(\tau)$.
+
+\emph{Proof:} Show that
+$\A_1 := \{B \in d(\tau) : B \cap C \in d(\tau), \forall C \in \tau\}$ and
+$\A_2 := \{B \in d(\tau) : B \cap C \in d(\tau), \forall C \in d(\tau)\}$ are
+$d$-systems.
+
+{\bf Theorem:} (Dynkin's Lemma) Suppose $\tau \subseteq \pow{S}$ is a
+$\pi$-system. Then, for any measures
+$\mu_1,\mu_2 : \sigma(\tau) \to [0,\infty]$, if $\mu_1 = \mu_2$ on $\tau$ and
+$\mu_1(S) = \mu_2(S) < \infty$, then $\mu_1 = \mu_2$ on $\sigma(\tau)$.
+
+\emph{Proof:} Consider two extensions $\mu_1$ and $\mu_2$. Show
+$\A := \{F \in \Sigma : \mu_1(F) = \mu_2(F)\}$ is a $d$-system.
+
+{\bf Lemma:} If $\mathcal{G}_0$ is an algebra and
+$\lambda : \mathcal{G}_0 \to [0,\infty]$ with $\lambda(\emptyset) = 0$ then
+$\L$ is an algebra, $\lambda$ is finitely additive on $\L$.
+
+\emph{Proof:} Tricks with clever splits to show $\L$ is closed under finite
+intersections. Obviously, $\L$ is closed under complement, so $\L$ is an
+algebra. More clever splits to show finite additivity.
+
+{\bf Lemma:} (Caratheodory's Lemma) Let $\lambda$ be an outer measure
+on $(S,\mathcal{G})$. Let
+\[\L := \{A \in \mathcal{G} : \lambda(B)
+                            = \lambda(A \cap B) + \lambda(A^c \cap B),
+    \forall B \in \mathcal{G}\}.
+\]
+Then, $\L$ is a $\sigma$-algebra, and $\lambda$ is countably additive on $\L$.
+
+\emph{Proof:} By the previous lemma, just need to show $\lambda$ is countably
+additive, i.e., for $L_n$ disjoint, $L := \bigcup_n L_n \in \L$ and
+\[\lambda\left( \bigcup_n L_n \right) = \sum_n \lambda(L_n).\]
+Let $G \in \mathcal{G}$. By subadditivity,
+$\lambda(G) \leq \lambda(L \cap G) + \lambda(L^c \cap G)$. To show $\geq$,
+examine $M_n := \bigcup_{k \leq n} L_k$.
+
+{\bf Theorem:} (Caratheodory's Extension Theorem) Let $\Sigma_0$ be an algebra
+on $S$, and let $\sigma := \sigma(\Sigma_0)$. If
+$\mu_0 : \Sigma_0 \to [0,\infty]$ is countably additive, then $\exists$ a
+measure $\mu$ on $(S,\Sigma)$ with $\mu = \mu_0$ on $\Sigma_0$.
+
+\emph{Proof:} Define $\lambda : \pow{S} \to [0,\infty]$ by
+\[\lambda(G) := \inf \left\{ \sum_n \mu_0(F_n)
+                    : G \subseteq \bigcup_n F_n, F_n \in \Sigma_0 \right\}.
+\]
+There are 4 steps:
+\begin{enumerate}
+\item Show $\lambda$ is an outer measure.
+\item Observe that, by Caratheodory's Lemma, show $\Sigma_0 \subseteq \L$ and
+$\lambda = \mu_0$ on $\Sigma_0$.
+\item Show $\Sigma_0 \subseteq \L$.
+\item Show $\lambda = \mu_0$ on $\Sigma_0$.
+\end{enumerate}
+\end{question}
+
+\begin{question}{1/22/14: Measurable Functions, Monotone Class Theorem}
+{\bf Definitions:}\\
+$m\Sigma := \{h : S \to \R : h\inv : \B \to \Sigma\}$ is the set of
+measurable functions.\\
+$\left( m\Sigma \right)^+ := \{h \in m\Sigma : h \geq 0\}$\\
+$b\Sigma := \{h \in m\Sigma : \exists c \in \R, |h| \leq b\}$\\
+For $X \in m\Sigma$, $\sigma(X) := X\inv(\B)$ (i.e.,
+$A \in \sigma(X) \Leftrightarrow \exists B \in \B, A = X\inv(B)$).
+
+{\bf Theorem:} (Monotone Class Theorem) Suppose $\H \subseteq b\Sigma$ with
+\begin{enumerate}
+\item $\H$ is a vector space
+\item $h \in (b\Sigma)^+, (h_n) \subseteq \H \cap (b\Sigma)^+$, and
+$h_n \uparrow h \Rightarrow h \in \H$
+\item $1 \in \H$
+\item $\exists$ a $\pi$-system $\tau \subseteq \Sigma$ with
+$\sigma(\tau) = \Sigma$ and, $\forall F \in \tau, 1_F \in \H$.
+\end{enumerate}
+Then, $\H = b\Sigma$.
+
+\emph{Proof:} The main idea is to show $\H$ contains indicator functions (using
+Dynkin's Lemma), then show $(b\Sigma)^+ \subseteq \H$ (using (APPROX)), and
+then show $b\Sigma \subseteq \H$.
+
+Step 1: Show, $\forall F \in \Sigma, 1_F \in \H$. To do this, show
+$\A := \{F \in \Sigma : 1_F \in \H\}$ is a $d$-system ($\tau \subseteq \A$).
+
+Step 2: $h \in (b\Sigma)^+$. For $n \in \N$, put
+\[h_n
+    := \sum_{k = 0}^{n - 1} \frac{k}{n} 1_{\frac{k}{n} < h < \frac{k + 1}{n}}
+    \in \H,
+\]
+by Step 1, since $\H$ is a vector space. Observe that $h_n \uparrow h \in \H$.
+
+Step 3: If $h \in b\Sigma$, then $h = h^+ - h^- \in \H$. \qed
+
+{\bf Definition:} Let $X \in m\F$ be a random variable. The \emph{law} of $X$
+is the probability measure on $(\R,\B)$ defined by
+$\L_X(B) := \P[X \in B]$, $\forall B \in \B$. The \emph{distribution
+function} $F_X : \R \to \R$ is defined by $F_X(t) = \P[X \leq t]$,
+$\forall t \in \R$.
+
+{\bf Lemma:} $\L_X = \L_Y \Leftrightarrow F_X = F_Y$.
+
+\emph{Proof:} ($\Rightarrow$) Trivial. ($\Leftarrow$) $\L_X = \L_Y$ on a
+$\pi$-system. Use Dynkin's Lemma.
+
+{\bf Lemma:} (Skorohod's Construction) $F$ is the distribution function of some
+random variable iff
+\begin{enumerate}
+\item $\lim_{t \to -\infty} F(t) = 0$ and $\lim_{t \to \infty} F(t) = 1$,
+\item $F$ is non-decreasing,
+\item $F$ is right-continuous
+($\forall t \in \R, F(t) = \lim_{x \downarrow t} F(x)$).
+\end{enumerate}
+
+\emph{Proof:} ($\Rightarrow$) Trivial. ($\Leftarrow$) Define $X : [0,1] \to \R$
+by \[X(t) := \inf \{x \in \R : t < F(x)\}.\] Since $X$ is increasing, $X$ is
+necessarily Borel measurable. $X$ is a right-inverse of $F$ except on the (at
+most) countable set
+\[\tau_0 := \{ t : X(t) - \lim_{y \downarrow t} X(y) > 0\}\]
+of discontinuities of $F$. Hence,
+\[\{[F(X(t)) = t] = 1,\]
+and
+\[\P[X(t) \leq x] = \P[t \leq F(x)] = F(x).\]
+\end{question}
+
+\begin{question}{1/24/14: Independence}
+{\bf Lemma:} If $\A$ and $\B$ are $\pi$-systems with $\A \perp \B$, then
+$\sigma(\A) \perp \sigma(\B)$.
+
+\emph{Proof:} Apply Dynkin's Lemma twice.
+
+{\bf Corollary:} RV's $X$ and $Y$ are independent iff, $\forall x,y \in \R$,
+$\P[X \leq x, Y \leq y] = F_X(x)F_Y(y)$.
+\end{question}
+
+\begin{question}{1/20/14: Borel-Cantelli Lemmas; Kolmogorov 0-1 Law}
+{\bf Lemma:} ($1^{st}$ Borel-Cantelli) $(F_n) \subseteq \F$,
+$F = \{F_n \mbox{ i.o.}\}$. Then,
+\[\sum_n \P[F_n] < + \infty \Rightarrow \P[F] = 0.\]
+\emph{Proof:} $F = \bigcap_{n = 1}^\infty \bigcup_{k = n}^\infty F_k$. Then,
+for $G_n := \bigcup_{k = n}^\infty F_k$, $G_n \downarrow F$. Hence,
+\[\P[F]
+    = \lim_{n \to \infty} \P[G_n]
+    \leq \lim_{n \to \infty} \sum_{k = n}^\infty \P[F_k]
+    = 0. \qed
+\]
+{\bf Lemma:} ($2^{nd}$ Borel-Cantelli) $(F_n) \subseteq \F$,
+$F = \{F_n \mbox{ i.o.}\}$, $F_n$ independent. Then,
+\[\sum_n \P[F_n] = + \infty \Rightarrow \P[F] = 1.\]
+\emph{Proof:} Note $\{E_n \mbox{ i.o.}\}^c = \{E_n^c \mbox{ ev}\}$, so show
+$\P\{E_n^c \mbox{ ev}\} = 0$, so show each
+$\P \left[ \bigcap_{n = m}^\infty E_n^c \right] = 0$.
+Since the $E_n$'s are independent, using the inequality $1 - x \leq e^{-x}$,
+\[\P \left[ \bigcap_{n = m}^\infty E_n^c \right]
+    = \prod_{n = m}^\infty \P\left[ E_n^c \right]
+    = \prod_{n = m}^\infty \left( 1 - \P\left[ E_n \right] \right)
+    \leq \prod_{n = m}^\infty \exp \left( - \P\left[ E_n \right] \right)
+    \leq \exp \left( - \sum_{n = m}^\infty \P\left[ E_n \right] \right)
+    = 0. \qed
+\]
+
+\newpage
+{\bf Theorem:} (Kolmogorov 0-1 Law) $(X_n)$ IRV's. Define the tail
+$\sigma$-algebra
+\[\tau := \bigcap_{m = 1}^\infty \sigma(X_m,X_{m + 1},\dots).\]
+Then
+\begin{enumerate}
+\item $\tau$ is $\P$-trivial (i.e., $\forall E \in \tau$, $\P(E) \in \{0,1\}$),
+\item every $X \in m\tau$ is $\P$-constant (i.e., $\exists c \in \R$ such that
+$\P[X = c] = 1$).
+\end{enumerate}
+\emph{Proof:} $\forall n \in \N$, define
+$\mathcal{X}_n := \sigma(X_1,\dots,X_n)$ and
+$\tau_n := \sigma(X_n,X_{n + 1},\dots,)$. Clearly, $\forall n < m$,
+\[\mathcal{X}_n \perp \tau_m
+    \quad \Rightarrow \quad \mathcal{X}_n \perp \cap_m \tau_m = \tau
+    \quad \Rightarrow \quad \bigcup_n \mathcal{X}_n \perp \tau.
+\]
+Thus,
+\[\tau \subseteq \sigma\left( \bigcup_{n} \mathcal{X}_n \right) \perp \tau,\]
+Hence, $\tau \perp \tau$, and so $\forall E \in \tau$,
+$\P[E] = \P[E \cap E] = \P[E]^2 \in \{0,1\}$. \qed
+\end{question}
+
+\begin{question}{1/29/14: Lebesgue Integration}
+Define the space of simple function
+\[SF^+ := \{f \in m\Sigma : f = \sum_{k = 1}^n a_n1_{A_n}, a_n \geq 0,
+                                                            A_n \in m\Sigma\},
+\]
+and define, $\forall f \in SF^+$,
+\[\mu_0(f) := \sum_{k = 1}^n a_n \mu(A_n) \in [0,\infty]
+\quad \mbox{(where $0 \cdot \infty := 0$)}.\]
+We have the following properties:
+\begin{enumerate}
+\item (Well-posedness) $f,g \in SF^+, \mu \{f \neq g\} = 0
+    \Rightarrow \mu(f) = \mu(g)$.
+\item (Positive Linearity) $f,g \in SF^+, a,b \geq 0
+    \Rightarrow \mu_0(af + bg) = wa\mu_0(f) + b\mu_0(g)$.
+\item (Order) $f,g \in SF^+, f \geq g \Rightarrow \mu(f) \geq \mu(g)$.
+\end{enumerate}
+\end{question}
+
+\begin{question}{1/31/14: Convergence Theorems}
+{\bf Monotone:} $(f_n) \subseteq m\Sigma^+$ ptwise non-decreasing and
+$f_n \to f$ ptwise
+$\Rightarrow \lim_{n \to \infty} \mu(f_n) \to \mu(f)$.
+
+{\bf Fatou:} $(f_n) \subseteq m\Sigma^+ \Rightarrow
+\liminf_n \mu(f_n) \geq \mu \left( \liminf_n f_n \right)$
+(\emph{Proof:} by Monotone)
+
+{\bf Reverse Fatou:} $(f_n) \leq g \subseteq m\Sigma^+, \mu(g) < \infty
+\Rightarrow \liminf_n \mu(f_n) \geq \mu \left( \liminf_n f_n \right)$
+(\emph{Proof:} $g - f_n$)
+
+{\bf Dominated:} $(f_n) \subseteq m\Sigma, f_n \to f$ ptwise,
+$|f_n| \leq g \in \L_1 \Rightarrow \mu(|f_n - f|) \to 0$, and
+$\mu(f_n) \to \mu(f)$. \\
+(\emph{Proof:} by Reverse Fatou, $\limsup_n \mu(f_n - f)| \leq \mu(0) = 0$ and
+\[|\mu(f_n) - \mu(f)| = |\mu(f_n - f)| \leq \mu(|f_n - f|) \to 0.)\]
+
+{\bf Scheffe:} $f_n, f \in \L_1, f_n \to f$. Then,
+$\mu(|f_n - f|) \to 0 \Leftrightarrow \mu(|f_n|) \to \mu(|f|)$.
+(\emph{Proof:} ($\Rightarrow$) trivial. ($\Leftarrow$) If all $f_n \geq 0$,
+then $|f_n - f| = f_n + f - 2f_n \wedge f$, and so, by (DOM),
+$\mu(|f_n - f|) \to 0$. In general, by Fatou, $\limsup\mu(f_n^+) \geq \mu(f^+)$
+and $\limsup(\mu(f_n^-) \geq \mu(f^-)$, and, since $|f| = f^+ + f^-$, we have
+equality. Now use step 1.)
+
+{\bf Bounded:}
+\end{question}
+
+\begin{question}{2/3/14: Inequalities}
+{\bf Markov's Inequality:} $f \in (m\B)^+$ non-decreasing, $X \in (m\F)^+$.
+Then, $\forall c > 0$,
+\[\E[f(X)] \geq \E[f(X)1_{\{X \geq c\}}] \geq f(c)\P[X \geq c].\]
+
+{\bf Chebyshev's Inequality:} $X \in \L_2$. Then, $\forall \e > 0$, by Markov's
+Inequality,
+\[\P[|X - \E[X]| > \e]
+    \leq \frac{1}{\e^2} \E[(X - \E[X])^2]
+    \leq \frac{\Var[X]}{\e^2}.
+\]
+ 
+{\bf Jensen's Inequality:} $X \in \L_1$, $\phi : \R \to \R$ convex with
+$\phi(X) \in \L_1$. Then, $\E[\phi(X)] \geq \phi(\E[X])$.
+
+\emph{Proof:} Since $\phi$ is convex, using a tangent (subgradient)
+approximation, $\phi(X) \geq \phi(\E[X]) + M \E[X] (X - \E[X])$, and so
+$\E[\phi(X) \geq \phi(\E[X]) + M \E[X] \cdot 0 = \phi(\E[X])$. \qed
+
+{\bf H\"older's Inequality (Special Case):} $0 < p \leq r$. Then
+$\|X\|_p \leq \|X\|_r$.
+
+\emph{Proof:} Since $p \leq r$, the function $x \to x^{r/p}$ is convex. Hence,
+\[\|X\|_p
+    = \E[|X|^p]^{1/p}
+    = \left( \E[|X|^p]^{r/p} \right)^{1/r}
+    \leq \E \left[ \left( |X|^p \right)^{r/p} \right]^{1/r}
+    = \E[|X|^r]^{1/r}
+    = \|X\|_r. \qed
+\]
+
+{\bf H\"older's Inequality:} $\frac{1}{p} + \frac{1}{q} = 1$. Then,
+$\|XY\|_1 \leq \|X\|_p\|Y\|_q$.
+
+%TODO
+\emph{Proof:} TODO
+
+{\bf Minkowski's Inequality:} $\|X + Y\|_p \leq \|X\|_p + \|Y\|_p$.
+
+\emph{Proof:} If $X,Y \geq 0$, then by H\"older's Inequality,
+\[\|X + Y\|_p^p
+    = \E[|X||(X + Y)|^{p - 1}] + \E[|X||(X + Y)|^{p - 1}]
+    \leq \left( \|X\|_p + \|Y\|_p \right)
+                \left( \frac{\|X + Y\|_p^p}{\|X + Y\|_p} \right). \qed
+\]
+\end{question}
+
+\begin{question}{2/5/14: $\L^p$ Spaces; Projections in $\L^p$}
+{\bf Theorem:} $(\L_p, \|\cdot\|_p)$ is a Banach space.
+
+\emph{Proof:} Prior considerations imply that $\L_p$ is a linear space and
+$\|\cdot\|_p$ is a norm on $\L_p$. Hence, it suffices to show that $\L_p$ is
+complete under $\|\cdot\|_p$.
+
+Step 1: ($(X_n)$ converges) 
+
+Step 2: ($\lim_{n \to \infty} X_n \in \L_p$)
+
+{\bf Theorem:} ($\L^2$ projections) If $\mathcal{K}$ is a closed linear
+manifold in $\L_2$ and $X \in \L_2$, then $\exists ! Y \in \mathcal{K}$ with
+(a) $\|X - Y\| = \inf\{\|X - Z\| : Z \in \mathcal{K}\}$ and (b)
+$X - Y \perp \mathcal{K}$.
+
+\emph{Proof:} Use the Parallelogram Law
+\[\|X\|^2 + \|Y\|^2 = \frac{1}{2}\left( \|X - Y\|^2 + \|X + Y\|^2 \right).\]
+To show (b), use a $0$ derivative argument.
+\end{question}
+
+\begin{question}{2/7/14: Independence and $\L^p$}
+\end{question}
+
+\begin{question}{2/10/14: Product $\sigma$-algebra/measure; Fubini's Theorem}
+\end{question}
+
+\begin{question}{2/12/14: Canonical Model for Sequence of IRVs}
+\end{question}
+
+\begin{question}{2/14/14: Conditional Expectation}
+{\bf Definition:} $\G$ sub-$\sigma$-algebra of $\F$, $X \in \L_1(\F)$
+\[Y = \E[X | \G] \Leftrightarrow Y \in \L_1(\G)
+\quad \mbox{ and } \quad \E[X1_F] = \E[Y1_F], \quad \forall F \in \G.\]
+
+{\bf Theorem:} $X \in \L_1(\F), \G \subseteq \F$. Then, $\E[X | \G]$ exists and
+is unique.
+\end{question}
+
+\begin{question}{2/17/14: Conditional Probability}
+\end{question}
+
+\begin{question}{2/19/14: Martingales; Discrete Stochastic Integral and
+                                                                Stopping Times}
+
+{\bf Definition:} If $(X_n)$ is adapted and $(H_n)$ is predictable, then the
+stochastic integral of $(H_n)$ with respect to $(X_n)$ is
+$(H \cdot X)_n := \sum_{k = 1}^n H_k(X_k - X_{k - 1})$.
+
+{\bf Lemma:} If $(X_n)$ is a martingale, $(H_n)$ is predictable, and each
+$X_nH_n \in \L_1$, then $((H \cdot X)_n)$ is a martingale.
+
+\emph{Proof:}
+Note that
+$\E_n[H_{n + 1}X_{n + 1}]
+    = H_{n + 1}\E[X_{n + 1}]
+    = H_{n + 1}X_n
+    \in \L_1$.
+Hence,
+\[\E_n[(H \cdot X)_{n + 1}]
+    = (H \cdot X)_n + \E_n\left[ H_n(X_{n + 1} - X_n) \right]
+    = (H \cdot X)_n
+\]
+
+{\bf Lemma:} If $(X_n)$ is a supermartingale and $\tau$ is a stopping time,
+then $(X_{n \wedge \tau})$ is a supermartingale.
+
+\emph{Proof:} Note that $X_{(n + 1) \wedge \tau}
+    = \sum_{k = 1}^n X_k1_{k = \tau} + X_{n + 1}1_{\tau > n}$. Hence, casing on
+$\tau$,
+\[\E_n[X_{(n + 1) \wedge \tau}]
+    = \sum_{k = 1}^n \E_n\left[ X_k1_{k = \tau} \right]
+    + \E_n\left[ X_{n + 1}1_{\tau > n} \right]
+    = X_{n \wedge \tau}
+\]
+\end{question}
+
+\begin{question}{2/21/14: Martingale Convergence Theorem;
+                                                    Doob's Upcrossing Lemma}
+{\bf Lemma:} (Doob's Upcrossing Lemma) $(X_n)$ supermartingale. Then,
+$\forall a < b \in \R$, defining
+$U_n[a,b] := \#\{\mbox{up crossings of [a,b] in [0,n]}\}$
+\[(b - a)\E[U_N[a,b]] \leq \E_n[X_n - a].\]
+
+\emph{Proof:}
+Define $H_n := 1_{\{\mbox{we are upcrossing at $t = N$}\}}$.
+By the supermartingale property, $\E[H \cdot X]_n \leq 0$.
+Then,
+\[(b - a)\E[U_n[a,b]]
+    \leq \E[H \cdot X]_n + (X_n - a)^-
+    \leq \E(X_n - a)^-. \qed
+\]
+
+{\bf Theorem:} (Supermartingale Convergence Theorem) $(X_n)$ supermartingale
+bounded in $\L_1$ (i.e., $\sup_n \E[X_n] < +\infty$). Then,
+$\exists X_\infty \in \L_1$ with $X_n \to X_\infty$ a.s.
+
+\emph{Proof:}
+Note that
+\[\left\{ \mbox{$X_n$ does not converge} \right\}
+    = \bigcup_{a,b \in \Q} \left\{ \liminf_n X_n < a < b < \limsup_n X_n \right\}
+    = \bigcup_{a,b \in \Q} \left\{ U_\infty[a,b] = \infty \right\}
+\]
+It follows from Doob's Upcrossing Lemma that each
+\[(b - a) \E[U_\infty[a,b]]
+    \leq \sup_n \E[X_n] + a
+    < +\infty
+\]
+and hence $\P[U_\infty[a,b] = \infty] = 0$. Thus, $X_n \to X_\infty$ a.s.
+Furthermore, $X_\infty \in \L_1$, since, by Fatou, 
+\[\E[X_\infty]
+    = \E\left[ \liminf X_n \right]
+    \leq \liminf \E[X_n]
+    < +\infty. \qed
+\]
+
+{\bf Corollary:} $(X_n)$ non-negative supermartingale. Then,
+$\exists X_\infty \in \L_1$ such that $X_n \to X_\infty$ a.s. and
+$\E[X_\infty | \F_n] \leq X_n$.
+
+\emph{Proof:} By the supermartingale property,
+$\E[|X_n|] = \E[X_n] \leq \E[X_0]$, and so $X_n \to X_\infty \in \L_1$ a.s.
+Hence, by (cFATOU),
+\[X_n
+    \geq \liminf_m \E_n[X_{n + m}]
+    \geq \E_n\left[ \liminf_m X_{n + m} \right]
+    = \E_n\left[ X_\infty \right].
+\qed\]
+\end{question}
+
+\begin{question}{2/24/14: Convergence of $\L_2$ Martingales}
+{\bf Theorem:} If $(M_n)$ is a martingale, then
+\[\sup_n \E[M_n^2] < \infty
+    \quad \Leftrightarrow \quad
+    \exists M_\infty \in \L_2 \mbox{ such that each} M_n = \E[M_\infty].
+\]
+Moreover, in this case, $M_n \to M_\infty$ in $\L_2$ and a.s.
+
+\emph{Proof:} ($\Leftarrow$) By the Conditional Jensen's Inequality,
+$M_n^2 = \left( \E_n[M_n] \right)^2 \leq \E_n[M_n^2]$, and so
+$\E[M_n^2] \leq \E[M_\infty^2] < +\infty$.
+
+Since expected cross terms of sum of increments are $0$,
+\[M_0^2 + \sum_{i = 1}^n \E[(M_k - M_{k - 1})^2]
+    = \E[M_n^2]
+    \leq \sup_k \E[M_k^2]
+    < +\infty.\]
+Hence, $\E[(M_m - M_{n})^2] \to 0$ as $m > n \to \infty$. Since $\L_2$ is
+a complete metric space, $M_n \to M_\infty \in \L_2$ as $n \to \infty$. It
+remains to show $M_n = \E_n[M_\infty]$ a.s.
+
+TODO %TODO
+\end{question}
+
+\begin{question}{2/26/14: Convergence of Sums of IRVs in $\L_2$}
+{\bf Theorem:} In $(X_n) \subseteq \L_2$ are IRVs with $\mu_n := \E[X_n]$ and
+$\sigma_n^2 := \Var[X_n]$, then
+\begin{enumerate}[(a)]
+\item $\sum_n \mu_n \to$ and $\sum_n \sigma_n^2 \to$ imply
+$\sum_n X_n \to$ a.s.
+
+\item $|X_n| < K$ and $\sum_n X_n \to$ a.s. imply $\sum_n \mu_n \to$ and
+$\sum_n \sigma_n^2 \to$
+\end{enumerate}
+
+\emph{Proof:} Previously, we showed the case when each $\mu_n = 0$. Hence (a)
+is trivial, since
+\[\sum_n X_n = \sum_n \mu_n + \sum_n (X_n - \mu_n) \to \mbox{ a.s.,}\]
+as $E[X_n - \mu_n] = 0$.
+
+To prove (b) we use ``symmetrization''. TODO
+%TODO
+
+{\bf Theorem:} (Kolmogorov's Three Series) $(X_n)$ IRVs. Then,
+$\sum_n X_n \to$ a.s. if and only if $\exists k > 0$ such that, for
+$X_n^k := X_n1_{\{|X_n| \leq k\}}$, the following three series converge:
+\[\sum_n \P[|X_n| > k],
+    \quad
+    \sum_n \E[X_n^k],
+    \quad \mbox{ and } \quad
+    \sum_n \Var[X_n^k].
+\]
+\emph{Proof:} Note that
+\[\sum_n X_n = \sum_n X_n^k + \sum_n X_n1_{\{|X_n| > k\}}.\]
+By the previous result,
+\[\sum_n X_n^k \to \mbox{ a.s. }
+    \quad \Leftrightarrow \quad
+    \sum_n \E[X_n^k] \to
+    \quad \mbox{ and } \quad
+    \sum_n \Var[X_n^k] \to.
+\]
+By Borel-Cantelli,
+\[\sum_n X_n1_{\{|X_n| > k\}} \to
+    \quad \Leftrightarrow \quad
+    \sum_n \P[|X_n| > k]. \qed
+\]
+\end{question}
+
+\begin{question}{3/5/14: SLLN for $\L_2$ Martingales; L\'evy's Generalization
+                                                            of Borel-Cantelli}
+{\bf Theorem:} (SLLN for $\L_2$ Martingales) If $(X_n)$ is a martingale with
+each $X_n \in \L_2$, then
+\[\{\langle X \rangle_\infty = +\infty\}
+    \subseteq \left\{ \frac{X_n}{\langle X \rangle_n} \to 0 \right\}.
+\]
+\emph{Proof:} TODO %TODO
+
+{\bf Theorem:} (L\'evy's Generalization of Borel-Cantelli) If $\E_n \in \F_n$,
+\[Z_n := \sum_{k = 1}^n 1_{E_k},
+    \quad \mbox{ and } \quad
+    Y_k    := \sum_{k = 1}^n \P_{k - 1}[E_k]
+            = \sum_{k = 1}^n \P\left[ E_k | \F_{k - 1} \right],
+\]
+then
+\[\left\{ Y_\infty = +\infty \right\}
+    \subseteq\left\{ \frac{Z_n}{Y_n} \to 1\right\}.
+\]
+\emph{Proof:} TODO %TODO
+
+\end{question}
+
+\begin{question}{3/24/14: Doob's Maximal Inequality; Law of the Iterated
+                                                                    Logarithm}
+{\bf Lemma:} Let $(X_n)$ be a non-negative
+submartingale, Then, $\forall c > 0$,
+\[c\P[\sup_{k \leq n} X_k > c]
+    \leq \E[X_n1_{\{\sup_{k \leq n} X_k > c\}}
+    \leq \E[X_n].
+\]
+\emph{Proof:} Define the stopping time $\tau := \inf\{n : X_n \geq c\}$. Then,
+\begin{align*}
+c\P\left[ \sup_{k \leq n} X_k > c \right]
+    \leq c\P\left[ \tau \leq n \right]
+    \leq \E[X_t1_{\tau \leq n}]
+ &  = \sum_{k = 0}^n \E\left[ X_k1_{\tau = k} \right]           \\
+ &  = \sum_{k = 0}^n \E\left[ \E_k[X_n1_{\tau = k}] \right]     \\
+ &  = \sum_{k = 0}^n \E\left[ X_n1_{\tau = k} \right]
+    = \E\left[ X_n1_{\tau \leq k} \right]
+    \leq \E\left[ X_n \right].
+\end{align*}
+
+{\bf Corollary:} (Doob's Maximal Inequality) Suppose $(M_n)$ is a martingale
+and $\phi : \R \to [0,\infty)$ is non-negative and convex such that each
+$\phi(M_n) \in \L_1$. Then,
+\[c\P\left[ \sup_{k \leq n} \phi(M_n) > c \right]
+    \leq \E[\phi(M_n)1_{\{\sup_{k \leq n} \phi(M_k) > c\}}
+    \leq \E[\phi(M_n)].
+\]
+
+\newpage
+{\bf Theorem:} (Law of the Iterated Logarithm) Suppose $(X_n)$ are IIDRV's with
+each $X_n \sim \mathcal{N}(0,1)$. Define $S_n := \sum_{k = 1}^n X_k$. Then,
+almost surely,
+\[\limsup_n \frac{S_n}{h(n)} = 1,
+    \quad \mbox{ where} \quad
+    h(n) = \sqrt{2n\log \log n}.
+\]
+
+\emph{Proof:} Notice that the result involves an upper bound and a lower bound:
+$\forall \e > 0$,
+\[\P\left[ S_n > (1 + \e)h(n) \mbox{ i.o.} \right] = 0
+    \quad \mbox{ and } \quad
+    \P\left[ S_n > (1 - \e)h(n) \mbox{ i.o.} \right] = 1.
+\]
+
+{\bf Lower Bound:} Let $\kappa \in (1,(1 + \e)^2)$. Recall that, by
+Doob's Maximal Inequality, $\forall c \in \R, \theta = c/n$,
+\[\P\left[ \sup_{k \leq n} S_k \geq c \right]
+    = \P\left[ \sup_{k \leq n} e^{\theta S_k} \geq e^{\theta c} \right]
+    \leq e^{-\theta c} \E\left[ e^{\theta S_n} \right]
+    = e^{-\theta c} e^{\theta^2 n/2}
+    = e^{-c^2/(2n)}.
+\]
+Hence,
+\vspace{-5mm}
+\begin{align*}
+b_n
+    = \P\left[ S_n > (1 + \e)h(n) \right]
+ &  \leq \P\left[ \sup_{k \leq \kappa^n} S_k
+                        > (1 + \e)h \left( \kappa^{n - 1} \right) \right]  \\
+ &  \leq \exp\left(-\frac{\left((1 + \e)h\left(\kappa^{n - 1}\right)\right)^2}
+                                                        {2\kappa^n} \right) \\
+ &  = \exp\left(-\frac{(1 + \e)^2(\log(n - 1) + \log\log \kappa)}
+                                                        {\kappa} \right)
+    \asymp n^{-(1 + \e)^2/\kappa},
+\end{align*}
+and so $\sum_{n = 1}^\infty a_n < +\infty$. The upper bound follows by the
+$1^{st}$ Borel-Cantelli Lemma.
+
+{\bf Upper Bound:} Let $N \in \N$ be sufficiently large such that
+\vspace{-1mm}
+\[\gamma_N := \frac{1 - \e + \sqrt{1/N}}{\sqrt{1 - 1/N}} \in (0,1)\]
+(since $\gamma_N \to 1 - \e$ as $N \to \infty$).
+The Lower Bound gives
+$\P\left[ S_n + 2h(n) > 0 \mbox{ i.o.}\right] = 0$,
+so we show
+\[\P\left[ S_{N^{n + 1}} - S_{N^n} \geq (1 - \e)h(N^{n + 1}) + 2h(N^n)
+                                                            \mbox{ i.o.}\right]
+    = 1.
+\]
+Notice that $S_{N^{n + 1}} - S_{N^n} = \sqrt{N^{n + 1} - N^n}\xi$, where
+$\xi \sim \mathcal{N}(0,1)$. A standard lower bound gives,
+\[\P[\xi > x] \geq \left( x + x\inv \right)\inv \phi(x), \quad \forall x > 0\]
+(where $\phi(x) = (2\pi)^{-1/2}\exp\left( -x^2/2 \right)$).
+Also notice that
+\[x(n) := \frac{(1 - \e)h(N^{n + 1}) + 2h(N^n)}{\sqrt{N^{n + 1} - N^n}}
+    = \gamma_N\sqrt{2\log\log n},
+\]
+and thus,
+\vspace{-1mm}
+\[\P\left[ \xi \geq x(n) \right]
+    = \left( \gamma_N\sqrt{2\log\log n}
+        + \left( \gamma_N\sqrt{2\log\log n} \right)\inv \right)\inv
+                                            \phi(\gamma_N\sqrt{2\log\log n})
+    \asymp n^{\gamma_N},
+\]
+and so, for the obvious choice of $b_n$, $\sum_{n = 1}^\infty b_n = +\infty$.
+\qed
+\end{question}
+
+\begin{question}{3/26/14: Doob's Maximal $\L_p$-Inequality}
+{\bf Theorem:} If $(M_n)$ is a martingale, $p > 1$, $q = \frac{p}{p - 1}$,
+then, for $M_n^* := \sup_{k \leq n} |X_n|$,
+\[\E\left[ \sup_{k \leq n} |M_n|^p \right]^{1/p}
+    = \|M_n^*\|_p
+    \leq q\|M_n\|_p
+    \quad \mbox{ and } \quad
+    \|M_\infty^*\| \leq q \sup_n \|M_n\|_p
+.\]
+\emph{Proof:} Observe that the second inequality follows from the first by
+Monotone Convergence. Since $(M_n)$ is a martingale and the function
+$x \mapsto |x|$ is convex, Doob's Maximal Inequality gives
+\[\P\left[ M_n^* \geq c \right]
+    \leq \frac{1}{c} \E\left[ |M_n|1_{\{M_k^* \geq c\}} \right].\]
+Hence,
+\begin{align*}
+\|M_n^*\|_p^p
+    = \E\left[ (M_n^*)^p \right]
+    = \int_0^\infty \P\left[ (M_n^*)^p \geq t \right] \, dt
+ &  = \int_0^\infty \P\left[ M_n^* \geq t^{1/p} \right] \, dt               \\
+ &  = p\int_0^\infty \P\left[ M_n^* \geq x \right] x^{p - 1} \, dx          \\
+ &  \leq p\int_0^\infty \E\left[ |M_n|1_{\{M_n^* \geq x\}} \right]
+                                                            x^{p - 2} \, dx \\
+ &  = p\E\left[ |M_n| \int_0^{M_n^*} x^{p - 2} \, dx \right]                \\
+ &  = \frac{p}{p - 1} \E\left[ |M_n| (M_n^*)^{p - 1} \right]
+    \leq q \E\left[ |M_n|^p \right]
+    = q\|M_n\|_p^p. \qed
+\end{align*}
+\end{question}
+
+\begin{question}{3/28/14: Kukutani's Theorem}
+{\bf Theorem:} (Kukutani's Theorem) $(X_n)$ non-negative IRV's with each
+$\E[X_n] = 1$. Then,
+\[M_n := \prod_{k = 1}^n X_k \to M_\infty \in \L_1\]
+a.s., and, furthermore, for $a_n := \E[\sqrt{X_n}]$,
+\begin{align*}
+\prod_n a_n > 0 & \Leftrightarrow \E[M_\infty] = 1  \\
+\mbox{and } \quad
+\prod_n a_n = 0 & \Leftrightarrow M_\infty = 0 \quad \mbox{a.s.}
+\end{align*}
+\emph{Proof:} Define
+\[N_n
+    := \prod_{k = 1}^n \frac{\sqrt{X_k}}{\E[\sqrt{X_k}]}
+    = \frac{\sqrt{M_n}}{\prod_{k = 1}^n a_k}.
+\]
+Note that $N_n$ is a martingale. Since $(X_n)$ are independent and $N_n$ is
+non-negative, $\sup_n \E[N_n] \leq 1$, and hence $N_n \to N_\infty \in \L_1$
+a.s. Also, since each $a_k \leq 1$,
+\[\E[N_n^2]
+    = \frac{\E[M_n]}{\prod_{k = 1}^n a_k}
+    = \prod_{k = 1}^n a_k^{-2}
+    \uparrow \prod_k a_k^{-2},
+\]
+and hence, if $\prod_n a_n > 0$, then
+\[\prod_{k = 1}^n a_k^{-2}
+    = \E[N_n^2]
+    \uparrow \E[N_\infty^2]
+    = \frac{\E[M_\infty]}{\prod_n a_n^2}
+    \quad \Rightarrow \quad
+    \E[M_\infty] = 1.
+\]
+On the other hand, if $\prod_n a_n = 0$, then
+\[0
+    \leftarrow N_n \prod_{k = 1}^n a_k
+    = \sqrt{M_n}
+    \to \sqrt{M_\infty} \quad \mbox{a.s.}
+\]
+\end{question}
+
+\begin{question}{3/31/14: Radon-Nikodym Theorem}
+\end{question}
+
+\begin{question}{4/14/14: Inversion Theorems for Characteristic Functions}
+{\bf Theorem:} (L\'evy's Inversion Theorem) Let $X$ be a random variable with
+characteristic function $\phi$. For $a < b$,
+\[\lim_{T \to \infty} \frac{1}{2\pi} \int_{-T}^T
+        \frac{e^{-i\theta a} - e^{-i\theta b}}{i\theta} \phi(\theta) \, d\theta
+    = \frac{1}{2} \left( \P(\{a\}) + \P(\{b\}) \right) + \P((a,b)).
+\]
+\emph{Proof:} Since,
+\[\left| \frac{e^{-i\theta a} - e^{-i\theta b}}{i\theta} \right|
+    = \left| \frac{1}{\theta} \int_{\theta a}^{\theta b} e^{-ix} \, dx \right|
+    \leq \frac{1}{\theta} \int_{\theta a}^{\theta b} |e^{-ix}| \, dx
+    = b - a,
+\]
+the integrand in question is bounded and so we can use Fubini's Theorem:
+\[\lim_{T \to \infty} \frac{1}{2\pi} \int_{-T}^T
+        \frac{e^{-i\theta a} - e^{-i\theta b}}{i\theta} \phi(\theta) \, d\theta
+    = \E G_T(X;a,b),
+\]
+where, since $\cos$ is even and $\sin$ is odd,
+\begin{align*}
+G_T(x;a,b)
+    := \frac{1}{2\pi} \int_{-T}^T 
+        \frac{e^{i\theta (x - a)} - e^{i\theta (x - b)}}{i\theta} \, d\theta
+ &  = \frac{1}{\pi} \int_0^T
+        \frac{\sin(\theta(x - a)) - \sin(\theta(x - b))}{i\theta} \, d\theta \\
+ &  = \sgn(x - a)S(|x - a|T) - \sgn(x - b)S(|x - b|T),
+\end{align*}
+for
+\[S(u) := \frac{1}{\pi} \int_0^u \frac{\sin(x)}{x} \, dx.\]
+By a homework problem, $S(u) \to 1/2$ as $u \to \infty$, and hence
+\[G_T(x;a,b) \to \frac{1}{2} \left( \sgn(x - a) - \sgn(x - b) \right).\]
+as $T \to \infty$. By the Bounded Convergence theorem, as $T \to \infty$,
+\[\E G_T(X;a,b)
+    \to \E \frac{1}{2} \left( \sgn(x - a) - \sgn(x - b) \right)
+    = \frac{1}{2} \left( \P(\{a\}) + \P(\{b\}) \right) + \P((a,b)). \qed
+\]
+{\bf Theorem:} Suppose $\phi_X \in \L_1$. Then, $F_X$ is continuously
+differentiable and $f_X = F_X'$ is bounded. Furthermore, $f_X$ is the Fourier
+transform of $\phi_X$.
+
+\emph{Proof:} Since $F_X$ is monotone, it is continuous a.e. Hence, let $a < b$
+such that $F_X$ is continuous at both $a$ and $b$. Then, by the previous result
+(L\'evy Inversion),
+\[F_X(b) - F_X(a)
+    = \lim_{T \to \infty} \frac{1}{2\pi} \int_{-T}^T 
+    \frac{e^{-i\theta a} - e^{-i\theta b}}{i\theta} \phi_X(\theta) \, d\theta,
+\]
+and hence
+\[F(b) - F(a) \leq \frac{(b - a)}{2\pi} \int_\R |\phi_X(\theta)| \, d\theta.\]
+Thus, $F_X$ is (Lipschitz) continuous. Furthermore, since
+\[\frac{e^{-i\theta a} - e^{-i\theta b}}{i\theta(b - a)}
+    \to \left\{
+        \begin{array}{ll}
+            e^{-i\theta a} & \mbox{ if } b \downarrow a \\
+            e^{-i\theta b} & \mbox{ if } a \uparrow b
+        \end{array}
+    \right.,
+\]
+we have
+\[f(x)
+    = F'(x)
+    = \int_\R e^{-i\theta x} \phi_X(\theta)
+    = \mathcal{F}[\phi]. \qed
+\]
+\end{question}
+
+\begin{question}{4/21/14: Characteristic Functions}
+{\bf Theorem:} (L\'evy's Convergence Theorem) $(\mu_n)$ probability
+measure on $(\R,\B(\R))$ with characteristic functions $(\phi_n)$. Suppose
+$\phi_n \to \phi$ pointwise and $\phi$ is continuous at $0$ (i.e.,
+$\lim_{\theta \to 0} \phi(\theta) = 1$). Then, $\exists$ a probability measure
+$\mu$ with characteristic function $\phi$ and $\mu_n \to \mu$ weakly.
+
+\emph{Proof:} {\bf Step 1 (verify tightness):} ($\Rightarrow \exists \mu$ with
+Characteristic Function $\phi$). Let $\e > 0$. Since $\phi$ is continuous at
+$0$, $\exists \delta > 0$ with $|\theta| < \delta \Rightarrow
+|1 - \phi(\theta)| < \e/4$, so that
+\[|2 - \phi(\theta) - \phi(-\theta)|
+    \leq |1 - \phi(\theta)| + |1 - \phi(-\theta)|
+    < \e/2.\]
+Hence,
+\[\frac{1}{\delta} \int_0^\delta |2 - \phi(\theta) - \phi(-\theta)| \, d\theta
+    < \e/2.\]
+Since $\phi_n \to \phi$ pointwise, by (BDD), $\exists N \in \N$ such that,
+$\forall n > N$,
+\begin{align*}
+\e >
+    \frac{1}{\delta} \int_0^\delta |2 - \phi_n(\theta) - \phi_n(-\theta)|
+                                                                    \, d\theta
+ &  = \frac{2}{\delta} \int_0^\delta |1 - \E[\cos(\theta X)]| \, d\theta    \\
+ &  = \int_{\R} d\mu_n(x) \frac{1}{\delta}
+        \int_0^\delta \left( 1 - \cos(\theta x) \right) \, d\theta \\
+ &  \geq \int_{\{|dx| \geq 2\}} d\mu_n(x)
+        \left( 1 - \frac{\sin(\delta x)}{\delta x} \right)  \\
+ &  \geq \mu_n(|\delta x| \geq 2)
+    = \mu_n(|X| \geq K),
+\end{align*}
+for $X \sim \mu$, using Fubini's Theorem, and the non-negativity of the
+integrand, for $K := 2/\delta$.
+
+{\bf Step 2 (verify subsequence stuff):} TODO %TODO
+
+{\bf Theorem:} (Central Limit Theorem) $(X_n)$ IID RV's, with each
+$\E[X_n] = 1$ and $\sigma^2 := \E[X_n^2] < +\infty$. Then, for
+$G_n := \frac{1}{\sigma\sqrt{n}} \sum_{i = 1}^n X_i$,
+\[\P[G_n \leq x]
+    \to \phi(x)
+    := \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x e^{-y^2/2} \, dy.
+\]
+
+\emph{Proof:} The characteristic function of the Standard Gaussian is
+\[\phi(\theta)
+    = \int_{-\infty}^\infty e^{i\theta t} \frac{e^{-t^2/2}}{\sqrt{2\pi}} \, dt
+    = e^{-\theta^2/2}
+        \int_{-\infty}^\infty \frac{e^{-(\theta - t)^2/2}}{\sqrt{2\pi}} \, dt
+    = e^{-\theta^2/2}
+\]
+(since $t^2/2 - i\theta t - \theta^2/2 = (\theta - t)^2/2$). Hence, by the
+Method of Characteristic Functions, it suffices to show that,
+$\forall \theta \in \R$, $\phi_{G_n}(\theta) \to \phi(\theta)$.
+We first perform a second-order Taylor estimate:
+\[e^{ix} - 1
+    = i\int_0^x e^{it} \, dt
+    = ix + \int_0^x t e^{it} \, dt
+    = ix - x^2/2 + R_2(x),
+\]
+where $|R_2(x)| \leq \int_0^x t^2/2 \, dt = |x|^3/6$.
+(since
+\[|e^{ix} - (1 + ix)| \leq \left| \int_0^x t \,dt \right| = x^2/2),\]
+and hence
+\[|e^{ix} - (1 + ix - x^2/2)|\]
+Thus,
+\[\phi_{G_n}(\theta)
+    = \left( o(1/n) + 1 - \frac{\theta^2}{2n} \right)^n
+    \to e^{-\theta^2/2}. \qed
+\]
+\end{question}
+\end{document}

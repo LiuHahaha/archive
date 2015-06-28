@@ -1,0 +1,289 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Monday, February 13, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Let $I = (a,b) \subseteq \mathbb{R}$ be an open interval, and let
+$f: I \rightarrow \mathbb{R}$ be convex. Let $x \in I$, and
+let $y, z \in I$ with $z < x < y$. Then $z < x < y$,
+$\exists \theta \in (0,1)$ such that $x = z + \theta(y - z)$.
+Thus, since $f$ is convex,
+\begin{eqnarray*}
+\frac{f(x) - f(z)}{x - z}
+ & =    & \frac{f(z + \theta(y - z)) - f(z)}{z + \theta(y - z) - z} \\
+ & \leq & \frac{f(z) + \theta(f(y) - f(z)) - f(z)}{\theta(y - z)} \\
+ & =    & \frac{\theta(f(y) - f(z))}{\theta(y - z)} \\
+ & =    & \frac{f(y) - f(z)}{y - z} \\
+ & =    & \frac{(1 + \theta)(f(y) - f(z)))}{(1 + \theta)(y - z)} \\
+ & =    & \frac{f(y) - (f(z) + \theta(f(y) - f(z)))}{y - (z + \theta(y - z))} \\
+ & \leq & \frac{f(y) - f(z + \theta(y - z))}{y - (z + \theta(y - z))} \\
+ & =    & \frac{f(y) - f(x)}{y - x}. \\
+\end{eqnarray*}
+Thus, $z \mapsto \frac{f(x) - f(z)}{x - z}$ is increasing on $I$, so that,
+since $x$ is an accumulation point of $I$, by Theorem 204 (as per the notes
+for Real Analysis I),
+$f_-^{\prime}(x)
+ := \lim_{z \rightarrow x-} \left(\frac{f(x) - f(z)}{x - z}\right)$ and
+$f_+^{\prime}(x)
+ := \lim_{z \rightarrow x+} \left(\frac{f(z) - f(x)}{z - x}\right)$
+exist. \qquad $\blacksquare$
+
+\item $\forall x,y \in I$ with $x < y$, also by Theorem 204, since
+$x \mapsto \frac{f(y) - f(x)}{y - x}$ is also increasing on $I$,
+\[f_-^{\prime}(x) \leq \frac{f(y) - f(x)}{y - x} \leq f_-^{\prime}(y)
+\leq f_+^{\prime}(y). \qquad \blacksquare\]
+
+\item Let $x,y \in I$. If $x < y$, then, by the result of part (b),
+\[f^{\prime}_-(x) \leq \frac{f(y) - f(x)}{y - x}
+= \frac{f(x) - f(y)}{x - y}.\] Thus, since $(x - y) > 0$, multiplying by
+$(x - y)$ and adding $f(y)$ gives
+$f(x) \geq f(y) + f^{\prime}_- (x) (x - y)$.
+If $y < x$, then, by the result
+of part(b), \[\frac{f(x) - f(y)}{x - y} \leq f^{\prime}_- (x).\] Thus, since
+$x - y < 0$, multiplying by $(x - y)$ and adding $f(y)$ gives
+$f(x) \geq f(y) + f^{\prime}_- (x) (x - y)$.
+If $x = y$, then $x - y = 0$, so, trivially,
+$f(x) \geq f(y) + f^{\prime}_-(x)  (x - y)$.
+Thus, $\forall x, y \in I$, $f(x) \geq f(y) + f^{\prime}_- (x) (x - y).$ \qquad
+$\blacksquare$
+
+\item Let $U \subseteq \mathbb{R}$ be convex, and let
+$g: U \rightarrow \mathbb{R}$ be differentiable and convex. Let
+$\mathbf{v} = \mathbf{y} - \mathbf{x}$.
+Since $U$ is convex, if $S$ is the line segment between $\mathbf{x}$ and
+$\mathbf{y}$, then $S \subseteq U$. Since $U$ is open,
+$\exists \delta_1, \delta_2$ such that
+$B(\mathbf{x},\delta_1),B(\mathbf{y},\delta_2) \subseteq U$.
+Thus, for $I = (-\delta_1,\|\mathbf{v}\| + \delta_2)
+ \subseteq \mathbb{R}$ we can define $h: I \rightarrow \mathbb{R}$,
+such that, $\forall t \in (-\delta_1,\|\mathbf{v}\| + \delta_2)$,
+$h(t) = g(\mathbf{x} + t\frac{\mathbf{v}}{\|\mathbf{v}\|})$. Since $g$ is convex, $h$ is also convex.
+Furthermore, $I$ is open, so that, by the result of part (c),
+\[h(0) \geq h(\|\mathbf{v}\|) + h^{\prime}_-(0)(\|\mathbf{v}\|).\] Since $g$ is differentiable,
+$h$ is differentiable (so that, $\forall t \in I$,
+$h^{\prime}(t) = h^{\prime}_-(t)$),
+\[g(\mathbf{y}) + \nabla g(\mathbf{x}) \cdot \mathbf{v}
+ = g(\mathbf{y}) + \frac{\partial g}{\partial \mathbf{v}} (\mathbf{x})
+ = h(\|\mathbf{v}\|) + \frac{dh}{dt}(0)\|\mathbf{v}\|
+ = h(\|\mathbf{v}\|) + h^{\prime}_-(0)\|\mathbf{v}\|
+ \leq h(0)
+ = g(\mathbf{x}). \qquad \blacksquare\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item Let $h \in C([a,b])$ such that \[\int_a^b h(x) v^{\prime}(x) \; dx = 0,\]
+$\forall v \in C^1([a,b])$ such that $v(a) = v(b) = 0$. Suppose, for sake of
+contradiction, that $h$ is non-constant, so that there exists some
+$x_1,x_2 \in [a,b]$ such that $h(x_1) \neq h(x_2)$. Without loss of generality,
+$h(x_1) < h(x_2)$ (since $h$ is constant if and only if $-h$ is constant), and
+$0 < h(x_1)$ (since $h$ is constant if and only if $h - h(x_1) + 1$ is
+constant).
+
+Since $h$ is continuous, $\exists \delta_1,\delta_2 > 0$ such that,
+$\forall x \in [x_1 - \delta_1, x_1 + \delta_1]$, $h(x) < m$, for some
+$m \leq \frac{h(x_1) + h(x_2)} {2}$, and
+$\forall x \in [x_2 - \delta_2, x_2 + \delta_2]$, $h(x) > M$, for some
+$M \geq \frac{h(x_1) + h(x_2)} {2}$. Let $\delta = \min\{\delta_1,\delta_2\}$,
+and let $c = \max\{a,x_1 - \delta_1\}$,
+$d = x_1 + \delta_1$, $e = x_2 - \delta_2$, and
+$f = \min\{b,x_2 + \delta_2\}$.
+
+Define $v: [a,b] \rightarrow \mathbb{R}$ piecewise as follows:
+\[
+   f(x) = \left\{
+     \begin{array}{lcr}
+       0 & : & x \in [a,c] \cup [f,b] \\
+       2 & : & x \in [d,e] \\
+       (\frac{2}{d - c}(x - c))^2 & : & x \in (c,\frac{c + d}{2}] \\
+       2 - (\frac{2}{d - c}(x - d))^2 & : & x \in (\frac{c + d}{2},d) \\
+       2 - (\frac{2}{f - e}(x - e))^2 & : & x \in (e,\frac{e + f}{2}] \\
+       (\frac{2}{f - e}(x - f))^2 & : & x \in (\frac{e + f}{2},f) \\
+     \end{array}
+   \right.
+\]
+
+Then, $v \in C^1([a,b])$, $\forall x \in (c,d)$. Since $v$ is constant on
+$[a,c]$, $[d,e]$ and $[f,b]$, $v^{\prime} = 0$ on these intervals.
+Since, $\forall y \in [c,d]$, $v(y) = 2 - v(e + y - c)$,
+\[\int_c^d v^{\prime} = - \int_e^f v^{\prime} \neq < 0.\]
+Thus, since $h \geq m > 0$ on $[c,d]$ and $m < M \leq h$
+\[\int_c^d hv^{\prime} + \int_e^f hv^{\prime}
+ < \int_c^d mv^{\prime} + \int_e^f Mv^{\prime} < 0.\]
+
+Thus,
+\begin{eqnarray*}
+\int_a^b hv^{\prime}
+ & = & \int_a^c hv^{\prime} + \int_c^d hv^{\prime}
+   + \int_d^e hv^{\prime} + \int_e^f hv^{\prime} + \int_f^b hv^{\prime} \\
+ & = & \int_c^d hv^{\prime} + \int_e^f hv^{\prime} < 0,
+\end{eqnarray*}
+contradicting the given that \[\int_a^b hv^{\prime} = 0. \qquad \blacksquare\]
+
+\item Since $p \in C([a,b])$, $p$ is integrable on $[a,b]$, so that is has an
+antiderivative $P \in C^1([a,b])$. Thus, since $v(a) = v(b) = 0$, integrating
+by parts gives
+\begin{eqnarray*}
+\int_a^b [pv + qv^{\prime}]
+ & = & P(b)v(b) - P(a)v(a) + \int_a^b [qv^{\prime} - Pv^{\prime}] \\
+ & = & \int_a^b [qv^{\prime} - Pv^{\prime}] \\
+ & = & \int_a^b \left[q - P\right]v^{\prime}
+\end{eqnarray*}
+By the result of part (a), $h := q - P$ is a constant function. As the
+sum of two functions in $C^1([a,b])$, $q$ is differentiable, and,
+furthermore, $q^{\prime} = P^{\prime} + h^{\prime} = p$. \qquad $\blacksquare$
+
+\item Let $\alpha, \beta \in \mathbb{R}$, and let
+$X = \{f \in C^1([a,b]) : f(a) = \alpha, f(b) = \beta\}$. Suppose some
+$f_0 \in X$ minimizes $G$ over $X$. Recall that, by the result of
+Problem 3, part (c) of Assignment 2,
+\[\int_{\alpha}^{\beta} \left[
+\frac{\partial g}{\partial y} (x,f_0(x),f^{\prime}_0(x))v(x)
+ + \frac{\partial g}{\partial z} (x,f_0(x),f^{\prime}_0(x))v^{\prime}(x)
+ \right]
+ = 0,\]
+$\forall v \in C^1([a,b])$ with $v(\alpha) = v(\beta) = 0$. Thus, by the
+result of part (b), for
+$q(x) := \frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x))$,
+$p(x) := \frac{\partial g}{\partial y} (x,f_0(x),f_0^{\prime}(x))$,
+$q \in C^1([a,b])$, and furthermore, $q^\prime = p$; i.e.
+\[\frac{d}{dx} \left( \frac{\partial g}{\partial z}
+                                   (x,f_0(x),f_0^{\prime}(x)) \right)
+ = \frac{\partial g}{\partial y} (x,f_0(x),f_0^{\prime}(x)).
+   \qquad \blacksquare\]
+
+\item Suppose that, $\forall x \in [a,b]$, $h := (y,z) \mapsto g(x,y,z)$ is
+convex, and suppose $f_0 \in X$ satisfies (1). Then, $\forall f \in X$, since
+$h$ is convex, by the result of Problem 1, part (d),
+\begin{eqnarray*}
+G(f) - G(f_0)
+ & = & \int_a^b g(x,f(x),f^{\prime}(x)) - g(x,f_0(x),f_0^{\prime}(x)) \; dx \\
+ & \geq & \int_a^b \nabla g(x,f_0(x),f_0^{\prime}(x))
+          \cdot ((x,f(x),f^{\prime}(x)) - (x,f_0(x),f_0^{\prime}(x))) \; dx \\
+ & = & \int_a^b \frac{\partial g}{\partial y} (x,f_0(x),f_0^{\prime}(x)) (f(x) - f_0(x)) \\
+ & + & \frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x)) (f^{\prime}(x) - f_0^{\prime}(x)) \; dx
+\end{eqnarray*}
+Since $f(a) = \alpha = f_0(a)$ and $f(b) = \beta = f_0(b)$, integration by
+parts gives
+\[\int_a^b \frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x)) (f^{\prime}(x) - f_0^{\prime}(x)) \; dx
+ = -\int_a^b \frac{d}{dx} \left(\frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x))\right) (f(x) - f_0(x)) \; dx,\]
+so that, by equation (1),
+\[\int_a^b \frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x)) (f^{\prime}(x) - f_0^{\prime}(x)) \; dx
+ = -\int_a^b \frac{\partial g}{\partial y} (x,f_0(x),f_0^{\prime}(x)) (f(x) - f_0(x)) \; dx.\]
+Therefore,
+\[G(f) - G(f_0) \geq \int_a^b 0 \; dx = 0,\] so that $G(f) \geq G(f_0)$, and
+$f_0$ minimizes $G$ over $X$. \qquad $\blacksquare$
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Let $X = \{f \in C^1([0,1]) : f(0) = f(1) = 0\}$, and let
+$G : X \rightarrow \mathbb{R}$ such that, $\forall f \in X$,
+$G(f) = \int_0^1 e^{-(f^{\prime}(x))^2} \; dx$. Note that, since the
+exponential function is strictly positive, $G > 0$. Suppose, for sake of
+contradiction, that some $f_0 \in X$ minimized $G$ over $X$. Then, for
+$h = 2f$, $h \in X$, and, since $G(f) > 0$,
+\[G(h) = \int_0^1 e^{-(h^{\prime}(x))^2}
+       = \int_0^1 e^{-4}e^{-(f_0^{\prime}(x))^2}
+       < \int_0^1 e^{-(f_0^{\prime}(x))^2},\]
+contradicting the choice of $f_0$ as a minimizer of $G$ on $X$. Thus, $G$ has
+no minimum on $X$. \qquad $\blacksquare$
+
+\item Let $X = \{f \in C^1([0,1]) : f(0) = f(1) = 0\}$, and let
+$G : X \rightarrow \mathbb{R}$ such that, $\forall f \in X$,
+$G(f) = \int_0^1 \left[(f^{\prime}(x))^2 - 1\right]^2$. Suppose, for sake of
+contradiction, that some $f_0 \in X$ minimized $G$ over $X$. Let
+$g : [0,1] \times \mathbb{R} \times \mathbb{R}$ such that,
+$\forall (x,y,z) \in [0,1] \times \mathbb{R} \times \mathbb{R}$,
+$g(x,y,z) = (z^2 - 1)^2$, so that, $\forall f \in X$,
+$G(f) = \int_0^1 g(x,f(x),f^{\prime}(x)) \; dx$. Note that
+$\frac{\partial g}{\partial y} = 0$, so that, by the result of Problem 2, part
+(c), $\forall x \in [0,1]$,
+\[4(f_0^{\prime}(x)f_0^{\prime\prime}(x) - f_0^{\prime}(x)f_0^{\prime\prime}(x))
+ = \frac{d}{dx} \left(
+  \frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x))\right) = 0.\]
+Thus, either $f_0^{\prime} = (f_0^{\prime})^3$, or $f_0^{\prime\prime} = 0$;
+in the former case, $\forall x \in [0,1]$, $f_0^{\prime}(x) \in \{-1,0,1\}$.
+Since $f_0^{\prime}$ is continuous, this means that $f_0^{\prime}$ is constant
+$-1$, $0$, or $1$. Thus, in any case, $f_0^{\prime\prime} = 0$. By the
+Fundamental Theorem of Calculus, integration gives, $\forall x \in [0,1]$,
+$f_0(x) = ax + b$ for some constants $a$ and $b$. However, the only such $f_0$
+with $f_0(0) = f_0(1) = 0$ is the constant function $f_0 = 0$. Thus, if $f_0$
+minimizes $G$ over $X$, then $f_0 = 0$. However, it can be seen that, for
+$h : [0,1] \rightarrow \mathbb{R}$ such that, $\forall x \in [0,1]$,
+$h(x) = x - x^2$, $h \in X$ and $G(h) < G(0)$, which is a contradiction. Thus,
+$G$ has no minimum on $X$. \qquad $\blacksquare$
+
+\item Let $X = \{f \in C^1([a,b]) : f(0) = 0, f(1) = 1\}$, and let
+$G : X \rightarrow \mathbb{R}$ such that, $\forall f \in X$,
+$G(f) = \int_0^1 \left[x(f^{\prime}(x))^2\right]$. Suppose, for sake of
+contradiction, that some $f_0 \in X$ minimized $G$ over $X$. Let
+$g : [0,1] \times \mathbb{R} \times \mathbb{R}$ such that,
+$\forall (x,y,z) \in [0,1] \times \mathbb{R} \times \mathbb{R}$,
+$g(x,y,z) = xz^2$, so that, $\forall f \in X$,
+$G(f) = \int_0^1 g(x,f(x),f^{\prime}(x)) \; dx$. Note that
+$\frac{\partial g}{\partial y} = 0$, so that, by the result of Problem 3,
+part(c) of Assignment 2,
+\[\int_0^1 2xf_0^{\prime}(x)v^{\prime}(x) \; dx
+ = \int_0^1 \frac{\partial g}{\partial z} (x,f_0(x),f_0^{\prime}(x))
+                                                    v^{\prime}(x) \; dx
+ = 0,\]
+$\forall v \in C^1([0,1])$ with $v(0) = v(1) = 0$. Thus, by the result of part
+(a), $2xf_0^{\prime}(x) = c_1$ for some constant $c_1 \in \mathbb{R}$, so that
+$f_0^{\prime} = \frac{c_1}{2x}$. By the Fundamental Theorem of Calculus,
+integration gives, $\forall x \in [0,1]$,
+$f_0(x) = \frac{c_1}{2}\left(\log(x) + c_2\right)$, for some constant
+$c_2 \in \mathbb{R}$. However, since
+$\lim_{x \rightarrow 0+} \log(0) = \infty$, either $c_2 \neq 0$ and
+$\lim_{x \rightarrow 0+} f_0(0) = \pm \infty$, contradicting the constraint on
+$f_0$ of $f_0(0) = 0$, or $c_2 = 0$, contradicting the constraint on $f$ that
+$f(1) = 1$. Thus, $G$ has no minimum on $X$. \qquad $\blacksquare$
+\end{enumerate}
+\end{question}
+\end{document}

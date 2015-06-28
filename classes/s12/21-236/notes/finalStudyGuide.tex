@@ -1,0 +1,652 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\duedate}{Tuesday, May 8, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\bvarphi}{\boldsymbol{\varphi}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\meas}{\operatorname{meas}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\rank}{\operatorname{rank}}
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\curl}{\operatorname{curl}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bfg}{\mathbf{g}}
+\newcommand{\bfh}{\mathbf{h}}
+\newcommand{\pjm}{Peano-Jordan measurable }
+\newcommand{\Rint}{Riemann integrable }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Final Study Guide} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Exam Date: \duedate \\
+
+\hrule
+{\Large \bf Integration}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 160 (Repeated Integration)}
+Let $S \subseteq \mathbb{R}^N$, $T \subseteq \mathbb{R}^M$ be rectangles, let
+$f: S \times T \rightarrow \mathbb{R}$ be Riemann integrable, and suppose
+that, $\forall \bx \in S$, $\by \in T \mapsto f(\bx,\by)$ is Riemann
+Integrable. Then, the function $\bx \in S \mapsto \int_T f(\bx,\by) \; d\by$
+is \Rint and
+\[\int_{S \times T} f(\bx,\by) \; d(\bx,\by)
+ = \int_S\left(\int_Tf(\bx,\by)\;d\by\right)\;d\bx.\]
+
+{\bf Proof:} Construct a partition $\mathcal{P} = \{R_1,\ldots,R_k\}$ (by
+refinement of partitions $\mathcal{P}$ and $\mathcal{Q}$) of $R := S \times T$
+such that $R_i = S_i \times T_j$, where $\mathcal{P}_N = \{S_1,\ldots,S_m\}$
+and $\mathcal{P}_M = \{T_i,\ldots,T_l\}$ are partitions of $S$ and $T$,
+respectively. Using the fact that
+\[\meas_{N + M} R_k
+ = \meas_{N + M} (S_i \times T_j)
+ = \meas_N S_i \meas_M T_j,\]
+\[L(f,\mathcal{P})
+ \leq \underline{\int_S} \left(\int_T f(\bx,\by) \; d\by\right) \; d\bx
+ \leq \overline{\int_S} \left(\int_T f(\bx,\by) \; d\by\right) \; d\bx
+ \leq U(f,\mathcal{Q}).
+\]
+Taking the supremum over all partitions $\mathcal{P}$ of $R$ gives
+\[\underline{\int_{S \times T}} f(\bx,\by) \; d(\bx,\by)
+ \leq \underline{\int_S} \left(\int_T f(\bx,\by) \; d\by\right) \; d\bx.
+ \leq \overline{\int_S} \left(\int_T f(\bx,\by) \; d\by\right) \; d\bx
+ \leq U(f,\mathcal{Q}).
+\]
+Taking the infimum over all partitions $\mathcal{Q}$ of $R$ gives
+\[\underline{\int_{S \times T}} f(\bx,\by) \; d(\bx,\by)
+ \leq \underline{\int_S} \left(\int_T f(\bx,\by) \; d\by\right) \; d\bx.
+ \leq \overline{\int_S} \left(\int_T f(\bx,\by) \; d\by\right) \; d\bx
+ \leq \overline{\int_{S \times T}} f(\bx,\by) \; d(\bx,\by).
+\]
+Therefore, since $f$ is Riemann integrable,
+\[\int_{S \times T} f(\bx,\by) \; d(\bx,\by)
+ = \underline{\int_S}\left(\int_T f(\bx,\by)\; d\by\right) \; d\bx
+ = \overline{\int_S}\left(\int_T f(\bx,\by)\; d\by\right) \; d\bx. \mqed
+\]
+\end{enumerate}
+
+\hrule
+{\Large \bf Peano-Jordan Measure}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 177 (Peano-Jordan Measurability of a Set and its
+                                                                    Boundary)}
+A bounded set $E \subset \mathbb{R}^N$ is \pjm if and only if $\partial E$ is
+\pjm and $\meas \partial E = 0$.
+
+{\bf Proof:} Note that, if $P$ is a pluri-rectangle, then
+$\meas \partial P = 0$, so that
+$\meas P = \meas \overline{P} = \meas P^{\circ}$.
+
+{\bf Step 1:} Suppose $E$ is \pjm and let $R$ be a rectangle containing $E$.
+Then, $\forall \epsilon > 0$, there exist pluri-rectangles $P_1$ and $P_2$
+with $P_1 \subseteq E \subseteq P_2$ such
+\[0 \leq \meas P_2 - \meas P_1 \leq \epsilon.\] Then,
+\[\meas (\overline{P_2}\backslash P_2^{\circ})
+ = \meas \overline{P_2} - \meas P_1^{\circ}
+ = \meas P_2 - \meas P_1
+ \leq \epsilon.\]
+Since $\overline{P_2}\backslash P_1^{\circ}$ is also a pluri-rectangle and
+$P_1^{\circ} E^{\circ} \subseteq \overline{E} \subseteq \overline{P_2}$,
+\[\partial E
+ = \overline{E}\backslash E^{\circ}
+ \subseteq \overline{P_2}\backslash P^{\circ}.\]
+Thus,
+\begin{eqnarray*}
+0 & \leq & \sup\{\meas P: P\mbox{ pluri-rectangle, }\partial E\supseteq P\} \\
+  & \leq & \inf\{\meas P: P\mbox{ pluri-rectangle, }\partial E\subseteq P\} \\
+  & \leq & \epsilon,
+\end{eqnarray*}
+so that, letting $\epsilon \rightarrow 0^+$,
+\begin{eqnarray*}
+0 & = & \sup\{\meas P : P\mbox{ pluri-rectangle, }\partial E\supseteq P\} \\
+  & = & \inf\{\meas P : P\mbox{ pluri-rectangle, }\partial E\subseteq P\}
+    = 0
+\end{eqnarray*}
+Therefore, $\partial E$ is \pjm with $\meas E = 0$. \qed
+
+{\bf Step 2:} Suppose $\partial E \subset \mathbb{R}^N$ is \pjm with
+$\meas \partial E = 0$. Since $E$ is bounded, there exists a rectangle $R$
+containing $\overline{E}$. Since $\meas \partial E = 0$, for $\epsilon > 0$,
+there exists a pluri-rectangle $P$ containing $\partial E$ with
+$\meas P \leq \epsilon$. Then, $R \backslash P$ is also a pluri-rectangle, so
+that we can decompose it into a disjoint union of rectangles $R_1,\ldots,R_k$.
+Let \[P_1 = \cup \{R_i : R_i \subseteq E\},\] and let $P_2 = P \cup P_1$, so
+that $E \subseteq P_2$. Thus,
+\[0 \leq \meas P_2 - \meas P_1 \leq \epsilon,\] so that $E$ is Peano-Jordan
+measurable. \qed
+
+\item \textbf{Theorem 178 (Riemann Integrability and Peano-Jordan
+                                                               Measurability)}
+Let $R \subseteq \mathbb{R}^N$ be a rectangle and let
+$f: R \rightarrow [0,\infty)$ be a bounded function. Then, $f$ is \Rint
+over $R$ if and only if the set
+\[S_f := \{(\bx,y) \in R \times [0,\infty) : 0 \leq y \leq f(\bx)\}.\]
+is \pjm in $\mathbb{R}^{N + 1}$, in which case
+\[\meas_{N + 1} S_f = \int_R f(\bx) \; d\bx.\]
+
+{\bf Proof:} Assume $f$ is \Rint over $R$. Then, For $\epsilon > 0$, there
+exists a partition $\mathcal{P} = \{R_1,\ldots,R_k\}$ such that
+\[0 \leq U(f,\mathcal{P}) - L(f,\mathcal{P}) \leq \epsilon.\]
+Define
+\[T_i := R_i \times \left[0,\inf_{R_i} f\right],
+U_i := R_i \times \left[0,\sup_{R_i} f\right],\]
+and
+\[P_1 := \cup_{i = 1}^k T_i, \quad P_2 := \cup_{i = 1}^k U_i.\]
+Then, $P_1$ and $P_2$ are pluri-rectangles, $P_1 \subseteq S_f \subseteq P_2$,
+and
+\begin{eqnarray*}
+\meas_{N + 1} P_2 - \meas P_1
+ & = & \sum_{i = 1}^k \meas_{N + 1} U_i - \sum_{i = 1}^k T_{N + 1} \\
+ & = & \sum_{i = 1}^k\left(\sup_{R_i} f - 0\right)\meas_NR_i
+   -   \sum_{i = 1}^k\left(\inf_{R_i} f - 0\right)\meas_NR_i \\
+ & = & U(f,\mathcal{P}) - L(f,\mathcal{P}) \leq \epsilon.
+\end{eqnarray*}
+Thus, $S_f$ is \pjm with
+\[\meas_{N + 1} S_f = \int_R f(\bx) \; d\bx.\]
+Suppose, conversely, that $S_f$ is \pjm and let $R \times [0,M]$ be a
+rectangle containing $S_f$.
+
+\item \textbf{Corollary 182 (Riemann Integration over the Region Between Two
+                                                                   Functions)}
+Let $R \subset \mathbb{R}^N$ be a rectangle, let
+$\alpha,\beta: R \rightarrow \mathbb{R}$ be \Rint with
+$\alpha \leq \beta$, and let $f: E \rightarrow \mathbb{R}$ be a bounded,
+continuous function. Then, $f$ is \Rint over $E$, and
+\[\int_E f(\bx,y) \; d(\bx,y)
+ = \int_R \left(\int_{\alpha(\bx)}^{\beta(\bx)} f(\bx,y) \; dy\right) \; d\bx
+.\]
+
+{\bf Proof:} Consider a rectangle $R \times [a,b]$ containing $E$ and let
+\[g(\bx,y) :=
+    \left\{
+        \begin{array}{cc}
+            f(\bx,y) & (\bx,y) \in E \\
+            0        & (\bx,y) \in (R \times [a,b]) \backslash E
+        \end{array}
+    \right
+.\]
+Let $c \leq \alpha(\bx)$ in $R$. Then, for
+\[T_{\beta}
+ := \{(\bx,y) \in R \times [c,\infty) : c \leq y \leq \beta(\bx)\},\]
+\[T_{\alpha}
+ := \{(\bx,y( \in R \times [c,\infty) : c \leq y \leq \alpha(\bx),\}\]
+if $E := T_{\beta} \backslash T_{\alpha}$,
+$\partial E \subseteq \partial T_{\beta} \cup \partial T_{\alpha}$, so that,
+since $\meas_{N + 1} T_{\beta} = \meas_{N + 1} T_{\alpha} = 0$,
+$\meas_{N + 1} \partial E = 0$. Therefore, since $g$ is continuous in $E$, the
+set of discontinuity points of $g$ (which must be in $\partial E$) has measure
+zero, so that $g$ is \Rint in $R \times [a,b]$.
+
+$\forall \bx \in R$, the function $y \in [a,b] \mapsto g(\bx,y)$ is \Rint
+since it is continuous except at most at the points $y = \alpha(\bx)$ and
+$y = \beta(\bx)$. Then, by Theorem 160 (Repeated Integration), the function
+$\bx \in R \mapsto \int_{[a,b]} g(\bx,y) \; dy$ is \Rint and
+\[\int_{R \times [a,b]}g(\bx,y) \; d(\bx,y)
+ = \int_R \left(\int_{[a,b]} g(\bx,y)\; dy\right)\; d\bx
+ = \int_R \left(\int_{\alpha(\bx)}^{\beta(\bx)} f(\bx,y)\; dy\right)\; d\bx.\]
+
+\end{enumerate}
+\hrule
+{\Large \bf Improper Integrals}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 191 (Improper Riemann Integrability of Non-negative
+                                                                   Functions)}
+Let $E \subseteq \mathbb{R}^N$, and let $f: E \rightarrow [0,\infty)$. If
+there exists \emph{one} exhausting sequence $\{E_n\}$ such that $f$ is \Rint
+over each $E_n$ and
+\[\lim_{n \rightarrow \infty} \int_{E_n} f(\bx) \; d\bx.\]
+
+{\bf Proof:}
+
+\item \textbf{Theorem 193 (Comparison for Improper Riemann Integrals)}
+Let $E \subseteq \mathbb{R}^N$ and let $f,g: E \rightarrow \mathbb{R}$, and
+assume $f$ is \Rint over every subset $F \subseteq E$ where $g$ is integrable.
+Then,
+\begin{enumerate}
+\item If $|f| \leq g$ and $g$ is \Rint in the improper sense over $E$ with
+$\int_E g(\bx) \; d\bx < \infty$, then $f$ and $|f|$ are \Rint in the improper
+sense over $E$, and
+\[\left|\int_E f(\bx) \; d\bx\right|
+ \leq \int_E |f(\bx)| \; d\bx
+ \leq \int_E g(\bx) \; d\bx.
+\]
+
+\item If $f \geq g \geq 0$ and $g$ is \Rint in the improper sense over $E$
+with $\int_E g(\bx) \; d\bx = \infty$, then $f$ is \Rint in the improper sense
+over $E$ and \[\int_E f(\bx) \; d\bx = \infty.\]
+\end{enumerate}
+
+\item \textbf{Theorem 197 (Improper Riemann Integrals of $f$ and $|f|$)}
+Let $E \subseteq \mathbb{R}^N$ and $f: E \rightarrow \mathbb{R}$ be \Rint in
+the improper sense Riemann integral. Then $|f|$ is \Rint in the improper sense
+over $E$ and, furthermore,
+\[\int_E |f| \; d\bx < \infty.\]
+\end{enumerate}
+
+\hrule
+{\Large \bf Change of Variables}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 204 (Change of Variables)}
+Let $U \subseteq \mathbb{R}^N$ be an open set, and let
+$\bfg: U \rightarrow \mathbb{R}^N$ be injective and of class $C^1$, such that
+$\det J_{\bfg} (\bx) \neq 0$ in $U$. Let $E \subset \mathbb{R}^N$ be \pjm with
+$\overline{E} \subseteq U$ and let $f: \bfg(E) \rightarrow \mathbb{R}$ be
+Riemann integrable. Then, the function
+$\bx \in E \mapsto f(\bfg(\bx))|\det J_{\bfg}(\bx)|$ is \Rint and,
+furthermore,
+\[\int_{\bfg(E)} f(\by) \; d\by
+ = \int_E f(\bfg(\bx))|\det J_{\bfg}(\bx)| \; d\bx
+.\]
+
+\item \textbf{Lemma 207 (One-Dimensional Change of Variables)}
+Let $g: [a,b] \rightarrow \mathbb{R}$ be an injective, differentiable function
+continuous derivative $g^{\prime}$ such that $g^{\prime}(x) \neq 0$ in
+$[a,b]$, and let $f: g([a,b]) \rightarrow \mathbb{R}$ be bounded. Then,
+\[\overline{\int_{g([a,b])}} f(y) \; dy
+ = \overline{\int_a^b} f(g(x))g^{\prime}(x)| \; dx
+.\]
+
+\end{enumerate}
+
+\hrule
+{\Large \bf Spherical Coordinates in $\mathbb{R}^N$}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Lemma 209 (Measure of the $n$-Dimensional Unit Ball)}
+Let $N \geq 1$. Then, $\forall \bx_0 \in \mathbb{R}^N$,
+\[\meas B_N(\bx_0, r) = \frac{\pi^{N/2}}{\Gamma(1 + N/2)}r^N.\]
+
+\item \textbf{Corollary 211 (Convenient Criteria for finite Riemann
+                                                                   Integrals)}
+Let $E \subseteq \mathbb{R}^N$, let $f: E \rightarrow \mathbb{R}$ be
+continuous, and let $\bx_0 \in \mathbb{R}^N \backslash E$. Then, if there
+exist $a,C > 0$ such that, in $E$
+\[|f(\bx)| \leq \frac{C}{\|\bx - \bx_0\|^a},\] then
+\begin{enumerate}[(i)]
+\item If $E$ is \pjm and $a < N$, then $f$ is \Rint in the improper sense over
+$E$ with finite improper Riemann integral.
+
+\item If $E \subseteq \mathbb{R}^N \backslash B(\bx_0,r)$ admits an
+exhausting sequence and $a > N$, then $f$ is \Rint in the improper sense over
+$E$ with finite improper Riemann integral.
+\end{enumerate}
+
+{\bf Proof:} Since $f$ is continuous and
+\[|f(\bx)| \leq g(\bx) := \frac{C}{\|\bx - \bx_0\|^a},\] $f$ is bounded
+wherever $g$ is bounded, and therefore $f$ is \Rint on any $F \subseteq E$
+such that $g$ is \Rint over $F$. The desired consequences then follow from
+Theorem 193 (Comparisson for Improper Riemann Integrals). \qed
+
+\item \textbf{Corollary 212 (Convenient Criteria for infinite Riemann
+                                                                   Integrals)}
+Let $E \subseteq \mathbb{R}^N$, let $f: E \rightarrow \mathbb{R}$ be
+continuous, and let $\bx_0 \in \mathbb{R}^N \backslash E$. Then, if there
+exist $a,C > 0$ such that, in $E$
+\[|f(\bx)| \geq \frac{C}{\|\bx - \bx_0\|^a},\] then
+\begin{enumerate}[(i)]
+\item If $E$ is \pjm with $(B(\bx_0,r)\backslash\{\bx_0\}) \subseteq E$,
+$a < N$, and $f$ is bounded on each $E_n := E \backslash B(\bx_0,\frac1n)$,
+then $f$ is \Rint in the improper sense over $E$ with infinite improper
+Riemann integral.
+
+\item If $E$ admits an exhausting sequence and $\{E_n\}$ such that $f$ is
+bounded on each $E_n$, $(\mathbb{R}^N\backslash B(\bx_0,r)) \subseteq E$, and
+$a > N$, then $f$ is \Rint in the improper sense over $E$ with infinite
+improper Riemann integral.
+\end{enumerate}
+
+{\bf Proof:} Since $f$ is continuous and $f$ is bounded on each $E_n$, $f$ is
+\Rint over each $E_n$. The rest of the proof is identical to the proof of (ii)
+in Theorem 193 (Comparisson for Improper Riemann Integrals). \qed
+\end{enumerate}
+
+\hrule
+{\Large \bf Differential Surfaces}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Definition 214 (Definition of a Manifold)}
+For $1 \leq k < N$, a nonempty set $M \subseteq \mathbb{R}^N$ is a
+$k$-dimensional manifold of class $C^m$ if and only if, $\forall \bx_0 \in M$,
+there exists an open set $U$ with $\bx_0 \in U$ and a function
+$\bvarphi: W \subseteq \mathbb{R}^k \rightarrow \mathbb{R}^N$ of class $C^m$
+such that $\bvarphi: W \rightarrow M \cap U$ is a homeomorphism and
+$\rank J_{\bvarphi}(\by) = k$ in $W$.
+
+\item \textbf{Proposition 219 (Equivalent Definition of a Manifold)}
+Suppose $1 \leq k < N$, $M \subseteq \mathbb{R}^N$ is nonempty, and
+$m \in \mathbb{N}$. Then, the following are equivalent:
+\begin{enumerate}[(i)]
+\item $M$ is a $k$-dimensional manifold of class $C^m$.
+
+\item $\forall \bx_0 \in M$, there exists an open set
+$U \subseteq \mathbb{R}^N$ with $\bx_0 \in U$ and
+$\bfg: U \rightarrow \mathbb{R}^{N - k}$ of class $C^m$ such that
+\[M \cap U = \{\bx \in U : \bfg(\bx) = \bzero\},\] and
+$\rank J_{\bfg}(\bx) = N - k$ in $M \cap U$.
+\end{enumerate}
+
+{\bf Proof:} That (ii) $\Rightarrow$ (i) is an exercise. We show that (i)
+implies (ii). Given $\bx_0 \in M$, let $U$,$W$, and $\bvarphi$ be as in the
+definition of the manifold. Let $\by_0 \in W$ be such that
+$\bvarphi(\by_0) = \bx_0$. Since $\rank J_{\bvarphi}(\by_0) = k$, there is a
+$k \times k$ submatrix $A$ of $J_{\bvarphi}(\by_0)$ with $\det A \neq 0$;
+without loss of generality,
+\[\det
+    \begin{bmatrix}
+        \frac{\partial \varphi_1}{\partial y_1}(\by_0)
+            & \cdots
+                & \frac{\partial \varphi_1}{\partial y_k}(\by_0) \\
+        \vdots & \ddots & \vdots \\
+        \frac{\partial \varphi_k}{\partial y_1}(\by_0)
+            & \cdots
+                & \frac{\partial \varphi_k}{\partial y_k}(\by_0) \\
+    \end{bmatrix}
+\neq 0.\]
+Consider $\Pi: \mathbb{R}^N \rightarrow \mathbb{R}^k$ defined by
+$\Pi(\bx) := (x_1,\ldots,x_k)$, and let $\bff: W \rightarrow \mathbb{R}^k$ be
+defined by
+\[\bff(\by)
+ := \Pi(\bvarphi(\by))
+ = (\varphi_1(\by),\ldots,\varphi(\by)),\]
+so that $\det J_{\bff} (\by) \neq 0$. Then, by the Inverse Function Theorem,
+$\exists r > 0$ such that $B_k(\by_0,r) \subseteq W$, $\bff(B_k(\by_0,r))$ is
+open, $\bff: B_k(\by_0,r) \rightarrow \bff(B_k(\by_0,r))$ is invertible, with
+inverse $\bff^{-1}$ of class $C^m$. Let $\bz = (x_1,\ldots,x_k)$; then, we can
+write $\by$ as a function of $\bz$ ($\by = \bff^{-1}(\bz)$). Let
+$\bw := (x_{k + 1},\ldots,x_N)$, so that $\bx = (\bz,\bw)$. Since $\bvarphi$
+is a homeomorphism, $\bvarphi(B_k(\by,r))$ is relatively open in $M$, so that
+it can be written as some \[\bvarphi(B_k(\by,r)) = M \cap U_1\] for some open
+set $U_1 \in \mathbb{R}^N$. Then,
+\[M \cap U_1
+ = \{\bvarphi(\by) : \by \in B_k(\by_0,r)\}
+ = \{(\bz,\varphi_{k + 1}(\bff^{-1}(\bz)),
+                             \ldots,\varphi_{n}(\bff^{-1}(\bz)): \bz \in U_1\}
+,\]
+so that $M \cap U_1$ is the graph of the function
+\[\bz \in U_1
+ \mapsto \varphi_{k + 1}(\bff^{-1}(\bz)),\ldots,\varphi_{n}(\bff^{-1}(\bz)).\]
+Let $\bfg: U_1 \rightarrow \mathbb{R}^{N - k}$ be the class $C^m$ function
+defined by
+\[g_i(\bx) := x_{k + i} - \varphi_{k + i}\bff^{-1}(x_1,\ldots,x_k).\]
+Then, $M \cap U_1 = \{\bx \in U_1 : \bfg(\bx) = \bzero\}$. Moreover, since,
+for $i,j \geq k + 1$,
+\[\frac{\partial g_i}{\partial x_j}(\bx)
+ = \frac{\partial}{\partial x_j} (x_i - \varphi_i(\bff^{-1}(x_1,\ldots,x_k)))
+ = \delta_{i,j} - 0
+.\]
+$J_{bfg}(\bx)$ contains $I_{N - k}$ as a submatrix, so that
+$\rank J_{\bfg}(\bx) = N - k$. \qed
+\end{enumerate}
+
+\hrule
+{\Large \bf Surface Integrals}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Definition of the Surface Integral}
+Given a $k$-dimensional manifold $M$ of class $C^m$, $m \in \mathbb{N}$, if
+$\bvarphi: V \rightarrow M$ is a local chart for $M$ with
+$E \subseteq \bvarphi(V)$ such that $\bvarphi^{-1}(E)$ is \pjm and
+$f: E \rightarrow \mathbb{R}$ is bounded, then we define the \emph{surface
+integral of $f$ over $E$} as
+\[\int_E \; d\mathcal{H}^k
+ := \int_{\bvarphi(E)} f(\bvarphi(\by))
+    \sqrt{
+        \sum_{\alpha \in \Lambda_{N,k}}
+            \left[
+                \det\frac
+                    {\partial(\varphi_{\alpha_1},\ldots,\varphi_{\alpha_k})}
+                    {\partial(y_1,\ldots,y_k)}(\by)
+            \right]^2
+    } \; d\by,\]
+provided the latter exists.
+\end{enumerate}
+
+\hrule
+{\Large \bf Divergence Theorem}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Definition 227 (Regular Set)}
+An open and bounded set $U \subset \mathbb{R}^N$ is \emph{regular} if and only
+if there exists a function $\bfg \in C^1(\mathbb{R}^N)$ with
+$\nabla g(\bx) = 0$ in $\partial U$, such that
+\[U = \{\bx \in \mathbb{R}^N : g(\bx) = 0\},\]
+\[\partial U = \{\bx \in \mathbb{R}^N : \nabla g(\bx) = 0\}.\]
+
+\item \textbf{Theorem 230 (Divergence Theorem)}
+Let $U \subset \mathbb{R}^N$ be regular, and let
+$\bff: \overline{U} \rightarrow \mathbb{R}^N$ be bounded and continuous in
+$\overline{U}$ such that all partial derivatives of $\bff$ exist and are
+bounded and continuous in $U$.
+\[\int_U \div \bff(\bx) \; d\bx
+ = \int_{\partial U} \bff(\bx) \cdot \nu(\bx) \; d\mathcal{H}^{N - 1}(\bx).\]
+
+{\bf Proof: Step 1:} First, prove the Theorem in the case that $U$ is the
+rectangle $R = (a_1,b_1) \times \cdots (a_N,b_N)$. Let
+$R^{\prime} = (a_2,b_2) \times \cdots (a_N,b_N)$, and let
+$\bx^{\prime} = (x_2,\ldots,x_N)$. Then, by Theorem 160 (Repeated
+Integration) and the Fundamental Theorem of Calculus,
+\begin{eqnarray*}
+\int_R \frac{\partial f_1}{\partial x_1}(\bx) \; d\bx
+ & = & \int_{R^{\prime}}
+            \left(
+                \int_{a_1}^{b_1} \frac
+                    {\partial f_1}
+                    {\partial x_1}
+                        (x_1,\bx^{\prime})
+                \; dx_1
+            \right)
+        \; d\bx^{\prime} \\
+ & = & \int_{R^{\prime}}
+            \left(
+                f_1(b_1,\bx^{\prime}) - f_1(a_1,\bx^{\prime})
+            \right)
+        \; d\bx^{\prime} \\
+ & = & \int_{R^{\prime}}
+                \bff(b_1,\bx^{\prime})\cdot\be_1
+        \; d\bx^{\prime}
+   +   \int_{R^{\prime}}
+                \bff(a_1,\bx^{\prime})\cdot(-\be_1)
+        \; d\bx^{\prime} \\
+ & = & \int_{\{b_1\} \times R^{\prime}}
+                \bff(\bx)\cdot\nu
+        \; d\mathcal{H}^{N - 1}(\bx)
+   +   \int_{\{a_1\} \times R^{\prime}}
+                \bff(\bx)\cdot\nu
+        \; d\mathcal{H}^{N - 1}(\bx)
+\end{eqnarray*}
+Applying this argument to each component and summing the resulting identities
+give the desired result.
+
+{\bf Step 2:} Next, prove the result in the case that $U$ is of the form
+\[U = \{(x_1,\bx^{\prime}) \in \mathbb{R} \times \mathbb{R}^{N - 1}
+    : h(\bx^{\prime}) < x_1 < b_1, \bx^{\prime} \in R^{\prime}\},\]
+by using the Change of Variables
+\[y_1 := x_1 - h(\bx^{\prime}), \quad \by^{\prime} := \bx^{\prime}.\]
+A similar argument works in the case that $x_1$ is replaced by some other
+$x_i$, and in the case that $b_i$ is switched approriately by $a_i$.
+
+{\bf Step 3:} Now, prove that, for any $\bx \in \partial U$, there exists
+$r_{\bx} > 0$ such that $U \cap Q(\bx,r_{\bx})$ is of a form addressed in Step
+2.
+
+{\bf Step 4:} Finally, we ``stitch'' together the results of Step 1, 2, and 3
+to prove the result for general $U$. Since $\overline{U}$ is closed and
+bounded, it is compact, so that it has a finite open cover
+$\{Q(\bx,r_{\bx})\} = Q_1,\ldots,Q_k$. Note that, for each $\bx$, either
+$Q(\bx,r_{\bx}) \subseteq U$ or $Q(\bx,r_{\bx}) \cap U$ is of the form covered
+by Step 2 (by the result of part 3). Thus, we construct $\varphi_k$, the
+partition of unity subordinated to the family of open sets $\{Q_i\}$. Note
+that, since in each $Q_i$, $\varphi_i$ is constant,
+\[\sum_{i = 1}^k \frac{\partial \varphi}{\partial x_i}(\bx)
+ = \frac{\partial}{\partial x_i} (1) = 0\] in $U$.
+
+By the results of Steps 1 and 2, since $\varphi_i\bff$ is nonzero only inside
+$Q_i$,
+\[\int_U \div (\varphi_k\bff) \; d\bx
+ = \int_{\partial U} \varphi\bff \cdot \nu \; d\mathcal{H}^{N - 1}.\]
+Since $\sum_{i = 1}^k \varphi_i = 1$ in $\overline{U}$, taking the sum over
+all $i$ gives
+\begin{eqnarray*}
+\int_U \div \bff \; d\bx
+ & = & \int_U \div \left(\sum_{i = 1}^k \varphi_i \bff \right) \; d\bx
+   =   \sum_{i = 1}^k \int_U \div (\varphi_i \bff) \; d\bx \\
+ & = & \sum_{i = 1}^k\int_{\partial U}\varphi_i \bff \cdot \nu
+                                                        \;d\mathcal{H}^{N - 1}
+   =   \int_{\partial U}\sum_{i = 1}^k\varphi_i \bff \cdot \nu
+                                                        \;d\mathcal{H}^{N - 1}
+   =   \int_{\partial U}\bff \cdot \nu \;d\mathcal{H}^{N - 1}. \mqed
+\end{eqnarray*}
+
+\item \textbf{Corollary 234 (Integration by Parts)}
+Let $U \subset \mathbb{R}^N$ be regular, and let
+$f,g: \overline{U} \rightarrow \mathbb{R}$ be bounded and continuous, such
+that all partial derivates of $f$ and $g$ exist and are bounded and continuous
+in $U$. Then, $\forall i \in \{1,2,\ldots,N\}$,
+\[\int_U f(\bx) \frac{\partial g}{\partial x_i}(\bx) \; d\bx
+ = -\int_U g(\bx)\frac{\partial f}{\partial x_i}(\bx) \; d\bx
+ + \int_{\partial U} f(\bx)g(\bx)\nu_i(\bx) \; d\mathcal{H}^{N - 1}(\bx).\]
+
+{\bf Proof:} Apply the Divergence Theorem to the function
+$\bff: \overline{U} \rightarrow \mathbb{R}^N$ defined by
+\[f_j(\bx) = \left\{
+    \begin{array}{cc}
+        f(\bx)g(\bx) & j = i,    \\
+        0            & j \neq i. \\
+    \end{array}
+\right.\]
+Then, since
+\[\div \bff
+ = \sum_{j = 1}^N \frac{\partial f_i}{\partial x_j}
+ = \frac{\partial(fg)}{\partial x_j}
+ = f\frac{\partial g}{\partial x_j} + g\frac{\partial f}{\partial x_j},\]
+\[\int_U \left(f\frac{\partial g}{\partial x_j}
+ + g\frac{\partial f}{\partial x_j}\right) \; d\bx
+ = \int_U \div \bff \; d\bx
+ = \int_{\partial U} \bff \cdot \nu \; d\mathcal{H}^{N - 1}
+ = \int_{\partial U} fg\nu_i \; d\mathcal{H}^{N - 1}. \mqed\]
+
+\item \textbf{Proposition 237 (Mollifiers)}
+Given open sets $A,D \subset \mathbb{R}^N$ with $D$ bounded and
+$\dist(A,D) \geq 3d > 0$ for some $d > 0$, there exists a function
+$f \in C^1(\mathbb{R}^N)$ such that $0 \leq f \leq 1$, $f(\bx) = 0$ in $A$,
+$f(\bx) = 1$ in $D$, and $\|\nabla f\| \leq \frac{C}{d}$, where $C > 0$
+depends only on $N$.
+
+{\bf Proof:} Construct a nonnegative function $g \in C^1(\mathbb{R}^N)$ with
+$g(\bx) = 0$ in $\mathbb{R}^N\backslash B(\bzero,1)$, $g(\bx) > 0$ in
+$B(\bzero,\frac12)$, and \[\int_{B(\bzero,1)} g(\bx) \; d\bx = 1.\]
+
+\item \textbf{Theorem 242 (Generalization of the Divergence Theorem)}
+The Divergence Theorem continues to hold if $U \subset \mathbb{R}^N$ is open
+and bounded, and its boundary consists of sets $E_1, E_2$, where
+$\meas_{N - 1} E_1 = 0$ and, $\forall \bx_0 \in E_2$, for $B := B(\bx_0,r)$,
+there exists $g \in C^1(B)$ with $\nabla g(\bx) = 0$ in $B \cap \partial U$,
+and
+\[B \cap U = \{\bx \in B : g(\bx) < 0\},\]
+\[B \backslash \overline{U} = \{\bx \in B : g(\bx) > 0\},\]
+\[B \cap \partial U = \{\bx \in B : g(\bx) = 0\}.\]
+
+{\bf Proof:} 
+
+\item \textbf{Lemma 243 (Lemma for Generalization of the Divergence Theorem)}
+Let $K \subset \mathbb{R}^N$ be a compact set with $\meas_{N - 1} K = 0$.
+Then, $\forall r > 0$, if
+\[A_r := \{\bx \in \mathbb{R}^N : \dist(\bx,K) < r\},\]
+\[\lim_{r \rightarrow 0^+} \frac{\meas_o (A_r)}{r} = 0.\]
+
+{\bf Proof:} Since $\meas_{N - 1} K = 0$, $\forall \epsilon > 0$,
+$\exists r_{\epsilon} > 0$ such that, for $0 < r \leq r_{\epsilon}$, there
+exists a finite family $\{Q(\bx_{n,r},r)\}$ of open cubes covering $K$ and
+\[\sum_n \left(\sqrt{N}r\right)^{N - 1}
+ = \sum_n (\diam Q(\bx_{n,r},r))^{N - 1}
+ \leq \frac{N^{(N - 1)/2}}{2^N}\epsilon.\]
+By choice of $A_r$, if $\bx \in A_r$, then $\exists \by \in K$ such that
+$\|\bx - \by\| < r$. Since $\{Q(\bx_{n,r},r)\}$ covers $K$, $\by$ is in some
+$Q(\bx_{n,r},r)$, so that $\bx \in Q(\bx_{n,r},2r)$, and therefore
+$\{Q(\bx_{n,r},2r)\}$ covers $A_r$. Then,
+\[\frac{1}{r}\meas_o(A_r)
+ \leq \frac{1}{r}\sum_n\meas Q(\bx_{n,r},2r)
+ = \frac{1}{r} \sum_n (2r)^N
+ = \frac{2^N}{N^{(N - 1)/2}}\sum_n \left(\sqrt{N}r\right)^{N - 1}
+ \leq \epsilon,\]
+and therefore, $\lim_{r \rightarrow 0} \frac{1}{r} \meas_o (A_r) = 0$. \qed
+\end{enumerate}
+
+\hrule
+{\Large \bf Stokes' Theorem}
+\vspace{1mm}
+\hrule
+\begin{enumerate}
+\item \textbf{Theorem 244 (Stokes' Theorem)}
+Let $U \subseteq \mathbb{R}^3$ be an open set, and let
+$\bff: U \rightarrow \mathbb{R}^3$ be of class $C^1$. Let
+$M \subseteq \mathbb{R}^2$ be a $2$-dimensional manifold of class $C^2$,
+with boundary $\Gamma$, of positive orientation. Then,
+\[\int_M \curl \bff \cdot \nu \; d\mathcal{H}^2 = \int_{\Gamma} \bff.\]
+
+{\bf Proof:} Don't need to know this one (just know how to apply the theorem).
+
+\end{enumerate}
+\end{document}

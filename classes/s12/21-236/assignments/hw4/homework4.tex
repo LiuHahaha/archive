@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Wednesday, March 7, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+%TODO
+\begin{question}{Problem 1} Let
+$f: (a,b) \times \mathbb{R} \rightarrow \mathbb{R}$ be of class $C^1$, such
+that, $\forall x \in (a,b), \exists \alpha_x > 0$ such that,
+$\forall y \in \mathbb{R}$,
+\[\left|\frac{\partial f}{\partial y}(x,y)\right| \geq \alpha_x.\]
+
+Suppose there existed $\mathbf{x}_1,\mathbf{x}_2 \in (a,b) \times \mathbb{R}$
+such that $f(\mathbf{x}_1) < 0 < f(\mathbf{x}_2)$. Let
+$h: [0,1] \rightarrow \mathbb{R}$ such that, $\forall t \in [0,1]$,
+$h(t) = \frac{\partial f}{\partial y}(x_1 + t(x_2 - x_1)$. Since $f$ is $C^1$,
+$\frac{\partial f}{\partial y}$ is continuous, and therefore $h$ is
+continuous. Thus, by the Intermediate Value Theorem, there exists
+$t_0 \in [0,1]$ such that $h(t_0) = 0$. However, then,
+$\exists (x,y) \in (a,b) \times \mathbb{R}$ such that
+\[\left|\frac{\partial f}{\partial y}(x,y)\right| = 0,\]
+contradicting the given constraint. Therefore, $\frac{\partial f}{\partial y}$
+is either everywhere positive or everywhere negative.
+Without loss of generality, take it to be everywhere postive (since taking
+$(-f)$ does not change $\{(x,y) \in (a,b) \times \mathbb{R} | f(x,y) = 0\}$).
+Let $x \in (a,b)$. Then, since
+\[\frac{\partial f}{\partial f} \geq \alpha_x > 0,\] by the Mean Value
+Theorem, for $y = \frac{-f(0)}{\alpha_x}$, if $f(0) <  0$, then
+$f(x,y) \geq f(x,0) + \alpha_x(y - 0) = 0$, and, if $f(x,0) \geq 0$, then
+$f(x,y) \leq f(x,0) + \alpha_x(y - 0) = 0$; in any case, $f(y)$ and $f(0)$ have
+different sign, so, by the intermediate value theorem, there exists
+$y_0 \in [f(0),y] \cup [y,f(0)]$, such that $f(x,y_0) = 0$. Since $f$ is strictly
+increasing in $y$, $y_0$ is unique. Therefore, $\forall x \in (a,b)$, there
+exists a unique function $g: (a,b) \rightarrow \mathbb{R}$ (defined by
+$g := (x \mapsto y_0)$) such that, $\forall x \in (a,b)$, $f(x,g(x)) = 0$.
+\qquad $\blacksquare$
+
+Let $x \in (a,b)$. Then, since $f(x,g(x)) = 0$ and
+$\frac{\partial f}{\partial y} (x,g(x)) > \alpha_x$, by the implicit function
+theorem, within open balls $B_1 = B(x,r_1) \subseteq (a,b)$,
+$B_2 = B(y,r_2) \subseteq \mathbb{R}$, such that, $\forall x \in B_1$, there
+is a unique function $g_x: B_1 \rightarrow B_2$ mapping $x$ to $y$ such that
+$f(x,y) = 0$, and, furthermore, since $f$ is of class $C^1$, $g_x$ is also of
+class $C^1$. However, the restriction of $g$ to $B_1$ has this property, so
+that, since $g_x$ is the unique function with this property,
+$g |_{B_1} = g_x$, and consequently $g$ is of class $C^1$ in a ball around
+$x$. Since this is true for all $x \in (a,b)$, $g$ is of class $C^1$ on its
+entire domain. \qquad $\blacksquare$
+\end{question}
+
+%TODO
+\begin{question}{Problem 2}
+Let $g: [0,1] \rightarrow Y$ such that, $\forall t \in [0,1]$,
+$g(t) = f(x + t(y - x))$. Let $y_0 = f(y) - f(x) = g(1) - g(0) \in Y$. By the
+Corollary of the Hahn-Banach Theorem proven in the notes, there exists a
+linear function $L: Y \rightarrow \mathbb{R}$ such that, for
+$y_0 = g(1) - g(0)$, $L(y_0) = \|y_0\|$, and,
+$\forall y \in Y$, $L(y) \leq \|y\|$.
+
+By the Mean Value Theorem,
+$L(g(1)) - L(g(0)) \leq \sup(\frac{d (L \circ g)}{dt} (1 - 0)$.
+
+Because $L$ is linear, so that, $\forall t_1, t_2 \in [0,1]$
+$\frac{L(g(t_1)) - L(g(t_2))}{t_1 - t_2} = L\left(\frac{g(t_1) - g(t_2)}{t_1 - t_2}\right)$.
+Thus, $\forall t \in [0,1]$, $(L \circ g)^{\prime}(t)  = L(g^{\prime}(t))$.
+
+By the Chain Rule, $\forall w \in S$,
+$\frac{d g}{d t}(w)
+ = \frac{\partial f}{\partial v}(w) \|y - x\|_X$.
+
+\begin{eqnarray*}
+\|f(y) - f(x)\|_Y
+ & =    & \|g(1) - g(0)\|_Y \\
+ & =    & \|L(g(1) - g(0))\|_Y \\
+ & =    & \|(L \circ g)(1) - (L \circ g)(0)\|_Y \\
+ & \leq & \sup_{t \in [0,1]} \left\|\left(L \circ g)^{\prime}(t)\right)\right\|_Y|1 - 0| \\
+ & =    & \sup_{t \in [0,1]} \left\| L (g^{\prime}(t)) \right\|_Y \\
+ & =    & \sup_{w \in S}\left\| L \left(\frac{\partial f}{\partial v}(w)\right)\| y - x \|_X \right\|_Y \\
+ & \leq & \sup_{w \in S}\left\| \frac{\partial f}{\partial v}(w) \right\|_Y \| y - x \|_X \\
+\end{eqnarray*}
+\end{question}
+
+\begin{question}{Problem 3} Let
+\begin{enumerate}[(a)]
+\item Let $(x,y) \in \{(x,y) : f(x) < y\}$. By the result of part (a) of
+Problem 1 on Assignment 2, there exists at least one point
+$(t,s) \in E$ such that dist$((x,y), E) = \|(x,y) - (t,s)\|$. Suppose there
+exist distinct $x_1,x_2 \in [a,b]$ such that 
+dist$((x,y), E) = \|(x,y) - (x_1,f(x_1))\|$ and
+dist$((x,y), E) = \|(x,y) - (x_2,f(x_2))\|$.
+Without loss of generality, $x_1 < x_2$.
+Let $B = B((x,y),g(x,y))$. By definition of the distance function, there
+cannot be $t \in [a,b]$ such that $\|(x,y) - (t,f(t))\| < g(x,y)$, so that, at
+$(x_1,f(x_1))$ and $(x_2,f(x_2))$, $B$ is tangent to the graph of $f$ (insofar
+as $B \cap \{(x,f(x)) : x \in [a,b]\} = \emptyset$ and
+$(x_1,f(x_1)), (x_2,f(x_2)) \in \partial B \cap \{(x,f(x)) : x \in [a,b]\}$).
+Thus, the curvature of $f$ at some point must be at least that of the boundary
+of $B$, so that, since the curvature of a circle of radius $\delta$ is
+$\frac{1}{\delta}$, $f^{\prime\prime} \geq \frac{1}{\delta}$.
+
+On the other hand, since $f$ is of class $C^2$, $f^{\prime\prime}$ is
+continuous, so that, by the Weierstrass Theorem, $f^{\prime\prime}$ has an
+upper bound $M$ on $[a,b]$. Therefore, letting $\delta < \frac{1}{M}$, ensures
+that $(t,s)$ is unique, $\forall (x,y) \in U_{\delta}$. \qquad $\blacksquare$
+
+\item Let $(x,y) \in U_\delta$, for $\delta$ as in part (a), and let $(t,s)$
+be the unique point shown to exist in part (a). Since the tangent vector of
+$f$ at $(t,s)$ is $(t,f^{\prime}(t))$, the normal vector of $f$ at $(t,s)$ is
+$(-f^{\prime},t)$. Since $(x,y) - (t,s)$ is in the direction of the normal
+vector of $f$ at $(t,s)$, we have
+\[(x,y) = (t,s) + \|(x,y) - (t,s)\|\frac{(t,-\frac{1}{f^{\prime}(t)})}{\|(t,-\frac{1}{f^{\prime}(t)})\|}.\]
+\qquad $\blacksquare$
+
+\item Let $L: \mathbb{R}^2 \rightarrow \mathbb{R}$ such that,
+$\forall (x,y) \in \mathbb{R}^2$, $L(x,y) = x^2 + y^2$. Then,
+Letting $h: \mathbb{R} \rightarrow \mathbb{R}$ such that,
+$\forall (x,y) \in \mathbb{R}^2$,
+\[h(x,y) = 
+L((t,s) + \|(x,y) - (t,s)\|\frac{(t,-\frac{1}{f^{\prime}(t)})}{\|(t,-\frac{1}{f^{\prime}(t)})\|} - (x,y)),\]
+by the result of part (b) above, fixing $(L \circ h)(x,y) = 0$, since the
+derivative of $L \circ h$ is non-zero, by the Implicit Function Theorem, in
+some ball around $(t,s)$, there exists a unique function $g_x$ such that
+$h(x,g_x(x)) = 0$, and, furthermore, $g_x$ is of class $C^1$. However,
+$(L \circ h)(x,y) = 0$ if and only if $g(x,y) = \|(x,y) - (t,s)\|$, so that
+$g$ also has this property. Therefore, since $g_x$ is unique $g = g_x$, so
+that $g$ is of class $C^1$. \qquad $\blacksquare$
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item Let $f : \mathbb{R}^2 \rightarrow \mathbb{R}$ such that,
+$\forall (x,y) \in \mathbb{R}^2$,
+\[f(x,y) = \alpha \log(1 + xy) + \alpha^2xy - 2 \sin x + y - 1.\]
+Evaluating $f$ at $(0,1)$ gives $f(0,1) = 0$.
+Evaluating
+\[\frac{\partial f}{\partial y} (x,y) = \frac{\alpha x}{1 + xy} + \alpha^2 x + 1\]
+at $(0,1)$ gives 
+\[\frac{\partial f}{\partial y} (0,1) = 1 \neq 0.\] Therefore, by the Implicit
+Function Theorem, fixing $f(x,y) = 0$ determines, in a ball $B_x = B(0,r_1)$,
+a unique function $g: B_x \rightarrow B_y = B(1,r_2)$ such that,
+$\forall x \in B_x$, $f(x,g(x)) = 0$. \qquad $\blacksquare$
+\end{enumerate}
+\end{question}
+\end{document}

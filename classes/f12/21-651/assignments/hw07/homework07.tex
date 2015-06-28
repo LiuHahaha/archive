@@ -1,0 +1,297 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{7}
+\newcommand{\duedate}{Friday, December 7, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\epi}[1]{\operatorname{epi} #1 } % epigraph of #1
+\newcommand{\e}{\varepsilon} % short for \varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+Suppose that $(C_b(X,Y), d_{\infty})$ is complete, and let
+$\{y_n\}_{n = 1}^{\infty}$ be a Cauchy sequence in $(Y,d_Y)$. Consider the
+sequence of constant functions in $C_b(X,Y)$ defined for each $n \in \N$
+by $f_n = y_n \forall x \in X$ ($f_n \in C_b(X,Y)$ because any constant
+function is clearly continuous and bounded). Then, for any $i,j \in \N$,
+$d_{\infty}(f_i,f_j) = d_Y(y_i,y_j)$, so that, since $\{y_n\}_{n = 1}^{\infty}$
+is a Cauchy sequence in $(Y,d_Y)$, $\{f_n\}_{n = 1}^{\infty}$ must be a Cauchy
+sequence in $(C_b(X,Y),d_{\infty})$, and, since the latter is complete,
+$\{f_n\}_{n = 1}^{\infty}$ converges to some $f \in (C_b(X,Y), d_{\infty})$.
+
+If $f$ were not constant (say, $f(x) \neq f(y)$, for some $x,y \in X$, then,
+for $\epsilon = \frac12d_Y(f(x),f(y))$, no constant $f_i$ could have both
+$d_{\infty}(f(x),f_i(x)) < \epsilon$ and $d_{\infty}(f(y),f_i(y)) < \epsilon$,
+contradicting the fact that $f_i \rightarrow f$ with respect to $d_{\infty}$ as
+$i \rightarrow \infty$. Thus, we can pick $y \in Y$ with $f(x) = y$
+$\forall x \in X$, and it follows from the fact that
+$d_{\infty}(f,f_i) = d_Y(y,y_i)$ for each $i \in \N$ that $y_i \rightarrow y$
+as $i \rightarrow \infty$. Therefore, $(Y,d_Y)$ is complete.
+
+Suppose, on the other hand, that $(Y, d_Y)$ is complete, and let
+$\{f_n\}_{n = 1}^{\infty}$ be a Cauchy sequence in $(C(X,Y), d_{\infty})$.
+Since $(Y,d_Y)$ is complete for any $x \in X$, $f_i(x) \rightarrow f(x)$, for
+some $f(x) \in Y$. It remains only to show that $f$ is continuous and bounded,
+so that $f \in C_b(X,Y)$. Given $\e > 0$, $\exists n \in \N$ such that $d_{\infty}(f,f_n) <
+\e/3$. Thus, for any $x \in X$, since $f_n$ is continuous, $\exists \delta > 0$
+such that, $f(B_X(x,\delta)) \subseteq B_Y(f(x),\e/3)$. Then, for any $y \in
+B_X(x,\delta)$, by the Triangle Inequality,
+\[|f(x) - f(y)|
+ \leq |f(x) - f_n(x)| + |f_n(x) - f_n(y)| + |f_n(y) - f(y)|
+ < \frac\e3 + \frac\e3 + \frac\e3 = \e,
+\]
+so that $f$ is continuous. Finally, if $M_n > 0$ bounds $f_n$, then $M_n +
+\e/3$ clearly bounds $f$. \qed
+\end{question}
+
+\begin{question}{Problem 2}
+Let $(X,\tau)$ be a locally compact Hausdorff space, and let $U_1,U_2, \ldots
+\in \tau$ be a sequence of sets dense in $X$. Let $U := \bigcap_{n = 1}
+^{\infty} U_n$. Let $V \in \tau$. Since $U_1$ is dense in $X$, $\exists x_1 \in
+V \cap U$. By Lemma 155, since $\{x_1\}$ is trivially compact, $\exists W_1 \in
+\tau$ with $\{x_1\} \subseteq W \subseteq \overline{W_1} \subseteq V \cap U$.
+Similarly, by picking $x_n \in W_{n - 1} \cap U_n$, we can recursively find,
+$\forall n \in \N$, some nonempty $W_n \in \tau$ with $\overline{W} \subseteq
+W_{n - 1} \cap U_n$. $\overline{W_1} \supseteq \overline{W_2} \supseteq \ldots$
+is a decreasing sequence of closed sets, the intersection $W := \bigcap_{n = 1}
+^{\infty} \overline{W_n} \subseteq V \cap \bigcap_{n = 1}^{\infty} U_n$ is
+nonempty. Thus, since every open set intersects $U$, $U$ is dense in $X$, so
+$(X,\tau)$ is Baire. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Let $f \in C([0,1])$, and let $\e > 0$. Since $f$ is continuous and has a
+compact domain, by Theorem 216, $f$ is uniformly continuous, so that
+$\exists \delta_n > 0$ such that, $\forall x,y \in [0,1]$ with
+$|x - y| < \delta$, $|f(x) - f(y)| < \frac{\e}{2}$. Let
+$g \in C([0,1])$ be defined $\forall x \in [0,1]$ by
+$g(x) = f(x) + \e\cos(ax)$, where
+$a := \max\left\{\frac{2\pi n}{\e}, \frac{2\pi}{\delta_n}\right\}$. Then, for
+$x \in [0,1]$, if $x_2$ is the second-nearest multiple of $\frac{\pi}{a}$ in
+$[0,1]$ to $x$ (if two such multiples are equidistant, pick either one; then
+$|x - x_2| < \frac{\pi}{a}$), by the geometry of the cosine curve,
+$|(\cos(ax) - \cos(ax_2)| \geq 1$. Then, since $|f(x) - f(x_2)| < \delta_n$ (by
+choice of $a$ and $x_2$,
+\begin{align*}
+|g(x) - g(x_2)|
+ & = |\e(\cos(ax) - \cos(ax_2)) + f(x) - f(x_2)| \\
+ & > \e - \frac{\e}{2}
+ = \e
+ \geq \frac{n\pi}{a} = n|x - x_2|, 
+\end{align*}
+and thus $g \notin X_n$. However, $d_{\infty}(f,g) < \e$. \qed
+
+\item Let $U \subseteq C([0,1])$ be open and nonempty, and let $f \in U$. Since
+$B(f,\e) \subseteq U$ for some $\e > 0$, we can construct $g \in U$ in terms of
+$f$ as in part (a), with $g \notin X_{2n}$, $d_{\infty}(f,g) < \e$. Then, by
+the construction of $g$, for any $h \in B(g,\e/2)$, $h \notin X_n$ (as $h$
+oscillates with frequency at least that of $g$ and amplitude at least half that
+of $g$). Thus, $B(g,\e/2) \cap U$ is a nonempty open subset of $U$ that does
+not intersect $X_n$. \qed
+
+\item Note first that, by a result of Problem 1, since $\R$ is a complete
+metric space, $C([0,1])$ is also complete ($C([0,1]) = C_b([0,1],\R)$, as
+continuous functions on compact domains are bounded). Then, by the Baire
+Category Theorem, $C([0,1]$ is a Baire space.
+
+Let $\tau$ be the topology induced by $d_{\infty}$ on $C([0,1])$. In part
+(b), we showed that, $\forall$ nonempty $U \in \tau, n \in \N$, $\exists$ a
+nonempty open set $V_{U,n} \subseteq U$ $V_{U,n}$ such that $V_{U,n} \cap X_n =
+\emptyset$. For each $n \in \N$, let $W_n := \bigcup_{U \in \tau} V_{U,n}$, so
+that, as a union of open sets, each $W_n$ is open. Then, the intersection
+$W := \bigcap_{n \in \N} W_n$ is a $G_{\delta}$ set. By construction, any
+open set has non-empty intersection with each $W_n$, so that each $W_n$ is
+dense in $C([0,1])$. Since $C([0,1])$ is a Baire space, $V$ is dense in
+$C([0,1])$.
+
+It remains then only to show that any $f \in V$ is nowhere differentiable. Note
+that, by construction of $V$, $\forall n \in \N$, $V \cap X_n = \emptyset$, so
+that it suffices to show that, if $f$ is differentiable at some point $x$, then
+$f \in X_n$ for some $n \in \N$. If $f$ is differentiable at $x$, then
+\[\exists D := \lim_{y \rightarrow x} \frac{f(x) - f(y)}{|x - y|} \in \R,\]
+Thus, $\exists \delta > 0$ such that
+$\left|\frac{|f(x) - f(y)|}{|x - y|} - D\right| < \e$ on $B(x,\delta)$, and, on
+the compact set $[0,1] \sminus B(x,\delta)$, $\frac{|f(x) - f(y)|}{|x - y|}$ is
+bounded, since it is continuous. Thus, some $n \in \N$ bounds $f$, so
+$f \in X_n$. \qed
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item If $x \in E$, then $f(x) = f(x) + L(d(x,x))^{\alpha} \in \{f(y) +
+L(d(x,y))^{\alpha} : y \in E\}$, so that, since $h(x)$ is an infimum,
+$h(x) \leq f(x)$. $\forall y \in E$, since $|f(x) - f(y)| \leq
+L(d(x,y))^{\alpha}$, $f(x) \leq f(y) + L(d(x,y))^{\alpha}$, so that, taking the
+infimum over $y \in E$, $f(x) \leq h(x)$. \qed
+
+\item It follows immediately from part (a) that $\inf_{x \in X} h(x) \leq
+\int_{y \in E} f(y)$. $\forall \e > 0, x \in X$, since $h(x)$ is an infimum,
+$\exists y \in E$ such that $f(y) \leq f(y) + L(d(x,y))^{\alpha} \leq h(x)
++ \e$. Thus, $\forall x \in X$, $\inf_{y \in E} f(y) \leq h(x)$, so,
+taking the infimum over $x \in X$, $\inf_{y \in E} f(y) \leq \inf_{x \in X}
+h(x)$. \qed
+
+\item By definition of $h$, $\forall \e > 0, x,y \in X$, $\exists v,w \in E$
+such that $|f(v) + L(d(v,x))^{\alpha} - h(x)|, |f(w) + L(d(w,y))^{\alpha} -
+h(y)| < \e$. Since $v,w \in E$, $|f(v) - f(w)| \leq L(d(v,w))^{\alpha}$. By the
+Triangle Inequality,
+\begin{align*}
+|h(x) - h(y)|
+ & \leq |f(v) + L(d(v,x))^{\alpha} - h(x)|
+      + |f(v) - f(w)|
+      + |f(w) + L(d(w,y))^{\alpha} - h(y)| \\
+ &    < L(d(v,w))^{\alpha} + 2\e \leq L(d(x,y))^{\alpha} + 2\e
+\end{align*}
+Taking $\e \rightarrow 0$ gives $|h(x) - h(y)| \leq L(d(x,y))^{\alpha}$. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+Consider the function $f: \R^2 \rightarrow \R^2$ defined $\forall x,y \in \R^2$
+by
+\[f(x,y)
+:=
+    \left[
+        \begin{array}{c}
+            \frac{x^4}{3}\sin(xy) - \frac{7x - y}{8} + x \\
+            \frac{y^2\cos(y)}{8} + \frac{e^x}{24}.
+        \end{array}
+    \right].
+\]
+Note that any fixed point of $f$ is a solution to the given system. Since
+$f$ is continuous, by Brouwer's Fixed Point Theorem, to show that $f$ has a
+fixed point, it suffices to show that
+$f(\overline{B(0,1)}) \subseteq \overline{B(0,1)}$.
+
+It is apparent that, $\forall (x,y) \in [0,1]^2$,
+$|f_1(x,y)| \leq \frac{7}{12}$, and $f_2(x,y) \leq \frac14$. Thus,
+$f(x,y) \in B(0,1)$, since
+\[\|f(x,y)\|
+ \leq \sqrt{\left( \frac{7}{12} \right)^2 + \left( \frac14 \right)^2}
+ = \frac{58}{144}
+ < 1. \mqed
+\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 6}
+Since $K$ is continuous and has compact domain, $|K|$ is bounded by some $M \in
+\R$. Then, $\forall Tf \in \mathcal{F}, x \in [0,1]$,
+\[|Tf(x)|
+ =    \left|\int_0^1 K(x - y) f(y) \, dy \right|
+ \leq \int_0^1 |K(x - y)| |f(y)| \, dy
+ \leq \int_0^1 M \, dy
+ = M,
+\]
+so that $\mathcal{F}$ is pointwise bounded.
+
+Since $K$ is continuous and has compact domain, $K$ is uniformly continuous,
+so, $\forall \e > 0$, $\exists \delta > 0$ such that, $\forall x_1,x_2$
+with $|x_1 - x_2| < \delta$, $|K(x_1) - K(x_2)| < \frac{\e}{2}$. Then,
+$\forall Tf \in \mathcal{F}, x_1,x_2 \in [0,1]$, by the Triangle Inequality and
+since $|f| \leq 1$ on $[0,1]$,
+\begin{align*}
+|Tf(x_1) - Tf(x_2)|
+ & =    \left|\int_0^1 K(x_1 - y)f(y) \, dy
+                                    - \int_0^1 K(x_1 - y)f(y) \, dy\right| \\
+ & =    \left|\int_0^1 (K(x_1 - y) - K(x_2 - y))f(y) \, dy\right| \\
+ & \leq \int_0^1 \left|(K(x_1 - y) - K(x_2 - y))\right||f(y)| \, dy
+   \leq \int_0^1 \frac{\e}{2} \, dy
+   <    \e.
+\end{align*}
+Thus, $\mathcal{F}$ is equicontinuous.
+
+Since $[0,1]$ is separable and compact, by the Ascoli-Arzel\`{a} Theorem,
+$\mathcal{F}$ is sequentially compact. \qed
+\end{question}
+
+\begin{question}{Problem 7}
+Let $\mathcal{F} := \{f_n : n \in \N\}$, so that, by the Ascoli-Arzel\`{a}
+Theorem, since $[0,1]$ is separable and compact, to show that every sequence in
+$\mathcal{F}$ has a convergent subsequence, it suffices to show that
+$\mathcal{F}$ is pointwise bounded and equicontinuous.
+
+We show inductively that each $f_n$ is in $C([0,1],\R)$, that $\mathcal{F}$ is
+pointwise bounded by $1$, and that, for any $\e > 0$, for $\delta =
+\frac{\e}{2}$, $\forall x,y \in [0,1]$, $y \in B(x,\delta)$ implies $f(y) \in
+B(f(x),\e)$ (implying in turn that $\mathcal{F}$ is equicontinuous). $f_0$
+is clearly continuous and bounded by $1$ on $[0,1]$, and $f_0$ satisfies the
+equicontinuity requirement, since it is differentiable on $[0,1]$ with
+derivative bounded by $2$. Suppose, as an inductive hypothesis, that, for some
+$n \in \N$, $f_n$ is in $C([0,1],\R)$ and is bounded by $1$ on $[0,1]$. Then,
+$\forall x \in [0,1]$,
+\[
+f_{n + 1}(x)
+ = \int_0^x (f_n(s))^{1/3} \, ds
+ \leq \int_0^x 1 \, ds
+ = x
+ \leq 1,
+\]
+so that $f_{n + 1}$ is bounded by $1$ on $[0,1]$, and, by the Fundamental
+Theorem of Calculus, $f_{n + 1}$ is in $C([0,1],\R)$. Also by the Fundamental
+Theorem of Calculus, $\forall x \in [0,1]$, $f_{n + 1}$ is differentiable at
+$x$ with $f^{\prime}(x) = (f_n(x))^{1/3} \leq 1$, so that $f_{n + 1}$ satisfies
+the equicontinuity requirement. \qed
+\end{question}
+\end{document}

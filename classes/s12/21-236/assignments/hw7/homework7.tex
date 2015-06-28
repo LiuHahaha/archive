@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{7}
+\newcommand{\duedate}{Monday, April 23, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\bvarphi}{\boldsymbol{\varphi}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\meas}{\operatorname{meas}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bfg}{\mathbf{g}}
+\newcommand{\bfh}{\mathbf{h}}
+\newcommand{\pjm}{Peano-Jordan measurable }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Let $\Gamma$ be the range of $\gamma_1$, and let
+$\bvarphi: [a,b] \rightarrow \mathbb{R}^N$ be a parametrization of $\gamma_1$.
+Since $U$ is open, $\forall \mathbf{x} \in U$, $\exists r > 0$ such that
+$B(\mathbf{x},r) \subseteq U$, so that there is a family
+$\{U_{\alpha}\}_{\alpha}$ of open balls around every point in $\Gamma$ with
+\[\bigcup \{U_{\alpha}\}_{\alpha} \subseteq U.\] Clearly,
+$\{U_{\alpha}\}_{\alpha}$ covers $\Gamma$. Since $\gamma_1$ is continuous and
+$[a,b]$ is compact, $\Gamma$ is compact. Thus, there
+exists some $\delta > 0$ (Lebesgue's number) such that,
+$\forall E \subseteq \Gamma$ with $\diam E \leq \delta$,
+$E \subseteq U_{\alpha}$ for some $\alpha$.
+Note that, since $\gamma_1$ is continuous and $[a,b]$ is compact, $\bvarphi$
+is uniformly continuous, so that, $\exists \delta_2 > 0$ such that,
+$\forall x,y \in [a,b]$, $|x - y| < \delta_2$ implies
+$\|\bvarphi(x) - \bvarphi(y)\| < \delta$. Define
+$k = \lceil\frac{b - a}{\delta_2/2}\rceil$, and,
+$\forall i \in \{0,1,\ldots,k\}$, let $t_i = a + i\frac{b - a}{k}$.
+Then, $\forall i \in \{0,1,\ldots,k\}$, $t_i - t_{i - 1} < \delta_2$, so that,
+by choice of $\delta_2$, $\diam \bvarphi([t_{i - 1},t_i]) < \delta$, and
+therefore, by choice of $\delta$,
+$\bvarphi([t_{i - 1},t_i]) \subseteq U_{\alpha}$ for some $\alpha$.
+Define $\bfh: [a,b] \times [0,1]$ such that,
+$\forall (s,t) \in [a,b] \times [0,1]$, if $s \in [t_{i - 1},t_i]$,
+\[\bfh(s,t) = \bvarphi(s) + t(L_i(s) - \bvarphi(s)),\]
+where
+\[L_i(s) := \bvarphi(t_{i - 1}) + \frac{s - t_{i - 1}}{t_i - t_{i - 1}}(\bvarphi(t_{i}) - \bvarphi(t_{i - 1}))\]
+is the point that is the same fraction along the line segment from
+$\bvarphi(t_{i -1})$ to $\bvarphi(t_i)$ as is $s$ on the line segment from
+$t_{i - 1}$ to $t_i$.
+
+Since each $\bvarphi([t_{i - 1},t_i])$ is contained in some ball $U_{\alpha}$,
+which must be convex, $\bfh([a,b] \times [0,1]) \subseteq U$.
+$\forall s \in [a,b]$, $\bfh(s,0) = \bvarphi(s)$, and, $\forall t \in [0,1]$,
+$\bfh(a,t) = \bvarphi(a) = \bvarphi(b) = h(b,t)$. Finally, each
+$\bfh([t_i,t_{i - 1}],1)$ is linear, so that $h([a,b],1)$ is a closed polygonal
+path. Therefore, $h$ is a homotopy from $\gamma_1$ to a closed polygonal path.
+\qed
+
+\item Let $bfh_1 = \bfh$ as defined in part (a), and let
+$\bpsi: [a,b] \rightarrow U$ such that, $\forall s \in [a,b]$,
+$\bpsi(s) = \bfh_1(s,1)$, so that $\bpsi$ parametrizes a polygonal path to
+which $\gamma_1$ is homotopic. Since $U$ is open,
+$\forall i \in \{1,2,\ldots,k\}$, $\exists r_i > 0$ such that
+$B_i := B(\bpsi(t_i), r_i) \subseteq U$. Note that, since $\bpsi$ is
+continuous, $\bpsi^{-1}(B_i)$ is an open interval $(a_i,b_i)$, and consider
+$\bfh_2:[a,b] \times [0,1]$ such that,
+$\forall t \in [0,1]$,
+$\forall s \in (a_i,b_i)$,
+\[\bfh_2(s,t)
+ = L_i(s) + t\frac{s - a_i}{b_i - a_i}(L_{i + 1}(s) - L_i(s)),\]
+where $L_i$ is as defined in part (a), and, for all other $s \in [a,b]$,
+$\bfh_2(s,t) = L_i(s)$.
+
+Let $\bfh:[a,b] \times [0,1]$ so that, $\forall (s,t) \in [a,b] \times [0,1]$,
+\[\bfh(s,t)
+  = \left\{
+      \begin{array}{cc}
+        \bfh_1(s,2t) & t \in [0,\frac12] \\
+        \bfh_2(s,2t - 1) & t \in [\frac12,1]
+      \end{array}
+    \right.
+\]
+Then, $\forall s \in [a,b]$, $\bfh(s,0) = \bvarphi(s)$ (where $\bvarphi$ is
+the parametrization of $\gamma_1$ from part (a)) and $\bfh(s,1)$ parametrizes
+a closed $C^1$ curve, and $\forall t \in [0,1]$, $\bfh(a,t) = \bfh(b,t)$.
+Since each $B_i \subseteq U$ is convex and
+$\bfh_1([a,b] \times [0,1]) \subseteq U$,
+$\bfh([a,b] \times [0,1]) \subseteq U$.
+Therefore, $\bfh$ is a homotopy in $U$ from $\gamma_1$ to a closed $C^1$
+curve. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item
+{\bf Lemma:} If $F = \cup_{i = 1}^{\infty} F_i$ is a union of disjoint \pjm
+sets and $F$ is Peano-Jordan measurable, then
+\[\meas F \leq \sum_{i = 1}^{\infty} \meas F_i.\]
+
+{\bf Proof:} Suppose, for sake of contradiction, that
+$\sum_{i = 1}^{\infty} \meas F_n < \meas F$. Note that, since
+$\cup_{i = 2}^n F_i \subseteq F\backslash F_1$,
+$\sum_{i = 1}^n \meas F_i \leq \meas (F\backslash F_1)$, so that
+\[\sum_{i = 1}^{\infty} \meas F_i \leq \meas (F\backslash F_1).\]
+
+Thus,
+\begin{eqnarray*}
+\meas F_1
+ & =    & \sum_{i = 1}^{\infty} \meas F_i - \sum_{i = 2}^{\infty} \meas F_i \\
+ & <    & \meas F - \sum_{i = 2}^{\infty} \meas F_i \\
+ & \leq & \meas F - \meas(F\backslash F_1) \\
+ & =    & \meas (F\backslash(F\backslash F_1))
+   =      \meas F_1,
+\end{eqnarray*}
+which is a contradiction, proving the Lemma.
+
+Note that, since $\{\meas E_n\}$ is increasing (as
+$E_i \subseteq E_{i + 1}$) and bounded above by $\meas E$ (as
+$E_i \subseteq E$), $\lim_{n \rightarrow \infty} \meas E_n$ exists and
+$\lim_{n \rightarrow \infty} E_n \leq \meas E$.
+
+$\forall i \in \mathbb{N}^*$, let $F_i := E_i \backslash E_{i - 1}$. For each
+$i \in \mathbb{N}^*$, since $\{E_n\}$ is exhausting,
+$E_i = \cup_{j = 1}^i F_i$, so that $\meas E_i = \sum_{j = 1}^i \meas F_i$.
+Since $E = \cup_{i = 1}^{\infty} F_i$, by the Lemma, since the $F_i$'s are
+\pjm and disjoint,
+\[\meas E
+ \leq \sum_{i = 1}^{\infty} \meas F_i
+ = \lim_{n \rightarrow \infty} \sum_{i = 1}^n \meas F_i
+ = \lim_{n \rightarrow \infty} \meas E_i,\]
+and, therefore, $\lim_{n \rightarrow \infty} \meas E_n = \meas E$. \qed
+
+\item
+Since $f$ is Riemann integrable, it is bounded above by some constant $M$ and
+below by some constant $m$.
+Since $E$ is \pjm, $E$ is bounded, so that it is contained
+in some rectangle $R$. Therefore, by the result of part (a) above,
+\begin{eqnarray*}
+0 & =    & M\lim_{n \rightarrow \infty} \meas(E \backslash E_n) \\
+  & =    & M\lim_{n \rightarrow \infty} \int_R \chi_{E\backslash E_n}(\bx) \; d\bx \\
+  & =    & M\lim_{n \rightarrow \infty} \int_R (\chi_E - \chi_{E_n})(\bx) \; d\bx \\
+  & \geq & \lim_{n \rightarrow \infty} \int_R f(\bx)(\chi_E - \chi_{E_n})(\bx) \; d\bx \\
+  & =    & \lim_{n \rightarrow \infty} \left(\int_R f(\bx)\chi_E(\bx) \; d\bx
+    -                                        \int_R f(\bx)\chi_{E_n}(\bx) \; d\bx\right). \\
+\end{eqnarray*}
+Subtracting $\int_R f(\bx)\chi_E(\bx) \; d\bx$ shows that
+\[\int_R f(\bx)\chi_E(\bx) \; d\bx
+ \leq \int_R f(\bx)\chi_{E_n}(\bx) \; d\bx
+.\]
+A similar proof with $m$ shows that
+\[\int_R f(\bx)\chi_E(\bx) \; d\bx
+  \geq \lim_{n \rightarrow \infty}  \int_R f(\bx)\chi_{E_n}(\bx) \; d\bx
+.\]
+Thus, $\lim_{n \rightarrow \infty}  \int_R f(\bx)\chi_{E_n}(\bx) \; d\bx$
+exists and
+\[\int_R f(\bx)\chi_E(\bx) \; d\bx = 
+\lim_{n \rightarrow \infty}  \int_R f(\bx)\chi_{E_n}(\bx) \; d\bx
+,\]
+as desired. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3}
+For $k \in \{1,2,\ldots,N\}$, let $i_k$ be the smallest number such that
+$(\nabla \bfg_k)_{i_k} \neq 0$ and $i_k \neq i_1,i_2,\ldots,i_{k -1}$ (such
+$i_k$ must exist, since $\det J_{\bfg}(\bx) \neq 0$).
+
+Let $\bfh = \bff_1 \circ \bff_2 \circ \cdots \circ \bff_N$, where each
+$\bff_j$ is a flip switching $j$ with $i_j$.
+
+Then, $\forall k \in \{1,2,\ldots,N\}$, let
+\[\bfh_i(\bx)
+ = (x_1,x_2,\ldots,x_{i - 1},
+      \bfg_i((\bfh_{k - 1}\circ\bfh_{k - 2}\circ\ldots\circ\bfh_1)^{-1}(\bx)),
+          x_{i + 1},\ldots,x_N)\]
+(noting that, by the inverse function theorem and the fact that the
+composition of invertible functions is invertible,
+$\bfh_{k - 1}\circ\bfh_{k - 2}\circ\ldots\circ\bfh_1$ is invertible in some
+ball $U_k$).
+Then, \[\bfg = \bfh_N \circ \bfh_{N - 1} \circ \ldots \circ \bfh_1 \circ \bfh,\]
+and, $\det J_{\bfh} = 1$, and, since $\det J_{\bfg} \neq 0$,
+$\det_{\bfh_i} \neq 0$. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item $E$ appears as follows:
+\vspace{3cm}
+
+We show that $E$ is \pjm by computing the integral of its characteristic
+function (using a Change of Variables into polar coordinates):
+\begin{eqnarray*}
+\int_E 1 \; d\bx
+ & = & \int_{\pi/4}^{\pi/2} \int_{\frac{\alpha}{\sin \theta}}^1 r \; dr \, d\theta \\
+ & = & \int_{\pi/4}^{\pi/2} \frac12 - \frac{\alpha^2}{2\sin^2 \theta} \; d\theta \\
+ & = & \frac12(\pi/2) + \frac{\alpha^2\cot(\pi/2)}{2} \\
+   -   \frac12(\pi/4) + \frac{\alpha^2\cot(\pi/4)}{2}
+ & = & \mbox{\fbox{$\displaystyle \frac{\pi + 4\alpha^2}{8}$.}}
+\end{eqnarray*}
+
+\item We show $f$ is integrable over $E$ by computing its integral (using a
+Change of Variables into polar coordinates):
+\vspace{3cm}
+
+\item
+\vspace{3cm}
+
+\item
+\end{enumerate}
+\end{question}
+\end{document}

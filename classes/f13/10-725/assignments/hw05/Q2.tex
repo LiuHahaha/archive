@@ -1,0 +1,114 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\X}{\mathcal{X}}
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+\newcommand{\KL}{{\operatorname{KL}}}
+\newcommand{\wx}{{\widetilde{x}}}
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{1}
+\section{PSD Matrices (Adona) [25 points]}
+\textbf{Part A [15 points]: Basic properties of PSD matrices} 
+\begin{enumerate}
+\item Suppose $v \in \R^{|I|}$. Let $k_1 < \dots < k_{|I|}$ denote the elements
+of $I$. Define $v_I \in \R^n$ such that each $(v_I)_{k_i} = v_i$ and
+$(v_I)_k = 0$, $\forall k \notin I$. Since $X \succeq 0$,
+\[v^T X_I v = v_I^T X v_I \geq 0,\]
+and hence $X_I \succeq 0$. \qed
+
+\item If $I = \{i,j\}$, then, since $X_I \succeq 0$,
+\[0 \leq \det X_I = X_{ii}X_{jj} - X_{ij}^2,\]
+and hence $X_{ij}^2 \leq X_{ii}X_{jj}$.
+
+If $X_{ii} = 0$, then each $0 \leq X_{ji}^2, X_{ij}^2 \leq X_{ii}X_{jj} = 0$,
+and so $X_{ji} = X_{ij} = 0$. \qed
+
+\item If $X = Q \Lambda Q\inv$, where $\Lambda$ is a diagonal matrix of
+eigenvalues of $X$, then
+\[\det X
+    = \det (Q \Lambda Q\inv)
+    = \det Q \det \Lambda \det(Q\inv)
+    = \det Q \det \Lambda \det(Q)\inv
+    = \det \Lambda.
+\]
+Since the determinant of a diagonal matrix is trivially the product of its
+diagonal elements, $\det X$ is the product of the eigenvalues of $X$. \qed
+
+\item {\bf Lemma} If $X = Y^TZY$ for some invertible matrix $Y$, then
+$X \succeq 0$ if and only if $Z \succeq 0$.
+
+\emph{Proof:} If $X \succeq 0$, then, $\forall v \in \R^n$,
+\[0
+    \leq (Y\inv v)^TXY\inv v
+    = (Y\inv v)^TY^TZYY\inv v
+    = v^TZv,
+\]
+and so $Z \succeq 0$. The converse follows, since $Z = (Y\inv)^TXY$.
+\quad $\square$
+
+It is easily checked that $X = Y^TZY$, where
+\[Y =
+\begin{bmatrix}
+    I   &   A\inv B \\
+    0   &   I
+\end{bmatrix}
+\quad \mbox{ and } \quad
+Z =
+\begin{bmatrix}
+    A   &   0   \\
+    0   &   C - B^T A\inv B
+\end{bmatrix}.
+\]
+Since $Y$ is triangular without zeros on its diagonal, $Y$ is invertible. Thus,
+by the lemma, it suffices to show that $Z \succeq 0$ if and only if
+$A \succeq 0$ and $C - B^T A\inv B \succeq 0$. One implication is immediate
+from Part 1. On the other hand, it is clear that any eigenvalue of either $A$
+or $C - B^T A\inv B$ is an eigenvalue of $Z$, and hence, if
+$A, C - B^T A\inv B \succeq 0$, then $Z$ has non-negative eigenvalues and so
+$Z \succeq 0$. \qed
+\end{enumerate}
+
+\newpage
+\textbf{Part B [10 points]: Formulating problems as SDPs}
+\begin{enumerate}
+\item Let $X \in \R^{n \times n}$ such that each $X_{uv} = x_u^Tx_v$.
+Since \[\|x_u - x_v\|^2 = x_u^Tx_u - 2x_u^Tx_v + x_v^Tx_v,\]
+the objective function is just
+\[\frac{1}{4} X \cdot W\]
+where $W_{uv}$ is the weight of $(u,v)$ if $(u,v) \in \mathcal{E}$ and
+$W_{uv} = 0$ otherwise.
+
+Each constraint $\|x_u\|^2 = 1$ is simply
+\[X \cdot A_u = 1,\]
+where $\left( A_u \right)_{uu} = 1$ and all other coordinates of $A_u$ are
+zero.
+
+Since each $\|x_u\|^2 = 1$, the constraint $\|x_{s_i} - x_{t_i}\|^2 = 4$ for
+$(s_i,t_i) \in T$ is equivalent to $x_{s_i} = - x_{t_i}$, and so it can be
+written
+\[X \cdot A_{(s_i,t_i)} = 0,\]
+where $A_{(s_i,t_i)}$ has $1$ in indices $(s_i,s_i)$ and $(s_i,t_i)$.
+
+Didn't have time to finish this part.
+
+\item Didn't have time to finish this part.
+
+\end{enumerate}
+\end{document}

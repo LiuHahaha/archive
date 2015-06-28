@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{9}
+\newcommand{\duedate}{Thursday, November 13, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item Since $n\hat p$ of the $X_i$ are $1$ and the remainder are $0$, each
+$X_i^*|X_1,\dots,X_n\sim$Bernoulli$(\hat p)$. Hence, given $X_1,\dots,X_n$,
+$n\hat p^* = \sum_{i = 1}^n X_i^* \sim$\fbox{Binomial$(n,\hat p)$.}
+\item Since the $X_1^*,\dots,X_n^*$ are conditionally independent given
+$X_1,\dots,X_n$, by part (a),
+\[\Var[\hat p^* | X_1,\dots,X_n]
+    = \frac{1}{n^2}\Var[n\hat p^* | X_1,\dots,X_n]
+    = \frac{n\hat p(1 - \hat p)}{n^2}
+    = \mbox{\fbox{$\displaystyle \frac{\hat p(1 - \hat p)}{n}$.}}
+\]
+\item \fbox{$\sqrt{n} (\hat p - p) \to \mathcal{N}(0,p(1 - p))$} in
+distribution (Example 14 in Lecture Notes 9). Since each
+$X_i^*|X_1,\dots,X_n\sim$Bernoulli$(\hat p)$, it follows immediately that,
+given $X_1,\dots,X_n$,\newline
+\fbox{$\sqrt{n} (\hat p^* - \hat p) \to \mathcal{N}(0,\hat p(1 - \hat p))$} in
+distribution.
+\end{enumerate}
+\item Note that $P(\hat\theta_n^* \neq \hat \theta)$ if and only if
+$X_1^*,\dots,X_n^* \neq X_{(n)}$. Note that since the $X_i$'s have a continuous
+distribution, almost surely, only one $X_i = X_{(n)}$. Hence
+$\pr(X_i^* \neq X_{(n)}) = 1 - 1/n$ and so, since $X_1^*,\dots,X_n^*$ are
+conditionally independent given $X_1,\dots,X_n$. Thus, as $n \to \infty$,
+\begin{equation}
+\pr\left( \hat\theta_n^* = \hat \theta \right)
+    = 1 - \pr\left( \hat\theta_n^* \neq \hat \theta \right)
+    = 1 - \left( 1 - \frac1n \right)^n
+    \to 1 - e\inv.
+\label{lim:boot}
+\end{equation}
+
+Recall that $n(\theta - \hat\theta_n) \to \exp(\theta)$ in distribution, so
+that $\pr[n(\theta - \hat \theta_n) \leq 0] \to 0$ as $n \to \infty$. The limit
+(\ref{lim:boot}) shows that
+$\pr[n(\hat\theta_n - \hat\theta_n^*) \leq 0] \to 1 - e\inv > 0$ as
+$n \to \infty$. Hence, the bootstrap estimator does not converge to the true
+estimator in distribution, and inferences made about the bootstrap estimator
+may not reflect the true estimator, even asymptotically.
+
+\item
+\begin{enumerate}
+\item Since the normal distribution is its own conjugate prior, a standard
+computation shows
+\[\mbox{\fbox{$\displaystyle
+    \theta | X_1,\dots,X_n
+        \sim \mathcal{N} \left(
+            \frac{a + b^2n\ol X}{1 + b^2n},
+            \frac{b^2}{1 + b^2n}
+        \right)$.}}
+\]
+\item Since $\theta | X_1,\dots,X_n)$ is normally distributed,
+\[Z
+    := \frac{\theta - \ol \theta}{\sqrt{\frac{b^2}{1 + b^2n}}}
+    = \frac{c_n\sqrt{1 + b^2n}}{b}
+    \sim \mathcal{N}(0,1),
+\]
+and so \fbox{$c_n = \frac{b}{\sqrt{1 + b^2n}} z_{\alpha/2}$.}
+\item I wasn't able to compute an exact value for $\Cov_{C_n}(\theta)$, but it
+should attain its maximum when $\theta = a$ and approach $0$ as
+$|\theta - a| \to \infty$ (i.e., when the prior is bad).
+By definition of $z_{\alpha/2}$, since
+$X_1,\dots,X_n \sim \mathcal{N}(\theta,1)$, $\Cov_{D_n}(\theta) = 1 - \alpha$
+for all $\theta \in \R$.
+\end{enumerate}
+\item
+\begin{enumerate}
+\item Since $X_1,\dots,X_n$ are independent, by Bayes' Rule,
+\begin{align*}
+p(\mu | X_1,\dots,X_n)
+    = \prod_{i = 1}^n p(x_i | \mu_i)\pi(\mu_1,\dots,\mu_n)
+ &  = \prod_{i = 1}^n (2\pi)^{-1/2}\exp\left(-\frac{(X_i-\mu_i)^2}{2}\right)\\
+ &  = \mbox{\fbox{$\displaystyle
+        (2\pi)^{-n/2} \exp\left(-\frac{\|X - \mu\|_2^2}{2} \right)$.}}
+\end{align*}
+\item Note that $\theta = \sum_{i = 1}^n (Z_i + X_i)^2$, where
+$Z_i \sim \mathcal{N}(0,1)$. Hence, by the hint, $\theta$ has a non-central
+$\chi_n^2\left( \|X\|_2^2 \right)$ distribution.
+\item By the hint, since each $\mu_i - X_i | X_1,\dots,X_n \sim N(0,1)$,
+$\E[\ol \theta_n | X_1,\dots,X_n] =$ \fbox{$2n + \|X\|_2^2$.}
+\item By the Law of Iterated Expectations and the hint, since
+$X_i - \mu_i \sim N(0,1)$,
+\[\E[\ol \theta_n]
+    = \E[\E[\ol \theta_n | X_1,\dots,X_n]]
+    = \E[2n + \|X\|_2^2]
+    = 2n + \E[\|X\|_2^2]
+    = \mbox{\fbox{$4n + \theta$}}
+\]
+is the bias of $\ol \theta_n$. Applying the Law of Total Variance followed by
+the hint,
+\begin{align*}
+\Var[\ol \theta_n]
+ &  = \E[\Var[\ol \theta_n | X_1,\dots,X_n]]
+    + \Var[\E[\ol \theta_n | X_1,\dots,X_n]]    \\
+ &  = \E[2n + 4\|X\|_2^2] + \Var[2n + \|X\|_2^2]    \\
+ &  = 2n + 4\E[\|X\|_2^2] + \Var[\|X\|_2^2]
+    = 2n + 4(2n + \theta) + 2n + 4\theta
+    = \mbox{\fbox{$12n + 8\theta$.}}
+\end{align*}
+$\ol \theta_n$ is not consistent; in fact, $\Var[\ol \theta_n] \to \infty$ as
+$n \to \infty$.
+\end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,362 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-720 Measure and Integration}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Wednesday, September 26, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\LR}[1]{\mathcal{L}\left(\R^{#1}\right)} % Lebesgue measurable sets of \R^{#1}
+\newcommand{\B}{\mathcal{B}} % Borel family of sets
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+Let $\mathcal{V} := \{V \in \pow{X} | V \mbox{ open }, \mu(V) = 0\}$ and let
+$U = \bigcup_{V \in \mathcal{V}} V$. Since a topology is closed under
+arbitrary unions, $U$ is open. Furthermore, it is immediate from the
+definition of $U$ that, if $V \subseteq X$ is open with $\mu(V) = 0$, then
+$V \subseteq U$. Thus, it remains only to show that $\mu(U) = 0$.
+
+Suppose $K \subseteq U$ is compact. Since $\mathcal{V}$ is an open cover of
+$K$, by definition of compactness, there exists a finite subcover
+$\{V_1,V_2,\ldots,V_k\} \subseteq \mathcal{V}$ of $K$. By definition of
+$\mathcal{V}$, we have, for each $i$, $\mu(V_i) = 0$, so that, by monotonicity
+and countable subadditivity,
+\[\mu(K)
+ \leq \mu\left( \bigcup_{i = 1}^k V_i \right)
+ \leq \sum_{i = 1}^k \mu(V_i)
+ = 0.\]
+Thus, since $\mu$ is regular,
+\[\mu(U) = \sup\{\mu(K) | K \subseteq U, K \mbox{ compact}\} = 0. \mqed\]
+\end{question}
+
+TODO
+\begin{question}{Problem 2}
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Since $C$ is a $\pi$-system and, $\forall i \in \N$,
+$\mathcal{C} \subseteq \Lambda_i
+ := \{S \in \Sigma | \mu(S \cap C_i) = \nu(S \cap C_i)\}$, by a theorem proven
+in class, to show that $\sigma(\mathcal{C}) \subseteq \Lambda_i$, it is
+sufficient to show that $\Lambda_i$ is a $\lambda$-system.
+
+Since $C_i \in \mathcal{C}$,
+$\mu(X \cap C_i) = \mu(C_i) = \nu(C_i) = \nu(X \cap C_i)$, so that
+$X \in \Lambda_i$.
+
+Suppose $A,B \in \Lambda$ with $A \subseteq B$. Since $A \subseteq B$,
+$B \cap A = A$, so that, since $A,B \in \Lambda$ (noting that, since
+$\mu(C_i) < \infty$, the below measures are all finite),
+\[\mu( (B \sminus A) \cap C_i)
+ = \mu(B \cap C_i) - \mu(A \cap C_i)
+ = \nu(B \cap C_i) - \nu(A \cap C_i)
+ = \nu( (B \sminus A) \cap C_i),\]
+and thus $B \sminus A \in \Lambda$.
+
+Suppose that $A_1,A_2,\ldots \in \Lambda$ with $A_i \subseteq A_{i + 1}$.
+Then, $\{A_i \cap C_i\}$ increasing sequence, so that, for
+$A := \bigcup_{i = 1}^{\infty} A_i$, since each
+$\mu(A_i \cap C_i) = \nu(A_i \cap C_i)$
+\[\mu(A \cap C_i)
+ = \mu\left( \bigcup_{i = 1}^{\infty}A_i \cap C_i \right)
+ = \lim_{i \rightarrow \infty} \mu(A_i \cap C_i)
+ = \lim_{i \rightarrow \infty} \nu(A_i \cap C_i)
+ = \nu\left( \bigcup_{i = 1}^{\infty}A_i \cap C_i \right)
+ = \nu(A \cap C_i),
+\]
+so that $A \in \Lambda$. Therefore, $\Lambda$ is a $\lambda$-system, so that,
+as discussed above, $\forall A \in \sigma(\mathcal{C})$,
+$\mu(A \cap C_i) = \nu(A \cap C_i)$.
+
+We now show that, $\mu = \nu$ on $\sigma(\mathcal{C})$. Suppose
+$A \in \sigma(\mathcal{C})$. $\forall i \in \N$, let
+\[A_i
+ := \left( A \cap \bigcap_{k = 1}^{i - 1} C_k^c \right) \cap C_i
+ \in \sigma(\mathcal{C}),\] so that $A_i$'s partition $A$ and
+$\mu(A_i) = \nu(A_i)$. Then, by countable additivity,
+\[\mu(A)
+ = \mu\left( \bigcup_{i = 1}^{\infty} A_i \right)
+ = \sum_{i = 1}^{\infty} \mu(A_i)
+ = \sum_{i = 1}^{\infty} \nu(A_i)
+ = \nu\left( \bigcup_{i = 1}^{\infty} A_i \right)
+ = \nu(A). \mqed
+\]
+
+\item Suppose $X = \{velociraptor,bunny\}$, $\mathcal{C} = \{\{bunny\},X\}$,
+$\Sigma = \pow{X}$. Note that $\mathcal{C}$ is closed under intersections and
+thus $\mathcal{C}$ is a $\pi$-system, and that
+$\sigma(\mathcal{C}) = \pow{X}$. If $\mu,\nu$ are the measures defined by
+$\mu(\{bunny\}) = \nu(\{bunny\}) = \infty$, $\mu(\{velociraptor\}) = 0$,
+$\nu(\{velociraptor\}) = 1$, then, $\mu = \nu$ on $\mathcal{C}$, but $\mu$ is
+not $\nu$ on $\sigma(\mathcal{C})$, and, furthermore, for
+$X = C_1 = C_2 = \ldots$, $\bigcup_{i = 1}^{\infty} C_i = X$. Thus, the
+condition $\mu(C_i) < \infty$ is necessary.
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+Suppose, for sake of contradiction, that there existed some
+$\kappa \in (0,1)$, $E \in \LR{1}$ such that, $\forall a < b \in (0,1)$,
+\[\kappa (b - a) \leq \lambda(E \cap (a,b)) \leq (1 - \kappa)(b - a).\]
+Let $\epsilon = \frac{\kappa}{2}$.
+
+By regularity of the Lebesgue measure, $\forall n,i \in \N$ with
+$0 \leq i < 2^n$, there exists an open set $U_{n,i}$ with
+\[\lambda(U_{n,i})
+ \leq \lambda\left(
+        E \cap
+          \left( \frac{i}{2^n}, \frac{i + 1}{2^n} \right)
+      \right)
+    + \frac{\epsilon}{2^{2n}}\]
+and $E \subseteq U \subseteq \left( \frac{i}{2^n}, \frac{i + 1}{2^n} \right)$ (we
+can ensure the second inclusion by replacing $U_{n,i}$ with
+$U_{n,i} \cap \left( \frac{i}{2^n}, \frac{i + 1}{2^n} \right)$).
+
+Let $U := \bigcup_{n = 1}^{\infty} \bigcup_{i = 1}^{2^n} U_{n,i}$. Then, for
+any interval $I_{n,i} = \left( \frac{i}{2^n}, \frac{i + 1}{2^n} \right)$, 
+
+\begin{align*}
+\lambda(U \cap I)
+ & = \lambda(U \cap E \cap I) + \lambda(U \cap E^c \cap I)
+                                     & \mbox{(since $E \in \LR{d}$)}        \\
+ & = \lambda(E \cap I)
+   + \lambda\left(
+       \bigcup_{m = 1}^{\infty}
+         \bigcup_{
+           \left( \frac{j}{2^m}, \frac{j + 1}{2^m} \right)
+             \subseteq
+           \left( \frac{i}{2^n}, \frac{i + 1}{2^n} \right)}
+       U_{m,j} \sminus E
+     \right)
+                                     & \mbox{(since $E \subseteq U$)}       \\
+ & = \lambda(E) + \sum_{m = 1}^{\infty}
+         \sum_{
+           \left( \frac{j}{2^m}, \frac{j + 1}{2^m} \right)
+             \subseteq
+           \left( \frac{i}{2^n}, \frac{i + 1}{2^n} \right)}
+        \lambda(U_{m,j} \sminus E)
+                                     & \mbox{(by countable subadditivity)}  \\
+ & = \lambda(E) + \sum_{m = 1}^{\infty} \frac{\epsilon}{2^{m + n}} \\
+ & < \frac{1 - \kappa + \epsilon}{2^n}
+   = \frac{1 - \kappa/2}{2^n}
+   < \lambda(I_{n,i}).
+\end{align*}
+Thus, since every interval $(a,b) \subseteq (0,1)$ contains some $I_{n,i}$,
+$\lambda(U \cap (a,b)) < b - a$.
+
+Since $\lambda(U) \geq \lambda(E) > 0$, $U$ is nonempty. Since $U$ is a union
+of open sets, $U$ itself is an open set, so that it contains some interval
+$(a,b)$. But then, $\lambda(U \cap (a,b)) = b - a$, which is a contradiction.
+\qed
+\end{question}
+
+%TODO
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item Define
+\[\Sigma
+ = \{A \in \pow{X_1 \times X_2} |
+     \forall x_1 \in X_1, x_2 \in X_2,
+       S_{x_1}(A) \in \Sigma_2, S_{x_2}(A) \in \Sigma_1\}.
+\]
+Then, to show the desired result, it is sufficient to show that $\Sigma$ is a
+$\sigma$-algebra and that
+$\{A_1 \times A_2 | A_i \in \Sigma_i\} \subseteq \Sigma$.
+
+If $A_1 \in \Sigma_1, A_2 \in \Sigma_2$, then, by definition of the Cartesian
+product $\forall x_1 \in X_1,x_2 \in X_2$, ${S_{x_1}(A_1 \times A_2) = A_2}$ and
+$S_{x_2}(A_1 \times A_2) = A_1$, so that $A_1 \times A_2 \in \Sigma$, and thus
+${\{A_1 \times A_2 | A_i \in \Sigma_i\} \subseteq \Sigma}$. Note that this
+implies $\emptyset \in \Sigma$.
+
+Suppose $A \in \Sigma$. Then, $\forall x_1 \in X_1,x_2 \in X_2$, since
+$S_{x_1}(A^c) = S_{x_1}(A)^c \in \Sigma_2$ and
+${S_{x_2}(A^c) = S_{x_2}(A)^c \in \Sigma_1}$, $A^c \in \Sigma$.
+
+Suppose $A_1,A_2,\ldots \in \Sigma$. Then, $\forall x_1 \in X_1,x_2 \in X_2$,
+since $S_{x_1}(A_i) \in \Sigma_2$ and $S_{x_1}(A_i) \in \Sigma_1$,
+\[S_{x_1}\left( \bigcup_{i = 1}^{\infty} A_i \right)
+ = \bigcup_{i = 1}^{\infty} S_{x_1}(A_i) \in \Sigma_2
+    \mbox{ \quad and \quad }
+  S_{x_2}\left( \bigcup_{i = 1}^{\infty} A_i \right)
+ = \bigcup_{i = 1}^{\infty} S_{x_2}(A_i) \in \Sigma_1,
+\]
+so that $\bigcup_{i = 1}^{\infty} A_i \in \Sigma$. Since $\Sigma$ is nonempty
+and closed under complements and countable unions, $\Sigma$ is a
+$\sigma$-algebra. \qed
+
+%TODO
+\item
+
+%TODO
+\item Let
+\[\mathcal{A}
+      := \left\{\bigcup_{i = 1}^{\infty} A_i \times B_i |
+                A_i \in \Sigma_1, B_1 \in \Sigma_2,
+                (A_i \times B_i)\mbox{'s pairwise disjoint}\right\},\]
+and define,
+$\forall A = \bigcup_{i = 1}^{\infty} A_i \times B_i \in \mathcal{A}$
+\[\nu \left( \bigcup_{i = 1}^{\infty} A_i \times B_i \right)
+ := \sum_{i = 1}^{\infty} \mu_1(A_i)\mu_2(B_i).\]
+
+We show that $\mathcal{A}$ is an algebra, that $\mu_0$ is a well-defined
+pre-measure on $\mathcal{A}$, and that $\forall A_i \in \Sigma_i$,
+$\nu(A_1 \times A_2) = \mu_1(A_1)\mu_2(A_)$. Then, noting that
+$\sigma(\mathcal{A}) = \Sigma_1 \otimes \Sigma_2$, by the Caratheodory
+Extension Theorem (the result of Problem 6 on Homework 2) ensures the
+existence of a measure on $(X_1 \times X_2,\Sigma_1 \otimes \Sigma_2)$ with
+the desired properties.
+
+The empty union, $\emptyset \in \mathcal{A}$.
+Since a countable union of countable unions of $(A_i \times B_i)$'s is itself
+a countable union of $(A_i \times B_i)$'s, $\mathcal{A}$ is closed under
+countable unions.
+If $A_i \in \Sigma_1,B_i \in \Sigma_2$, then
+$(A_i \times B_i)^c = (X_2 \times A_i^c) \cup (X_1 \times B_i^c)$. Thus, since
+intersections distribute over Cartesian products and unions,
+\begin{align*}
+\left( \bigcup_{i = 1}^{\infty} A_i \times B_i \right)^c
+ & =   \bigcap_{i = 1}^{\infty} (A_i \times B_i)^c
+   =   \bigcap_{i = 1}^{\infty} (X_2 \times A_i^c) \cup (X_1 \times B_i^c) \\
+ & =   \left( X_2 \times \bigcap_{i = 1}^{\infty} A_i^c \right)
+         \cup
+       \left( X_1 \times \bigcap_{i = 1}^{\infty} B_i^c \right)
+   \in \mathcal{A},
+\end{align*}
+since $\Sigma_1$ and $\Sigma_2$ are $\sigma$-algebras and thus closed under
+complements and countable intersections (note that we can ``disjointify'' the
+above set by replacing each term with a set difference with all terms of lower
+indices). Therefore, $\mathcal{A}$ is closed under complements and thus an
+algebra.
+
+To show that $\nu$ is well-defined, it suffices to observe that, for
+\[\bigcup_{i = 1}^{\infty} A_i \times B_i
+ = \bigcup_{i = 1}^{\infty} C_i \times D_i \in \mathcal{A}\]
+(with $(A_i \times B_i)$'s pairwise disjoint and $(C_i \times D_i)$'s pairwise
+disjoint),
+\begin{align*}
+\nu\left( \bigcup_{i = 1}^{\infty} A_i \times B_i \right)
+ & = \sum_{i = 1}^{\infty} \mu_1(A_i)\mu_2(B_i) \\
+ & = \sum_{i = 1}^{\infty}
+     \sum_{j = 1}^{\infty} \mu_1(A_i \cap C_i)\mu_2(B_i \cap D_i)
+                                & \mbox{(since the sets are disjoint sets)} \\
+ & = \sum_{j = 1}^{\infty}
+     \sum_{i = 1}^{\infty} \mu_1(A_i \cap C_i)\mu_2(B_i \cap D_i)
+                                & \mbox{(since $\mu_1,\mu_2 \geq 0$)} \\
+ & = \sum_{j = 1}^{\infty} \mu_1(C_j)\mu_2(D_i)
+   = \nu\left( \bigcup_{i = 1}^{\infty} C_i \times D_i \right).
+\end{align*}
+
+It is immediate from the definition of $\nu$ that $\nu(\emptyset) = 0$ and
+that $\nu$ is countably additive on $\mathcal{A}$ where necessary.
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6}
+Suppose $\mathbb{M} \in \pow{\pow{\pow{X}}}$ is a set of monotone classes,
+and suppose that $\mathcal{M} = \bigcap_{M \in \mathbb{M}} M$. Suppose,
+$\forall i \in \N$, $A_i,B_i \in \mathcal{M}$ with $A_i \subseteq A_{i + 1}$
+and $B_i \supseteq B_{i + 1}$, so that $\forall M \in \mathbb{M}$,
+$A_i,B_i \in M$. Then, by definition of a monotone class,
+$\forall M \in \mathbb{M}$, $A := \bigcup_{i = 1}^{\infty} A_i \in M$ and
+$B := \bigcap_{i = 1}^{\infty} B_i \in M$, so that $A,B \in \mathcal{M}$, and
+thus $\mathcal{M}$ is a monotone class. Thus, we can safely define the
+smallest monotone class $\mathcal{M}$ containing $\mathcal{A}$ as the
+intersection of all monotone classes containing $\mathcal{A}$ (clearly, this
+intersection contains $\mathcal{A}$).
+
+Since any $\sigma$-algebra is closed under countable unions and intersections,
+$\sigma(\mathcal{A})$ is a monotone class containing $\mathcal{A}$, so that,
+since $\mathcal{M}$ is the \emph{smallest} monotone class containing
+$\mathcal{A}$, $\mathcal{M} \subseteq \sigma(\mathcal{A})$.
+
+Since any nonempty monotone class that is closed under complements is a
+$\sigma$-algebra and $\emptyset \in \mathcal{A} \subseteq \mathcal{M}$, to
+show that $\sigma(A) \subseteq \mathcal{M}$, it is sufficient to show that
+$\mathcal{M}$ is closed under complements.
+
+Let $\mathcal{M}_c := \{A \in \mathcal{M} | A^c \in \mathcal{M}\}$. To
+show that $\mathcal{M}$ is closed under complements, it is sufficient to show
+that $\mathcal{M}_c$ is a monotone class containing $\mathcal{A}$, since then
+$\mathcal{M} \subseteq \mathcal{M}_c$.
+
+Since $\mathcal{A} \subseteq \mathcal{M}$ is an algebra and thus closed under
+complements, clearly $\mathcal{M}_c$ contains $\mathcal{A}$.
+Suppose
+$A_1,A_2,\ldots \in \mathcal{M}_c$ with $A_i \subseteq A_{i + 1}$. Then,
+$A_1^c,A_2^c,\ldots \in \mathcal{M}$, and $A_i^c \supseteq A_{i + 1}^c$.
+Thus, since $\mathcal{M}$ is a monotone class,
+\[\left( \bigcup_{i = 1}^{\infty} A_i \right)^c
+ = \bigcap_{i = 1}^{\infty}A_i^c \in \mathcal{M},\]
+so that $\bigcup_{i = 1}^{\infty} A_i \in \mathcal{M}_c$.
+Similarly, if $B_1,B_2,\ldots \in \mathcal{M}_c$ with
+$B_i \supseteq B_{i + 1}$, then
+$B_1^c,B_2^c,\ldots \in \mathcal{M}$, and $B_i^c \subseteq B_{i + 1}^c$, so
+that, since $\mathcal{M}$ is a monotone class,
+\[\left( \bigcap_{i = 1}^{\infty} B_i \right)^c
+ = \bigcup_{i = 1}^{\infty}B_i^c \in \mathcal{M},\]
+and thus $\bigcap_{i = 1}^{\infty} B_i \in \mathcal{M}_c$.
+Therefore, $\mathcal{M}_c$ is a monotone class containing $\mathcal{A}$. \qed
+\end{question}
+
+\end{document}

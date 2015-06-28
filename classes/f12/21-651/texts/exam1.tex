@@ -1,0 +1,248 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Wednesday, October 10, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % varepsilon
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Final Exam Note Sheet} \\
+\myclass \\
+Name: \myname \\
+{\bf Finite and Infinite Sets, Orderings:} \\
+{\bf Axiom 12: (Axiom of Choice)} For any family of nonempty disjoint sets
+$\mathcal{A}$, $\exists C \subseteq \cup \mathcal{A}$ with $|C \cap A| = 1$,
+$\forall A \in \mathcal{A}$. \\
+{\bf Lemma 13: (Zorn's Lemma)} $(X,\preceq)$ partially ordered set, if every
+totally ordered subset of $X$ has a maximal element, then $X$ has an upper
+bound. \\
+{\bf Topological Spaces:}
+and $\tau = \{A \subseteq \R : \forall x \in A, \exists \epsilon > 0,
+[x,x + \epsilon) \subseteq A\}$ is the \emph{Sorgenfrey} topology (line). \\
+$x \in X$ is an \emph{isolated point} iff $\{x\} \in \tau$. \\
+{\bf Basis of Topology:} \\
+{\bf Definition 19: (Neighborhood, Basis of a Topology)} $U \in \tau$ is a
+neighborhood of $x \in X$ iff $x \in U$. $U \in \tau$ is a neighborhood of
+$E \subseteq X$ iff $E \subseteq U$.
+A family $\beta \subseteq \pow{X}$ is a
+base for the topology $\tau$ iff $\tau$ is the set of arbitrary unions of
+elements of $\beta$.
+Neighborhoods $\beta_x \subseteq \tau$ of $x$ form a \emph{local} base at
+$x \in X$ iff, $\forall U \in \tau$,
+$\exists B \in \beta_x$ with $B \subseteq U$. \\
+{\bf Proposition 21:} $\beta \subseteq \pow{X}$ is the base of a topology iff
+$\emptyset \in \beta$, $X = \cup \beta$, and every finite intersection of
+elements in $\beta$ is a union of elements in $\beta$. \\
+{\bf Interior and Closure:} \\
+{\bf Proposition 24:} $E^\circ \subseteq E$ is open, and is the union of open
+subsets of $E$. $E \in \tau$ iff $E = E^\circ$. $(E^\circ)^\circ = E^\circ$.
+\\
+{\bf Proposition 26:} $(X,d)$ metric space, $E \subseteq X$.
+$E \subseteq \overline{E}$, $\overline{E}$ closed. $\overline{E} =
+\bigcap_{E \subseteq B} B$. $E$ closed iff $E = \overline{E}$.
+$\overline{(\overline{E}}) = \overline{E}$. \\
+{\bf Metric Spaces:} \\
+A pseudometric is a metric except that it need not differentiate points. \\
+If $(X,d)$ is a pesudometric space, $\B := \{B(x,r) : x \in X, r \geq 0\}$ is
+the base of a topology on $X$. \\
+{\bf Quotient Metric Spaces:} Considering equivalent those points not
+differentiated by a pseudometric gives a metric space.
+If $(X,d_i)$ is a pseudometric space, $d(x,y) := \sup_i d_i(x,y)$ is a
+pseudometric. \\
+{\bf Infinite Sums:} \\
+The infinite sum $\sum_{x \in X} f(x) := \sup\{\sum_{x \in Y} f(x)
+ : Y \subseteq X$ is finite$\}.$ \\
+Young's, H\"older's, and Minkowski's inequalities. \\ %TODO
+{\bf Sequences:} \\
+{\bf Lemma 53:} If $(X,\tau)$ is first countable with $E \subseteq X$, then
+$\forall p \in \overline{E}$, there is a sequence in $E$ converging to $p$. \\
+{\bf Separability:} \\
+$E \subseteq X$ is dense in $X$ iff $\overline{E} = X$ (in a metric space, iff
+all $p \in X$ are within $\epsilon$ of some $x \in E$). \\
+Every second countable space is separable. \\
+Separability is \emph{not} hereditary (it is in metric space, where separable
+$\Leftrightarrow$ second countable). \\
+{\bf Connectedness:} \\
+$(X,\tau)$ is connected iff the only clopen sets are $\emptyset$ and $X$. \\
+If $(X,d)$ metric space, $E \subseteq X$ is not connected iff disjoint
+$\exists U_1,U_2 \in \tau$ covering $E$ with $E \cap U_1,E \cap U_2$ nonempty.
+\\
+If $E \subseteq X$ is connected, then $\overline{E}$ is connected. \\
+$\gamma: [a,b] \rightarrow X$ continuous iff sequentially continuous.
+$E \subseteq X$ pathwise connected iff $\exists$ continuous path between
+all $x,y \in E$. \\
+The connected components of a closed set are closed. \\
+{\bf Continuity:} \\
+The $\max$ of two continuous functions is continuous. \\
+Continuity always implies sequential continuity. In first countable spaces,
+the converse also holds. \\
+Continuous functions preserve connectedness (and compactness). \\
+{\bf Axioms of Separation:} \\
+$T_3$ iff $T_0$ and regular. $T_{3\frac{1}{2}}$ {\bf Tikhonov} iff $T_0$ and
+completely regular. $T_4$ iff $T_1$ and normal. \\
+If $T_1$, then $\{x\}$ is closed, $\forall x \in X$. \\
+$T_3 \Rightarrow T_2$. $T_0$ and normal does not imply $T_4$. \\
+Counterexamples: $\tau_l,\tau_r$ are $T_0$ but not $T_1$. Sorgenfrey line is
+normal, but Sorgenfrey plane is not. \\
+{\bf Compactness:} \\
+$E \subseteq X$ is relatively compact (precompact) iff $\overline{E}$ is
+compact. \\
+$(X,\tau)$ $T_2$ (Hausdorff), $K \subseteq X$ compact, $x_0 \in X \sminus K$.
+Then, $\exists U_1,U_2 \in \tau$ with $K \subseteq K$, $x_0 \in V$. \\
+$X$ compact, $C \subseteq X$ closed implies $C$ compact. \\
+If $X$ Hausdorff, then $K \subseteq X$ compact implies $K$ closed, and $X$
+compact implies $X$ regular and normal (recall that normal does not always imply
+regular). \\
+The trivial topology has sets compact but not closed. \\
+$(X,d)$ compact metric space implies $X$ separable, bounded (if not
+separable, $\exists$ countable $E \subseteq X$ of isolated points).
+$\{E_{\alpha}\}$ has finite-$\cap$ property iff any finite subfamily
+has nonempty intersection. $X$ compact iff any family of closed sets with
+finite-$\cap$ property has nonempty intersection.\\
+$X$ compact implies every infinite subset of $X$ has a limit point in $X$. \\
+$X$ compact, $T_1$, and first countable implies $X$ sequentially compact. \\
+A bijection $f: X \rightarrow Y$ is a homeomorphism iff
+$\tau_y = \{f(U) : U \in \tau\}$. \\
+$f : X \rightarrow Y$ continuous bijection, $X$ compact, $Y$ $T_2$ implies $f$
+homeomorphism.
+
+{\bf Lower Semicontinuity:} $f\inv((a,\infty)) \in \tau$ ($\forall x_0 \in X$,
+$\exists U \in \tau$ with $x_0 \in U$, $f(x) \geq f(x_0) + \e$). \\
+{\bf Upper Semicontinuity:} $f\inv((a,\infty)) \in \tau$ ($\forall x_0 \in X$,
+$\exists U \in \tau$ with $x_0 \in U$, $f(x) \geq f(x_0) + \e$).
+
+{\bf Urysohn's Lemma:} $(X,\tau)$ is normal if and only if $(X,\tau)$ is
+completely normal. \\
+{\bf Lemma 155:} $(X,\tau)$ loc. compact, Hausdorff $\Rightarrow$
+$\forall U \in \tau$, $K \subseteq U$ compact, $\exists V \in \tau$,
+$K \subseteq V \subseteq \overline{V} \subseteq U$, $\overline{V}$ compact. \\
+{\bf Tietze's Extension Theorem:}  $(X,\tau)$ is normal if and only if,
+$\forall C$ closed, $f : C \rightarrow \R$ continuous, $\exists F : X
+\rightarrow \R$ continuous with $F = f$ on $C$. Furthermore, any bound on $f$
+bounds $F$.
+
+{\bf Partitions of Unity:} \\
+{\bf Definition 168:}
+$\mathcal{F}$ \emph{point finite} iff, $\forall x \in X$, $x$ is in only
+finitely many $U \in F$. \\
+$\mathcal{F}$ \emph{locally finite} iff, $\forall x \in X$, $x$ has a
+neighborhood intersecting only finitely many $U \in F$. \\
+$\mathcal{F}$ \emph{$\sigma$-locally finite} iff $\mathcal{F} =
+\bigcup_{n = 1}^{\infty} \mathcal{F}_n$, where each $\mathcal{F}_n$ is locally
+finite. \\
+{\bf Theorem 171:} $(X,\tau)$ separable and $\mathcal{F} \subseteq \tau$ covers
+$X$ $\Rightarrow$ $\exists$ locally finite partition of unity subordinated to
+$\mathcal{F}$.
+{\bf Theorem 172:} $(X,\tau)$ normal and $\mathcal{F} \subseteq \tau$ point
+finite cover of $X$ $\Rightarrow$ $\exists$ partition of unity subordinated to
+$\mathcal{F}$.
+
+{\bf Metrization:} \\
+{\bf Urysohn Metrization Theorem:} $(X,\tau)$ is metrizable and separable
+$\Leftrightarrow$ $(X,\tau)$ is $T_4$ and second countable. \\
+{\bf Nagata-Smirnov Metrization Theorem:} $(X,\tau)$ is metrizable
+$\Leftrightarrow$ $(X,\tau)$ is $T_4$ and has a $\sigma$-locally finite base.
+
+{\bf Baire Spaces:} \\
+{\bf Definition 189:} $(X,\tau)$ is a \emph{Baire space} iff, for any countable
+family $\mathcal{U} \subseteq \tau$ of dense sets, $\cap U$ is dense. \\
+{\bf Definition 190:} $E \subseteq X$ is \emph{nowhere dense} iff
+$\overline{E^\circ} = \emptyset$ and \emph{meager} iff it is a countable union
+of nowhere dense sets. \\
+{\bf Exercise 191:} $(X,\tau)$ is Baire iff, $\forall E \subseteq X$ meager,
+$E^\circ = \emptyset$. If $E$ is meager, $X \sminus M$ is dense. \\
+{\bf Baire Category Theorem:} Any complete metric space is Baire. \\
+{\bf Corollary 194:} In any complete metric space, a countable intersection of
+dense $G_{\delta}$ sets is itself a dense $G_{\delta}$ set. \\
+{\bf Second Baire Category Theorem:} All locally compact Hausdorff spaces are
+Baire.
+
+{\bf Uniform Continuity:} \\
+{\bf Definition 202:} $\omega : [0,\infty) \rightarrow [0,\infty]$ is a modulus
+of continuity for $f : X \rightarrow Y$ iff $\omega(0) = 0$,
+$\lim_{s \rightarrow 0} \omega(s) = 0$, and, $\forall x,y \in X,
+d_Y(f(x),f(y)) \leq \omega(d_X(x,y))$. \\
+{\bf Remark 205:} Lipschitz continuity is strictly stronger than H{o}lder
+continuity. \\
+{\bf Proposition 206:} $(X,d_X)$ metric space, $(Y,d_Y)$ complete metric space,
+$f : E \subseteq X \rightarrow Y$ uniformly continuous. Then, $f$ can be
+extended uniquely to $\overline{E}$.
+
+{\bf Fixed Point Theorems:} \\
+{\bf Banach Contraction Principle:} If $(X,d)$ is a metric space, and
+$f : X \rightarrow X$ is a contraction ($\exists c \in (0,1)$ such that,
+$\forall x,y \in X$, $d(f(x),f(y)) \leq cd(x,y)$), then $f$ has a unique fixed
+point. \\
+{\bf Brouwer Fixed Point Theorem:} If $E \subseteq \R^n$ is homeomorphic to
+$\overline{B(\bzero,1)}$ and $f : E \rightarrow E$, then $f$ has a fixed
+point.
+
+{\bf Definition 212:} $(X,d)$ is \emph{totally bounded} iff, any cover of $X$ by
+balls of radius $\epsilon$ has a finite subcover. $E \subseteq X$ is
+\emph{bounded} iff $\sup \{d(x,y) : x,y, \in E\} < \infty$.
+
+In a metric space, compactness, sequential compactness, and (complete +
+bounded) are equivalent.
+
+{\bf Stone Theorem:} If $(X,d)$ is a compact metric space and $\mathcal{F}
+\subseteq C(X)$, if $\mathcal{F}$ separates points, contains all constant
+functions, and is closed under addition, multiplication, and scalar
+multiplication, the $\mathcal{F}$ is dense in $X$.
+
+{\bf Ascoli-Arzela:} $(X,d)$ is a separable and $\mathcal{F} \subseteq
+C(X)$. If $\mathcal{F}$ is pointwise bounded and equicontinuous, then every
+sequence in $\mathcal{F}$ has a subsequence converging uniformly on every
+compact $E \subseteq X$ to a a continuous function.
+\end{document}

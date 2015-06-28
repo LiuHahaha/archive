@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-621 Introduction to Lebesgue Integration}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Friday, December 14, 2012}
+\newcommand{\problemlist}{Page 93, Problems 19, 22, Page 260, Problem 6}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\B}{\mathcal{B}}
+\renewcommand{\'}{^{\prime}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Exam \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\problemlist
+\begin{question}{Page 93, Problem 19}
+By Fubini's Theorem,
+\[
+\int_0^{\infty} m(E_{\alpha}) \, d\alpha
+ = \int_0^{\infty} \int_{\R^d} \chi_{E_{\alpha}}  \, dx \, d\alpha
+ = \int_{\R^d} \int_0^{\infty} \chi_{E_{\alpha}} \, d\alpha \, dx
+ = \int_{\R^d} \int_0^{|f(x)|} 1                 \, d\alpha \, dx
+ = \int_{\R^d} |f(x)|                                       \, dx
+.\mqed
+\]
+\end{question}
+
+\begin{question}{Page 93, Problem 22}
+By Translation Invariance of the Lebesgue Integral over $\R^d$,
+\begin{align*}
+\hat{f}(\xi)
+ & = \int_{\R^d} f\left( x - \frac{\xi}{2\|\xi\|^2} \right) e^{-2\pi i \left( x -
+\frac{\xi}{2\|\xi\|^2} \right) \cdot \xi} \, dx \\
+ & = \int_{\R^d} f\left( x - \frac{\xi}{2\|\xi\|^2} \right) e^{-2\pi ix \cdot
+\xi} e^{-2\pi i\frac{\xi \cdot \xi}{2\|\xi\|^2}} \, dx \\
+ & = \int_{\R^d} f\left( x - \frac{\xi}{2\|\xi\|^2} \right) e^{-2\pi ix \cdot
+\xi} e^{-\pi i} \, dx \\
+ & = - \int_{\R^d} f\left( x - \frac{\xi}{2\|\xi\|^2} \right) e^{-2\pi ix \cdot
+\xi} \, dx. & (\mbox{since } e^{-\pi i} = -1)
+\end{align*}
+
+Adding $\hat{f}(\xi)$, dividing by $2$, and taking absolute values on both
+sides gives, by the Triangle Inequality and then by Monotonicity of the
+Lebesgue Integral,
+\begin{align*}
+|\hat{f}(\xi)|
+ & =    \frac12 \left| \int_{\R^d} f(x) e^{-2\pi ix \cdot \xi} \, dx
+                  - \int_{\R^d} f\left( x - \frac{\xi}{2\|\xi\|^2} \right)
+                                        e^{-2\pi ix \cdot \xi} \, dx \right| \\
+ & =    \frac12 \left| \int_{\R^d}
+            \left( f(x) - f\left( x - \frac{\xi}{2\|\xi\|^2} \right) \right)
+                                        e^{-2\pi ix \cdot \xi} \, dx \right|
+         & \mbox{Linearity} \\
+ & \leq \frac12 \int_{\R^d} \left| 
+            \left( f(x) - f\left( x - \frac{\xi}{2\|\xi\|^2} \right) \right)
+                                        e^{-2\pi ix \cdot \xi} \right| \, dx
+         & \mbox{Triangle Inequality} \\
+ & \leq \frac12 \int_{\R^d} \left| 
+            f(x) - f\left( x - \frac{\xi}{2\|\xi\|^2} \right)
+                                                               \right| \, dx
+         & \mbox{Monotonicity} \\
+ & = \frac12 \left\| f(x) - f\left( x - \frac{\xi}{2\|\xi\|^2} \right)
+                                                        \right\|_{L^2(\R^d)}
+   \rightarrow 0
+\end{align*}
+as $\xi \rightarrow \infty$, by Propositon 2.5 (since
+$\frac{\xi}{2\|\xi\|^2} \rightarrow 0$). \qed
+\end{question}
+
+%TODO
+\begin{question}{Page 260, Problem 6}
+\begin{enumerate}[(a)]
+\item Define $E_{\alpha} := |f|\inv((\frac{\alpha}{2},\infty))$, $F_{\alpha} :=
+(f^*)\inv((\alpha,\infty))$.
+By regularity of the Lebesgue Measure, it suffices to show that, for any
+compact $K \subseteq F_{\alpha}$, $m(K) \leq \frac{2A}{\alpha}
+\int_{E_{\alpha}} |f|$.
+
+By definition of $f^*$, $\forall x \in F_{\alpha}$, $\exists$ a ball $B_x$ with
+$x \in B_x$ and $m(B_x) \leq \frac{1}{\alpha} \int_{B_x} |f|$.
+
+Since $K$ is compact, there exists a finite subcover $\B$ of $K$ of such balls.
+Then, by the version of the Vitali Covering Lemma shown in class, there is a
+subset $\B\' \subseteq \B$ with
+\[m(K)
+ \leq m\left( \bigcup_{B \in \B} B \right)
+ \leq A \sum_{B \in \B\'} m(B).\]
+
+Then, by additivity of the Lebesgue Integral over sets and the definition of
+$E_{\alpha}$, $\forall B \in \B\'$,
+\[
+m(B)
+ \leq \frac{1}{\alpha} \left( \int_{B \sminus E_{\alpha}} |f|
+                                     + \int_{B \cap E_{\alpha}} |f| \right)
+ \leq \frac{1}{\alpha} \left( \frac{\alpha}{2} m(B)
+                                     + \int_{B \cap E_{\alpha}} |f| \right).
+\]
+Isolating $m(B)$ then gives $m(B) \leq \frac{2}{\alpha}
+\int_{B \cap E_{\alpha}} |f|$. Thus, since the balls in $\B\'$ are disjoint,
+\[
+m(K)
+ \leq A \sum_{B \in \B\'} m(B)
+ \leq A\sum_{B \in \B\'} \frac{2}{\alpha} \int_{B \cap E_{\alpha}} |f|
+ \leq \frac{2A}{\alpha} \int_{E_{\alpha}} |f|. \mqed
+\]
+
+\item By Fubini's Theorem,
+\begin{align*}
+\int_{\R^d} (f^*)^2
+ & = \int_{\R^d} \int_{(f^*)^2}^{\infty} 1
+   = \int_{\R^d} \int_0^{\infty} \chi_{((f^*)^2)\inv((y,\infty))} \, dy \\
+ & = \int_0^{\infty} \int_{\R^d} \chi_{((f^*)^2)\inv((y,\infty))} \, dy \\
+ & = \int_0^{\infty} m(E_{\sqrt{y}}) \, dy
+   = 2\int_0^{\infty} \alpha m(E_{\alpha}) \, d\alpha,
+\end{align*}
+where the last equality follows from changing variables to $\alpha = \sqrt{y}$.
+\qed
+
+\item Combining the results of parts (a) and (b) gives
+\[\|f^*\|_{L^2(\R^d)}\int_{\R^d} (f^*)^2
+ \leq 2\int_0^{\infty} 2A \int_{|f|\inv(\frac{\alpha}{2},\infty)} |f|
+                                                                    \, d\alpha
+ \leq 4A \int_{\R} f^2
+ = C \|f\|_{L^2(\R^d)},
+\]
+where $C = 4A$. Since $f \in L^2$, it follows immediately that $f^* \in L^2$.
+\qed
+\end{enumerate}
+\end{question}
+\end{document}

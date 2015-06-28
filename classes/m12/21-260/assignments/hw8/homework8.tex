@@ -1,0 +1,212 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{8}
+\newcommand{\duedate}{Tuesday, July 31, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Section 6.1, Problem 16}
+If $F$ is the Laplace transform of $f$, then, by definition,
+\[F(s)
+ = \int_0^{\infty} e^{-st} f(t) \, dt
+ = \int_0^{\infty} e^{-st} t \sin(at) \, dt.
+\]
+Integration by Parts (differentiating the $te^{-st}$ term and integrating the
+$\sin(at)$ term) gives
+\begin{eqnarray*}
+F(s)
+ & = & -te^{-st}\frac{\cos(at)}{a}\big|_{t = 0}^{t = \infty}
+   + \frac1a\int_0^{\infty}\left(e^{-st}
+                                  - \frac{t}{s}e^{-st}\right)\cos(at) \, dt \\
+ & = & \frac1a\int_0^{\infty}\left(e^{-st}
+                                  - \frac{t}{s}e^{-st}\right)\cos(at) \, dt.
+\end{eqnarray*}
+
+Integration by Parts again (differentiating the $\frac{t}{s}e^{-st}$ term,
+integrating the $\cos(at)$ term, and ignoring the $e^{-st}\cos(at)$ term by
+linearity of the integral for the time being)
+\begin{eqnarray*}
+F(s)
+ & = & \frac1a\int_0^{\infty}
+                        - \frac{1}{sa}\int_0^{\infty}te^{-st}\cos(at) \, dt \\
+ & = & \frac1a\int_0^{\infty}
+                - \frac{1}{sa}\left( \frac{F(s)}{sa}
+                                 - \int_0^{\infty}e^{-st}\sin(at) \, dt\right).
+\end{eqnarray*}
+Solving for $F(s)$ in the above equation gives
+\[F(s)
+ = \left(1 + \frac{1}{s^2a^2}\right)\inv
+   \left(\frac1a g_1(s) + \frac{1}{sa^2}g_2(s)\right)
+ = \frac{s^2a}{s^2a^2 + 1}g_1(s) + \frac{s}{s^2a^2 + 1}g_2(s)
+\]
+where $g_1(s) = \int_0^{\infty} e^{-st}\cos(at) \, dt$ and
+$g_2 = \int_0^{\infty} e^{-st} \sin(at) \, dt$.
+
+Table 6.2.1 shows that
+\[\int_0^{\infty}e^{-st}\cos(at) \, dt
+ = \mathcal{L}\{\cos(at)\} = \frac{s}{s^2 + a^2},\]
+and that
+\[\int_0^{\infty}e^{-st}\sin(at) \, dt
+ = \mathcal{L}\{\sin(at)\} = \frac{a}{s^2 + a^2}.\]
+
+Thus,
+\[F(s)
+ = \mbox{
+    \fbox{
+        $\displaystyle
+            \frac{s^3a}{(s^2a^2 + 1)(s^2 + a^2)} + \frac{sa}{(s^2a^2 + 1)(s^2 + a^2)}
+        $.
+    }
+   }
+\]
+\end{question}
+
+\begin{question}{Section 6.1, Problem 26abc}
+\begin{enumerate}[(a)]
+\item Suppose $p > 0$. Then, Integration by Parts (differentiating $x^p$ and
+integrating $e^{-x}$) gives that
+\begin{eqnarray*}
+\Gamma(p + 1)
+ & = &  \int_0^{\infty} x^pe^{-x}                      \, dx \\
+ & = & -x^pe^{-x}\big|_{x = 0}^{x = \infty}
+   -    \int_0^{\infty} px^{p - 1}\left(-e^{-x}\right) \, dx \\
+ & = & p\int_0^{\infty} x^{p - 1}e^{-x}                \, dx
+   =   p\Gamma(p). \mqed
+\end{eqnarray*}
+
+\item
+\[\Gamma(1)
+ = \int_0^{\infty} e^{-x} \, dx
+ = -e^{-x}\big|_{x = 0}^{x = \infty}
+ = \lim_{x \rightarrow \infty}\left(-e^{-x}\right) - \left(-e^{-0}\right)
+ = 0 - (-1)
+ = 1. \mqed
+\]
+
+\item Since the factorial is defined by the recurrence relation
+\[n! = n\cdot(n - 1)! \mbox{ for } n \in \mathbb{N}\backslash\{0\},\quad 0! = 1,\]
+the desired result follows immediately by the Principle of Mathematical
+Induction (the result of part (b) above is the base case, while the result of
+part (a) above is the general case). \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 6.2, Problem 14}
+As given in equation (16) is Section 2 of Chapter 6, if $Y$ is the Laplace
+transform of the solution to the given initial value problem, then
+\[Y(s)
+ = \frac{(s - 4) + 1}{s^2 - 4s + 4}
+ = \frac{(s - 2) - 1}{s^2 - 4s + 4}
+ = \frac{1}{s - 2} - \frac{1}{(s - 2)^2}.
+\]
+Table 6.2.1 shows that $\frac{1}{s - 2}$ is the Laplace transform of the
+function $e^{2t}$ of $t$, and that $\frac{1}{(s - 2)^2}$ is the Laplace
+transform of the function $te^{2t}$ of $t$. Thus, by linearity of the inverse
+Laplace transform, the solution to the given initial value problem is
+\[y(t)
+ = \mathcal{L}\inv      \{ Y(s)                      \}
+ = \mathcal{L}\inv \left\{ \frac{1}{s - 2}     \right\}
+ - \mathcal{L}\inv \left\{ \frac{1}{(s - 2)^2} \right\}
+ = \mbox{\fbox{$e^{2t} - te^{2t}$.}}
+\]
+\end{question}
+
+\newpage
+\begin{question}{Section 6.2, Problem 20}
+As given in equation (16) is Section 2 of Chapter 6, if $Y$ is the Laplace
+transform of the solution to the given initial value problem, then (using Table
+6.2.1) to compute $\mathcal{L}\{\cos(2t)\}$)
+\[Y(s)
+ = \frac{s}{s^2 + \omega^2}
+ + \frac{s}{(s^2 + 4)(s^2 + \omega^2)}
+ = \frac{s}{s^2 + \omega^2}
+ + \frac{s}{(\omega^2 - 4)(s^2 + 4)}
+ - \frac{s}{(\omega^2 - 4)(s^2 + \omega^2)}.
+\]
+Table 6.2.1 shows that $\frac{s}{s^2 + \omega^2}$ is the Laplace transform of
+the function $\cos(\omega t)$, and that $\frac{s}{s^2 + 4}$ is the Laplace
+transform of $\cos(2t)$. Thus, by linearity of the inverse Laplace transform
+(noting that the $\frac{1}{\omega^2 - 4}$ terms are constants in $s$),
+the solution to the given initial value problem is
+\begin{eqnarray*}
+y(t)
+   =                         \mathcal{L}\inv      \{ Y(s)                           \}
+ & = &                       \mathcal{L}\inv \left\{ \frac{s}{s^2 + \omega^2} \right\}
+   +   \frac{1}{\omega^2 - 4}\mathcal{L}\inv \left\{ \frac{s}{s^2 + 4}        \right\}
+   -   \frac{1}{\omega^2 - 4}\mathcal{L}\inv \left\{ \frac{s}{s^2 + \omega^2} \right\} \\
+ & = & \mbox{
+         \fbox{
+           $\displaystyle
+               \cos(\omega t)
+             + \frac{\cos(2t)}{\omega^2 - 4}
+             + \frac{\cos(\omega t)}{\omega^2 - 4}
+           $.
+         }
+       }
+\end{eqnarray*}
+\end{question}
+
+\begin{question}{Section 6.3, Problem 12}
+On the interval $[0,\infty)$,
+\begin{eqnarray*}
+f(t)
+ & = & t + (2 - t)u_2(t) + (7 - t - 2)u_5(t) - (7 - t)u_7(t) \\
+ & = & \mbox{
+         \fbox{
+           $t + (2 - t)u_2(t) + (5 - t)    u_5(t) - (7 - t)u_7(t)$.
+         }
+       }
+\end{eqnarray*}
+\end{question}
+\end{document}

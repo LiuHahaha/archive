@@ -1,0 +1,340 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-651 General Topology}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Wednesday, October 10, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Problem 1}
+\begin{enumerate}[(i)]
+\item Suppose $f$ is continuous, and let
+$(x,y) \in (X \times Y) \sminus \Gamma$, so that by definition of
+$\Gamma$, $f(x)$ and $y$ are distinct. Since $Y$ is Hausdorff,
+there exist disjoint $V_1,V_2 \in \tau_Y$ with $y \in V_1,f(x) \in V_2$.
+Since $f$ is continuous, $U := f\inv(V_2) \in \tau_X$, and, since
+$V_1 \cap V_2 = \emptyset$, $f(U) \cap V_2 = \emptyset$.
+
+Therefore, $(U \times V_2) \subseteq (X \times Y) \sminus \Gamma$.
+Since $(x,y) \in (U \times V_2) \in \tau_X \times \tau_Y$, this implies
+that, $\forall \bx \in (X \times Y) \sminus \Gamma$,
+$\exists U_{\bx} \in \tau$, with
+$\bx \in U_{\bx} \subseteq (X \times Y) \sminus \Gamma$, so that,
+\[(X \times Y) \sminus \Gamma
+ = \bigcup_{\bx \in (X \times Y) \sminus \Gamma} U_{\bx}\]
+is open, and thus $\Gamma$ is closed. \qed
+
+\item Since $X$ is not Hausdorff, $\exists$ distinct $x,y \in X$ such that,
+$\forall U_1,U_2 \in \tau_X$ with $x \in U_1,y \in U_2$. Since
+$\{U_1 \times U_2 : U_1,U_2 \in \tau_X\}$ is a base of $\tau_X^2$, any
+$U \in \tau_X^2$ contains some $U_1 \times U_2$, ($U_1,U_2 \in \tau_X$),
+so that $x \in U_1,y \in U_2$. By choice of $x$ and $y$,
+$\exists z \in U_1 \cap U_2$, so that $(z,z) \in U_1 \times U_2$.
+Therefore, $U \cap \Gamma$ is nonempty. Since no neighborhood of
+$(x,y) \in X^2 \sminus \Gamma$  is contained in $X^2 \sminus \Gamma$,
+$X^2 \sminus \Gamma$ is not open, and $\Gamma$ is not closed. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+Let $(X,\tau)$ be a $T_3$ topological space, and let distinct $x,y \in X$.
+Since any $T_3$ space is $T_0$, there exists some $U \in \tau$ containing $x$
+but not $y$, or containing $y$ but not $x$; without loss of generality,
+$U$ contains $x$ but not $y$ (the proof is identical up to variable names in
+the case $U$ contains $y$ but not $x$). Since $C := X \sminus U$ is closed and
+does not contain $x$, and since $(X,\tau)$ is regular, there exist disjoint
+$V,W \in \tau$ with $C \subseteq V$, $x \in W$. Since $y \in C \subseteq V$,
+$V$ and $W$ separate $x$ and $y$, so that $(X,\tau)$ is $T_2$. \qed
+
+Let $X = \{0,1\}$ and let $\tau = \{\emptyset,\{0\},X\}$. Then, the set
+of closed sets in $(X,\tau)$ is $\mathcal{C} := \{\emptyset,\{1\},X\}$.
+
+If $C_1,C_2 \in \mathcal{C}$ are disjoint, then either $C_1 = \emptyset$ or
+$C_2 = \emptyset$. Thus, the open sets $\emptyset$ and $X$ separate
+$C_1$ and $C_2$, so that $(X,\tau)$ is normal.
+
+Furthermore, for distinct $x,y \in X$, $x = 0$ and $y = 1$ or $x = 1$ and
+$y = 0$, so that exactly one of $x$ and $y$ is contained in $\{0\} \in \tau$.
+Thus, $(X,\tau)$ is $T_0$.
+
+If $x = 0,y = 1$, then there is no $U \in \tau$ containing $y$ but not
+containing $x$. Thus, $(X,\tau)$ is not $T_1$, and thus not $T_4$.
+Therefore, $(X,\tau)$ is normal and $T_0$ but not $T_4$. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+Let $X = \{0,1\}$ and let $\tau = \{\emptyset,\{0\},X\}$.
+
+If $x = 0$, $C = \{1\}$, then $C$ is a closed set not containing $x$, but the
+only open set containing $C$ is $X$, which contains $x$, so that $(X,\tau)$ is
+not regular.
+It was shown in the solution to Problem 2 that $(X,\tau)$ is normal.
+Thus, $(X,\tau)$ is topological space which is normal but not regular. \qed
+\end{question}
+
+%TODO
+\begin{question}{Problem 4}
+\begin{enumerate}[(i)]
+\item Clearly, $\emptyset \in \B$.
+Since
+$B\left( \frac12,1 \right), \left\{ \left( \frac12,2 \right) \right\} \in \B$,
+$\B$ covers $X$. Let
+\[\B_1 := \{B(x,r) \times \{1,2\} \sminus \{(x,2)\} : x \in I, r > 0\},
+  \quad
+  \B_2 := \{\{(x,2)\} : x \in I\} \cup \{\emptyset\},\]
+so that $\B_1,\B_2$ partition $\B$.
+If $B_1,B_2 \in \B_1$, so that
+$B_1 = B(x_1,r_1) \times \{1,2\} \sminus \{x_1,2\}$,
+$B_2 = B(x_2,r_2) \times \{1,2\} \sminus \{x_2,2\}$, then, for
+$x \in B_1 \cap B_2$, for
+\[r
+  := \frac12\min\{
+    |x - \min\{x_1 + r_1, x_2 + r_2\}|,
+    |x - \max\{x_1 - r_1, x_2 - r_2\}|,
+    |x - x_1|,
+    |x - x_2|
+  \}
+\]
+$x
+ \in (B(x + \frac{r}{2}, r) \times \{1,2\} \sminus (x + \frac{r}{2},2\}))
+ \in B$.
+If $B_1 \in \B_2, \B_2 \in \B$, then, $B_1 \cap B_2 = B_2$ or
+$B_1 \cap B_2 = \emptyset$.
+Thus, any finite intersection of sets in $\B$ is the union of sets in $\B$,
+so that, by Proposition 21, $\B$ is the basis of a topology $\tau$. \qed
+
+\item
+
+\item Suppose distinct $x = (x_1,k_1),y = (y_1,k_2) \in X$. If
+$x \in I \times \{2\}$, then $\{x\} \in \tau$ contains $x$ but not $y$.
+Otherwise, $x \in I \times \{1\}$, so that, for $r = \frac12 |x_1 - y_1|$,
+$(B(x_1,r) \times \{1,2\}) \sminus \{x_1,2\} \in \tau$ contains $x$ but not
+$y$. Thus, $(X,\tau)$ is $T_1$.
+
+Suppose $C_1,C_2$ are disjoint closed sets. Notice that
+the topology induced by $\tau$ on $I \times \{1\}$ is homeomorphic to
+$\tau_{\R}$, the topology induced on $I$ by the standard topology on $\R$.
+Thus, since $\tau_{\R}$, is normal, there exist two disjoint sets $U_1,U_2$
+which are open in the topology induced on $I$ by the standard topology on
+$\R$, and are thus open in the topology induced on $I \times \{1\}$ by $\tau$.
+
+Each of $U_1,U_2$ is a union of some subset $B_1,B_2$, respectively, of the
+basis elements of the standard topology on $\R$, so that
+$U_1 = \bigcup_{B(x,r) \in B_1} B(x,r)$,
+$U_2 = \bigcup_{B(x,r) \in B_2} B(x,r)$. Let
+\[V_1 :=
+ \left(
+    \bigcup_{B(x,r) \in B_1} (B(x,r) \times \{1,2\}) \sminus \{(x,2)\}
+ \right)
+      \cup \bigcup_{(x,2) \in C_1} \{(x,2)\}\]
+and
+\[V_2 :=
+ \left(
+    \bigcup_{B(x,r) \in B_2} (B(x,r) \times \{1,2\}) \sminus \{(x,2)\}
+ \right)
+      \cup \bigcup_{(x,2) \in C_2} \{(x,2)\}.\]
+Then, each of $V_1,V_2$ is a union of basis elements on $\tau$, so that
+$V_1,V_2 \in \tau$, $C_1 \subseteq V_1$, $C_2 \subseteq V_2$, and
+$V_1 \cap V_2 = \emptyset$. Therefore, $(X,\tau)$ is normal.
+
+Since $(X,\tau)$ is $T_1$ and normal, $(X,\tau)$ is $T_4$. \qed
+
+\item Suppose $p \in X$. If $p = (x,2)$ for some $x \in I$, then the set
+$\{p\}$ is clearly a countable local base at $p$. Otherwise, $p = (x,1)$, for
+some $x \in I$. $\forall n \in \N$, let
+$B_n := (B(x,1/n) \times \{1,2\}) \sminus \{(x,2)\}$, and let
+$\beta := \{B_n : n \in \N\}$. Clearly, $\beta$ is countable.
+
+If $U \in \tau$ is a neighborhood of $p$, then $U$ contains some
+$B \in \B$ containing $p$, which must be of the form
+$B = (B(x_2,r) \times \{1,2\}) \sminus \{(x,2)\}$, with $r > 0$. Then, since
+there is some $n \in \N$ with
+$\frac{1}{n} < \min\{|x - (x_2 - r)|,|x - (x_2 + r)|,|x - x_2|\}$ (if
+$x_2 = x$, simply $\frac{1}{n} < \min\{|x - (x_2 - r)|,|x - (x_2 + r)|\}$)
+$B \supseteq (B(x,1/n) \times \{1,2\}) \sminus \{(x,2)\} \in \beta$, so that
+$U$ contains an element of $\beta$, and thus $\beta$ is a local base at $p$.
+
+Since each of the uncountably many sets of the form $\{(x,2)\}$ ($x \in I$)
+must be in any base of $(X,\tau)$, $(X,\tau)$ has no countable base and is
+thus not second countable. \qed
+
+\item Suppose, for sake of contradiction, that $(X,\tau)$ is separable, so
+that, for some countable $S \in \pow{X}$, $\overline{S} = X$. Since
+$I \times \{2\}$ is uncountable, $\exists p \in (I \times \{2\}) \sminus S$.
+But $\{p\} \in \tau$, so that $S \subseteq (X \sminus \{p\})$ contradicts the
+fact that $\overline{S} = X$, since, by Proposition 26, $\overline{S}$ is the
+intersection of closed sets containing $S$. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+Suppose $X$ is compact, and suppose, for sake of contradiction, that there
+exists a family $\mathcal{C} \subseteq \pow{X}$ of closed sets with the finite
+intersection property, such that $\bigcap_{C \in \mathcal{C}} C = \emptyset$.
+
+Define $\mathcal{U} := \{ X \sminus C : C \in \mathcal{C}\}$. Then, by
+DeMorgan's laws,
+\[\bigcup_{U \in \mathcal{U}} U
+ = \bigcup_{C \in \mathcal{C}} X \sminus C
+ = X \sminus \left( \bigcap_{C \in \mathcal{C}} C \right)
+ = X \sminus \emptyset
+ = X.
+\]
+Thus, since any $U \in \mathcal{U}$ is the complement of a closed set, and
+thus open, $\mathcal{U}$ is an open cover of $X$. Since $X$ is compact, there
+exists some finite subcover $\mathcal{V} \subseteq \mathcal{V}$ of $X$.
+However, for
+$\mathcal{D} := \{X \sminus V : V \in \mathcal{V}\} \subseteq \mathcal{C}$,
+by DeMorgan's laws,
+\[\bigcup_{V \in \mathcal{V}} V
+ = \bigcup_{D \in \mathcal{D}} X \sminus D
+ = X \sminus \bigcap_{D \in \mathcal{D}}
+ \subsetneq X,
+\]
+since $\mathcal{D}$ is finite and $\mathcal{C}$ has the
+finite intersection property. However, this contradicts the fact that
+$\mathcal{V}$ is a subcover of $X$. \qed
+
+Conversely, suppose that, for every family $\mathcal{C} \subseteq \pow{X}$ of
+closed sets with the finite intersection property,
+$\bigcap_{C \in \mathcal{C}} C$ is nonempty, and let
+$\mathcal{U} \subseteq \tau$ be an open cover of $X$.
+
+Define $\mathcal{C} := \{X \sminus U : U \in \mathcal{U}\}$. Then, by
+DeMorgan's laws,
+\[\bigcap_{C \in \mathcal{C}}
+ = \bigcap_{U \in \mathcal{U}} X \sminus U
+ = X \sminus \bigcup_{U \in \mathcal{U}} U
+ = \emptyset,
+\]
+since $\mathcal{U}$ covers $X$. Thus, $\mathcal{C}$ cannot have the finite
+intersection property, so that, for some finite
+$\mathcal{D} \subseteq \mathcal{C}$,
+$\bigcap_{D \in \mathcal{D}} D = \emptyset$.
+But then, for
+$\mathcal{V} := \{X \sminus D : D \in \mathcal{D} \subseteq \mathcal{U}$,
+$\mathcal{V}$ is finite, and, by DeMorgan's laws,
+\[\bigcup_{V \in \mathcal{V}} V
+ = \bigcup_{D \in \mathcal{D}} X \sminus D
+ = X \sminus \bigcap_{D \in \mathcal{D}}
+ = X,
+\]
+so that $\mathcal{V}$ is a finite open subcover of $X$. Thus, $X$ is compact.
+\qed
+
+\end{question}
+
+\begin{question}{Problem 6}
+\begin{enumerate}[(i)]
+\item Suppose $U \in \tau$, the standard topology of $\R$. Since $\tau$ is
+closed under translation, $U^{\prime} := \{x + v(\infty) : x \in U\}$ is open
+in $\tau$.
+
+We first show that $u$ is continuous by casing on whether
+$v(\infty) \in U^{\prime}$.
+If $v(\infty) \in U^{\prime}$, then, by definition of $u$,
+$V := v\inv(U^{\prime}) = u\inv(U) \cup \{\infty\}$, which must be open in
+$\tau_{\infty}$, since $v$ is continuous. Since $\infty \in V$, by
+construction of the one-point compactification, $X \sminus u\inv(U)$ is closed
+in $\tau$, so $u\inv(U) \in \tau$.
+If $v(\infty)$ is not in $U^{\prime}$, then, by definition of $u$,
+$V := v\inv(U^{\prime}) = u\inv(U)$, which must be open in $\tau_{\infty}$,
+since $v$ is continuous. Since $V$ does not contain $\infty$, by construction
+of the one-point compactification, $u\inv(U) \in \tau$.
+Therefore, in either case $u\inv(U)$ is open, so $u \in C(X)$.
+
+It remains, then, only to show that, for any $r > 0$, $\exists f \in C_c(X)$
+such that $u \in B(f,r)$, so that $u \in \overline{C_c(X)}$. Let $r > 0$.
+Since $v$ is continuous, $N := v\inv((-r,r)) \in \tau_{\infty}$. Let
+$f: X \rightarrow \R$ be defined by
+\[f(x) :=   \left\{
+                \begin{array}{lcr}
+                    0       & : & x \in N           \\
+                    v(x)    & : & \mbox{otherwise}
+                \end{array}
+            \right..
+\]
+Since $\infty \in N$, for $M := u\inv((-r,r)) = N \sminus \{\infty\}$, by
+construction of the one-point compactification, $X \sminus N$ is compact.
+Since $v$ is nonzero on $X \sminus N$, $X \sminus N$ is the support of $f$,
+so that $f \in C_c(X)$. Since $f = u$ on $X \sminus N$ and $|f - u| < r$ on
+$N$, $u \in B(f,r).$ \qed
+
+\item Suppose $U \in \tau$. We show that $v$ is continuous by casing on
+whether $0 \in U$.
+
+If $0 \in U$, then $v\inv(U) = u\inv(U) \cup \{\infty\}$. Since $u$ is
+continuous, $u\inv(U) \in \tau$, so that $X \sminus u\inv(U)$ is closed.
+Since $u$ is compactly supported and $0 \in U$,
+$X \sminus u\inv(U) \subseteq K$, for some $K$ compact in $\tau$. Since any
+closed subset of a compact set is itself compact, $X \sminus u\inv(U)$ is
+compact. Since $X \sminus u\inv(U)$ is closed and compact, by construction of
+the one-point compactification,
+$v\inv(U) = u\inv(U) \cup\{\infty\} \in \tau_{\infty}$.
+
+If $0 \notin U$, then $v\inv(U) = u\inv(U)$, which must be open in
+$\tau$, since $u$ is continuous. Since $\infty \notin v\inv(U)$, by
+construction of the one-point compactification, $v\inv(U) \in \tau_{\infty}$.
+
+Therefore, in either case, $v\inv(U) \in \tau_{\infty}$, so
+$v \in C(X^{\infty})$. \qed
+\end{enumerate}
+\end{question}
+\end{document}

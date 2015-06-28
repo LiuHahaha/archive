@@ -1,0 +1,262 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{textcomp}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-759 Differential Geometry}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Monday, November 25, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED square
+\newcommand{\inv}{^{-1}}                % inverse
+\newcommand{\ox}{{\overline{X}}}
+\newcommand{\oy}{{\overline{Y}}}
+\newcommand{\oz}{{\overline{Z}}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\sminus}{\backslash}        % set difference
+\renewcommand{\dim}{\operatorname{dim}} % dimension of a vector space
+\renewcommand{\det}{\operatorname{det}} % determinant of a matrix
+\newcommand{\sgn}{\operatorname{sign}}  % determinant of a matrix
+\newcommand{\rnk}{\operatorname{rank}}  % rank of a matrix
+\newcommand{\tr}{\operatorname{trace}}  % trace of a matrix
+\renewcommand{\div}{\operatorname{div}} % divergence of a vector field
+\newcommand{\grad}{\operatorname{grad}} % gradient of a scalar function
+\newcommand{\Ric}{\operatorname{Ric}}   % Ricci curvature
+\newcommand{\N}{\mathbb{N}}             % natural numbers
+\newcommand{\Z}{\mathbb{Z}}             % integers
+\newcommand{\Q}{\mathbb{Q}}             % rational numbers
+\newcommand{\R}{\mathbb{R}}             % real numbers
+\newcommand{\M}{\mathcal{M}}            % manifold M
+\newcommand{\D}{\mathcal{D}}            % \smooth real functions on a manifold
+\newcommand{\B}{\mathcal{B}}            % basis of a topology
+\newcommand{\pow}{\mathcal{P}}          % power set
+\newcommand{\e}{\varepsilon}            % \varepsilon
+\renewcommand{\phi}{\varphi}            % replace \phi with \varphi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname\footnote{\myandrew} \\
+Due: \duedate
+
+I would be willing to present solutions to Exercises 2, 3, or 7.
+
+\begin{question}{Exercise 2}
+\begin{enumerate}[a)]
+\item Since $p$ is a critical point of $f$,
+\begin{align*}
+\langle A_X(Z), X \rangle
+    = \langle \nabla_Z X, X \rangle
+    = \frac{1}{2} \left( \langle \nabla_Z X, X \rangle
+    + \langle X, \nabla_Z X \rangle \right)
+    = Z \langle X, X \rangle
+    = \frac{1}{2} Z f(p)
+    = 0. \qed
+\end{align*}
+
+\item By the Killing Equation,
+\begin{align*}
+\frac12 Z Z \langle X, X \rangle + \langle R(X,Z)X, Z \rangle
+ &  = Z \langle \nabla_Z X, X \rangle + \langle R(X,Z)X, Z \rangle  \\
+ &  = - Z \langle \nabla_X X, Z \rangle + \langle R(X,Z)X, Z \rangle  \\
+ &  = - \langle \nabla_Z \nabla_X X, Z \rangle
+      - \langle \nabla_X X, \nabla_Z Z \rangle
+      + \langle \nabla_Z \nabla_X X - \nabla_X \nabla_Y X + \nabla_{[X,Z]} X,
+        Z \rangle  \\
+ &  = \langle \nabla_{[X,Z]} X, Z \rangle
+    - \langle \nabla_X X, \nabla_Z Z \rangle
+    - \langle \nabla_X \nabla_Z X, Z \rangle    \\
+ &  = \langle \nabla_{[X,Z]} X, Z \rangle
+    - \langle \nabla_X \nabla_Z X, Z \rangle    \\
+ &  = \langle \nabla_Z X, \nabla_Z X \rangle
+    = \langle A_X(Z), A_X(Z) \rangle.
+\end{align*}
+Since
+$\langle \nabla_{[X,Z]} X, Z \rangle = - \langle \nabla_Z X, [X,Z] \rangle$ and
+$\nabla_X X = 0$ (both also by the Killing Equation). \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Exercise 3}
+Let $X$ be a Killing field on $M$. Define $f : M \to \R$ by
+$f(p) = \langle X, X \rangle_p$, $\forall p \in \M$, and let $p \in M$
+be a minimizer of $f$ on $M$ (since $M$ is compact). Suppose, for sake of
+contradiction, that $X(p) \neq 0$.
+
+Define $A : T_p\M \to T_p\M$ by $A(y) = \nabla_X Y$, for an extension $Y$ of
+$y$, and note that $A$ is linear.
+
+Define $E := \{v \in T_p\M : \langle v, X(p) \rangle = 0\}$, and note that
+clearly $\dim E = \dim M - 1$, which is odd.
+
+Since $p$ minimizes $f$ on $M$ and $M$ has no boundary, $df_p = 0$, and hence
+we can apply the results of Exercise 2 at $p$. Thus, for any $y \in E$,
+\[\langle \nabla _Y X, X \rangle (p) = 0,\]
+and so $A(E) \subseteq E$. Note that, by the Killing Equation,
+\[\langle A(Y), Z \rangle
+    = \langle \nabla_Y X, Z \rangle
+    = - \langle \nabla_Z X, Y \rangle
+    = - \langle A(Z), Y \rangle,
+\]
+and so $A : E \to E$ is skew-symmetric, and hence
+\[\det(A)
+    = \det(-A^T)
+    = (-1)^{\dim E} \det(A^T)
+    = -\det(A),
+\]
+so that $\det(A) = 0$. On the other hand, since $p$ minimizes $f$,
+$Z Z f(p) \geq 0$, and, since the sectional curvature is strictly positive, by
+part (b) of Exercise 2, if $Z \neq 0$ then
+\[\langle A(Z), A(Z) \rangle_p
+    = \frac12 Z Z f(p) + \langle R(X,Z)X, Z \rangle_p
+    > 0
+\]
+Thus, $A(Z) \neq 0$, and so $A$ is injective. This is a contradiction. \qed
+\end{question}
+
+\begin{question}{Exercise 7}
+Since each term is a tensor, by multilinearity, it suffices to show for a
+geodesic frame $\{e_i\}$ at $p$ that
+\begin{equation}
+\label{eq:goal}
+\nabla R(e_i,e_j,e_k,e_l,e_h)
+    + \nabla R(e_i,e_j,e_l,e_h,e_k)
+    + \nabla R(e_i,e_j,e_h,e_k,e_l) = 0.
+\end{equation}
+Since $\{e_i\}$ is a geodesic frame, each $\nabla_{e_i} e_j = 0$, and so
+\begin{align*}
+\nabla R(e_i,e_j,e_k,e_l,e_h)
+ &  = e_h \langle R(e_i,e_j)e_k, e_l \rangle
+    = e_h \langle R(e_i,e_j)e_k, e_l \rangle    \\
+ &  = \langle \nabla_{e_h} \nabla_{e_l} \nabla_{e_k} e_i
+    - \nabla_{e_h} \nabla_{e_k} \nabla_{e_l} e_i
+    + \nabla_{e_h} \nabla_{[e_k,e_l]} e_i, e_j \rangle.
+\end{align*}
+Since
+\[R(e_h,[e_k,e_l])e_i
+    = \nabla_{[e_k,e_l]}\nabla_{e_h} e_i
+    - \nabla_{e_h}\nabla_{[e_k,e_l]} e_i
+    + \nabla_{[e_h,[e_k,e_l]]} e_i,
+\]
+\[\nabla_{e_h} \nabla_{[e_k,e_l]} e_i
+    = \nabla_{e_h}\nabla_{[e_k,e_l]} e_i
+    - \nabla_{[e_k,e_l]}\nabla_{e_h} e_i
+    - R(e_h,[e_k,e_l])e_i.
+\]
+
+If we add the three terms together, by the Jacobi Identity, the terms
+\[\nabla_{[e_h,[e_k,e_l]]}
+    + \nabla_{[e_h,[e_k,e_l]]}
+    + \nabla_{[e_h,[e_k,e_l]]}
+    = 0
+\]
+and, since
+\[R(e_h,[e_k,e_l])e_i
+    = \nabla_{e_h} \nabla_{e_l} \nabla_{e_k} e_i
+    - \nabla_{e_h} \nabla_{e_l} \nabla_{e_k} e_i
+    + \nabla_{[e_h,e_l]} \nabla_{e_k} e_i,
+\]
+all terms cancel when we add the three terms in (\ref{eq:goal}). \qed
+\end{question}
+
+\begin{question}{Exercise 9}
+Let $\{e_i\}$ be an orthonormal basis of $T_p\M$ such that, for
+$x = \sum_{i = 1}^n x_ie_i$,
+\[\Ric_p(x) = \sum_i \lambda_i x_i^2,\quad \lambda_i \in \R.\]
+(Why does such a basis exist?)
+Let $B_n$ denote the unit ball at the origin in $\R^n$ (so that
+$S^{n - 1} = \partial B_n$). A well known recurrence relating the volume and
+surface area of the $n$-dimensional sphere unit ball (easily checked by taking
+a derivative of the volume with respect to the radius) gives
+$\operatorname{vol}(B_n) = n \omega_n$.
+
+Thus, for $V : \R^n \to \R^n$ defined by
+$V = (\lambda_1 x_1,\dots,\lambda_n x_n)$ for all $\bx \in \R^n$,
+\begin{align*}
+K(p)
+ &  = \frac{1}{n} \sum_i \Ric_p(e_i)
+    = \frac{1}{n} \sum_i \lambda_i
+    = \frac{1}{\omega_{n - 1}} \sum_i \lambda_i \int_{B^n} \, dB^n \\
+ &  = \frac{1}{\omega_{n - 1}} \int_{B^n} \div V \, dB^n \\
+ &  = \frac{1}{\omega_{n - 1}} \int_{S^{n - 1}}
+                                        \langle V, \nu \rangle \, dS^{n - 1}
+ & \mbox{(by the Divergence Theorem)}      \\
+ &  = \frac{1}{\omega_{n - 1}} \int_{S^{n - 1}}
+                                        \sum_i \lambda_i x_i^2 \, dS^{n - 1} \\
+ &  = \frac{1}{\omega_{n - 1}} \int_{S^{n - 1}} \Ric_p(x) \, dS^{n - 1}, \\
+\end{align*}
+where $\nu = (x_1,\dots,x_n)$ is a unit normal vector to $S^{n - 1}$.
+\end{question}
+
+\begin{question}{Exercise 10}
+\begin{enumerate}[a)]
+\item Let $\{e_i\}$ be a geodesic frame at $p \in \M$. We first show a few
+calculations:
+\begin{align*}
+\sum_{ikjh} \delta_{hj}\delta_{ik}e_s(R_{hijk})
+ &  = e_s \left( \sum_{ikjh} \delta_{hj}\delta_{ik} R_{hijk} \right) \\
+ &  = e_s \left( \sum_{hj} \delta_{hj} R_{hj} \right)               
+    = e_s \left( \sum_{hj} \delta_{hj}(\lambda\delta_{hj})  \right)
+    = ne_s(\lambda).
+\end{align*}
+Also,
+\[
+\sum_{ikjh} \delta_{hj}\delta_{ik} e_s(R_{hiks})
+ = \sum_{ikjh} \delta_{hj} e_j \left( \sum_{ik} -\delta_{ik} R_{hijk} \right)
+ = \sum_{ikjh} \delta_{hj} e_j(\lambda \delta_{hs})
+ = -e_s(\lambda),
+\]
+and, by an essentially identical calculation,
+\[\sum_{ikjh} \delta_{hj}\delta_{ik}e_k(R_{hiks}) = -e_s(\lambda).\]
+
+By the second Bianchi identity (Exercise 7),
+\[e_s(R_{hijk}) + e_j(R_{hiks}) + e_k(R_{hish}) = 0.\]
+Thus,
+\[(n - 2) e_s(\lambda)
+    = ne_s(\lambda) - e_s(\lambda) - e_s(\lambda)
+    = 0,
+\]
+proving the result for $n \geq 3$, since $M^n$ is connected and $s$ was
+arbitrary.  \qed
+
+\item I wasn't able to finish this part.
+\end{enumerate}
+\end{question}
+\end{document}

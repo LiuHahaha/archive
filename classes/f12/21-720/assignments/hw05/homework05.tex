@@ -1,0 +1,262 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-720 Measure and Integration}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Wednesday, October 10, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\LR}[1]{\mathcal{L}\left(\R^{#1}\right)} % Lebesgue measurable sets of \R^{#1}
+\newcommand{\B}{\mathcal{B}} % Borel family of sets
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Problem 1}
+\begin{enumerate}[(a)]
+\item Since any step function is also a simple function, it is immediate from
+the definitions of the Riemann and Lebesgue integrals of step functions and
+simple functions, respectively, that the Riemann and Lebesgue integrals agree
+when $f$ is a step function.
+
+Suppose that $s,t$ are step functions with $s \leq f \leq t$. Then,
+\[\int_I s \, dx
+ =    \int_I s \, d\lambda
+ \leq \int_I f \, d\lambda
+ =    \int_I t \, d\lambda
+ =    \int_I t \, dx,
+\]
+where the first and last terms are Riemann integrals and the other terms are
+Lebesgue integrals.
+Since $f$ is Riemann integrable, taking the supremum over all lower and upper
+step functions $s$ and $t$ gives
+\[\int_I f \, dx
+ \leq \int_I f \, d\lambda
+ \leq \int_I f \, dx,
+\]
+so that the Lebesgue integral exists and is equal to the Riemann integral.
+\qed
+
+\item Let $f$ be defined by $f(x) = \frac{\sin(x)}{x}$,
+$\forall x \in [1,\infty)$. Integration by parts gives that, for the Riemann
+integral,
+\begin{align*}
+\int_1^{\infty} f(x) \, dx
+ & =    \lim_{x \rightarrow \infty} \int_1^x \frac{(1 - \cos(t))^{\prime}}{t} \, dt \\
+ & =    \lim_{x \rightarrow \infty} \left. \frac{1 - \cos(t)}{t} \right|_{t = 1}^x + \lim_{x \rightarrow \infty} \int_1^x \frac{1 - \cos(t)}{t^2} \, dt \\
+ & =    0 + \lim_{x \rightarrow \infty} \int_1^x \frac{1 - \cos(t)}{t^2} \, dt \\
+ & \leq \lim_{x \rightarrow \infty} \int_1^x \frac{2}{t^2} \, dt < \infty. \\
+\end{align*}
+Since $\int_1^x \frac{1 - \cos(t)}{t^2} \, dt$ is monotone and bounded, the limit
+exists, so that $f$ is improper Riemann integrable on $[1,\infty)$.
+
+On the other hand
+\begin{align*}
+\int_{[1,\infty)} f^+(x), \int_{[1,\infty)} f^-(x) \geq \sum_{i = 1}^{\infty} cH_n = \infty,
+\end{align*}
+where $c$ is some positive constant and $H_n$ is the $n^{th}$ harmonic number,
+so that $f$ is not Lebesgue integrable.
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 2}
+\begin{enumerate}[(a)]
+\item We first show the result under the additional hypothesis that $f$ and
+$g$ are simple functions. Let $\{f_1,\dots f_m\}$ be the range of $f$, let
+$\{g_1,\dots,g_n\}$ be let the range of $g$, let
+$F_i := f\inv(\{f_i\}), G_j := g\inv(\{g_j\})$, and let
+$N := \{x \in X : f \neq g\}$, so that $\mu(N) = 0$.
+Then,
+\begin{align*}
+\int_X f \, d\mu
+ & = \sum_{i = 1}^m f_i \mu(F_i) \\
+ & = \sum_{i = 1}^m f_i (\mu(F_i \cap N) + \mu(F_i \cap N^c))
+                    & (\mbox{$\Sigma$ complete $\Rightarrow N \in \Sigma$}) \\
+ & = \sum_{i = 1}^m f_i \mu(F_i \cap N^c)
+                  & (\mbox{monotonicity $\Rightarrow \mu(F_i \cap N) = 0$}) \\
+ & = \int_{X \sminus N} f \, d\mu
+   = \int_{X \sminus N} g \, d\mu
+   = \int_X g \, d\mu, & (\mbox{$f = g$ on $X \sminus N$})
+\end{align*}
+where the last equality holds due to symmetry.
+
+We now relax the assumption that $f$ and $g$ are simple. Suppose
+$s: X \rightarrow [-\infty,\infty]$ is simple with $s \leq f^+$. Then, for
+$t: X \rightarrow [-\infty,\infty]$ defined by
+\[t(x) :=   \left\{
+                \begin{array}{lcr}
+                    s(x) & : & f(x) = g(x) \\
+                    0    & : & \mbox{otherwise}
+                \end{array}
+            \right.,\]
+$s = t$ a.e. (since $f = g$ a.e.), so that
+$\int_X s \, d\mu = \int_X t_s \, d\mu$ Thus, since $t \leq g^+$, taking
+the supremum over all $s$ on both sides gives,
+$\int_X f^+ \, d\mu \leq \int_X g^+ \, d\mu$.
+A symmetric argument shows that
+$\int_X f^+ \, d\mu \geq \int \int_X g^+ \, d\mu$
+and then an identical argument shows that
+$\int_X f^- \, d\mu = \int_X g^- \, d\mu$, so that, as desired,
+\[\int_X f \, d\mu
+ = \int_X f^+ \, d\mu - \int_X f^- \, d\mu
+ = \int_X g^+ \, d\mu - \int_X g^- \, d\mu
+ = \int_X g \, d\mu. \mqed\]
+
+\item $\forall n \in \N$, define $g_n: X \rightarrow [-\infty,\infty]$ by
+\[g_n(x) := \left\{
+                \begin{array}{lcr}
+                    f_n(x)  & : & \lim_{n \rightarrow \infty} f_n(x) = (x) \\
+                    f(x)    & : & \mbox{otherwise}
+                \end{array}
+            \right.,\]
+Then, $g_n = f_n$ almost everywhere, so that, by the result of part (a), and
+then by Fatou's Lemma (since $(g_n) \rightarrow f$ pointwise on $E$),
+\[\lim \inf_n \int_E f_n \, d\mu
+ =    \lim \inf_n \int_E g_n d\mu \,
+ \geq \int_E f \, d\mu. \mqed\]
+\end{enumerate}
+\end{question}
+
+\newpage
+\begin{question}{Problem 3}
+If $\mu_{f\inv}$ is the pushforward measure of $\lambda$ by $f\inv$,
+then $\mu_{f\inv}(I) = 0$ for all cells $I$. By the result of part (a) of
+Problem 3 on Assignment 3, since the set of cells is a $\pi$-system,
+$\mu_{f\inv} = 0$ on the $\sigma$-algebra generated by cells, which is the
+Borel $\sigma$-algebra. Since $\LR{d}$ is the completion of the Borel
+$\sigma$-algebra under the Lebesgue measure, $\mu_{f\inv}(E) = 0$ except
+perhaps for sets of Lebesgue measure $0$. But then, $f = 0$ almost
+everywhere. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item Suppose $x \in [0,\infty)$. Then, by the dominated convergence
+theorem, since $|e^{-st}f(t)| \leq |f(t)|$ for $s,t \in [0,\infty)$ and
+$\int_0^{\infty} |f(t)| \, dt < \infty$,
+\[\lim_{s \rightarrow x} F(s)
+   = \lim_{s \rightarrow x} \int_0^{\infty} e^{-st}f(t) \, dt
+   = \int_0^{\infty} \lim_{s \rightarrow x} e^{-st}f(t) \, dt \\
+   = \int_0^{\infty} e^{-xt}f(t) \, dt
+   = F(x).\]
+Thus, $F$ is continuous. \qed
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5}
+\begin{enumerate}[(a)]
+\item If $\det(T) = 0$, then $T(A)$ is a subspace of $\R^d$ with
+$\dim(T(A)) < d$. Thus, by the result of part (a) of Problem 2 on Assignment
+1, $\lambda(T(A)) = 0 = |\det(T)| \lambda(A)$.
+
+Note that, since the image of a cell under a scaling transformation is a cell
+whose volume is the product of the scaling factors in each dimension and the
+volume of the original cell (the same as the determinant of such a
+transformation), for any cell $I$, if $E$ is a scaling matrix,
+\[\lambda(E(I)) = \vol(E(I)) = |\det(E)|\vol(I) = |\det(E)|\lambda(I).\]
+It follows then, from the definition of the Lebesgue measure that the above
+equality holds for any $I \in \LR{d}$.
+
+Recall also that, by the result of part (b) of Problem 3 on Assignment 1,
+if $E$ is an orthogonal matrix, then, since $\det(E) = \pm 1$,
+\[\lambda(E(I)) = \lambda(I) = |\det(E)|\lambda(I).\]
+
+We now consider the case that $T$ is any nonsingular linear transformation.
+Then, $T$ has a unique polar decomposition, so that $T = UP$, where $U$ is
+orthogonal and $P$ is symmetric. Since $P$ is symmetric, $P$ can be
+diagonalized on an orthogonal basis, so that $P = Q\Lambda Q^T$, where $Q$,
+and thus $Q^T$, are orthogonal, and $\Lambda$ is diagonal (and thus a scaling
+transformation). Then, $\forall E \in \LR{d}$,
+\begin{align*}
+\lambda(T(E))
+ & = \lambda(UQ\Lambda Q^T(E))                                              \\
+ & = \lambda(\Lambda Q^T(E))          & \mbox{(since $UQ$ is orthogonal)}   \\
+ & = |\det(\Lambda)|\lambda(Q^T(E))   & \mbox{(since $\Lambda$ is diagonal)} \\
+ & = |\det(\Lambda)|\lambda(E)        
+   = |\det(T)|\lambda(E),
+\end{align*}
+since the determinant is multiplicative. \qed
+
+%TODO
+\item We first show the result in the case that $f$ is a simple function.
+Suppose $\{c_1,c_2,\ldots,c_k\}$ is the range of $f$, and let
+$A_i := \{x \in E | f(x) = c_k\}$. Then, (noting that
+$\det(T)$ is nonzero, since $T$ is invertible),
+\begin{align*}
+\int_{E} f \, d\mu
+ & = \sum_{i = 1}^k c_i \lambda(A_i) & \mbox{(since $f$ is simple)} \\
+ & = \sum_{i = 1}^k c_i |\det(T)| \lambda(T\inv(A_i)) & \mbox{(by the result of part (a))} \\
+ & = \int_{T\inv(E)} (f \, \circ \, T)|\det(T)| \, d\lambda & \mbox{(since $(f \, \circ \, T) |\det(T)|$ is simple)}
+\end{align*}
+since $T\inv(A_i) = \left\{ x \in T\inv(E) \; | \; (f \, \circ \, T)(x) |\det(T)| = c_i|\det(T)| \right\}$.
+
+Now suppose $f$ is any Lebesgue Integrable function. Since the result holds
+for simple functions, and, for any simple function
+$s : E \rightarrow \R$ with $s \leq f$,
+$(s \, \circ \, T) |\det(T)| : T\inv(E) \rightarrow \R$ is simple, by
+definition of the Lebesgue integral for general functions (in terms of simple
+functions), as desired,
+\[\int_E f \, d\lambda
+ = \int_{T\inv(E)} \, (f \, \circ \, T) |\det(T)| \, d\lambda. \mqed \]
+\end{enumerate}
+\end{question}
+\end{document}

@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{8}
+\newcommand{\duedate}{Wednesday, May 2, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\bvarphi}{\boldsymbol{\varphi}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\meas}{\operatorname{meas}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bfg}{\mathbf{g}}
+\newcommand{\bfh}{\mathbf{h}}
+\newcommand{\pjm}{Peano-Jordan measurable }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Problem 1}
+Let $F := f^{-1}((0,\infty))$ and let $G := f^{-1}(-\infty,0))$.
+Since $f^+$ and $f^-$ are Riemann integrable in the improper sense over $E$,
+there exist exhausting sequences $\{A_n\}_{n \in \mathbb{N}}$ and
+$\{B_n\}_{n \in \mathbb{N}}$ of $E$ such that $f^+$ is Riemann integrable over
+each $A_i$ and $f^-$ is Riemann integrable over each $B_i$.
+$\forall i \in \mathbb{N}$, define $F_i = A_i \cap F$ and $G_i = B_i \cap G$.
+Note that, since $f^+$ and $f^-$ are Riemann integrable over $A_i$ and $B_i$
+respectively, $f^+$ and $f^-$ are bounded over $A_i$ and $B_i$, respectively,
+and, furthermore, each $A_i$ and each $B_i$ is Peano-Jordan measurable. Thus,
+for each $i \in \mathbb{N}$, if $R$ is a rectangle with
+$A_i \cup B_i \subseteq R$, then
+\[\int_{A_i} f^+ \; d\bx
+ = \int_R f^+\chi_{A_i} \; d\bx
+ = \int_R f\chi_{A_i \cap F} \; d\bx
+ = \int_R f\chi_{F_i} \; d\bx
+ = \int_{F_i} f \; d\bx
+\]
+and
+\[\int_{B_i} f^- \; d\bx
+ = \int_R f^-\chi_{B_i} \; d\bx
+ = \int_R -f\chi_{B_i \cap G} \; d\bx
+ = \int_R -f\chi_{G_i} \; d\bx
+ = \int_{G_i} -f \; d\bx
+,\]
+so that $f$ is integrable over each $F_n$ and each $G_n$.
+Note that, since $\int_E f^+ = \infty$, $\forall i \in \mathbb{N}$,
+$\exists j_i \in \mathbb{N}$ such that
+$\int_{F_{j_i}} f^+ \geq 1 + \int_{G_i} f^-$, so that, since $f = f^+ - f^-$,
+$\forall i \in \mathbb{N}$, 
+\[\int_{F_{j_i} \cup G_i} f \geq 1.\]
+Thus, since $\{F_{j_i} \cup G_i\}_{i \in \mathbb{N}}$ is an exhausting
+sequence, if $f$ were Riemann integrable in the improper sense over $E$,
+taking the limit as $i \rightarrow \infty$ then $\int_E f \; d\bx \geq 1$.
+
+Similarly, since $\int_E f^+ = \infty$, $\forall i \in \mathbb{N}$,
+$\exists k_i \in \mathbb{N}$ such that
+$\int_{G_i} f^- \geq 1 + \int_{F_i} f^+$,
+$\forall i \in \mathbb{N}$, 
+\[\int_{F_i \cup G_{k_i}} f \leq -1.\]
+Thus, since $\{F_i \cup G_{k_i}\}_{i \in \mathbb{N}}$ is an exhausting
+sequence, if $f$ were Riemann integrable in the improper sense over $E$,
+taking the limit as $i \rightarrow \infty$ then $\int_E f \; d\bx \leq -1$.
+Therefore, $f$ cannot be Riemann integrable over $E$ in the improper sense.
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+Suppose $k$ with $1 \leq k < N$, nonempty $M \subseteq \mathbb{R}^N$,
+$m \in \mathbb{N}$, $\bx_0 \in M$, $U \subseteq \mathbb{R}^N$ and
+$\bfg: U \rightarrow \mathbb{R}^{N - k}$ satisfy (ii) in Proposition 219.
+
+Since $\rank J_g = N - k$,
+we can relabel the components of $g$ such that, for some
+$\ba \in \mathbb{R}^k$, $\bb \in \mathbb{R}^{N - k}$, $\bx_0 = (\ba,\bb)$ and
+\[\det \frac{\partial \bfg}{\partial \by}(\ba,\bb) \neq 0.\] Since
+$\bx_0 \in M \cap U$, so that $\bfg(\ba,\bb) = \bzero$, by the Implicit
+Function Theorem, there exist
+nonempty open balls $W = B_N(\ba,r_0) \subseteq \mathbb{R}^k$ and
+$V = B_M(\bb,r_1)$ with $W \times V \subseteq U$ and a function
+$\bfh: W \rightarrow $ of class $C^m$ such that $\forall \bx \in W$,
+$\bfg(\bx,\bfh(\bx)) = \bzero$ and $\bfh(\ba) = \bb$.
+
+Therefore, for the open set $U_2 = W \times V$ with $\bx_0 \in U_2$,
+if we define $\bvarphi:W \rightarrow M \cap U_2$ so that,
+$\forall \bx \in W$, $\bvarphi(\bx) = (\bx,\bfh(\bx))$, $\bvarphi$ is
+invertible with continuous inverse ($\bvarphi^{-1}(\bx,\bfh\bx)) = \bx$), so
+that $\bvarphi$ is a homeomorphism from $W$ to $M \cap U_2$, and
+$\rank J_{\bvarphi} = k$, since $J_{\bvarphi}$ contains $I_k$ as a submatrix.
+The regularity of $\bvarphi$ is that of $\bfh$, so that $\bvarphi$ is of class
+$C^m$.
+
+Thus, $\bvarphi$ serves as a class $C^m$ local chart for $M$ near $\bx_0$, so
+that $M$ is a $k$-dimensional surface of class $C^m$, and thus (ii) implies
+(i) in Proposition 219. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Let $\bx_0 \in M$, and let $U = M$, so that $\bx_0 \in U$.
+Since the components of $\bvarphi$ are all polynomials, $\bvarphi$ is of class
+$C^{\infty}$. Furthermore, $\bvarphi^{-1}$ is the function
+$(x,y,z) \mapsto (z,x - z)$, which is also clearly of class $C^{\infty}$.
+Therefore, $\bvarphi$ is a homeomorphism from $V$ to $M \cap U$. Since $U$ is
+inverse image of $V$ under $\bvarphi^{-1}$ and $\bvarphi^{-1}$ is continuous,
+since $V$ is open (since it contains none of its boundary), $U$ is open. Thus,
+it remains only to show that $\rank J_{\bvarphi}(u,v) = 2$,
+$\forall (u,v) \in V$.
+\[J_{\bvarphi}(u,v) =
+  \begin{bmatrix}
+    1 & 1  \\
+    0 & 2v \\
+    1 & 0
+  \end{bmatrix}
+,\]
+which always has rank $2$, since the first and last rows are clearly linearly
+independent. Therefore, by definition, $M$ is a $2$-dimensional surface of
+class $C^{\infty}$. \qed
+
+\item Note that $\bvarphi:V \rightarrow M$ is global chart for $M$, so that by
+definition of the Surface Integral, if $f$ is the function
+$(x,y,z) \mapsto (u,v)$,
+\[\int_M z \; d\mathcal{H}^2 = \int_V f(\bvarphi(\by))\sqrt{
+    \sum_{\balpha \in \Lambda_{N,2}}
+        \left[
+            \det\frac{
+                \partial(\varphi_{\alpha_1},\varphi_{\alpha_2})}
+                {(y_1,y_2)}
+            (\by)
+        \right]^2
+} \; d\by.\]
+
+It follows from the computation of $J_{\bvarphi}$ in part (a) above, that,
+$\forall (u,v) \in V$,
+\[\sum_{\balpha \in \Lambda_{N,2}}
+    \left[
+        \det\frac{
+            \partial(\varphi_{\alpha_1},\varphi_{\alpha_2})}
+            {(y_1,y_2)}
+        (\by)
+    \right]^2
+ = (-1)^2 + (2v)^2 + (-2v)^2 = 1 + 8v^2.\]
+Therefore, noting that $f \circ \bvarphi$ is the function $(u,v) \mapsto u$,
+by Theorem 160 (Repeated Integration)
+\begin{eqnarray*}
+\int_M z \; d\mathcal{H}^2
+ & = & \int_V u\sqrt{1 + 8v^2} \; d\by \\
+ & = & \int_0^1 \left(\int_0^{\sqrt{v}} u \sqrt{1 + 8v^2} \; du\right)\; dv \\
+ & = & \int_0^1 \frac12 v\sqrt{1 + 8v^2} \; dv \\
+ & = & \frac{1}{48}(1 + 8v^2)^{3/2} \bigg|_{v = 0}^{v = 1} \\
+ & = & \mbox{\fbox{$\displaystyle \frac{13}{24}$.}}
+\end{eqnarray*}
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+Suppose, for sake of contradiction, that $M$ is a $2$-dimensional surface of
+class $C^1$, so that, by Proposition 219 (the alternative definition of the
+manifold), $\forall \bx_0 \in M$, $\exists$ an open set
+$U \subseteq \mathbb{R}^3$ containing $\bx_0$ and
+$g: U \rightarrow \mathbb{R}$ of class $C^1$, such that
+\[M \cap U = \{\bx \in U : g(\bx) = \bzero\},\] and
+$\rank (J_g(\bx)) = 1$, $\forall \bx \in M \cap U$; in particular, we
+take the open set $U$ and the function $g$ for $\bx_0 = \bzero$.
+Note that, since $g$ is a scalar function, $J_g = \nabla g$, so that it
+suffices to show that $\nabla g(\bzero) = \bzero$.
+
+By Theorem 10, since $U$ is open and $g \in C^1(U)$, all the directional
+derivatives of $g$ exist at $\bzero$, and furthermore, for any direction
+$\bv$,
+\[\frac{\partial g}{\partial \bv_1}(\bzero)
+ = \nabla g(\bzero)\cdot\bv
+.\]
+Define the directions $\bv_1 = (\sqrt2,0,\sqrt2)$,
+$\bv_2 = (0,\sqrt2,\sqrt2)$,
+$\bv_3 = (\frac12,\frac12,\frac{1}{\sqrt2})$. It is easily checked that,
+$\forall t \geq 0$, $t\bv_1,t\bv_2,t\bv_3 \in M$, and, since $U$ is open, for
+some $r > 0$, $\forall$ positive $t < r$, $t\bv_1,t\bv_2,t\bv_3 \in U$.
+Therefore, since since $g$ is identically $0$ on $M \cap U$, it follows from
+the definition of directional derivative that
+\[\frac{\partial g}{\partial \bv_1}
+= \frac{\partial g}{\partial \bv_2}
+= \frac{\partial g}{\partial \bv_3} = 0.\]
+Therefore, if $\nabla g = (x,y,z)$,
+\[\sqrt2x + \sqrt2z
+ = \nabla g(\bzero) \cdot (\sqrt2,0,\sqrt2)
+ = \frac{\partial g}{\partial \bv_1}(\bzero) = 0,\]
+\[\sqrt2y + \sqrt2z
+ = \nabla g(\bzero) \cdot (0,\sqrt2,\sqrt2)
+ = \frac{\partial g}{\partial \bv_2}(\bzero) = 0,\]
+and
+\[x/2 + y/2 + z/\sqrt2
+ = \nabla g(\bzero) \cdot (\frac12,\frac12,\frac{1}{\sqrt2})
+ = \frac{\partial g}{\partial \bv_1}(\bzero) = 0.\]
+However, the only solution to this system of equations is $x = y = z = 0$,
+so that $\nabla g = \bzero$, giving the desired contradiction. \qed
+\end{question}
+\end{document}

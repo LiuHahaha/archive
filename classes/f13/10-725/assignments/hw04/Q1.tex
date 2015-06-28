@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+%\usepackage{mysymbols}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\prox{\mathrm{prox}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}   % argmin
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}   % argmax
+\newcommand{\inv}{{^{-1}}}                              % inverse
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+
+\begin{document}
+\twocolumn
+
+\section{Mastery set [20 points] (Yifei)}
+
+\textbf{A [5 points]}
+Let $\|\cdot\|_1$ be a norm, let $\|\cdot\|_2$ be the
+dual norm of $\|\cdot\|_1$, and let $\|\cdot\|_3$ be the dual norm of
+$\|\cdot\|_2$. The conjugate of $\|\cdot\|_1$ is the indicator function
+$I_{\{z : \|z\|_2 \leq 1\}}$ of the unit ball under $\|\cdot\|_2$. The
+conjugate of $I_{\{z : \|z\|_2 \leq 1\}}$ is
+\[\left(x \mapsto \max_{\|z\|_2 \leq 1}z^Tx \right) = \|\cdot\|_3.\]
+Since every norm is convex and continuous (in finite dimensions),
+$\|\cdot\|_3 = \|\cdot\|_1^{**} = \|\cdot\|_1$. \qed
+
+\textbf{B [5 points]}
+
+The KKT conditions give
+\begin{align*}
+0
+ &  \in \partial \left( \frac{1}{2}\|x - y\|_2^2 + \lambda \|x\|_1 \right)  \\
+ &  \in x - y + \lambda \left\{
+        \begin{array}{ll}
+            [-1,1]              & : \mbox{ if } x_i = 0      \\
+            \{\sgn(x_i)\}   & : \mbox{ if } x_i \neq 0
+        \end{array}
+    \right..
+\end{align*}
+
+\textbf{C [5 points]} The dual program is
+\begin{align*}
+\min_{u \in \R^4} \quad &   u_1 + u_2         \\
+\mbox{ such that } \quad
+                        &   u_1 + u_2/3 - u_3   \geq 1, \\
+                        &   u_1/2 + u_2  - u_4  \geq 1, \\
+\mbox{ and } \quad
+                        &   u_1, u_2 u_3, u_4   \geq 0.
+\end{align*}
+We have strong duality
+
+
+
+Since we have strong duality, we change the optimization problem into an
+equivalent feasibility problem by finding point where the dual is equal to the
+primal; i.e., we add the constraint
+\[u_1 + u_2 \leq x_1 + x_2\]
+and find a feasible point over all $6$ primal and dual variables.
+
+\textbf{D [5 points]} The Lagrangian of the dual is
+\[L(u,v,x) = -f^*(-A^Tu - C^Tv) - b^Tu - d^Tv + x^Tu.\]
+Thus, the dual of the dual is
+\begin{align*}
+\min_{x \in \R^n, x \leq 0} & \; \max_{u \in \R^m, v \in \R^n}   \\
+                            &        -f^*(-A^Tu - C^Tv) - b^Tu - d^Tv + x^Tu \\
+\end{align*}
+\end{document}

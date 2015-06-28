@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Friday, August 10, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Extra Credit Project \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\begin{question}{Section 8.1, Problem 23}
+\begin{enumerate}[(a)]
+\item By definition of $E_n$ and $E_{n + 1}$, equation (20) gives
+\[E_{n + 1}
+ = E_n + h(f(t_n,\phi(t_n)) - f(t_n,y_n)) + \frac12\phi(\bar{t}_n)h^2.\]
+Then, since $h > 0$, the triangle inequality then gives
+\[|E_{n + 1}|
+ \leq |E_n| + h|f(t_n,\phi(t_n)) - f(t_n,y_n)| + \frac12h^2|\phi(\bar{t}_n)|.\]
+
+Since $f$ is Lipschitz in its second argument with Lipschitz constant $L$,
+$|f(t_n,\phi(t_n)) - f(t_n,y_n)| \leq L|\phi(t_n) - y_n| = L|E_n|$, so that
+\begin{equation}
+|E_n| + h|f(t_n,\phi(t_n)) - f(t_n,y_n)| \leq  |E_n| + hL|E_n| = \alpha|E_n|.
+\end{equation}
+
+Since, $\frac12h^2 \geq 0$ and, by definition of $\beta$,
+$|\phi^{\prime\prime}(\bar{t}_n)| \leq \beta$,
+\begin{equation}
+\frac12h^2|\phi(\bar{t}_n)| \leq \beta h^2.
+\end{equation}
+Adding equations (1) and (2) gives
+\[|E_n| + h|f(t_n,\phi(t_n)) - f(t_n,y_n)| + \frac12h^2|\phi(\bar{t}_n)|
+ \leq \alpha|E_n| + \beta h^2,
+\]
+so that, as desired,
+\[|E_{n + 1}|
+ \leq |E_n| + h|f(t_n,\phi(t_n)) - f(t_n,y_n)| + \frac12h^2|\phi(\bar{t}_n)|
+ \leq \alpha|E_n| + \beta h^2. \mqed
+\]
+
+\item By definition of $\alpha$,
+\[|E_n|
+   \leq   \beta h^2\frac{\alpha^n - 1}  {\alpha - 1}
+   =      \beta h^2\frac{(1 + hL)^n - 1}{(1 + hL) - 1}
+   =      \beta h  \frac{(1 + hL)^n - 1}{L}. \mqed
+\]
+
+\item Since, $\forall x \in \mathbb{R}$, $1 + x \leq e^x$ (this can be shown
+for $x \geq 0$ by noting that the first derivative of $e^x - 1$ is positive
+and $e^0 - 1 = 0$, and can be shown for $x < 0$ by noting that $e^x$ is
+everywhere positive), $1 + hL \leq e^{hl}$. Thus, $(1 + hL)^n \leq e^{nhl}$.
+\qed
+\end{enumerate}
+\end{question}
+\end{document}

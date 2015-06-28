@@ -1,0 +1,114 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{enumerate,comment}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\X}{\mathcal{X}}
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\sgn}{{\operatorname{sign}}}
+\newcommand{\KL}{{\operatorname{KL}}}
+\def\hbeta{\hat{\beta}}
+\def\hu{\hat{u}}
+
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{2}
+\section{Binary sequences of piecewise constant expectation [30 points]}
+\begin{enumerate}[(a)]
+\item Let $m = n - 1$, and, for each $j \in \{1,\dots,m\}$ let
+$d_j := (0,\dots,0,1,-1,0,\dots,0) \in \R^n$, with $d_{j,j} = 1$ and
+$d_{j,j + 1} = -1$. Then, for $x_i = e_i$, (4) is clearly equivalent to
+
+\[\min_{\beta \in \R^p} \sum_{i = 1}^n - t_i \cdot x_i^T\beta
+    + \log\left(1 + \exp(x_i^T\beta) \right)
+    + \lambda \sum_{j = 1}^m |d_j\beta|,
+\]
+which is of the form considered in Homework 3. $D \in \R^{m \times n}$ is the
+matrix with $j^{th}$ row $d_j$. \qed
+
+\item For notational convenience, we note that, if $H : [0,1] \to [0,\infty)$
+is the entropy function
+\[H(p) = -p\log p - (1 - p)\log(1 - p),\]
+then $\displaystyle g(u) = \sum_{t = 1}^n H(y_t(D^Tu)_t)$. Since
+$\displaystyle \frac{d}{dp} H(p) = -\log\left( \frac{p}{1 - p} \right)$, by the
+Chain Rule,
+\[ \nabla g(u)
+    = -\sum_{t = 1}^n \log\left( \frac{y_t(D^Tu)_t}{1 - y_t(D^Tu)_t} \right)
+        y_t \nabla (D^Tu)_t
+    = -\sum_{t = 1}^n \log\left( \frac{y_t(D^Tu)_t}{1 - y_t(D^Tu)_t} \right)
+        y_t d_t^T
+    = Dc(u),
+\]
+where, for $t \in \{1,\dots,n\}$,
+\[(c(u))_t
+    = - \log\left( \frac{y_t(D^Tu)_t}{1 - y_t(D^Tu)_t} \right) y_t.
+\]
+Since $\displaystyle \frac{d}{dp} \log \left( \frac{p}{1 - p} \right)
+    = \frac{1}{p(1 - p)}$,
+\[\nabla(c(u))_t
+    = -\frac{y_td_t^T}{y_t(D^Tu)_t(1 - y_t(D^Tu)_t)}
+    = -\frac{d_t^T}{(D^Tu)_t(1 - y_t(D^Tu)_t)},
+\]
+so $\nabla c(u) = W(u)D^T$, where $W(u)$ is the diagonal matrix with
+\[W_{t,t}(u) = -\frac{1}{(D^Tu)_t(1 - y_t(D^Tu)_t)},\]
+and hence $\nabla^2 g(u) = D\nabla c(u) = DW(u)D^T$.
+
+The log barrier function is
+\[\phi(u)
+    = \sum_{t = 1}^n \log(y_t(D^Tu)_t) + \log(1 - y_t(D^Tu)_t)
+    + \sum_{i = 1}^m \log(\lambda - u_i) + \log(u_i + \lambda).
+\]
+Thus, for each $i \in \{1,\dots,m\}$,
+\begin{align*}
+(\nabla(\phi(u))_i
+ &  = \frac{1}{u_i - \lambda} + \frac{1}{u_i + \lambda}
+    + \sum_{t = 1}^n \frac{2y_t(D^Tu)_t - 1}{y_t(D^Tu)_t(y_t(D^Tu)_t - 1)}
+    (y_td_t^T)  \\
+ &  = \frac{2u_i}{u_i^2  - \lambda^2}
+    + \sum_{t = 1}^n \frac{2y_t(D^Tu)_t - 1}{(D^Tu)_t(y_t(D^Tu)_t - 1)}
+    d_t^T  \\
+\end{align*}
+Thus, $\nabla\phi(u) = a(u) + Db(u)$, where for each $i \in \{1,\dots,m\}$,
+\[(a(u))_i = \frac{2u_i}{u_i^2  - \lambda^2}
+    \quad \mbox{ and } \quad
+  (b(u))_i = \sum_{t = 1}^n \frac{2y_t(D^Tu)_t - 1}{(D^Tu)_t(y_t(D^Tu)_t - 1)}.
+\]
+Since
+$\displaystyle (\nabla (a(u))_i)_i = -\frac{2(u_i^2 + 1)}{(u_i^2 - 1)^2}$,
+\[\nabla^2 \phi(u)
+    = U(u) + DV(u)D^T,
+\]
+where $U(u)$ and $W(u)$ are diagonal matrices with
+\[U_{i,i}(u) = -\frac{2(u_i^2 + 1)}{(u_i^2 - 1)^2}
+    \quad \mbox{ and } \quad
+  V_{t,t}(u) = \frac{-2(y_t(D^T)_t)^2 + 2y_t(D^T)_t - 1}
+                            {(D^Tu)_t^2(y_t(D^Tu)_t - 1)^2}.
+\]
+The Newton step is
+\begin{align*}
+      \left[ \nabla^2 (\tau g(u) + \phi(u)) \right]\inv
+ &                                      \nabla (\tau g(u) + \phi(u))    \\
+ &  = \left[ D(\tau W(u) + V(u))D^T + U(u) \right]\inv
+                                        \nabla (\tau D(c(u) + b(u)) + a(u)).
+\end{align*}
+
+\item See attached code.
+
+%TODO
+\item
+
+\end{enumerate}
+
+\end{document}

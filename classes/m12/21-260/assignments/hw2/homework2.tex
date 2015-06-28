@@ -1,0 +1,205 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-260 Differential Equations}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Tuesday, July 10, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diffeq}{differential equation }
+\newcommand{\inv}{^{-1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+
+\begin{question}{Section 2.3, Problem 6}
+\begin{enumerate}[(a)]
+\item The gravitational potential energy of a particle with mass $m$ at height
+$h$ is $mgh$, whereas the kinetic energy of such a particle after having
+fallen from height $h$ is $\frac12 mv^2$, where $v$ is the speed of the
+particle; equating the two by Conservation of Energy and solving for $v$
+gives (by Torricelli's principle) the desired quantity:
+\[v = \sqrt{\frac{2mgh}{m}} = \sqrt{2gh}.\mqed\]
+
+\item The instantaneous rate of change of the volume $V$ of liquid in the tank
+is the product of the cross-sectional area of the tank (as seen from above)
+and the instantaneous rate of change in the height of the liquid in the tank:
+$\frac{dV}{dt} = A(h) \frac{dh}{dt}$.
+
+Assuming the density of the water in the tank is uniform, since the mass is
+conserved, this is the same as the volumetric rate of outflow from the tank,
+which is the product of the cross-sectional area of the outflow stream and the
+outflow velocity $v$:
+$\frac{dV}{dt} = -\alpha av$.
+
+Thus, by the result of part (a), as desired,
+\begin{equation}
+A(h) \frac{dh}{dt} = -\alpha a\sqrt{2gh}. \mqed
+\end{equation}
+
+\item Since the tank is a right cylinder, for $0\,m < h < 3\,m$,
+$A = \pi\,m^2$ in equation (1) above is constant with respect to $h$. Thus,
+rewriting equation (1) as
+\[Ah^{-1/2} \frac{dh}{dt} = -\alpha a\sqrt{2g}\]
+shows that the equation is separable, so that, as shown in class,
+\[2A\sqrt{h}
+ = \int Ah^{-1/2} \; dh
+ = \int -\alpha a\sqrt{2g} \; dt
+ = (-\alpha a\sqrt{2g})t + C,
+\]
+for some $C \in \mathbb{R}$. Since the tank is initially full,
+$h(0) = 3 \, m$, giving $C = 2\sqrt{3}A$. Thus, when $h = 0$,
+\[t
+ =         \frac{2\sqrt{3}A}{\alpha a\sqrt{2g}}
+ \approx   \mbox{
+               \fbox{
+                   $130\,s$.
+               }
+           }
+\]
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 2.3, Problem 8}
+\begin{enumerate}[(a)]
+\item As derived in example 2 in section 2.3 of the textbook,
+\begin{equation}
+S(t) = \mbox{\fbox{$\displaystyle \frac{k}{r}\left(e^{rt} - 1)\right)$.}}
+\end{equation}
+
+\item Solving equation (2) above in the case $S = 10^6$, $r = 0.075$, $t = 40$
+for $k$ gives
+\[k
+ = \frac{0.075\cdot10^6}{e^{0.075\cdot40} - 1}
+ \approx \mbox{\fbox{3930}}
+\]
+
+\item Solving equation (2) above in the case $S = 10^6$, $k = 2000$, $t = 40$
+for $r$ gives
+\[r \approx \mbox{\fbox{0.098.}}\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Section 2.4, Problem 30}
+The \diffeq can be re-written in the form
+\begin{equation}
+y^{-3}y^{\prime} - \epsilon y^{-2} = -\sigma.
+\end{equation}
+For $v = y^{1 - n} = y^{-2}$, $v^{\prime} = -2y^{-3}y^{\prime}$ (where
+differentiation is with respect to the independent variable). Thus,
+substituting $v$ and $v^{\prime}$ appropriately into equation (1) gives:
+\[-\frac12v^{\prime} - \epsilon v = -\sigma,\]
+which is a linear first-order ODE, whose standard form is
+\[v^{\prime} + 2\epsilon v = 2\sigma.\]
+Let $\mu = e^{\int 2\epsilon \, dt} = e^{2\epsilon t}$. Then, multiplying by
+$\mu$ gives
+\[v^{\prime}\mu + 2\epsilon v\mu = 2\sigma\mu,\]
+so that
+\[v\mu
+ = \int \left( v^{\prime}\mu + 2\epsilon v\mu \right)\,dt
+ = \int 2\sigma\mu\,dt
+ = \frac{2\sigma e^{2\epsilon t}}{2 \epsilon} + C,
+\]
+for some $C \in \mathbb{R}$. Thus,
+\[v
+ = \frac{2\sigma e^{2\epsilon t}}{2\epsilon\mu} + \frac{C}{\mu}
+ = \frac{2\sigma}{2\epsilon} + Ce^{-2\epsilon t},
+\]
+so that
+\[y
+ = v^{-1/2}
+ = \mbox{
+    \fbox{
+        $\displaystyle \left(
+                                \frac{2\sigma}
+                                     {2\epsilon}
+                                + Ce^{-2\epsilon t}
+                       \right)^{-1/2}$.
+    }
+   }
+\]
+
+\end{question}
+
+\begin{question}{Section 2.5, Problem 10}
+Figure 1 (see last page) shows sketch of graph of $f$. $f(y)$ has as roots
+$y \in \{-1,0,1\}$. Furthermore, $\forall y \in (-\infty,-1), f(y) > 0$,
+$\forall y \in (-1,0), f(y) < 0$, $\forall y \in (0,1), f(y) > 0$, and,
+$\forall y \in (1,\infty), f(y) < 0$. \fbox{Thus, $y = -1$ and $y = 1$ are stable
+equilibrium points, and $y = 0$ is an unstable equilibrium point.}
+\end{question}
+
+\begin{question}{Section 2.5, Problem 21}
+\begin{enumerate}[(a)]
+\item The quadratic formula gives that $\frac{dy}{dt} = 0$ if and only if
+\[y = \mbox{\fbox{$\displaystyle \frac{r \pm \sqrt{r^2 - 4rh/K}}{2r/K}$.}}\]
+If $h < rK/4$, then the discriminant $r^2 - 4rh/K$ above is strictly positive,
+so that there exist $2$ distinct values of $y$ such that $\frac{dy}{dt} = 0$,
+as determined by the above equation. \qed
+
+\item Since $\frac{dy}{dt}$ is quadratic polynomial in terms of $y$ and it
+first coefficient is negative, for $y < y_1$, $\frac{dy}{dt} < 0$, and, for
+$y_1 < y < y_2$, $\frac{dy}{dt} > 0$, so that $y_1$ is an unstable equilibrium
+point. Similarly, since, for $y_1 < y < y_2$, $\frac{dy}{dt} > 0$, and, for
+$y > y_2$, $\frac{dy}{dt} < 0$, $y_2$ is an asymptotically stable equilibrium
+point. \qed
+
+\item Since, as shown in Figure 2 (see last page), $\frac{dy}{dt} > 0$ when
+$y_1 < y < y_2$ and $\frac{dy}{dt} < 0$ when $y > y_2$, when $y_1 < y < y_2$,
+$y$ increases over time, and, when $y > y_2$, $y$ decreases over time, in
+either case approaching $y_2$. Similarly, since $\frac{dy}{dt} < 0$ when
+$y < y_1$, when $y < y_1$ decreases over time, approaching $-\infty$. \qed
+
+\item For $h > rK/4$, the discriminant found in part (a) above is negative, so
+that the quadratic ($\frac{dy}{dt}$) has no zeros. Since the leading
+coefficient of the quadratic is negative, this is possible only if it takes
+only negative values, so that, $\forall y \in \mathbb{R}$,
+$\frac{dy}{dt} < 0$, and thus $y$ always decreases over time. \qed
+
+\item For $h = rK/4$, the discriminant fround in part (a) above is $0$, so
+that $\frac{dy}{dt}$ has exactly $1$ root, $y = K/2$, and so $y = K/2$ is the
+single equilibrium point. Since, for $y \neq K/2$, $\frac{dy}{dt} < 0$, this
+equilibrium point is semistable (it resists increase in $y$, but not decrease
+in $y$). \qed
+\end{enumerate}
+\end{question}
+\end{document}

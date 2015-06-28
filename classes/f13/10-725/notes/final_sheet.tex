@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+%\usepackage[margin=0.8in]{geometry}
+\usepackage[]{graphicx}
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mytitle}{10-725 Convex Optimization}
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\vx}{\vec{x}}                           % vector x
+\newcommand{\vy}{\vec{y}}                           % vector y
+\newcommand{\vz}{\vec{z}}                           % vector z
+\newcommand{\vv}{\vec{v}}                           % vector v
+\newcommand{\vu}{\vec{u}}                           % vector u
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\lsp}{\operatorname{span}}              % span of a set
+\newcommand{\conv}{\operatorname{conv}}             % convex hull of a set
+\newcommand{\cl}{\operatorname{cl}}                 % closure of a set
+\newcommand{\argmax}{\operatorname{argmax}}         % (set of) maximizer(s)
+\newcommand{\argmin}{\operatorname{argmin}}         % (set of) minimizer(s)
+\newcommand{\C}{\mathcal{C}}                        % center region of [0,1]^d
+\newcommand{\B}{\mathcal{B}}                        % border region of [0,1]^d
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+\twocolumn
+
+\begin{center}
+{\Large \mytitle} \\
+\myname \\
+\today
+\end{center}
+
+{\bf Gradient Descent:}\\ $x^{(0)} \in \R^n$. $\forall k \in \N$
+\[x^{(k + 1)} = x^{(k)} - t_k \nabla f\left( x^{(k)} \right).\]
+
+For $\nabla f$ $L$-Lipschitz, $t_k = t \leq 1/L, \forall k \in \N$,
+\[f\left( x^{(k)} \right) - f\left( x^* \right)
+    \leq \frac{\left\|x^{(0)} - x^* \right\|_2^2}{2tk},\]
+so Gradient Descent has $O(1/k)$ convergence.   \\
+
+{\bf Backtracking line search:}\\ $\beta \in (0,1), \alpha \in (0,1/2]$. While
+\[f(x - t \nabla f(x)) > f(x) - \alpha t \|\nabla f(x)\|_2^2,\]
+update $t = \beta t$.
+
+With backtracking, for $\nabla f$ $L$-Lipschitz,
+\[f\left( x^{(k)} \right) - f\left( x^* \right)
+    \leq \frac{\left\|x^{(0)} - x^* \right\|_2^2}{2k \min\{1,\beta/L\}},\]
+so Gradient Descent has $O(1/k)$ convergence.   \\
+
+For $\nabla f$ $L$-Lipschitz, $\nabla^2 f \succeq dI$, $d > 0$,
+\[\exists c \in (0,1) \quad
+f\left( x^{(k)} \right) - f\left( x^* \right)
+ \leq c^k\frac{L}{2} \|x^{(0)} - x^* \|_2^2.
+\]
+
+For any first-order method, i.e., if
+\[x^{(k)} - x^{(0)} \in \lsp\{\nabla f(x^{(0)}),\dots,\nabla f(x^{(k - 1)}),\]
+$\exists f$ s.t.
+\[f(x^{(k)} - f(x^*)
+    \geq \frac{3L\|x^{(0)} - x^*\|_2^2}{32(k + 1)^2}.
+\]
+$O(1/k^2)$ rate is achievable.
+
+{\bf Subgradients:} For $f : \R^n \to \R$, $x,y \in \R^n$,
+$y \in \partial f(x)$ iff
+\[f(z) \geq f(x) + y^T(z - x), \quad \forall z \in \R^n.\]
+
+\[\partial f(Ax + b) = A^T \partial f(Ax + b).\]
+\[\partial \max_{i = 1,\dots,m} f_i(x)
+    = \conv \bigcup_{i : f_i(x) = f(x)} \partial f_i(x).
+\]
+\[\partial \max_{s \in \mathcal{S}} 
+    = \cl \; \conv \bigcup_{s : f_s(x) = f(x)} \partial f_i(x).
+.\]
+\[\partial \|x\|_p
+    = \argmax_{\|y\|_q \leq 1} y^Tx.
+\]
+\[x^* = \argmin_{x \in \R^n} f(x)
+    \Leftrightarrow 0 \in \partial f(x^*).
+\]
+{\bf Semidefinite Programming:}
+For $A,B \in S^n$,
+\[A \cdot B := \sum_{i,j} A_{ij} B_{ij}.\]
+A semidefinite program is of the form:
+\[\min_X C \cdot X\]
+subject to
+\[A_i \cdot X = b_i
+\quad \mbox{ and } \quad
+X \succeq 0.\]
+It's dual is
+\[\max_{y \in \R^n, S \in \R^{n \times n}} y^Tb\]
+subject to
+\[S = C - \sum_{i = 1}^n y_i A_i
+\quad \mbox{ and } \quad
+S \succeq 0.\]
+
+Positive semidefinite properties:
+\[
+\begin{bmatrix}
+    A   &   B   \\
+    B^T &   C
+\end{bmatrix}   \succeq 0
+\Leftrightarrow
+A, C - B^T A\inv B \succeq 0.
+\]
+
+\end{document}

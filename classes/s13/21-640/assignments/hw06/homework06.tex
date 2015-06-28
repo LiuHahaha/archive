@@ -1,0 +1,331 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-640 Introduction to Functional Analysis}
+\newcommand{\myhwnum}{6}
+\newcommand{\duedate}{Wednesday, April 17, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+Suppose $\alpha_n \to 0$ as $n \to \infty$. Consider the sequence
+$\{T_k\}_{k = 1}^\infty$ of operators in $\L(l^2;l^2)$ defined for all
+$x \in l^2$ by
+\[(T_kx)_n
+    = \left\{
+        \begin{array}{cl}
+            \alpha_nx_n &   : \mbox{ if } n \leq k    \\
+            0           &   : \mbox{ else }
+        \end{array}
+    \right..
+\]
+Suppose $\e > 0$. Then, for $n_0$ sufficiently large, $\forall n \geq n_0$,
+$\alpha_n < \epsilon$, and hence, $\forall x \in l^2$ with $\|x\|_2 = 1$,
+\[\|(T_n - T)x\|_2 \leq \e\|x\|_2 = \e,\]
+so $T_n \to T$ in the uniform operator topology. Thus, by Proposition 11.8
+and Theorem 12.11, since each $T_n$ has finite rank and is thus compact, $T$ is
+compact. Thus, $\alpha_n \to 0$ is sufficient for $T$ compact.
+
+Suppose $\alpha_n \not\to 0$ as $n \to \infty$. Then, since,
+\[\|Te^{(n)} - Te^{(m)}\|_2 = \alpha_n^2 + \alpha_m^2,
+    \quad \forall n,m \in \N,\]
+$\{Te^{(n)}\}$ has no Cauchy subsequence and hence no convergent subsequence.
+Thus, $\alpha_n \to 0$ is also necessary for $T$ compact. \qed
+\end{question}
+
+\begin{question}{Problem 2}
+I solved this problem with a hint from Jimmy Murphy suggesting that I design
+components of $Tx$ to be `local averages' of components of $x$.
+
+To construct a counterexample $T$, we make use of the triangle numbers defined
+by
+\[t_1 = 0, t_{k + 1} = t_k + k, \forall k \in \N.\]
+
+Define $T : l^2 \to l^2$ for all $x \in l^2, n \in \N$ by
+\[(Tx)_n
+   := \frac1k \sum_{n = t_k}^{t_{k + 1} - 1} x_n,
+        \quad \mbox{for} \quad t_k \leq n \leq t_{k + 1} - 1,
+\]
+\[(\mbox{so } \quad Tx = \left( x_1, \frac{x_2 + x_3}{2},
+        \frac{x_2 + x_3}{2}, \frac{x_4 + x_5 + x_6}{3},
+          \frac{x_4 + x_5 + x_6}{3}, \frac{x_4 + x_5 + x_6}{3}, \dots \right)
+  ).
+\]
+$T$ is linear, since as each component is a linear combination of components of
+$x$. To see that $T$ is continuous (and $\|T\| \leq 1$), it suffices observe
+that, by the Cauchy-Schwarz inequality,
+$\forall x \in l^2, k \in \N$,
+\[\sum_{n = t_k}^{t_{k + 1} - 1} \left( (Tx)_n \right)^2
+    = k \left( \sum_{n = t_k}^{t_{k + 1} - 1} \frac{x_n}{k} \right)^2
+    \leq k \left( \sum_{n = t_k}^{t_{k + 1} - 1} x_n^2 \right)
+        \left( \sum_{n = t_k}^{t_{k + 1} - 1} \frac{1}{k^2} \right)
+    = \sum_{n = t_k}^{t_{k + 1} - 1} x_n^2.
+\]
+Thus, $T \in \L(l^2;l^2)$. Also, $\forall n \in \N$ with
+$t_k \leq n \leq t_{k + 1} - 1$, $\|Te^{(n)}\|_2 = \frac{1}{k^2}$, so
+$Te^{(n)} \to 0$ strongly.
+
+Now consider $\{x^{(n)}\}_{n = 1}^\infty$ in $l^2$ defined by
+\[x^{(n)}_i
+    := \left\{
+        \begin{array}{cl}
+            \frac{1}{\sqrt n} & : \mbox{ if } t_n \leq i \leq t_{n + 1} - 1 \\
+            0                 & : \mbox{ else }
+        \end{array}
+    \right..
+\]
+$\{x^{(n)}\}_{n = 1}^\infty$ is bounded, since the $n$ non-zero components of
+$x^{(n)}$ are identically $\frac{1}{\sqrt n}$, giving
+\[\|x^{(n)}\| = n\left( \frac{1}{\sqrt n} \right)^2 = 1.\]
+Furthermore, $\forall n \in \N$, $Tx^{(n)} = x^{(n)}$, and so, for
+$n, m \in \N$,
+\[\|Tx^{(n)} - Tx^{(m)}\| = n\left( \frac{1}{\sqrt n} \right)^2
+    + m\left( \frac{1}{\sqrt m} \right)^2 = 2,
+\]
+and so $\{Tx^{(n)}\}_{n = 1}^\infty$ has no convergent subsequence.
+Consequently, $T$ is not compact. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+Let $L,R \in \L(l^2;l^2)$ denote the shift operators defined by
+\[Lx = (x_2,x_3,\dots), \quad Rx = (0,x_1,x_2,\dots), \quad
+    \forall x \in l^2.\]
+$\forall n \in \N$, put $T_n = L^n$ and $T = 0$. $\forall x \in l^2$,
+\[\|T_nx\|_2
+    = \sum_{k = n + 1}^\infty x_k^2
+    \to 0
+\]
+as $n \to \infty$, and so $T_n \to T$ in the strong operator topology. An easy
+induction argument using $(L^{n - 1}L)^* = L^*(L^{n - 1})^*$ shows
+$T_n^* = R^n$. Thus, $\|T_n^*x\|_2 = \|x\|_2$, so $T_n^* \not\to 0 = T^*$
+as $n \to \infty$. \qed
+\end{question}
+
+\begin{question}{Problem 4}
+Assume $X$ is complete and $Y$ is weakly sequentially complete (e.g., by
+Theorem 8.5, if $Y$ is reflexive).
+
+For all $x \in X$, the
+condition that $\{y^*(T_nx)\}_{n = 1}^\infty$ is convergent for all
+$y^* \in Y^*$ is equivalent to $\{T_nx\}_{n = 1}^\infty$ being weakly
+convergent.
+Thus, we can define $T : X \to Y$ by assigning $Tx$ to be the weak limit of
+$\{T_nx\}_{n = 1}^\infty$ (which is in $Y$ by weak sequential completeness).
+Since the weak limit operator is linear, $T$ is linear. Since $X$ is complete,
+by the Principle of Uniform Boundedness, $T$ is bounded, and hence
+$T \in \L(X;Y)$. \qed
+\end{question}
+
+\newpage
+\begin{question}{Problem 5}
+\vspace{-0.2in}
+\begin{enumerate}[(a)]
+\item Let $X = l^2, Y = l^1$, and suppose $T \in \L(X;Y)$. If
+$\{x_n\}_{n = 1}^\infty$ is a bounded sequence in $X$, by Theorem
+8.1, $\{x_n\}_{n = 1}^\infty$ has a weakly convergent subsequence
+$\{x_{n_k}\}_{k = 1}^\infty$. Since continuous linear operators respect
+weak convergence, $\{Tx_{n_k}\}_{k = 1}^\infty$ is weakly convergent, and
+hence, since, in $l^1$, weak convergence is equivalent to strong convergence,
+$\{Tx_{n_k}\}_{k = 1}^\infty$ is a convergent subsequence of
+$\{Tx_n\}_{n = 1}^\infty$. Thus, $T \in C(X;Y)$. Since
+$\C(X;Y) \subseteq \L(X;Y)$, $\C(X;Y) = \L(X;Y)$. \qed
+
+\item I wasn't able to solve this problem.
+\end{enumerate}
+\vspace{-0.2in}
+\end{question}
+
+\begin{question}{Problem 6}
+\vspace{-0.2in}
+\begin{enumerate}[(a)]
+\item $T$ is not surjective. If it were, by the Open Mapping Theorem,
+$T[B_1(0)]$ would be open and hence contain a non-empty ball $B$. Since $Y$ is
+infinite dimensional, $B$ would contain a sequence with no convergent
+subsequence, contradicting the compactness of $T$. \qed
+
+\item Let $X = (l^{\infty}, \|\cdot\|_\infty)$, and let
+$Y = (l^\infty,\|\cdot\|)$ where $\|x\| := \sup_{n \in \N} x_n/n$, and let
+$I \in \L(X;Y)$ be the identity (which is continuous, since clearly $\|\cdot\|$
+is bounded by $\|\cdot\|_\infty$, and note that $I$ is surjective.
+
+Now consider the sequence $\{I_k\}_{k = 1}^\infty$ in $\L(X;Y)$ defined,
+$\forall x \in l^\infty, n \in \N$ by
+\[(I_kx)_n
+    = \left\{
+        \begin{array}{cl}
+            \alpha_nx_n &   : \mbox{ if } n \leq k    \\
+            0           &   : \mbox{ else }
+        \end{array}
+    \right..
+\]
+$\forall x \in l^2$ with $\|x\| = 1$,
+$\|(I_k - I)x\|_2 \leq \frac1k\|x\| = \frac1k$,
+and so $I_k \to I$ in the uniform operator topology. Thus, by Proposition 11.8
+and Theorem 12.11, since each $I_n$ has finite rank and is thus compact, $I$ is
+compact. \qed
+\end{enumerate}
+\vspace{-0.2in}
+\end{question}
+
+\begin{question}{Problem 7}
+\vspace{-0.15in}
+\begin{enumerate}[(a)]
+\item Suppose $T \in \L(l^2;l^2)$. As shown in the solution to part (a) of
+Problem 5, $T$ is compact. Then, by part (a) of Problem 6, $T$ is not
+surjective. \qed
+
+\item By the identification of $(c_0)^*$ with $l^1$ and $(l^2)^*$ with
+$(l^2)^*$, if $L \in \L(c_0;l^2)$, then, as shown in the solution to part (a)
+of Problem 5, $L^* : l^2 \to l^1$ would be compact. Then, by Theorem 11.15,
+$T$ would be compact, and hence, by part (a) of Problem 6, $T$ is not
+surjective.
+\end{enumerate}
+\vspace{-0.2in}
+\end{question}
+
+\begin{question}{Problem 8}
+If $x = 0$, then, as $n \to \infty$, $\|x_n\| \to \|x\|$ immediately implies
+$x_n \to x$. Thus, we assume $x \neq 0$. Then, since $\|x_n\| \to \|x\|$ as
+$n \to \infty$, by considering only $n$ sufficiently large, we may assume,
+without loss of generality, that each $x_n \neq 0$, and we may therefore define
+\[z := \frac{x}{\|x\|} \quad \mbox{ and } z_n := \frac{x_n}{\|x_n\|},
+    \quad \forall n \in \N.
+\]
+It suffices to show $z_n \to z$ strongly, and so, since each
+$\|z_n\| = \|z\| = 1$, by uniform convexity, it suffices to show that
+$\|z_n + z\| \to 2$. By part (iii) of Theorem 7.15, since $z_n + z \wto 2z$ weakly,
+\[2
+    = \|2z\|
+    \leq \liminf_{n \to \infty} \|z_n + z\|
+    \leq \limsup_{n \to \infty} \|z_n + z\|
+    \leq \limsup_{n \to \infty} \|z_n\| + \|z\|
+    = \|z\| + \|z\|
+    = 2.
+\]
+\vspace{-0.3in}
+\end{question}
+
+\begin{question}{Problem 9}
+\begin{enumerate}[(a)]
+\item
+Let $x,y \in X$ with $x \neq y$ and $\|x\| = \|y\| = 1$, and let $t \in (0,1)$.
+Since $\|tx + (1 - t)y\| \leq t\|x\| + (1 - t)\|y\| = 1$, it suffices to show
+that $\|tx + (1 - t)y\| \neq 1$. If it were the case that
+$\|\frac12x + \frac12y\| = 1$, then $\|x + y\| = 2$, and hence, by uniform
+convexity (using the constant sequences
+$\{x\}_{i = 1}^\infty, \{y\}_{i = 1}^\infty$), $x = y$. Thus, it suffices to
+show that, if $\|tx + (1 - t)y\| = 1$, then $\|\frac12x + \frac12y\| = 1$.
+
+The case $t = 1/2$ is trivial, and the case $t \in (1/2,1)$ follows by
+switching $x$ and $y$, so we may assume $t \in (0,1/2)$.
+Then, $tx + (1 - t)y$ is a convex combination of $x$ and $\frac12x + \frac12y$,
+and so, for some $t_2 \in (0,1)$,
+\[1
+    = \|tx + (1 - t)y\|
+    = \|t_2x + (1 - t_2)(\frac12x + \frac12y)\|
+    \leq t_2 + (1 - t_2)\|(\frac12x + \frac12y)\|,
+\]
+and so $1 \leq \|(\frac12x + \frac12y)\| \leq 1$. \qed
+
+\item Let $\displaystyle X' := \prod_{i = 1}^\infty \R^2$,
+let
+\vspace{-0.2in}
+\[X := \left\{ x \in X'
+        \, : \, \sum_{i = 1}^\infty \|(x_i,y_i)\|_k < \infty \right\},\]
+(where $\|\cdot\|_k$ denotes the usual $k$-norm on $\R^2$) and, define
+$\|\cdot\| : X \to \R$ for all $x \in X$ by
+\[\|x\| = \sum_{i = 1}^\infty \|(x_i,y_i)\|_k.\]
+The proof that $(X,\|\cdot\|)$ is a Banach space is essentially identical to
+the proof for $l^1$.
+
+Suppose $x, y \in X$, $\|x\| = \|y\| = 1$ and $x \neq y$ (say $x_n \neq y_n$).
+Then, since each $(R^2,\|\cdot\|_k)$ is strictly convex,
+$\|tx_n + (1 - t)y_n\| < \frac{\|x_n\|_n + \|y_n\|_n}{2}$ (and each
+$\|tx_k + (1 - t)y_k\| \leq \frac{\|x_k\|_k + \|y_k\|_k}{2}$), and so 
+\[\|tx + (1 - t)y\|
+    = \sum_{k = 1}^\infty \|tx_k + (1 - t)y_k\|_k
+    < \sum_{k = 1}^\infty \frac{\|x_i\|_k + \|y_i\|_k}{2}
+    = \frac12(\|x\| + \|y\|)
+    = 1.
+\]
+Thus, $X$ is strictly convex. However, suppose
+$\forall n \in \N, x^{(n)}$ and $y^{(n)}$ have $x^{(n)}_n = (1,0),
+y^{(n)}_n = (0,1)$, and $x^{(n)}_i = y^{(n)}_i = 0$ for $i \neq n$. Then, each
+$\|x^{(n)}\| = \|y^{(n)}\| = 1$ and, as $n \to \infty$,
+\[\|x^{(n)} + y^{(n)}\| = 2^{\frac{1}{1 + 1/n}} \to 2\]
+but
+\[\|x^{(n)} - y^{(n)}\| = 2^{\frac{1}{1 + 1/n}} \to 2.\]
+Therefore, $X$ is not uniformly convex. The proof that $X$ is separable is
+similar to the proof of separability for $l^1$. I'm not quite sure about
+reflexivity\dots
+\end{enumerate}
+\end{question}
+\end{document}

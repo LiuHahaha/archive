@@ -1,0 +1,219 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-630 Ordinary Differential Equations}
+\newcommand{\myhwnum}{10}
+\newcommand{\duedate}{Wednesday, April 10, 2013}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass            \\
+Name: \myname       \\
+Email: \myandrew    \\
+Due: \duedate
+
+\begin{question}{Problem 1}
+Note that $(0,0)$ is a critial point, and so any solution with initial
+condition at $(0,0)$ will be constant. Hence, we assume the initial condition
+is not $(0,0)$.
+
+We first calculate
+\begin{align*}
+\dot r
+    & = \dot X \cos \theta + \dot Y \sin \theta \\
+    & = (1 - r^2) r (\cos^2 \theta - \sin \theta \cos \theta
+        + \cos \theta \sin \theta + \sin^2 \theta) \\
+    & = (1 - r^2) r \\
+\dot \theta
+    & = \dot Y r\inv \cos \theta - \dot X r\inv \sin \theta \\
+    & = (1 - r^2) r (\cos^2 \theta + \sin \theta \cos \theta
+        - \cos \theta \sin \theta + \sin^2 \theta) \\
+    & = (1 - r^2) = \dot r / r.
+\end{align*}
+Thus, $\forall t \geq t_0$,
+\[\theta(t)
+    = \theta(t_0) + \int_{t_0}^t \dot r / r \, dt
+    = \theta(t_0) + \int_{t_0}^t \frac{d}{dt} \ln(r(t)) \, dt
+    = \theta(t_0) + \ln(r(t)) - \ln(r(t_0)).
+\]
+By choosing $\theta(t_0)$ appropriately, we ensure that $r(t_0) \geq 0$, for
+any initial conditions. Thus, it is clear from the above (autonomous) equation
+for $\dot r$ that \[r(t) \rightarrow 1 \mbox{ as } t \rightarrow \infty.\] Then,
+since $\log(r(t)) \rightarrow 0$ as $t \rightarrow \infty$, from the above
+equation for $\theta$,
+\[\theta(t) \rightarrow \theta(t_0) - \log(r(t_0)) \mbox{ as }
+    t \rightarrow \infty.\]
+It follows that
+\[\mbox{\fbox{$\displaystyle
+    \Omega(r(t_0),\theta(t_0))
+    = \{(1,\theta(t_0) - \log(r(t_0)))\}
+$.}}\]
+\end{question}
+
+\newpage
+\begin{question}{Problem 2}
+Suppose $X(t) \in C^+(X(0))$, and define, $\forall k \in \N$, $t_k := t + kT$.
+Since $T$ is a period of $X$, a trivial induction argument shows that
+$0 \leq t_k \rightarrow \infty$ and $X(t_k) \rightarrow X(t)$ as
+$k \rightarrow \infty$. Hence, $X(t) \in \Omega(X(0))$.
+
+Suppose $\ol x \in \Omega(X(0))$, so that there is a sequence
+$0 \leq t_k \rightarrow \infty$ with $X(t_k) \rightarrow \ol x$ as
+$k \rightarrow \infty$. Since $T$ is a period of $X$, a trivial induction
+argument shows that $C^+(X(0)) = \{X(t) : t \in [0,T]\}$. Therefore,
+$C^+(X(0))$ is the image of the compact set $[0,T]$ under the continuous
+function $X$, and so $C^+(X(0))$ is compact. Hence, since each
+$X(t_k) \in C^+(X(0))$, $\ol x \in C^+(X(0))$. \qed
+\end{question}
+
+\begin{question}{Problem 3}
+We first calculate
+\begin{align*}
+D_*w(x,y)
+ &  =   \begin{bmatrix}
+            2x  \\
+            2y  \\
+        \end{bmatrix}
+  \cdot \begin{bmatrix}
+            yg(x,y) - x(x - y)^2  \\
+           -xg(x,y) - y(x - y)^2  \\
+        \end{bmatrix}   \\
+ &  = 2xy(g(x,y) - g(x,y)) - 2(x^2 + y^2)(x - y)^2  \\
+ &  = - 2(x^2 + y^2)(x - y)^2.
+\end{align*}
+It is clear, then, that
+$Z := \{(x,y) : D_*w(x,y) = 0\} = \{(x,y) \in \R^2 : x = y\}$.
+
+Fix $\eta > 0$. From the choice of $w$, it is clear that $H_{\eta}$ is the
+circle of radius $\sqrt{\eta}$ centered at the origin.
+
+By Theorem 5.8, it suffices to show that the largest positively invariant
+subset $M$ of $H_{\eta} \cap Z$ is the singleton $\{(0,0)\}$. Since $(0,0)$ is
+a critical point, $(0,0) \in M$.
+
+Suppose $X(0) = Y(0) \neq 0$. Since $g(X(0),Y(0)) \neq 0$, without loss of
+generality,
+\[\frac{d(X - Y)}{dt}(0)
+    = 2X(0)g(X,Y) > 0.
+\]
+By continuity of this derivative, $\exists \e, \delta > 0$ such that,
+$\forall t \in [0,\delta]$, $\frac{d(X - Y)}{dt}(t) > \e$. Hence,
+\[(X - Y)(\delta) \geq \int_0^{\delta} \e \, dt = \delta\e > 0.\]
+and hence $(X(\delta),Y(\delta)) \notin M$. By definition of positive
+invariance, $M = \{(0,0)\}$. \qed
+\end{question}
+
+\newpage
+%TODO
+\begin{question}{Problem 4}
+\begin{enumerate}[A)]
+\item By definition of $v$ and $u$, the given system can be written as
+\begin{align*}
+\frac{dv}{dt} = - \left( v + u + \frac{\partial P}{\partial x} \right)  \\
+\frac{du}{dt} = - \left( v + u + \frac{\partial P}{\partial y} \right)
+\end{align*}
+Thus,
+\begin{align*}
+D_*w(x,y,v,u)
+    =   \begin{bmatrix}
+            \frac{\partial P}{\partial x}   \\
+            \frac{\partial P}{\partial y}   \\
+            v                               \\
+            u
+        \end{bmatrix}
+  \cdot \begin{bmatrix}
+            v               \\
+            u               \\
+            \frac{dv}{dt}   \\
+            \frac{du}{dt}   \\
+        \end{bmatrix}
+ &  =   v\frac{\partial p}{\partial x} + u\frac{\partial p}{\partial y}
+    -   v\left( v + u + \frac{\partial P}{\partial x} \right)
+    -   u\left( v + u + \frac{\partial P}{\partial y} \right)   \\
+ &  =   -(v^2 + 2vu + u^2) = \mbox{\fbox{$-(v + u)^2$}} \leq 0.
+\end{align*}
+ 
+\item The origin is asymptotically stable. Let $M$ be as in Theorem 5.8 (for an
+arbitrary $\eta > 0$). Since the origin is a critical point, it is in $M$.
+Then, by Theorem 5.8, it suffices to show that any initial condition aside from
+the origin causes the solution to leave $M$.
+
+Since $D_*w = 0$ in $M$, $v + u = 0$ in $M$. Thus, in $M$,
+\begin{align*}
+\frac{d^2x}{dt^2} & = - \frac{\partial P}{\partial x} = -4x^3   \\
+\frac{d^2y}{dt^2} & = - \frac{\partial P}{\partial y} = -2y.
+\end{align*}
+This system has no (non-zero) solution preserving
+$V(t) + U(t) = 0, \forall t \geq t_0$. Thus solutions with initial conditions
+not at the origin leave $M$. \qed
+
+
+\item Letting $M$ be as in part (b), we have, for solutions lying in $M$,
+\begin{align*}
+\frac{d^2x}{dt^2} & = - \frac{\partial P}{\partial x} = -4x^3   \\
+\frac{d^2y}{dt^2} & = - \frac{\partial P}{\partial y} = -4y^3.
+\end{align*}
+If, for any $\delta > 0$, we choose the initial condition $X(t_0) = \delta$,
+$Y(t_0) = -\delta$, $V(t_0) = U(t_0) = 0$, then, since the negation of any
+solution to each of the above equations is a solution, by uniqueness, the
+solution will preserve $V(t) + U(t) = 0$. However, the solution is periodic
+rather than converging to the origin. \qed
+\end{enumerate}
+\end{question}
+\end{document}

@@ -1,0 +1,109 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-484A Graph Theory}
+\newcommand{\myhwnum}{5}
+\newcommand{\duedate}{Friday, May 4, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%MACROS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\diam}{\operatorname{diam}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate
+\begin{question}{Problem 1}
+Let $G$ be a graph whose vertices are all possible states of the system of
+lights and the gnome (including the position of the gnome), with an edge from
+vertex $u$ to vertex $v$ if and only if it is possible for the system to go
+from state $u$ to state $v$ in a single step. Since there are a finite number
+of states, some set of states must repeat after a finite number of steps, so
+that the current state will eventually traverse a cycle $C$ in $G$ indefinitely.
+Note that, from any state, we can determine the previous step (the gnome must
+have been at the previous light, and, depending on whether the previous light
+is on or off, the current light must have been in the same or opposite state,
+and no other lights were changed). Therefore, the in-degree of each vertex is
+$1$, so that, if a vertex $v$ is in a cycle, then the previous state (the
+vertex with an edge to $v$) is also in that cycle. Consequently, once the
+current state has entered $C$, it will eventually return to any vertex it
+visited previously, including the start vertex (that in which the gnome is at
+$1$ and all the lights are on). \qed
+\end{question}
+
+\begin{question}{Problem 4}
+{\bf Lemma:} If $G$ is outerplanar, cyclic, and biconnected, the $G$ contains
+a vertex of degree $2$.
+
+{\bf Proof:}
+Since $G$ is planar, let $G^*$ be the dual of $G$, and let
+$G^{\prime}$ be the graph produced by removing from $G^*$ the vertex
+representing the unbounded region of $G$ (noting that, since $G$ is cyclic,
+$G^{\prime}$ is nonempty). Suppose, for sake of contradiction, that
+$G^{\prime}$ contained a cycle. Then, there is a vertex $v$ in $G$
+corresponding to the face surrounded by that cycle. But then, $v$ must be
+surrounded by bounded regions in $G$, contradicting the fact that $G$ is
+outerplanar. Therefore, $G^{\prime}$ contains no cycle, so that its connected
+components are trees and it has a leaf $l$ (or a vertex $l$ of degree $0$).
+The face $f$ in $G$ corresponding
+to $l$ is adjacent to at most $1$ bounded region $r$. Then, the vertex $u$ on
+the boundary of $f$ that is not on the boundary of $r$ has no neighbors not on
+the boundary of $f$ (if it did, then removing $u$ would disconnect those
+vertices them, contradicting the fact that $G$ is biconnected). Thus,
+$\deg(u) = 2$, proving the lemma. \qed
+
+We proceed to prove that all outerplanar graphs $G$ are $3$-colorable by
+strong induction on the number of vertices in $G$. If $G$ has fewer than $4$
+vertices, $G$ is trivially $3$-colorable. Suppose, as an inductive hypothesis,
+that, for some $n \in \mathbb{N}$, $\forall k \in \mathbb{N}$ with $k \leq n$,
+all outerplanar graphs on $k$ vertices are $3$-colorable. Let $G$ be an
+outerplanar graph on $n + 1$ vertices. If $G$ is acyclic, then its
+connected components are trees, so that they are $3$-colorable. If
+$G$ is not biconnected, then each biconnected component of $G$ is an
+outerplanar graph on at most $n$ vertices, so that, by the inductive
+hypothesis, each biconnected component of $G$ is $3$-colorable; the colorings
+of each biconnected component of $G$ can then be merged (as in the general
+proof of Brooks' Theorem) to construct a proper $3$-coloring of $G$. If $G$ is
+outerplanar, cyclic, and biconnected, then, by the above lemma, $G$ has a
+vertex $v$ of degree $2$. Since removing a vertex preserves outerplanarity, by
+the inductive hypothesis, the graph $K = G - \{v\}$ can be $3$-colored.
+Therefore, $G$ can be $3$-colored by using the $3$-coloring from $K$, and then
+coloring $v$ differently from its neighbors. \qed
+\end{question}
+\end{document}

@@ -1,0 +1,205 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\newcommand*\mycirc[1]{%
+  \begin{tikzpicture}
+    \node[draw,circle,inner sep=1pt] {#1};
+  \end{tikzpicture}}
+
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{15-359 Probability and Computing}
+\newcommand{\myhwnum}{6}
+\newcommand{\mysection}{B}
+\newcommand{\duedate}{Friday, March 2, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Assignment \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Section: \mysection \\
+Due: \duedate
+\begin{question}{Problem 1: How we get them}
+Since $- \ln X < 0$ if and only if $X > 1$, $P(-ln X < 0) = 0$.
+Let $x \in \mathbb{R}$ with $0 \leq x$. Then, since
+$0 \leq e^{-x} \leq 1$,
+\[P(0 \leq - \ln X \leq x) = P(e^{-x} \leq X \leq 1)
+ = \int_{e^{-x}}^1 1 \; dt = 1 - e^{-x}.\]
+Differentiating gives the probability density function
+$f: \mathbb{R} \rightarrow \mathbb{R}$ such that, $\forall x \in \mathbb{R}$,
+\[f_{- \ln X} (x)
+ = \left\{
+     \begin{array}{c c}
+         e^{-x} & x \geq 0 \\
+         0      & x < 0
+     \end{array}
+   \right.
+,\]
+which is that of an exponential distribution, where $\lambda = 1$.
+\qquad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 2: The rain in Spain}
+Let $\lambda = 1/25$.
+\begin{enumerate}[A.]
+\item By definition of the conditional probability of a continuous random
+variable and the exponential distribution,
+\[E[X | X > 10]
+ = \frac{\int_{10}^{\infty} x f_X(x)           \; dx}
+        {\int_{10}^{\infty} f_X(x)             \; dx}
+ = \frac{\int_{10}^{\infty} x e^{-\lambda x})  \; dx}
+        {\int_{10}^{\infty}   e^{-\lambda x}   \; dx}
+ = \frac{\int_{10}^{\infty} x e^{-\lambda x})  \; dx}
+        {\frac{1}{\lambda}(e^{-10\lambda})}.
+\]
+Integrating by parts gives
+\[\int_{10}^{\infty} x e^{-\lambda x}) \; dx
+ = \frac{10e^{-10\lambda}}{\lambda} - \int_{10}^{\infty}\frac{e^{- \lambda x}}{\lambda} \; dx
+ = \left(\frac{10}{\lambda} + \frac{1}{\lambda^2}\right) e^{-10\lambda},\]
+so that $E[X | X > 10] = 10 + \frac{1}{\lambda} =$ \fbox{$35$}.
+
+\item Since the exponential distribution is memoryless,
+$E[X | X > 10] = 10 + E[X] = 10 + \frac{1}{\lambda} =$ \fbox{$35$}.
+
+\item Integration by parts gives
+\[\int_{10}^{\infty} x^2 e^{-\lambda x} \; dx
+ = \frac{100e^{-10\lambda}}{\lambda}
+ - \int_{10}^{\infty}\frac{-2x e^{-\lambda x}}{\lambda} \; dx
+ = \frac{100e^{-10\lambda}}{\lambda}
+ + \frac{2}{\lambda} \int_{10}^{\infty} x e^{-\lambda x} \; dx,\]
+so that, by the integral computed in part A.,
+\[\int_{10}^{\infty} x^2 e^{-\lambda x} \; dx
+ = \frac{100e^{-10\lambda}}{\lambda}
+ + \frac{2}{\lambda}\left(\frac{10}{\lambda} + \frac{1}{\lambda^2}\right) e^{-10\lambda}
+ = \left(\frac{100}{\lambda} + \frac{2}{\lambda^2} + \frac{2}{\lambda^3}\right) e^{-10\lambda}.
+\]
+Thus,
+\[E[X^2 | X > 10]
+ = \frac{\left((\frac{100}{\lambda} + \frac{2}{\lambda^2} + \frac{2}{\lambda^3}\right) e^{-10\lambda}}
+   {\frac{1}{\lambda}(e^{-10\lambda})}
+ = 100 + \frac{2}{\lambda} + \frac{2}{\lambda^2} = \mbox{\fbox{$1400$.}}\]
+
+Therefore,
+Var$(X | X > 10) = E[X^2 | X > 10] - E[X | X > 10]^2 = 1400 - 35^2 =$
+  \fbox{$175$.}
+Since $X$ is distributed exponentially with parameter $\lambda$,
+Var$(X) = \frac{1}{\lambda^2} = 625 > $ Var$(X | X > 10)$.
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 3: Failure rate}
+\begin{enumerate}[A.]
+\item Since $X$ is distributed exponentially, for some $\lambda > 0$,
+$\forall x \in \mathbb{R}$,
+\[f_X (x)
+ = \left\{
+     \begin{array}{c c}
+         \lambda e^{-\lambda x} & x \geq 0 \\
+                 0              & x < 0
+     \end{array}
+   \right.
+,\]
+and
+\[\overline{F}_X (x)
+ = \left\{
+     \begin{array}{c c}
+          e^{-\lambda x} & x \geq 0 \\
+          1              & x < 0
+     \end{array}
+   \right.
+.\]
+Thus, for $x \geq 0$,
+\[r(x) = \frac{f_X(x)}{\overline{F}_X(x)}
+ = \frac{\lambda e^{- \lambda x}}{e^{- \lambda x}} = \lambda,\]
+so that $r$ is constant on $[0,\infty)$. \qquad $\blacksquare$
+
+\item Suppose that $r = \lambda$, for some constant $\lambda > 0$ (noting that
+$r(x)$ is necessarily positive for some $x \in [0,\infty)$). Then,
+$\forall x \in [0,\infty)$,
+\[\frac{f_X(x)}{1 - F_X(x)} = \lambda,\] so that
+$\lambda - \lambda F_X(x) = f_X(x)$. By definition of $F$,
+$\lambda - \int_{-\infty}^x f_X(t) \; dt = f_X(x)$. Thus, by the Fundamental
+Theorem of Calculus, differentiation gives
+\[-\lambda f_X(x) = \frac{d}{dx} f_X(x).\] The unique solution of this well-known
+differential equation is the exponential $f_X(x) = e^{- \lambda x},
+\forall x \in [0,\infty)$. Thus, the exponential is the unique probability
+distribution with a constant failure rate. \qquad $\blacksquare$
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4: \mycirc{$\lambda$}}
+\begin{enumerate}[A.]
+\item By definition of half-life, if $t_{1/2}$ is the half-life of the isotope
+in question, $\frac{1}{2} = e^{- \lambda t_{1/2}}$. Solving for $t_{1/2}$
+gives \fbox{$t_{1/2} = \frac{\ln 2}{\lambda}$.}
+
+\item Since $X_1, X_2, \ldots, X_n$ are independent,
+\[F_Y(x) = P(Y < x) = \prod_{i = 1}^n P(X < x) = (1 - e^{-\lambda x})^n.\]
+Differentiating gives $f_Y(x) = n(1 - e^{-\lambda x})^{n - 1}$. Thus,
+$E[Y] = n\int_0^{\infty} x(1 - e^{-\lambda x})^{n - 1} \; dx$.
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 5: Sparse selection}
+\begin{enumerate}[A.]
+\item Suppose that, in step $6$., $a^- \leq b^- \leq b^+ \leq a^+$.
+By definition, $A_0$ is the set of elements in $A$ in between $b^-$ and $b^+$,
+so that $|A_0| \leq \delta(b^+,b^-) \leq \delta(a^+, a^-)$, where,
+$\forall x,y \in \mathcal A$, $\delta(x,y)$ denotes the number of elements of
+$A$ between $x$ and $y$ (when $A$ is sorted). Thus, since, by definition,
+$\lambda^- \geq n/2 - 2n^{3/4}$ and $\lambda^+ \leq n/2 + 2n^{3/4}$,
+$\delta(a^+,a^-) \leq n/2 + 2n^{3/4} - (n/2 - 2n^{3/4}) = 4n^{3/4}$, so that
+$|A_0| \leq 4n^{3/4}$, the desired result.
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 6: Bayes of our lives}
+\begin{enumerate}[A.]
+\item \[f_P(p | N > 47)
+ = \sum_{i = 48}^{\infty} \frac{P(N = i | P = p) f_P(p)}{P(N = i)}\cdot P(N = i)
+ = \sum_{i = 48}^{\infty} P(N = i | P = p) f_P(p)\]
+\[ = \sum_{i = 48}^{\infty} (1 - p)^{i - 1}p
+ = (1 - p)^{47}p \sum_{i = 0}^{\infty}(1 - p)^i
+ = (1 - p)^{47}p \frac{1}{p}
+ = \mbox{\fbox{$(1 - p)^{47}$.}}
+\]
+
+\item By the result of part A., $E[P | N > 47]
+ = \int_0^1 p(1 - p)^{47} \; dp =$ \fbox{$\frac{1}{2352} \approx 0.00043$.}
+\end{enumerate}
+\end{question}
+\end{document}

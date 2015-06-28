@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+
+% For figures
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+\usepackage{amsmath,amssymb}
+
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\D}{\mathcal{D}}                        % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\renewcommand{\d}{\delta}                           % \delta
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\hP}{{\hat P}}                          % 
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{natbib}
+\usepackage[disable]{todonotes}
+
+\begin{document}
+\begin{center}
+{\bf\Large Manifold Learning via Conditional Entropy Minimization}\\
+Shashank Singh\\
+sss1@andrew.cmu.edu\\
+\end{center}
+
+\section{Introduction}
+Given samples $x_1,\dots,x_n \sim p$, where $p : \R^d \to \R_+$ is an unknown
+probability density, we are interested in finding a continuous surjection
+$f : \R^d \to [0,1]\}$ so as to minimize the ratio of the conditional entropy
+of $f(X)$ given $X$ to the entropy of $f(X)$:
+
+\begin{align*}
+H(Y|X)
+ &  = -\int_\X p_X(x) \int_\Y p_{Y|X}(y|x) \log p_{Y|X}(y|x) \, dy \, dx \\
+ &  = -\int_{\X \times \Y} p_{Y,X}(y,x) \log \frac{p_{Y,X}(y,x)}{p_X(x)} \, d(x,y)
+    = -\E_{X,Y} \left[ \log \frac{p_{Y,X}(y,x)}{p_X(x)} \right].
+\end{align*}
+Hence, given $y_1,\dots,y_n$ and an estimator $\hat p$ for $p$, a reasonable
+estimator $\hat H(Y|X)$ for $H(Y|X)$ might be 
+\begin{align*}
+\hat H(Y|X)
+ &  = - \frac{1}{n} \sum_{i = 1}^n
+            \log \left( \frac{\hat p_{X,Y}(x_i,y_i)}{\hat p_X(x_i)} \right).
+\end{align*}
+Note that
+\begin{align*}
+\frac{d}{dy_i} \hat H(Y|X)
+ &  = - \frac{1}{n} \sum_{i = 1}^n \frac{d}{dy_i}
+        \log \left( \frac{\hat p_{X,Y}(x_i,y_i)}{\hat p_X(x_i)} \right) \\
+ &  = - \frac{1}{n} \sum_{i = 1}^n \frac{d}{dy_i}
+        \log \left( \hat p_{X,Y}(x_i,y_i) \right)
+    = - \frac{1}{n} \sum_{i = 1}^n
+            \frac{\frac{d}{dy_i} \hat p_{X,Y}(x_i,y_i)}{\hat p_{X,Y}(x_i,y_i)}.
+\end{align*}
+Hence, if we use a kernel density estimate $\hat p$ of $p$ with bandwidth $h$
+and symmetric kernel $K_h$, then $\forall k \in [n]$,
+\begin{align*}
+\frac{d}{dy_k} \hat H(Y|X)
+ &  = - \frac{1}{n} \sum_{i = 1}^n
+            \frac{\sum_{j = 1}^n
+            \frac{d}{dy_k} K_h((x_i,y_i),(x_j,y_j))}
+            {\sum_{j = 1}^n K_h((x_i,y_i),(x_j,y_j))}  \\
+ &  = - \frac{1}{n} \sum_{i = 1}^n
+            \frac{\sum_{j = 1}^n
+            K_h(x_i,x_j) \frac{d}{dy_k} K_h(y_i,y_j)}
+            {\sum_{j = 1}^n K_h(x_i,x_j)K_h(y_i,y_j)}  \\
+ &  = - \frac{1}{n} \left(
+            \frac{\sum_{j = 1}^n K_h(x_k,x_j)\frac{d}{dy_k} K_h(y_k,y_j)}
+            {\sum_{j = 1}^n K_h(x_k,x_j)K_h(y_k,y_j)}
+    - \sum_{i = 1}^n
+            \frac{K_h(x_i,x_k)\frac{d}{dy_k} K_h(y_k,y_i)}
+            {\sum_{j = 1}^n K_h(x_i,x_j)K_h(y_i,y_j)}
+        \right)
+\end{align*}
+
+Similarly,
+\[\hat H(Y)
+    = -\int_\Y p_Y(y) \log p_Y(y) \, dy
+    = -\E_Y \left[ \log p_Y(y) \right].
+\]
+Hence, given $y_1,\dots,y_n$ and an estimator $\hat p_Y$ for $p_Y$, a reasonable
+estimator $\hat H(Y)$ for $H(Y)$ might be 
+\[\hat H(Y) = - \frac{1}{n} \sum_{i = 1}^n \log \left( \hat p_Y(y_i) \right).\]
+\begin{align*}
+\frac{d}{dy_i} \hat H(y)
+    = - \frac{1}{n} \sum_{i = 1}^n
+                        \frac{d}{dy_i} \log \left( \hat p_Y(y_i) \right)
+ &  = - \frac{1}{n} \sum_{i = 1}^n
+                        \frac{\frac{d}{dy_i} \frac{1}{nh} \sum_{j = 1}^n K_h(y_i,y_j)}
+                             {\frac{1}{nh} \sum_{j = 1}^n K_h(y_i,y_j)}  \\
+ &  = - \frac{1}{n} \sum_{i = 1}^n
+                        \frac{\sum_{j = 1}^n \frac{d}{dy_i} K_h(y_i,y_j)}
+                             {\sum_{j = 1}^n K_h(y_i,y_j)}  \\
+\end{align*}
+
+\begin{align*}
+n \hat H(Y | X)
+ &  = \hat H(Y) + \hat H(X | Y) - \hat H(X) \\
+ &  = \sum_{j = 1}^k n_j \log\frac{n_j}{n}
+    + \sum_{j = 1}^k n_j \sum_{i = 1}^{n_j} \log \hat p_j(x_{j,i}) 
+    - \sum_{i = 1}^n \log \hat p(x_i)   \\
+ &  = \sum_{j = 1}^k n_j \log\frac{n_j}{n}
+    + \sum_{j = 1}^k \sum_{i = 1}^{n_j}
+        \log \left( \frac{\hat p_j^{n_j}(x_{j,i})}{\hat p(x_{j,i})} \right) \\
+ &  = \sum_{j = 1}^k \sum_{i = 1}^{n_j}
+        \log \left( \frac{n_j \hat p_j^{n_j}(x_{j,i})}{n\hat p(x_{j,i})} \right) \\
+ &  = \sum_{j = 1}^k \sum_{i = 1}^{n_j}
+        \log(n_j \hat p_j^{n_j}(x_{j,i})) - \log(n\hat p(x_{j,i})) \\
+% &  = \sum_{j = 1}^k n_j \log\frac{n_j}{n}
+%    + \sum_{i = 1}^n \left( \sum_{j = 1}^k n_j \delta^j_{y_i}
+%            \log \left( \frac{1}{n_jh^d} \sum_{\ell = 1}^n \delta^j_{y_\ell}
+%    K_h(x_i,x_\ell) \right)
+%    - \log \left( \frac{1}{nh^d} \sum_{\ell = 1}^n
+%            K_h(x_i,x_\ell) \right) \right)   \\
+\end{align*}
+
+%{\small
+%\bibliography{biblio}
+%%\bibliographystyle{icml2014}
+%\bibliographystyle{plain}
+%}
+\end{document}

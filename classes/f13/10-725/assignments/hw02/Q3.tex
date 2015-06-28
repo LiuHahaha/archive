@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+
+\usepackage{epsfig, graphics, graphicx}
+\usepackage{latexsym}
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[tight]{subfigure}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,enumerate,comment}
+
+\newcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\prox}{\operatorname{prox}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\begin{document}
+Shashank Singh\footnote{sss1@andrew.cmu.edu}
+\setcounter{section}{2}
+\section{Algorithms for matrix completion [30 points] (Sashank)}
+\begin{enumerate}[(a)]
+\item {\bf [10]} See code submitted in \texttt{code.zip}.
+
+\item {\bf [5]} For $\lambda~\approx~17.4$, the algorithm seems to converge
+very quickly ($24$ iterations) without significantly increasing the RMSE. While
+$\lambda \approx 5.30$ appears to minimize the RMSE, it also requires many more
+iterations ($299$). The rank of the solution for $\lambda~\approx~17.4$ is $9$.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=400pt,height=300pt]{3b1}
+\end{center}
+\caption{Semilog plot of number of iterations till convergence over $\lambda$.}
+\label{fig:num_iters}
+\end{figure}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=400pt,height=300pt]{3b2}
+\end{center}
+\caption{Semilog plots of solution RMSE (from training and test data) over
+$\lambda$.}
+\label{fig:RMSEs}
+\end{figure}
+
+\item {\bf [5]} As is clear from Figure~\ref{fig:warm_num_iters}, warm starts
+significantly reduce the number of iterations required to converge for lower
+values of $\lambda$. Since the convergence criterion
+$\frac{|f_{k + 1} - f_k|}{f_k} < 10^{-4}$ occurs when the change in the
+objectie function at a step is small, which occurs near optima, and warm starts
+begin relatively near optima, warm starts result in much quicker convergence.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=400pt,height=300pt]{3c}
+\end{center}
+\caption{Semilog plots of number of iterations till convergence over $\lambda$,
+with and without warm starts.}
+\label{fig:warm_num_iters}
+\end{figure}
+\end{enumerate}
+\end{document}

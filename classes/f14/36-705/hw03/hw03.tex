@@ -1,0 +1,202 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{36-705 Intermediate Statistics}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Thursday, September 25, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+\newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item For all $n \in \N$, $F \in \F_n$, since $\C = \A \cup \B$,
+$\{C \cap F : C \in \C\}
+    = \{A \cap F : A \in \A\} \cup \{B \cap F : B \in \B\}$,
+and hence $s(\C,F) \leq s(\A,F) + s(\B,F)$. Thus,
+\[s_n(\C)
+    = \sup_{F \in \F_n} s(\C, F)
+    \leq \sup_{F \in \F_n} s(\A, F) + s(\B, F)
+    \leq \sup_{F \in \F_n} s(\A, F) + \sup_{F \in \F_n} s(\B, F)
+    = s_n(\A) + s_n(\B).
+\]
+
+\item For all $n \in \N$, $F \in \F_n$,
+$\{C \cap F : C \in \C\}
+    = \{(A \cap F) \cup (B \cap F) : C \in \C\}$, and hence
+$s(\C,F) \leq s(\A,F)s(\B,F)$. Thus,
+\[s_n(\C)
+    = \sup_{F \in \F_n} s(\C, F)
+    \leq \sup_{F \in \F_n} s(\A, F)s(\B, F)
+    \leq \left( \sup_{F \in \F_n} s(\A, F)\right)
+                                    \left(\sup_{F \in \F_n} s(\B, F)\right)
+    = s_n(\A)s_n(\B).
+\]
+
+\item For all $n, m \in \N$, $F \in \F_{n + m}$, there exist disjoint sets
+$G_F \in \F_n$ and $H_F \in \F_m$ such that $F = G_F \cup H_F$, and hence
+$C \cap F = (C \cap G_F) \cup (C \cap H_F)$, for all $C \in \C$. Hence,
+\begin{align*}
+s_{n + m}(\C)
+    = \sup_{F \in \F_{n + m}} s(\C,F)
+ &  = \sup_{F \in \F_{n + m}} s(\C,G_F)s(\C,H_F)    \\
+ &  \leq \sup_{G \in \F_n} s(\C,G) \sup_{H \in \F_m} s(\C,H)
+    = s_n(\C)s_m(\C).
+\end{align*}
+
+\item The VC dimension of $\A$ is $4$.
+
+Suppose $n = 4$, and suppose $x_1,\dots,x_n \in \R$ with
+$x_1 < x_2 < x_3 < x_4$. It is clear that $\A$ picks any subset of
+$F := \{x_1,x_2,x_3,x_4\}$ of cardinality $0$, $1$, $2$, or $4$. In any subset
+of cardinality $3$, at least two points must be consecutive. Thus, $\A$ also
+picks out any subset of cardinality $3$, and hence
+$2^n \geq s_n(\A) \geq s(\A,F) = 2^n$, so that $s_n(\A) = 2^n$ $d \geq 4$.
+
+Suppose, on the other hand, that $n \geq 5$. Then,
+$\forall x_1,\dots,x_n \in \R$ with $x_1 < \dots < x_n$,
+$\A$ cannot pick out the subset $\{x_1,x_3,x_5\}$. Hence, $s_5(\A) < 2^n$, and
+$d < 5$. \qed
+
+\item Problem removed.
+
+\item Let $\mu_n := \E[X_n]$. Note that
+\begin{align*}
+\E[(X_n - b)^2]
+ &  = \E[(X_n - \mu_n + \mu_n - b)^2]   \\
+ &  = \E[(X_n - \mu_n)^2] + 2\E[(X_n - \mu_n)(\mu_n - b)] + \E[(\mu_n - b)^2]
+    = \Var[X_n] + (\mu_n - b)^2.
+\end{align*}
+All terms above are non-negative, and hence, as $n \to \infty$, the left-hand
+side vanishes if and and only if both terms on the right-hand side vanish. \qed
+
+\item Since $L_2$ convergence implies convergence in probability, it suffices
+to show that $n\inv \sum_{i = 1}^n X_i^2 \to p$ in $L_2$ as $n \to \infty$.
+Hence, by the previous problem, it suffices to observe that, as $n \to \infty$,
+\[\E \left[ n\inv \sum_{i = 1}^n X_i^2 \right]
+    = \E[X_1^2]
+    = p
+\quad \mbox{ and that } \quad
+\Var \left[ n\inv \sum_{i = 1}^n X_i^2 \right] = n\inv \Var[X_1^2] \to 0. \qed
+\]
+
+\item
+\begin{enumerate}
+\item For any $\e$, as $n \to \infty$,
+\[\pr[X_n \geq \e]
+    \leq 1 - \pr[X_n = 0]
+    = 1 - e^{-1/n} \frac{1/n^0}{0!}
+    = 1 - e^{-1/n}
+    \to 0. \qed
+\]
+
+\item For any $\e$, as $n \to \infty$, as above,
+\[\pr[nX_n \geq \e]
+    \leq 1 - \pr[nX_n = 0]
+    \leq 1 - \pr[X_n = 0]
+    \to 0. \qed
+\]
+\end{enumerate}
+
+\item Suppose $X_n$ approaches $X$ in distribution. For all integers $k$, since
+$X$ is integer valued, $F$ is continuous at $k + 1/2$ and $k - 1/2$, and so
+$F_n(k + 1/2) \to F(k + 1/2)$ and $F_n(k + 1/2) \to F(k + 1/2)$, as
+$n \to \infty$. Since $\pr[X_n = k] = F(k + 1/2) - F(k - 1/2)$ and each
+$\pr[X_n = k] = F_n(k + 1/2) - F_n(k - 1/2)$, $\pr[X_n = k] \to \pr[X_n = k]$.
+
+Suppose now that, $\forall k \in \Z$, $\pr[X_n = k] \to \pr[X_n = k]$ as
+$n \to \infty$. Since, $\forall x \in \R$,
+$F(x) = \sum_{i = 1}^{\lfloor x \rfloor} \P[X = k]$ and each
+$F_n(x) = \sum_{i = 1}^{\lfloor x \rfloor} \P[X_n = k]$,
+$F_n(x) \to F(x)$ as $n \to \infty$.
+
+\item Note that, by the Central Limit Theorem,
+\[
+\begin{bmatrix}
+\sqrt n (\overline X_1 - \mu_1) \\
+\sqrt n (\overline X_2 - \mu_2)
+\end{bmatrix}
+    \to \mathcal{N}(0,\Sigma),
+\]
+in distribution, and that, for $g : \R^2 \to \R$ defined by
+$g(x_1,x_2) = x_1/x_2$,
+$\nabla_\mu := \nabla g(\mu_1,\mu_2) = (1/\mu_2,-\mu_1/\mu_2^2)^T$.
+Hence, assuming $\mu_1,\mu_2 \neq 0$, by the Multivariate Delta Method,
+\[\sqrt{n}(Y_n - \mu_1/\mu_2)
+    = \sqrt{n}(g(\overline X_1, \overline X_2) - g(\mu_1,\mu_2))
+    \to \mathcal{N}(0,\nabla_\mu^T \Sigma \nabla_\mu).
+\]
+\end{enumerate}
+
+\end{document}

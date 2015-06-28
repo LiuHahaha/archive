@@ -1,0 +1,303 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-621 Introduction to Lebesgue Integration}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Wednesday, November 28, 2012}
+\newcommand{\problemlist}{Chapter 1, Problems 5,7,11,13,16,17, provide the
+details of Property 3 on page 29}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad $\blacksquare$}
+\newcommand{\mqed}{\quad \blacksquare}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\sminus}{\backslash}
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\pow}[1]{\mathcal{P} \left( #1 \right)} % power set of #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+Due: \duedate \\
+\problemlist \\
+
+The following lemma is used in the solutions to problems 5 and 13:
+
+{\bf Lemma 1:} If $C \subseteq \R^d$ is closed, $x \in C$ if and only
+if $d(x,C) = 0$.
+
+{\bf Proof of Lemma 1:} It is clear that, if $x \in C$, then $d(x,C) = 0$,
+since $\|x - x\| = 0$. Suppose that $x \notin C$. Let $y \in C$, and let
+$B = B(x, \|x - y\|)$ by the ball of radius $\|x - y\|$ centered at $x$. Let
+$K := \overline{B \cap C}$, the closure of the intersection of $B$ and $C$.
+Since $K$ is compact, the continuous function taking $y \in K$ to $\|x - y\|$
+achieves a minimum on $K$, so that there must exist $y \in K$ with
+$\|y - x\| = d(x,K)$. Thus, if $x \notin K$, $d(x,K) > 0$. From the definition
+of $K$, it is clear that $d(x,K) = d(x,C)$, so that, if $x \notin C$,
+$d(x,C) > 0$. \qed
+
+{\bf Lemma 2:} $F \subseteq \R^d$ is a $G_{\delta}$ if and only if
+$R^d \sminus F$ is an $F_{\sigma}$.
+
+{\bf Proof of Lemma 2:} If $F = \bigcap_{i = 1}^{\infty} U_i$ with each $U_i$
+open, then
+\[ \R^d - F
+ = \R^d - \bigcap_{i = 1}^{\infty} U_i 
+ = \bigcup_{i = 1}^{\infty} \R^d - U_i,
+\]
+so that, since each $\R^d - U_i$ is closed, $\R^d - F$ is an $F_{\sigma}$.
+
+If $\R^d - F = \bigcup_{i = 1}^{\infty} C_i$, with each $C_i$ closed, then
+\[ F
+ = \R^d - (\R^d - F)
+ = \R^d - \bigcup_{i = 1}^{\infty} C_i 
+ = \bigcap_{i = 1}^{\infty} \R^d - C_i,
+\]
+so that, since $\R^d - C_i$ is open, $F$ is a $G_{\delta}$. \qed
+
+\begin{question}{Chapter 1, Problem 5}
+\begin{enumerate}[(a)]
+\item Suppose $E$ is compact. $\forall \in \N$, since $\O_n$ is open, $\O_n$
+is measurable. Since $E$ is compact, it is bounded by some ball $B$ of radius
+$r$ centered at the origin. Then, clearly, $\O_1$ is bounded (by the ball of
+radius $r + 1$ centered at the origin), so that $\mu_*(\O_n) < \infty$.
+
+Thus, by part (ii) of Corollary 3.3, it suffices to show that $\O_n \searrow E$
+as $n \rightarrow \infty$. Clearly,
+$\forall n \in \N$, $\O_n \supseteq \O_{n + 1}$. It is also apparent that
+$E \subseteq \O_n, \forall n \in \N$, so that
+$E \subseteq \bigcap_{i = 1}^{\infty} \O_n$. If $x \in \R^d$, then, by Lemma 1
+above, $d(x,E) > 0$, so that, for some $n \in \N$, $x \notin \O_n$, and so
+$E \supseteq \bigcap_{i = 1}^{\infty} \O_n$. \qed
+
+\newpage
+\item Let $C = \{(x,0) : x \in \R\} \subseteq \R^2$, so that $C$ is closed but
+unbounded. $\forall \epsilon > 0$, we can cover $C$ with the countably
+many almost disjoint rectangles of dimension $1 \times \frac{\epsilon}{2^i}$,
+each centered at $(\pm i,0)$. Thus, by monotonicity of $\mu_*$,
+\[\mu_*(C)
+ \leq 2 \sum_{i = 1}^{\infty} \frac{\epsilon}{2^i}
+ =    \epsilon
+ <    \infty
+.\]
+On the other hand, $\forall n \in \N$, if
+$\O_n = \{x \in \R^2 : d(x,C) < 1/n\}$, then $\O_n$ is the union of
+countably many almost disjoint rectangles of dimension $1 \times 1/n$, each
+centered at $(\pm i, 0)$, so that
+\[
+\mu_*(\O_n)
+ = \sum_{i = 1}^{\infty} 1/n
+ = \infty.
+\]
+Therefore, $\mu_*(\O_n)$ does not converge to $\mu_*(C)$ as
+$n \rightarrow \infty$. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Chapter 1, Problem 7}
+Let $\mathcal{R}$ be the set of rectangles in $\R^d$.
+Clearly, $\{R_1,R_2,\ldots\} \subseteq \mathcal{R}$ is a countable cover of
+$E$ if and only if $\{\delta R_1,\delta R_2, \ldots\} \subseteq \mathcal{R}$
+is a countable cover of $\delta E$. Thus, since, $\forall i \in \N$, it is
+clear that $\mu_*(\delta R_i) = \mu_*(R_i) \prod_{i = 1}^d \delta_i$,
+\begin{align*}
+\mu_*(\delta E)
+ & = \inf \left\{ \sum_{i = 1}^{\infty} \mu_*(\delta R_i) \right|
+          \left. \delta E \subseteq \bigcup_{i = 1}^{\infty} \delta R_i,
+            \delta R_i \in \mathcal{R} \right\} \\
+ & = \inf \left\{ \left( \sum_{i = 1}^{\infty} \mu_*(\delta R_i) \right)
+     \prod_{i = 1}^d \delta_i \right|
+        \left. E \subseteq \bigcup_{i = 1}^{\infty} R_i,
+            R_i \in \mathcal{R} \right\} \\
+ & = \left( \prod_{i = 1}^d \delta_i \right)
+   \inf \left\{ \sum_{i = 1}^{\infty} \mu_*(\delta R_i) \right|
+        \left. E \subseteq \bigcup_{i = 1}^{\infty} R_i,
+            R_i \in \mathcal{R} \right\}
+   = \mu_*(E) \prod_{i = 1}^d \delta_i.
+\end{align*}
+
+Thus, it remains only to show that $\delta E$ is measurable, so that
+\[ \mu(\delta E)
+ = \mu_*(\delta E)
+ = \mu_*(E) \prod_{i = 1}^d \delta_i
+ = \mu(E) \prod_{i = 1}^d \delta_i.
+\]
+Let $\epsilon > 0$. Since $E$ is measurable, there is an open set
+$U \supseteq E$ with
+$\mu_*(U - E) < \frac{\epsilon}{\prod_{i = 1}^d \delta_i}$. Then,
+\[\mu_*(\delta U - \delta E)
+ = \mu_*(\delta(U - E))
+ = \mu_*(U - E) \prod_{i = 1}^d \delta_i
+ < \epsilon,
+\]
+so that, since $\delta U$ is clearly open, by Theorem 3.4, $\delta E$ is
+measurable. \qed
+\end{question}
+
+\newpage
+\begin{question}{Chapter 1, Problem 11}
+Let $S$ be the set in question.
+The proof that $\mu(S) = 0$ is identical to the proof given for Exercise 3
+that Cantor sets of constant dissection have measure $0$, by first showing, in
+a proof identical to that given for part (a) of Exercise 2, that $S$ can be
+written in terms of removing from $[0,1]$ countably many intervals (first
+$(0.4,0,5)$, then $(0.14,0.15),(0.24,0.25),\ldots$, and $(0.94,0.95)$, and so
+on). It's really a bit too tedious to do in full again. \qed
+\end{question}
+
+\begin{question}{Chapter 1, Problem 13}
+\begin{enumerate}[(a)]
+\item Let $C \subseteq \R^d$ be closed, and, $\forall n \in \N$, let
+$\O_n := \{x \in \R^d : d(x,C) < 1/n\}$. Clearly, $\forall n \in \N$,
+$C \subseteq \O_n$, so that $C \subseteq \bigcap_{i = 1}^{\infty} \O_n$.
+$C \subseteq $. It follows from Lemma 1 above that, if $x \notin C$, then
+$d(x,C) > 0$, so that, for some $n \in \N$, $x \notin \O_n$. Therefore,
+$\bigcap_{i = 1}^{\infty} \O_n \subseteq C$, so that $C$ is a $G_{\delta}$.
+\qed
+
+Let $U \subseteq \R^d$ be open, so that $C := \R^d - U$ is closed. Then, as
+shown above, $C$ is a $G_{\delta}$, so that, by Lemma 2 above, $U$ is an
+$F_{\sigma}$. \qed
+
+\item Let $f$ be a bijection from $\N$ to $\Q$. Then,
+$\Q = \bigcup_{i = 1}^{\infty} \{f(i)\}$, so that, since each $\{f(i)\}$ is
+closed, $\Q$ is an $F_{\sigma}$. Thus, by Lemma 2 above, $\R - \Q$ is a
+$G_{\delta}$. However, $\Q$ is not a $G_{\delta}$, since this would contradict
+the Baire category theorem, as $\emptyset = \Q \cap (\R - \Q)$ would be the
+countable intersection of open dense sets (as any set with a dense subset is
+dense). \qed
+
+\item By the same argument as in part (b) $(\Q \cap [1,2])$ is not a
+$G_{\delta}$ and thus, by Lemma 2, $(\R - \Q) \cap [-2,-1]$ is not
+an $F_{\sigma}$ (as, clearly, any translation of an $F_{\sigma}$ is, itself an
+$F_{\sigma}$), $S := (\Q \cap [1,2]) \cup ((\R - \Q) \cap [-2,-1])$ is neither a
+$G_{\delta}$ nor an $F_{\sigma}$.
+
+Since $\Q$ is an $F_{\sigma}$ and $\R - \Q$ is a $G_{\delta}$, and
+$[1,2]$ and $[-2,-1]$ are closed (and thus, all these sets are Borel),
+since a $\sigma$-algebra is closed under finite unions and intersections,
+$S$ is Borel. \qed
+\end{enumerate}
+\end{question}
+
+\begin{question}{Chapter 1, Problem 16}
+Note that $E = \bigcap_{i = 1}^{\infty} \bigcup_{j = i}^{\infty} E_j$, since
+$x$ is in the latter if and only if $x \in E_k$ for infinitely many $k$.
+\begin{enumerate}[(a)]
+\item Since the set of Lebesgue measurable sets is a $\sigma$-algebra, and
+thus closed under countable unions and intersections, it follows immediately
+from the above characterization of $E$ that $E$ is Lebesgue measurable, since
+each $E_k$ is measurable. \qed
+
+\newpage
+\item Since $\forall k \in \N$,
+$\bigcap_{i = 1}^{\infty} \bigcup_{j = i}^{\infty} E_j
+\subseteq \bigcup_{j = k}^{\infty} E_j$,
+it follows from monotonicity and countable subadditivity of $\mu$, given the
+above characterization of $E$, that
+\[
+\mu(E)
+ =    \mu \left( \bigcap_{i = 1}^{\infty} \bigcup_{j = i}^{\infty} E_j \right)
+ =    \mu \left( \bigcup_{j = k}^{\infty} E_j \right)
+ \leq \sum_{j = k}^{\infty} \mu(E_j).
+\]
+Since $\sum_{i = 1}^{\infty} \mu(E_j) < \infty$,
+\[
+\mu(E)
+ =    \lim_{k \rightarrow \infty} \mu(E)
+ \leq \lim_{k \rightarrow \infty} \sum_{j = k}^{\infty} \mu(E_j)
+ =    0. \mqed
+\]
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Chapter 1, Problem 17}
+$\forall n \in \N$, since $f_n$ is finite almost everywhere,
+$\exists c_n \in \R$ such that $f_n$ is bounded by $c_n/n$ except on a set of
+measure less than $2^{-n}$, so that, for $E_n := \{x : |f_n(x)/c_n| > 1/n\}$,
+$m(E_n) < 2^{-n}$. Then,
+\[\sum_{i = 1}^{\infty} \mu(E_i)
+ < \sum_{i = 1}^{\infty} \frac{1}{2^i}
+ = 1
+ < \infty
+.\]
+Since each $(c_n/n, \infty)$ and $f_n$ are measurable, each
+$S_n = (|f_n|)\inv((c_n/n, \infty))$ is also measurable.
+Thus, for $E := \limsup_{i \rightarrow \infty} (E_i)$, by the Borel-Cantelli
+lemma, $\mu(E) = 0$.
+
+Since the set of points where $\frac{f_n(x)}{c_n}$ does converge to $0$
+is precisely $E$, $\frac{f_n(x)}{c_n} \rightarrow 0$ as $n \rightarrow \infty$
+a.e. \qed
+\end{question}
+
+\begin{question}{Details of Proof of Property 3}
+Since each $f_n$ is measurable, $\forall a \in \R$, if, $\forall n \in \N$,
+$E_n = \{x \in \R : f_n(x) > a\}$, $E_n$ is measurable. Note that
+$\sup_n f_n(x) > a$ if and only if $\exists n \in \N$ such that $f_n(x) > a$,
+so that
+$E := \{x \in \R : \sup_n f_n(x) > a\} = \bigcup_{i = 1}^{\infty} E_i$.
+Thus, since the set of Lebesuge measurable sets is a $\sigma$-algebra, and
+thus closed under countable unions, $E$ is measurable. Then, since this holds
+$\forall a \in \R$, the function $x \mapsto \sup_n f(x)$ is measurable. The
+proof for the pointwise infimum of countably many measurable functions is
+analagous.
+\qed
+
+Since each $f_n$ is measurable, as shown above, $\forall k \in \N$,
+the functions $x \mapsto \sup_n f_n(x)$ is measurable. Thus, since the
+pointwise infimum of countable many measurable functions is measurable,
+the function
+\[x
+ \mapsto \limsup_{n \rightarrow \infty} f_n(x)
+ =       \inf_k \{\sup_{n \geq k} f_n(x) : k \in \N\}
+\]
+is measurable. The proof for the pointwise limit inferior of countable many
+measurable functions is analagous. \qed
+\end{question}
+\end{document}

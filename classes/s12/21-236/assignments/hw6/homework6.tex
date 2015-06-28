@@ -1,0 +1,266 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+\def\indented#1{\list{}{}\item[]}
+\let\indented=\endlist
+
+\newcounter{questionCounter}
+\newcounter{partCounter}[questionCounter]
+\newenvironment{question}[2][\arabic{questionCounter}]{%
+    \setcounter{partCounter}{0}%
+    \vspace{.25in} \hrule \vspace{0.5em}%
+        \noindent{\bf #2}%
+    \vspace{0.8em} \hrule \vspace{.10in}%
+    \addtocounter{questionCounter}{1}%
+}{}
+\renewenvironment{part}[1][\alph{partCounter}]{%
+    \addtocounter{partCounter}{1}%
+    \vspace{.10in}%
+    \begin{indented}%
+       {\bf (#1)} %
+}{\end{indented}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh}
+\newcommand{\myandrew}{sss1@andrew.cmu.edu}
+\newcommand{\myclass}{21-236 Mathematical Studies Analysis II}
+\newcommand{\myhwnum}{6}
+\newcommand{\duedate}{Wednesday, April 11, 2012}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+\myclass \\
+Name: \myname \\
+Email: \myandrew \\
+\begin{question}{Problem 1}
+Let $\boldsymbol{\varphi}: [a,b] \rightarrow \mathbb{R}^2$ parametrize
+$\gamma$, and let
+$\mathbf{h}_1,\mathbf{h}_2: [a,b] \times [0,1] \rightarrow \mathbb{R}^2$ such
+that, $\forall (s,t) \in [a,b] \times [0,1]$, if $(\rho,\theta)$ is the polar
+representation of $\boldsymbol{\varphi}(s)$ (i.e.,
+$\boldsymbol{\varphi}(s) = (\rho \cos \theta, \rho \sin \theta)$, $\theta \in [0,2\pi]$),
+\[\mathbf{h_1}(s,t) = (\rho + t(r - \rho), \theta)\]
+and
+\[\mathbf{h_2}(s,t) =
+\left(1,
+\theta + t\left((2 \pi \omega)\frac{(s - a)}{(b - a)} - \theta\right)\right)
+,\]
+where $\omega = \operatorname{ind}_{\gamma}(x_0,y_0)$.
+Then, let $\mathbf{h}:[a,b] \times [0,1]$ such that,
+$\forall (s,t) \in [a,b] \times [0,1]$,
+\[\mathbf{h}(s,t) =
+  \left\{
+    \begin{array}{cc}
+      (x_0,y_0) + \mathbf{h}_1(s,2t), & t \in \left[0,\frac12\right] \\
+      (x_0,y_0) + \mathbf{h}_2(s,2t - 1), & t \in \left[\frac12,1\right]
+    \end{array}
+  \right.
+.\]
+Let $\gamma_2$ be the continuous closed curve parametrized by
+$\boldsymbol{\phi}: [a,b] \rightarrow \mathbb{R}^2$ such that,
+$\forall s \in [a,b]$,
+$\boldsymbol{\phi}(s) = (x_0,y_0) + (r \cos(\omega s), r \sin(\omega s))$.
+Then, $\forall s \in [a,b]$, $\mathbf{h}(s,0) = \boldsymbol{\varphi}(s)$ and
+$\mathbf{h}(s,1) = \boldsymbol{\phi}(s)$, and, because $\sin 0 = \sin(2\pi)$
+and $\cos 0 = \cos(2\pi)$ $\forall t \in [0,1]$,
+$\mathbf{h}(a,t) = \mathbf{h}(b,t)$.
+$\forall (s,t) \in [a,b] \times [0,\frac12]$, $\mathbf{h}(s,t)$ is on the line segment
+from $\boldsymbol{\varphi}(s) \in U$ to $(x_0,y_0)$, and,
+
+$\forall (s,t) \in [a,b] \times [\frac12,1]$ $\mathbf{h}(s,t) \in \partial B((x_0,y_0),r)$
+
+so that, since $U$ is starshaped with respect to $(x_0,y_0)$ and by choice of
+$r$, $\forall (s,t) \in [a,b] \times [0,1]$, $h(s,t) \in U$.
+
+Therefore,
+$\mathbf{h}$ is a homotopy from $\gamma$ to $\gamma_2$ so that, since
+$\mathbf{g}$ is irrotational and of class $C^1$, by Theorem 143,
+\[\int_{\gamma} \mathbf{g} = \int_{\gamma_2} \mathbf{g}.\]
+However, $\gamma_2$ is the union of $\omega$ identical curves parametrized by
+$\psi$, so that
+\[\int_{\gamma} \mathbf{g}
+ = \int_{\gamma_2} \mathbf{g}
+ = \sum_{i = 1}^{\omega} \int_{\gamma_1} \mathbf{g}
+ = \operatorname{ind}_{\gamma}\int_{\gamma_1} \mathbf{g}
+\quad \blacksquare.\]
+
+
+\end{question}
+
+\begin{question}{Problem 2}
+Let $\boldsymbol{\varphi}: [a,b] \subseteq \mathbb{R} \rightarrow V$
+be a parametrization of $\gamma$ (with components
+$\varphi_1,\varphi_2,\varphi_3$), let $\gamma_2$ be the curve parametrized by
+$\boldsymbol{\phi}: [a,b] \rightarrow V$ such that,
+$\forall s \in [a,b]$,
+\[\boldsymbol{\phi}(s) = (\varphi_1(s),\varphi_2(s),0),\] and let
+$\mathbf{h}:[a,b] \times [0,1] \rightarrow V$ such that,
+$\forall (s,t) \in [a,b] \times [0,1]$,
+\[\mathbf{h}(s,t) = (\varphi_1(s),\varphi_2(s),\varphi_3(s) - t\varphi_3(s)).\]
+Note that, $\forall s \in [a,b]$, $\mathbf{h}(s,0) = \boldsymbol{\varphi}(s)$ and
+$\mathbf{h}(s,1) = \boldsymbol{\phi}(s)$, and, $\forall t \in [0,1]$,
+$\mathbf{h}(a,t) = \mathbf{h}(b,t)$. Since $\mathbf{h}$ is linear in $t$ and
+$\boldsymbol{\varphi}$ is continuous (as $\gamma$ is continuous), $\mathbf{h}$
+is continuous. Since $h_1 = \varphi_1$ and $h_2 = \varphi_2$, and
+$\boldsymbol{\varphi}$ has range in $V$, $h$ has range in $V$. Therefore,
+$\mathbf{h}$ is a homotopy from $\gamma$ to $\gamma_2$, and $\gamma$ and
+$\gamma_2$ are homotopic in $V$. By Theorem 143, then, since $\mathbf{g}$ is
+an irrotational field of class $C^1$,
+\[\int_{\gamma} \mathbf{g} = \int_{\gamma_2} \mathbf{g}.\]
+
+Note that $\gamma_2$ in $\mathbb{R}^3$ is the same curve as $\Pi_{\gamma}$ is
+$\mathbb{R}^2$, so that
+\[\int_{\gamma_2} \mathbf{g} = \int_{\Pi_{\gamma}} \mathbf{g}.\] By the result
+of Problem 1 above, since $U := \mathbb{R}^2 \backslash \{(0,0)\}$ is open and
+starshaped with respect to $(0,0)$, and $\partial B((0,0),1) \subseteq U$,
+\[\int_{\gamma} \mathbf{g}
+ = \int_{\gamma_2} \mathbf{g}
+ = \int_{\Pi_{\gamma}} \mathbf{g}
+ = \operatorname{ind}_{\Pi_{\gamma}}(0,0) \int_{\gamma_1} \mathbf{g},
+\]
+as $\gamma_1$ in $\mathbb{R}^3$ is the same curve as unit circle centered at
+the origin in $\mathbb{R}^2$. \quad $\blacksquare$
+\end{question}
+
+\begin{question}{Problem 3}
+\begin{enumerate}[(a)]
+\item Let $h:U \rightarrow \mathbb{R}^3$ such that, $\forall (x,y,z) \in U$,
+\[h(x,y,z) = \frac12\ln(x^2 + y^2).\]
+Then, by the Quotient Rule,
+\[\frac{\partial g_1}{\partial y}(x,y,z)
+ = \frac{-xz(2y)}{(x^2 + y^2)^2}
+ = \frac{\partial g_2}{\partial x}(x,y,z).\]
+Furthermore,
+\[\frac{\partial g_1}{\partial z}(x,y,z)
+ = \frac{x}{x^2 + y^2}
+ = \frac12\frac{2x}{x^2 + y^2}
+ = \frac{\partial h}{\partial x}(x,y,z)
+ = \frac{\partial g_3}{\partial x}(x,y,z),\]
+and
+\[\frac{\partial g_2}{\partial z}(x,y,z)
+ = \frac{y}{x^2 + y^2}
+ = \frac12\frac{2y}{x^2 + y^2}
+ = \frac{\partial h}{\partial y}(x,y,z)
+ = \frac{\partial g_3}{\partial y}(x,y,z).\]
+Thus, $\mathbf{g}$ is irrotational. \quad $\blacksquare$
+
+\item $\forall (x,y,z) \in \mathbb{R}^3$, if $z = 0$, then
+$\mathbf{g}(x,y,z) = \mathbf{0}$. Thus, $\forall t \in [0,2\pi]$,
+$\mathbf{g}(\boldsymbol{\varphi}(t)) = \mathbf{0}$, so that, by definition of the
+curve integral,
+\[\int_{\gamma} \mathbf{g}
+ = \int_0^{2\pi} \sum_{i = 1}^3 0\cdot(\varphi_i^{\prime}(t)) \; dt
+ = 0. \quad \blacksquare\]
+
+\item Let $\gamma$ be a piecewise $C^1$ closed, oriented curve with range
+$\Gamma \subseteq U$. By the result of Problem 2 above, since $\mathbf{g}$ is
+irrotational and $C^1$,
+\[\int_{\gamma} \mathbf{g}
+ = \operatorname{ind}_{\Pi_{\gamma}}((0,0)) \int_{\gamma_1} \mathbf{g},\]
+where $\gamma_1$ is the closed curve parametrized by
+$\boldsymbol{\varphi}(t) = (\cos t, \sin t, 0), t \in [0,2 \pi]$.
+Then, by the result of part (b) above,
+\[\int_{\gamma} \mathbf{g}
+ = \operatorname{ind}_{\Pi_{\gamma}}((0,0))\cdot 0 = 0.\]
+By Theorem 130, then, $\mathbf{g}$ is conservative. \quad $\blacksquare$
+
+\item Let $f: U \rightarrow \mathbb{R}^3$ such that, $\forall (x,y,z) \in U$,
+\[f(x,y,z) = \frac{z}{2}\ln(x^2 + y^2) - \frac{\ln 2}{2}.\]
+Then,
+\begin{eqnarray*}
+\frac{\partial f}{\partial x}(x,y,z) & = & \frac{xz}{x^2 + y^2} = g_1(x,y,z) \\
+\frac{\partial f}{\partial y}(x,y,z) & = & \frac{yz}{x^2 + y^2} = g_2(x,y,z) \\
+\frac{\partial f}{\partial z}(x,y,z) & = & \frac12 \log(x^2 + y^2) = g_3(x,y,z) \\
+\end{eqnarray*}
+(where $g_3 = h$ as defined in part (a). Furthermore,
+$f(1,1,1) = \frac{1}{2} \ln(1^2 + 1^2) - \frac{\ln 2}{2} = 0$,
+so that $f$ has the desired properties. \quad $\blacksquare$
+
+\end{enumerate}
+\end{question}
+
+\begin{question}{Problem 4}
+\begin{enumerate}[(a)]
+\item {\bf Case 1:} ($N = M$) Let $L$ be the Lipschitz constant of
+$\mathbf{g}$, and $R$ be a rectangle with $E \subseteq R$ (such a rectangle
+exists because $E$ is Peano-Jordan Measurable). Since
+$\operatorname{meas} E = 0$, $\forall \delta = \frac{\epsilon}{L^M}$, there exists a
+partition $P$ of $R$ such that $U(\chi_E,P) < \delta$. Let $\epsilon > 0$, and
+let $Q$ be a refinement of $P$ such that each rectangle $R$ in $Q$ has
+diagonals of length no more than $\epsilon$, with rectangles
+$Q_1,Q_2,\ldots,Q_l$. Since $Q$ is a refinement of $P$,
+$U(\chi_E,Q) < \delta$. Since $\mathbf{g}$
+is Lipschitz, $\forall \mathbf{x},\mathbf{y} \in R_i$,
+$\|\mathbf{g}(\mathbf{x}) - \mathbf{g}(\mathbf{x})\|
+                                              < L\|\mathbf{x} - \mathbf{y}\|,$
+so that each $\mathbf{g}(Q_i)$ can be covered by a rectangle $C_i$ of diagonal
+at most $L\epsilon$; let $S$ be a cover of $\mathbf{g}(E)$ of such rectangles.
+Then, $U(\chi_{\mathbf{g}(E)},S) < L^MU(\chi_{\mathbf{g}(E)} < \epsilon$,
+so that $\int_S \chi_{\mathbf{g}(E)} = 0$ and thus
+$\operatorname{meas} \mathbf{g}(E) = 0$, concluding this case.
+
+{\bf Case 2:} ($N < M$) Let \[E^{\prime}
+         := \{(\mathbf{x},\mathbf{0}) \in \mathbb{R}^M : \mathbf{x} \in E\}.\]
+If $\chi_E$ is integrable over $R$ over some rectangle $R$ with
+$E \subseteq R$, then, $\forall k \in \mathbb{N}$, $\chi_{E^{\prime}}$ is
+integrable over the rectangle
+$R^{\prime} := R \times [0,0]^{M - N} \subseteq \mathbb{R}^M$.
+In particular, since $\chi_{E^{\prime}}$ is bounded and
+$\operatorname{meas}_{M} R^{\prime} = 0$, \[\int_{R^{\prime}} \chi_{E^{\prime}} = 0.\]
+
+Let $\mathbf{f}: E^{\prime} \rightarrow \mathbb{R}^M$ such that,
+$\forall \mathbf{y} = (\mathbf{x},\mathbf{0}) \in E^{\prime}$
+($\mathbf{x} \in E$), $\mathbf{f}(\mathbf{y}) = \mathbf{g}(\mathbf{x})$. Then,
+$\mathbf{f}$ is Lipschitz, and $E^{\prime}$ is Peano-Jordan Measurable with
+measure zero, so that, by the result of Case 1 above, $\mathbf{f}(E^{\prime})$
+is Peano-Jordan Measurable with measure zero. Therefore, since
+$\mathbf{f}(E^{\prime}) = \mathbf{g}(E)$, $\mathbf{g}(E)$ is
+Peano-Jordan Measurable with measure zero. \quad $\blacksquare$
+
+\item Since $\mathbf{g}$ is of class $C^1$, its derivative is continuous.
+Thus, since $\overline{E}$ is compact, (it is clearly closed, and it is
+bounded because it is Peano-Jordan Measurable) and any continuous function on
+a compact domain is bounded, the derivative of $\mathbf{g}$ is bounded on
+$\overline{E}$. Therefore, $\mathbf{g}$ is Lipschitz over $\overline{E}$. By
+the result of part (a), then, $\mathbf{g}(E)$ is Peano-Jordan measurable with
+measure zero. \quad $\blacksquare$
+
+\item
+\begin{enumerate}[i.]
+\item By the Inverse Function Theorem, $\forall \mathbf{x} \in E^{\circ}$,
+$\exists r > 0$ such that $B(\mathbf{x},r)) \subseteq E^{\circ}$ and
+$\mathbf{g}(B(\mathbf{x},r))$ is open. Thus, if $\mathbf{x} \in E^{\circ}$,
+$\exists r_{\mathbf{x}} > 0$ such that $B(\mathbf{g}(\mathbf{x},r_\mathbf{x}))
+ \subseteq \left(\mathbf{g}(E)\right)^{\circ}$. Therefore,
+$\mathbf{g}(\mathbf{x}) \in \left(\mathbf{g}(E)\right)^{\circ}$, and so
+$\mathbf{g}(E^{\circ}) \subseteq \left(\mathbf{g}(E)\right)^{\circ}$.
+Since $\mathbf{g}$ is continuous,
+$\overline{\mathbf{g}(E)} \subseteq \mathbf{g}(\overline{E})$.
+Thus,
+\[\partial\mathbf{g}(E)
+ = \overline{\mathbf{g}(E)}\backslash (\mathbf{g}(E))^{\circ}
+ \subseteq \overline{\mathbf{g}(E)}\backslash \mathbf{g}(E^{\circ})
+ \subseteq \mathbf{g}(\overline{E})\backslash \mathbf{g}(E^{\circ})
+ \subseteq \mathbf{g}(\partial E).\]
+
+\item Since $E$ is Peano-Jordan measurable, by Theorem 177, $\partial E$ is
+Peano-Jordan measurable with measure zero. Thus, by the result of part (b)
+above, $\mathbf{g}(\partial E)$ is Peano-Jordan measurable with measure zero.
+By the result of part i. above and Theorem 167,
+\[\operatorname{meas} \partial \mathbf{g}(E)
+  \leq \operatorname{meas} \mathbf{g}(\partial E) = 0,\]
+so that $\operatorname{meas} \partial \mathbf{g}(E) = 0$. Therefore, by
+Theorem 177, $\mathbf{g}(E)$ is Peano-Jordan measurable. \quad $\blacksquare$
+\end{enumerate}
+\end{enumerate}
+\end{question}
+\end{document}
