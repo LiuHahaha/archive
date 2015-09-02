@@ -1,0 +1,410 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\usepackage{mathrsfs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10/36-702 Statistical Machine Learning}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Friday, March 20, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+\newcommand{\MSE}{\operatorname{MSE}} % mean squared error
+\newcommand{\tr}{\operatorname{tr}} % trace operator
+\renewcommand{\H}{\mathscr{H}} % Hilbert space (RKHS)
+\renewcommand{\hat}{\widehat}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item Since each $y_i = f_0(x_i) + \e_i$ and $\E[\e_i] = 0$, the bias of
+$\hat f$ at $x$ is
+\begin{align*}
+\E\left[ \hat f(x) - f_0(x) \right]
+    = \E\left[ \frac{1}{k} \sum_{i \in \mathscr{N}_k(x)} y_i - f_0(x) \right]
+ &  = \frac{1}{k} \sum_{i \in \mathscr{N}_k(x)}
+                                \E\left[ f_0(x_i) + \e_i - f_0(x) \right]   \\
+ &  = \frac{1}{k} \sum_{i \in \mathscr{N}_k(x)}
+                                            \left( f_0(x_i) - f_0(x) \right),
+\end{align*}
+Since each $\Var[\e_i] = \sigma$, $y_i$'s are independent, and $f_0(x_i)$ is
+fixed, the variance of $\hat f$ at $x$ is
+\[\Var[\hat f(x)]
+    = \Var\left[ \frac{1}{k} \sum_{i \in \mathscr{N}_k(x)} y_i \right]
+    = \frac{1}{k^2} \sum_{i \in \mathscr{N}_k(x)} \Var\left[ y_i \right]
+    = \frac{1}{k} \Var\left[ \e_i \right]
+    = \frac{\sigma^2}{k}.\]
+
+By the bias-variance decomposition, the mean squared error of $\hat f$ at $x$
+is
+\begin{equation}
+\E\left[ \left( \hat f(x) -  f_0(x) \right)^2 \right]
+    = \left( \frac{1}{k} \sum_{i \in \mathscr{N}_k(x)}
+                                    \left( f_0(x_i) - f_0(x) \right) \right)^2
+    + \frac{\sigma^2}{k}. \qed
+\label{ineq:MSE_bound1}
+\end{equation}
+
+\item Let $x \in [0,1]^d$, and, for any $s > 0$, let
+$C_s := \prod_{i = 1}^d [x_i - 2s, x_i + 2s]$ denote the cube of sidelength
+$4s$ centered at $x$. Notice that $C_s \cap [0,1]^d$ is a rectangle each of
+whose sidelengths is at least $2s$. Since $x_1,\dots,x_n$ are uniformly spaced
+in $[0,1]^d$, $C_s$ contains at least an $s^d$ fraction of the $n$ points, so
+that, for $s = (k/n)^{1/d}$, $\mathscr{N}_k(x) \subseteq C_s$ and all
+$y \in C_s$ satisfy
+$\|y - x\|_2 \leq 2s\sqrt{d} = 2\sqrt{d}(k/n)^{1/d}$. Thus, for
+$i \in \mathscr{N}_k(x)$,
+\[\|x_i - x\|_2 \leq C\left( \frac{k}{n}\right)^{1/d}\]
+where $C = 2\sqrt{d}$. It follows that, if $f_0$ is $L$-Lipschitz, then for
+each $x_i \in \mathscr{N}(x)$,
+\[|f_0(x_i) - f_0(x)| \leq CL\left( \frac{k}{n} \right)^{1/d},\]
+Plugging this into (\ref{ineq:MSE_bound1}) gives the desired result:
+\begin{equation}
+\E\left[ \left( \hat f(x) - f_0(x) \right)^2 \right]
+    \leq (CL)^2 \left( \frac{k}{n} \right)^{2/d} + \frac{\sigma^2}{k}. \qed
+\label{ineq:MSE_bound2}
+\end{equation}
+
+\item If the derivative with respect to $k$ of the bound in
+(\ref{ineq:MSE_bound2}) is $0$, then
+\[0 = \frac{d}{dk} (CL)^2 \left( \frac{k}{n} \right)^{2/d} + \frac{\sigma^2}{k}
+    = \frac{(CL)^2(2/d)}{n}\left( \frac{k}{n} \right)^{\frac{2 - d}{d}}
+        - \frac{\sigma^2}{k^2},
+\]
+and solving for $k$ gives $k = C_2 n^{\frac{2}{d + 2}}$, where
+$C_2 = \left( \frac{d\sigma^2}{2(CL)^2} \right)^{\frac{d}{d + 2}}$. Since the
+bound in $(\ref{ineq:MSE_bound2})$ is convex in $k$, this $k$ minimizes the
+bound, which then becomes
+\[\E\left[ \left( \hat f(x) - f_0(x) \right)^2 \right]
+    \leq (CL)^2 \left( \frac{C_2n^{\frac{2}{d + 2}}}{n} \right)^{2/d} + \frac{\sigma^2}{k}
+    = \left( (CL)^2 C_2^{2/d} + \frac{\sigma^2}{C_2} \right) n^{-\frac{2}{d + 2}}.\]
+This agrees with the bound
+$\E\left[ \left( \hat f(x) - f_0(x) \right)^2 \right]
+    \in O\left( n^{-\frac{2}{2 + d}} \right)$
+stated in class. \qed
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item
+Note that $K(\cdot, x_i) = \sum_{j = 1}^\infty \gamma_j \phi_j(x_i) \phi_j$ and
+$f = \sum_{j = 1}^\infty c_j \phi_j$, for some real-valued sequence
+$\{c_j\}_{j = 1}^\infty$. By construction of
+$\langle \cdot, \cdot \rangle_{\H_K}$ and of $\{c_j\}_{j = 1}^\infty$,
+\[\langle f, K(\cdot, x_i) \rangle_{\H_k}
+    = \sum_{j = 1}^\infty \frac{c_j\gamma_j\phi_j(x_i)}{\gamma_j}
+    = \sum_{j = 1}^\infty c_j\phi_j(x_i)
+    = f(x_i).\]
+Using this property and bilinearity of the inner product,
+\begin{align*}
+\|f\|_{\H_K}^2
+    = \langle f, f \rangle_{\H_k}
+ &  = \langle f, \sum_{i = 1}^n \alpha_i K(\cdot, x_i) \rangle_{\H_k}   \\
+ &  = \sum_{i = 1}^n \alpha_i \langle f, K(\cdot, x_i) \rangle_{\H_k}
+    = \sum_{i = 1}^n \alpha_i f(x_i)
+    = \sum_{i = 1}^n \sum_{j = 1}^n \alpha_i \alpha_j K(x_i, x_j). \qed
+\end{align*}
+
+
+\item For $i \in \{1,\dots,n\}$, since
+$\langle \rho, K(\cdot, x_i) \rangle_{\H_K} = 0$,
+\[\tilde f(x_i)
+    = \langle \tilde f, K(\cdot, x_i) \rangle_{\H_K}
+    = \langle f + \rho, K(\cdot, x_i) \rangle_{\H_K}
+    = \langle f, K(\cdot, x_i) \rangle_{\H_K}
+    = f(x_i).
+\]
+Since
+$f \in \vspan\left\{ K(\cdot, x_1),\dots,K(\cdot,x_n) \right\}$,
+$\langle f, \rho \rangle_{\H_K} = 0$. By the Pythagorean Theorem,
+\[\|\tilde f\|_{\H_K}^2
+    = \|f\|_{\H_K}^2 + \|\rho\|_{\H_K}^2
+    \geq \|f\|_{\H_K}^2. \qed\]
+
+\item Since $(\H_K, \langle \cdot, \cdot \rangle_{\H_K})$ is a Hilbert space
+of which $F := \vspan\left\{ K(\cdot, x_1),\dots,K(\cdot,x_n) \right\}$ is a
+finite-dimensional (and hence closed) subspace, for any $f \in \H_K$, there
+exists an orthogonal projection $f_F$ of $\hat f$ on $F$. Since
+$\rho := f - f_F$ is in the orthogonal complement $\F^\perp$ of $F$,
+by the results of part (b), for $\lambda \geq 0$,
+\[\sum_{i = 1}^n (y_i - f(x_i))^2 = \sum_{i = 1}^n (y_i - f_F(x_i))^2
+    \quad \mbox{ and } \quad
+    \lambda \|f\|_{\H_K}^2 \geq \lambda \|f_F\|_{\H_K}^2.\]
+It follows that $\hat f \in F$, and so there exists $\alpha \in \R^n$ with
+$\hat f = \sum_{i = 1}^n \alpha_i K(\cdot, x_i)$, reducing the initial
+optimization problem over $\H_K$ to an $n$-dimensional one. Since each
+$\hat f(x_i) = \sum_{j = 1}^n \alpha_j K(x_i, x_j)$,
+\[\begin{bmatrix}
+    \hat f(x_1) \\
+    \vdots  \\
+    \hat f(x_n)
+\end{bmatrix}
+    = K\alpha
+\quad \mbox{ and so } \quad
+\sum_{i = 1}^n (y_i - \hat f(x_i))^2 = \|y - K\alpha\|_2^2.\]
+Furthermore, as shown in part (a),
+$\|\hat f\|_{\H_K}^2
+    = \sum_{i = 1}^n \sum_{j = 1}^n \alpha_i\alpha_j K(x_i,x_j)
+    = \alpha^T K \alpha$.
+Thus, $\hat f(x_i) = \sum_{j = 1}^n \hat\alpha_j K(x_i, x_j)$, where
+\[\hat\alpha
+    := \arg\min_{\alpha \in \R^n} \|y - K\alpha\|_2^2
+    + \lambda \alpha^T K \alpha. \qed\]
+\end{enumerate}
+
+% TODO
+\newpage
+\item
+\begin{enumerate}
+\item By definition of smoothing splines and the construction of $z$,
+\begin{align*}
+\hat f^{-i}
+ &  = \argmin_f \sum_{j \neq i} (y_j - f(x_i))^2 + \|f^{((k + 1)/2)}\|_2^2  \\
+ &  = \argmin_f \sum_{j \neq i} (y_j - f(x_i))^2 + (\hat f^{-i}(x_i)
+                                    - f(x_i))^2 + \|f^{((k + 1)/2)}\|_2^2   \\
+ &  = \argmin_f \sum_{j = 1}^n (z_j - f(x_i))^2 + \|f^{((k + 1)/2)}\|_2^2
+    = \hat f_z,
+\end{align*}
+where $\hat f_z$ is the smoothing spline resulting from regressing $z$ over
+$x$. Since the smoothing matrix $S$ depends only on the predictors $x$,
+$\hat f^{-i}(x_i) = f_z(x_i) = \sum_{j = 1}^n S_{i,j} z_j$.
+
+\item By part (a) and the fact that $\hat y = S y$,
+\begin{align*}
+\hat f(x_i) - \hat f^{-i}(x_i)
+    = \hat y_i - \sum_{j = 1}^n S_{i,j} z_j
+    = \sum_{j = 1}^n S_{i,j} y_j - S_{i,j} z_j
+    = S_{i,i} \left( y_j - z_i \right)
+    = S_{i,i} \left( y_j - \hat f^{-i}(x_i) \right)
+\end{align*}
+by construction of $z$. This rearranges to
+$\hat f(x_i) = S_{i,i} y_i + (1 - S_{i,i}) \hat f^{-i}(x_i)$,
+and hence,
+\[\frac{y_i - \hat f(x_i)}{1 - S_{i,i}} = y_i - \hat f^{-i}(x_i). \qed\]
+
+\end{enumerate}
+
+\item
+Note that it suffices to show the case $\sigma = 1$, since, for
+$X_j := Z_j/\sigma$, $X_i \sim \mathcal{N}(0,1)$ and
+\[\pr\left[ \max_{j \in \{1,\dots,p\}} |Z_j|
+                                \leq \sigma \sqrt{2(1 + \delta)\log p} \right]
+    = \pr\left[ \max_{j \in \{1,\dots,p\}} |X_j|
+                                    \leq \sqrt{2(1 + \delta)\log p} \right].\]
+For any $p \in \N$, $\delta > 0$, since $Z_1,\dots,Z_p$ are i.i.d., for
+$c := \sqrt{2(1 + \delta)\log p}$,
+\[\pr\left[ \max_{j \in \{1,\dots,p\}} |Z_j| \leq c \right]
+    = \pr\left[ |Z_1|,\dots,|Z_p| \leq c \right]
+    = \prod_{j = 1}^p \pr\left[ |Z_j| \leq c \right]
+    = \left( 2\left( \phi(c) - \frac12 \right) \right)^p.\]
+By Mills' inequality,
+\begin{align*}
+\pr\left[ \max_{j \in \{1,\dots,p\}} |Z_j| \leq c \right]
+ &  \geq \left( 2\left( 1 - \frac{\phi(c)}{c} - \frac12 \right) \right)^p   \\
+ &  = \left( 1 - 2\frac{\phi(c)}{c} \right)^p
+    = \left( 1 - 2\frac{\frac{1}{\sqrt{2\pi}}e^{-(1 + \delta) \log p}}{\sqrt{2(1 + \delta)\log p}} \right)^p
+    \geq \left( 1 - p^{-(1 + \delta)} \right)^p.
+\end{align*}
+For $L := \lim_{n \to \infty} \left( 1 - n^{-(1 + \delta)} \right)^n$, by
+continuity of the logarithm and L'Hospital's Rule,
+\begin{align*}
+\log L = \lim_{n \to \infty}
+                \frac{\log \left( 1 - \frac{1}{n^{1 + \delta}} \right)}{1/n}
+    = \lim_{n \to \infty}
+        \frac{\frac{d}{dn} \log \left( 1 - \frac{1}{n^{1 + \delta}} \right)}
+        {\frac{d}{dn} n\inv}
+    = \lim_{n \to \infty}
+        \frac{(1 + \delta)n^{-\delta}}
+        {-\left( 1 - \frac{1}{n^{1 + \delta}} \right)}
+    = 0.
+\end{align*}
+Thus, $L = 1$, and so
+$\lim_{p \to \infty} \pr\left[ \max_{j \in \{1,\dots,p\}} |Z_j| \leq c \right]
+    \geq L = 1$. \qed
+
+\newpage
+\item
+\begin{enumerate}
+\item For any $\beta \in \R^p$, let
+$S_\beta := \{j \in \{1,\dots,\} : \hat\beta_j \neq 0\}$ denote the support of
+$\beta$, and let
+\[\hat\beta := \argmin_{\beta \in \R^p} \|y - X^T \beta\|_2^2 + \|\beta\|_0
+    = \argmin_{\beta \in \R^p : S_\beta = S_{\hat\beta}} \|y - X^T \beta\|_2^2.\]
+It follows that the restriction $\hat\beta_{S_{\hat\beta}}$ of $\hat\beta$ to
+$S_{\hat\beta}$ is the usual least squares solution (using $X_{S_{\hat\beta}}$,
+the columns of $X$ indexed by $S_{\hat\beta}$), so that
+$\hat\beta_{S_{\hat\beta}}
+    = (X_{S_{\hat\beta}}^T X_{S_{\hat\beta}}) X_{S_{\hat\beta}}^T y
+    = X_{S_{\hat\beta}}^T y$.
+
+This shows that each $\hat\beta_j \in \{X_j^T y, 0\}$. Since $X$ is
+orthonormal, $\|X^T \beta\|_2^2 = \sum_{j = 1}^p \beta_j^2$. Thus, for some
+$C \in \R$ not depending on $\hat\beta_j$,
+\begin{align*}
+\|y - X^T \hat\beta\|_2^2 + 2\lambda \|\hat\beta\|_0,
+ &  = \|y\|_2^2 + \|X^T \hat\beta\|_2^2 - 2\langle y, X^T \hat\beta \rangle
+                                                + 2\lambda \|\hat\beta\|_0  \\
+ &  = C + \hat\beta_j^2 - 2 \hat\beta_j X_j^T y
+                                    + 2\lambda 1_{\{\hat\beta_j \neq 0\}}   \\
+ &  = C + \left( -(X_j^T y)^2 + 2\lambda \right) 1_{\{\hat\beta_j = X_j^T y\}}.
+\end{align*}
+Since $\hat\beta$ minimizes the above quantity, it follows that
+$\hat\beta_j = X_j^T y$ if $|X_j^T y| > \sqrt{2\lambda}$ and
+$\hat\beta_j = X_j^T y$ otherwise. \qed
+
+\item By definition of the degrees of freedom and the choice of $\hat\beta$,
+\[df(\hat y)
+    = \frac{1}{\sigma^2} \tr(\Cov(y,X\hat\beta))
+    = \frac{1}{\sigma^2} \tr(\Cov(X^Ty,\hat\beta))
+    = \sum_{j = 1}^p \frac{1}{\sigma^2}i \Cov(Z_j,f(Z_j)),
+\]
+where $Z_j = X_j^T y \sim \mathcal{N}(X^T \mu, \sigma^2)$ (since $X$ is
+orthonormal and $f = S_\lambda$ is the operator which soft-thresholds its
+argument at the level $\lambda$. For $z \in \R$,
+\[f'(z)
+    = \left\{
+        \begin{array}{ll}
+            1 \quad & \mbox{ if } |X_j^Ty| > \lambda \\
+            0 \quad & \mbox{ else }
+        \end{array}
+    \right..\]
+Thus, by Stein's identity,
+\[df(\hat y)
+    = \sum_{j = 1}^p \E\left[ 1_{\{|X_j^T y| > \lambda\}} \right]
+    = \sum_{j = 1}^p \E\left[ 1_{\{\hat\beta_j \neq 0\}} \right],
+\]
+which is the expected number of nonzero entries of $\hat\beta$. \qed
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Since the $V_i$'s are independent and identically distributed, each
+\begin{align*}
+\E[W_j]
+    = \E\left[ V_j \prod_{i = 1}^{j - 1} (1 - V_j) \right]
+    = \E[V_j] \prod_{i = 1}^{j - 1} (1 - \E[V_i])
+ &  = \left( \frac{1}{1 + \alpha} \right)
+                            \left( 1 - \frac{1}{1 + \alpha} \right)^{j - 1} \\
+ &  = \left( \frac{1}{1 + \alpha} \right)
+                            \left( \frac{\alpha}{1 + \alpha} \right)^{j - 1}.
+\end{align*}
+Thus,
+\begin{align*}
+\E\left[ \sum_{j = 1}^\infty W_j \right]
+ &  = \left( \frac{1}{1 + \alpha} \right)
+    \sum_{j = 1}^\infty \left( \frac{\alpha}{1 + \alpha} \right)^{j - 1}    \\
+ &  = \left( \frac{1}{1 + \alpha} \right)
+        \sum_{j = 0}^\infty \left( \frac{\alpha}{1 + \alpha} \right)^j
+    = \left( \frac{1}{1 + \alpha} \right)
+    \left( \frac{1}{1 - \frac{\alpha}{1 + \alpha}} \right)
+    = 1.
+\end{align*}
+Furthermore, since each
+\[W_j
+    = V_j \prod_{i = 1}^{j - 1} (1 - V_j)
+    \leq \prod_{i = 1}^{j - 1} (1 - V_j)
+    = 1 - \sum_{i = 1}^{j - 1} W_i,
+\]
+$\pr\left[ \sum_{j = 1}^\infty W_j \leq 1 \right] = 1$. Since
+$\E\left[ \sum_{j = 1}^\infty W_j \right] = 1$,
+$\pr\left[ \sum_{j = 1}^\infty W_j = 1 \right] = 1$. \qed
+
+% TODO
+\item Since $\{A,\R \sminus A\}$ is a partition of $\R$, as discussed in
+lecture, $(F(A),1 - F(A))$ has a Dirichlet prior distribution with parameters
+$(\alpha,F_0(A),1 - F_0(A))$. That is, the density
+$f_{F(A)} : [0,1] \to [0,\infty)$ of $F(A)$ is
+\footnote{i.e., the density of
+Beta$(\alpha F_0(A), \alpha (1 - F_0(A)))$.}
+\[f_{F(A)}(x)
+            = \frac{\Gamma(\alpha)
+                x^{\alpha F_0(A) - 1}
+                \left( 1 - x \right)^{\alpha (1 - F_0(A)) - 1}}
+            {\Gamma(\alpha F_0(A))\Gamma(\alpha(1 - \F_0(A)))}.\]
+As discussed in lecture, the posterior distribution for $F$ is
+Dir$(n + \alpha, \frac{n}{n + \alpha} F_n + \frac{\alpha}{n + \alpha} F_0)$,
+and so, as above, the posterior density
+$f_{F(A) | X_1,\dots,X_n} : [0,1] \to \R^+$ of $F(A)$ given $X_1,\dots,X_n$ is 
+\footnote{i.e., the density of
+Beta$((n + \alpha) \ol F_n(A), (n + \alpha) (1 - \ol F_n(A)))$.}
+\begin{equation}
+f_{F(A)|X_1,\dots,X_n}(x)
+            = \frac{\Gamma(n + \alpha)
+                x^{(n + \alpha) \ol F_n(A) - 1}
+                \left( 1 - x \right)^{(n + \alpha)(1 - \ol F_n(A)) - 1}}
+            {\Gamma((n + \alpha) \ol F_n(A))\Gamma((n + \alpha)(1 - \ol F_n(A)))},
+\label{eq:post}
+\end{equation}
+where $\ol F_n = \frac{n}{n + \alpha} F_n + \frac{\alpha}{n + \alpha} F_0$, so
+that
+$\ol F_n(A) = \frac{1}{n + \alpha} \sum_{i = 1}^n 1_{\{X_i \in A\}} + \frac{\alpha}{n + \alpha} F_0(A)$.
+
+Note that, by the Law of Large Numbers, $\ol F_n(A) \to F_*(A)$ in probability
+as $n \to \infty$. Since the posterior density (\ref{eq:post}) becomes
+increasingly concentrated around $\ol F_n(A)$ (in fact, we can explicitly show
+that its variance as a beta distribution goes to $0$), it follows that
+\[\pi_n
+    = \int_{F_*(A) - \e}^{F_*(A) + \e} f_{F(A)|X_1,\dots,X_n}(x) \, dx \to 1
+    \quad \mbox{ as } n \to \infty,\]
+by the continuous mapping theorem. \qed
+\end{enumerate}
+\end{enumerate}
+\end{document}

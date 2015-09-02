@@ -1,0 +1,4 @@
+1) Application to clustering or MDS with time series.
+2) Rerun simulations with lower noise.
+3) Rerun simulations with other entropy estimators (good point of comparison
+for the estimators).

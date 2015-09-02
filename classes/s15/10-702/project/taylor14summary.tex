@@ -1,0 +1,258 @@
+\documentclass{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+
+% For figures
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+\usepackage{amsmath,amssymb}
+
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\renewcommand{\H}{\mathcal{H}}                      % hypothesis class
+
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\D}{\mathcal{D}}                        % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\renewcommand{\d}{\delta}                           % \delta
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\var}{\mathbb{V}}                       % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\hP}{{\hat P}}
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+\newcommand{\ol}{\overline}
+\renewcommand{\hat}{\widehat}
+\newcommand{\poly}{\mathcal{P}}
+\newcommand{\Unif}{\operatorname{Unif}}             % Uniform distribution
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{natbib}
+\usepackage[disable]{todonotes}
+
+\begin{document}
+\begin{center}
+{\bf\Large Exact Post-Selection Inference for Forward Stepwise and Least Angle
+Regression}\\
+Shashank Singh\\
+sss1@andrew.cmu.edu\\
+\end{center}
+
+A summary of the 2014 paper of the above name by Taylor, Lockhart, Tibshirani,
+and Tibshirani.
+
+Taylor et al. 2014 focus on the case that the variable selection criterion can
+be expressed as a collection of linear constraints on the observed response
+variable $y$, resulting in what they call \emph{polyhedral selection}. For such
+selectors, they derive $p$-values for testing the significance of predictor
+variables. These $p$-values are exact for finite samples, and, most
+importantly, they are conditional on the results of variables selection.
+
+They show that two common variable selection methods for linear regression,
+forward stepwise (FS) and least angle regression (LAR), are polyhedral
+selectors, and derive appropriate tests and confidence intervals of parameter
+estimates under these selection procedures. In the case of LAR, they provide an
+explicitly computable approximation for these tests and confidence intervals,
+called the \emph{spacing test}.
+
+Taylor et al. also point out a simple but important observation that helps
+characterize the utility of such conditional hypothesis tests. In
+particular, if $A$ is the event of a type 1 error, then, for a valid
+$\alpha$-level hypothesis test conditioned on some random variable $X = x$,
+\[\alpha \geq \pr\left[ A | X = x \right]
+    = \frac{\pr\left[ A,X = x \right]}{\pr\left[ X = x \right]}
+    \geq \pr\left[ A,X = x \right].\]
+Then, integrating over $x$ gives $\alpha \geq \pr\left[ A \right]$. Thus, a
+valid conditional $\alpha$-level hypothesis test is also a valid unconditional
+$\alpha$-level hypothesis test. In the case of variable selection, $X$ might be
+the subset of selected variables. In fact, a similar argument shows that the
+conditional hypothesis is valid for any coarsening of the condition; for
+example, a valid test conditioned on $X = x$ would also be a valid test
+conditioned on $X \subseteq \X$, for any set $\X$ containing $x$.
+
+As discussed previously, Taylor et al. 2014 use their polyhedral selection
+framework to derive selective $p$-values and confidence intervals conditional
+for forward stepwise and least angle regression. Lee and Taylor 2014 apply this
+to yet another polyhedral selection method, marginal screening. We intend to 
+
+\section{Introduction}
+Consider observations $y \in \R^n$ drawn from a (not necessarily linear)
+Gaussian regression model:
+\begin{equation}
+y = \theta(x) + \e, \quad \e \sim \mathcal{N}(0,\sigma^2 I),
+\label{eq:g_model}
+\end{equation}
+where $X \in \R^{n \times p}$ is fixed. Suppose we partition $\R^n$ into
+a finite number of polygonal regions $\poly_1,\dots,\poly_k$ and then select a
+subset $A \subseteq \{1,\dots,p\}$ of predictors based on the $i$ for which
+$y \in \poly_i$. Several popular methods for variable selection, including
+forward stepwise (FS) and least angle regression (LAR) can be characterized by
+such a \emph{polyhedral selection} procedure.
+
+Suppose we are interested in testing whether some selected variable $x_k$ is
+significant (i.e., whether $\theta(x)$ depends on $x_k$). As discussed
+previously, a standard $t$-test will give biased results due to the use of the
+selection procedure. This paper discusses how to carry out such inference after
+an arbitrary polyhedral selection procedure by deriving exact finite-sample
+$p$-values conditional on the fact that $y$ lies in some particular $\poly_i$.
+
+Our only additional assumption is that the predictors $X$ lie in general
+position, which ensures uniqueness of the behavior of the selection procedure.
+
+\section{Summary of Results}
+\subsection{Hypothesis Testing after Selection}
+We would like to test the hypothesis $H_0 : v^T \theta = 0$, conditioned on
+having observed $y \in \poly$, for some polyhedron $\poly \subseteq \R^n$
+(represented as an intersection of half-spaces). We derive a test statistic
+$T(y,\poly,v)$ such that, when $v^T \theta = 0$,
+\[T(y,\poly,v) | y \in \poly \sim \Unif(0,1),\]
+assuming only the Gaussian model (\ref{eq:g_model}).
+
+As an example, suppose $A_k = [j_1,\dots,j_k]$ denotes the FS active list (in
+order of selection) after $k$ steps, and $s_{A_k} = [s_1,\dots,s_k]$ denotes
+the signs of the corresponding fitted coefficients. We will show that
+\[\poly
+    = \left\{ y \in \R^n : \hat A_k(y) = A_k,
+                                            \hat s_{A_k} = s_{A_k} \right\}\]
+is polyhedral, where $\hat A_k(y)$ and $\hat s_{A_k}$ denote the active list
+and signs after $k$ steps as functions of $y$. If $X_{A_k} \in \R^{n \times k}$
+denotes the submatrix of the covariate matrix $X$ with columns indexed by $A_k$
+and $e_k$ denotes the $k^{th}$ canonical basis vector, then the above null
+hypothesis becomes $H_0 : e_k^T (X_{A_k})^+ \theta = 0$,
+\footnote{$M^+$ denotes the Moore-Penrose psuedoinverse of the matrix $M$.}
+and, if $e_k^T (X_{A_k})^+ \theta = 0$, our statistic $T_k$ obeys
+\[\pr\left[ T_k \leq \alpha | \hat A_k(y) = A_k, \hat s_{A_k} = s_{A_k} \right]
+    = \alpha, \quad \alpha \in [0,1].\]
+
+\subsection{Selection Intervals}
+Our test statistic can also be inverted to make coverage statements about
+linear contrasts of $\theta$. For example, for FS after $k$ steps, we derive a
+selection interval $I_k$ such that
+\begin{equation}
+\pr\left[ e_k^T (X_{A_k})^+ | \hat A_k(y) = A_k,
+                                            \hat s_{A_k}(y) = S_{A_k} \right]
+    = 1 - \alpha.
+\label{ineq:cond_selection_interval}
+\end{equation}
+Furthermore, we can marginalize (\ref{ineq:cond_selection_interval}) (over $y$)
+to give an unconditional selection interval
+\begin{equation}
+\pr\left[ e_k^T (X_{A_k})^+ \right] \leq 1 - \alpha
+\label{ineq:uncond_selection_interval}
+\end{equation}
+(which differs from a traditional confidence interval because $A_k$ is a random
+set depending on $y$). While (\ref{ineq:cond_selection_interval}) is more in
+line with the spirit of post-selection inference,
+(\ref{ineq:uncond_selection_interval}) is, in a way, cleaner.
+
+\subsection{Related Work}
+TODO % TODO
+
+Grazier G'Sell et al. (2013) leverage these selection adjusted $p$-values to
+design a stopping (i.e., model selection) rule with a false discovery rate
+guarantee.
+Wasserman \& Roeder (2009), Meinhausen \& Buhlmann (2010), Minier et al.
+(2011), consider methods based on sample-splitting or resampling. Zhang \&
+Zhang (2011), Buhlmann (2012), 
+
+\subsection{Notation}
+For a matrix $M \in \R^{n \times p}$ and an (ordered) list
+$S \subseteq [1,\dots,p])$, $M_S \in \R^{n \times |S|}$ is the submatrix formed
+by taking columns of $M$ indexed by $S$ (in order); similarly, for vectors in
+$\R^p$. $(M^TM)^+$ denotes the Moore-Penrose pseudoinverse of the square matrix
+$M^TM$, and $M^+ = (M^TM)^+M^T$ for a general matrix $M$. $P_L$ denotes teh
+projection operator onto a linear space $L$. For two vectors $x, y \in \R^n$,
+$x \geq y$ should be read componentwise. $\Phi : \R \to \R$ denotes the
+standard normal CDF, and for $a < b$,
+\[F^{[a,b]}_{\mu,\sigma^2}(x)
+    = \frac{\Phi\left( \frac{x - \mu}{\sigma} \right)
+                                - \Phi\left( \frac{a - \mu}{\sigma} \right)}
+        {\Phi\left( \frac{b - \mu}{\sigma} \right)
+                                - \Phi\left( \frac{a - \mu}{\sigma} \right)}.
+\]
+denotes the CDF of $\mathcal{N}(\mu, \sigma^2)$ truncated to $[a,b]$.
+
+
+\section{Conditional Gaussian inference after polyhedral selection}
+The $p$-values are constructed via two lemmas. The first lemma of the paper
+defines three quantities $\V^{lo}(y)$, $\V^{hi}(y)$, and $V^0(y)$, which
+characterize whether $y \in \poly$, and establishes a basic independence
+result for $(\V^{lo}(y),\V^{hi}(y),V^0(y))$. The second
+
+A polyhedron $\poly$ is, in general, and intersection of a finitely many
+halfspaces, and can thus be written as
+$\poly = \{y \in \R^n : \Gamma y \geq u\}$ for some $u \in \R^m$,
+$\Gamma \in \R^{m \times n}$.
+
+The following lemma gives an alternative representation of a polygon $\poly$ in
+terms of terms of an arbitrary selection vector $v \in \R^n$ (which may depend
+on $\poly$). \\
+
+{\bf Lemma 1 (Polyhedral selection as truncation):}
+Suppose $y \sim \mathcal{N}(\theta,\Sigma)$, where $\theta \in \R^n$ is unknown
+but $\Sigma \in \R^{n \times n}$ is known. Consider a polyhedron
+$\poly = \{y \in \R^n : \Gamma y \geq u \}$, where $\Gamma \in \R^{m \times n}$
+and $u \in \R^m$. If $v^T \Sigma v \neq 0$, then, for
+\[\rho := \frac{\Gamma \Sigma v}{v^T \Sigma v},
+    \quad \V^0(y) := \max_{j : \rho_j = 0} u_j - (\Gamma y)_j,\]
+\[\V^{hi}(y) := \min_{j : \rho_j > 0}
+    \frac{u_j - (\Gamma y)_j + \rho_j v^T y}{\rho_j},
+    \quad \mbox{ and } \quad
+\V^{lo}(y) := \max_{j : \rho_j < 0}
+    \frac{u_j - (\Gamma y)_j + \rho_j v^T y}{\rho_j},\]
+ $\V^0(y)$, $\V^{hi}(y)$, and $\V^{lo}(y)$ are independent of $v^T y$ and
+\[y \in \poly
+    \quad \Leftrightarrow \quad
+    \V^0(y) \leq 0
+    \mbox{ and }
+    v^T y \in [\V^{lo}(y), \V^{hi}(y)].\]
+
+The proof of Lemma 1 is trivial, noting that the $\V^0$ encodes constraints
+parallel to $v$. \\
+
+Since $v^T y$ has a Gaussian distribution, by Lemma 1, $v^T y | y \in \poly$
+has a truncated Gaussian distribution. This gives rise to the following pivotal
+statistic: \\
+
+{\bf Lemma 2:} For $v^T \Sigma v \neq 0$ the statistic
+\[F^{\V^{lo}(y), \V^{hi}(y)}_{v^T \theta, v^T \Sigma v}(v^T y) | y \in \poly
+    \sim \Unif(0,1).\]
+
+The proof of Lemma 2 is also fairly simple, and depends essentially on on the
+independence of $\V^0,\V^{lo},\V^{hi}$ and $v^T y$. This gives rise to the
+following two-sided conditional hypothesis test (testing $H_0 v^T \theta = 0$
+against $H_1 : v^T \theta \neq 0$):
+\footnote{Note that a slightly more powerful one-sided conditional $p$-value
+for testing the alternative $H_1 : v^T \theta > 0$ also available.} \\
+
+{\bf Lemma 4 (Two-sided conditional inference after polyhedral selection:}
+Suppose $v^T \Sigma v \neq 0$, and define the statistic
+\[T := 2 \min \left\{ F^{\V^{lo}(y),\V^{hi}(y)}_{0,v^T \Sigma v}(v^T y),
+            1 - F^{\V^{lo}(y),\V^{hi}(y)}_{0,v^T \Sigma v}(v^T y) \right\}.\]
+Then, $T$ is a valid conditional $p$-value for $H_0$; i.e., under $H_0$,
+$T | y \in \poly \sim \Unif(0,1)$. \\
+
+
+%{\small
+%\bibliography{biblio}
+%%\bibliographystyle{icml2014}
+%\bibliographystyle{plain}
+%}
+\end{document}

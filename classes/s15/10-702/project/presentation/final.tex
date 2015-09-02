@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%% PREAMBLE %%%%%%%%%%%%%%%%%%%%%
+\documentclass{beamer}
+
+% include frame number on each frame
+\setbeamertemplate{footline}{\quad \insertframenumber/\inserttotalframenumber}
+%%%%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Recent Developments in Post-Selection Inference}
+\author[Singh]{Yotam Hechtlinger \and Shashank Singh}
+\date{April 27, 2015}
+\institute{Carnegie Mellon University\\10-702 Spring '15}
+\frame{\titlepage}
+
+\frame{\frametitle{Polyhedral Selection}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[width=1.2\textwidth]{polyhedral}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Includes common selection procedures:
+      \begin{itemize}
+        \item Forward Stepwise Regression
+        \item Marginal Screening
+        \item LARS
+        \item Lasso
+      \end{itemize}
+    \end{column}
+  \end{columns}
+}
+
+\end{document}

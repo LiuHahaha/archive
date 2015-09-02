@@ -1,0 +1,385 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{nips14submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{fullpage}
+
+% For bibliography
+\usepackage[round]{natbib}
+\renewcommand{\bibsection}{}
+
+\title{11-745 Final Report}
+
+\author{
+Shashank Singh \\
+Statistics \& Machine Learning Departments \\
+Carnegie Mellon University \\
+Pittsburgh, PA 15213 \\
+\texttt{sss1@andrew.cmu.edu}
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\tilde}{\widetilde}
+\newcommand{\Rc}{\mathfrak{R}}
+\renewcommand{\H}{\mathcal{H}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\ind{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+Most of the semester covered chapters from \citet{mohri12foundations}, as
+discussed in Sections \ref{sec:PAC} to \ref{sec:reg} below. The main
+theoretical ideas are PAC learning and Rademacher complexity, presented in
+Chapters 2 and 3, while the remainder of the book is devoted largely to
+applications of these ideas to give generalization bounds various learning
+problems and algorithms. Thus, we discuss these in detail (in Sections
+\ref{sec:PAC} and \ref{sec:Rademacher}) and discuss later sections relatively
+more summarily.
+
+\section{PAC Learning}
+\label{sec:PAC}
+\subsection{The PAC learning model}
+Let $h$ be a hypothesis and let $c$ be a target concept. Then, for an
+underlying distribution $D$ the \emph{generalization error} or \emph{risk} of
+$h$ is
+\[R(h)
+    = \pr_{x \sim D}\left[ h(x) \neq c(x) \right]
+    = \E_{x \sim D}\left[ 1_{h(x) \neq c(x)} \right],\]
+where $1_E$ denotes the indicator function of an event $E$.
+Given a sample $x_1,\dots,x_n$, the \emph{empirical error} is
+\[\hat R(h) = \frac1n \sum_{i = 1}^n 1_{h(x_i) \neq c(x_i)}.\]
+Note that
+\begin{equation}
+\E[\hat R(h)] = R(h)
+\label{eq:exp_emp_risk}
+\end{equation}
+Moreover, we will show finite-sample guarantees for the convergence
+$\hat R(h) \to R(h)$ as $x \to \infty$. \\
+
+A concept class $C$ is \emph{PAC-learnable} if $\exists$ and algorithm $\A$ and
+a polynomial function $poly(\cdot,\cdot,\cdot,\cdot)$ such that,
+$\forall \e, \delta > 0$, distributions $D$ on $\X$, and $c \in C$,
+\[\pr_{S = (x_1,\dots,x_n) \sim D^n}\left[ R(h_S) \leq \e \right]
+    \geq 1 - \delta\]
+whenever the sample size $n \geq poly(1/\e,1/\delta,n,size(c))$
+\footnote{$size(c)$ denotes the computational memory overhead of $c$.}
+If $\A$ runs in $poly(1/\e,1/\delta,n,size(c))$, then $C$ is \emph{efficiently
+PAC-learnable}, and $\A$ is a PAC-learning algorithm for $C$. \\
+
+It is now worth noting the following three points:
+\begin{itemize}
+\item The PAC framework is distribution-free: no assumption is made about $D$.
+\item The training and test samples are drawn from identical distributions;
+this is typically necessary for generalization to occur.
+\item PAC deals with learnability for a concept class $C$, not a single
+(unknown) concept $c$.
+\end{itemize}
+
+\subsection{Guarantees for finite hypothesis sets: the consistent case}
+A hypothesis is \emph{consistent} with a sample $S$ if $\hat R(h_S) = 0$
+We begin with guarantees in the case of a finite hypothesis class $H$ and an
+algorithm that returns consistent hypothesis:\\
+
+{\bf Theorem 2.1 - Learning Bounds in the finite $H$, consistent case:}
+Consider a finite hypothesis class $H$ and let $\A$ be an algorithm such that,
+for any concept $c \in H$ and i.i.d. sample $S$, $\A$ returns a consistent
+hypothesis $h_S$. Then, $\forall \e, \delta > 0$,
+\[\pr_{S = (x_1,\dots,x_n) \sim D^n}\left[ R(h_S) \leq \e \right]
+    \geq 1 - \delta\]
+whenever
+\[n \geq \frac1\e \left( \log|H| + \log \delta \right).\]
+Said another way, $\forall \e, \delta > 0$, with probability at least
+$1 - \delta$,
+\[R(h_S) \leq \frac1m \left( \log|H| + \log \delta \right).\]
+
+This subsection concludes with two examples concerning PAC-learnability of
+boolean formulae and a brief discussion of the fact that a universal concept
+class is not PAC-learnable.
+
+\subsection{Guarantees for finite hypothesis sets: the inconsistent case}
+In general, there may be no hypothesis in $H$ consistent with the training
+sample; this is in fact common in practice, when the concept class may be far
+larger than the hypothesis class. However, we can provide guarantees even when
+$\hat R(h)$ is small but nonzero. To do so, we recall a corollary of
+Hoeffding's Inequality (and observation (\ref{eq:exp_emp_risk})):\\
+
+{\bf Corollary 2.1 - Corollary of Hoeffding's Inequality:} Let $\e > 0$, and
+let $S$ denote an i.i.d. size $n$ sample. Then, $\forall h : \X \to \{0,1\}$,
+\[\pr_{S \sim D^n}\left[ |\hat R(h) - R(h)| \geq \e \right]
+    \leq 2\exp(-2n\e^2).\]
+Said another way, with probability at least $1 - \delta$,
+\[R(h) \leq \hat R(h) + \sqrt{\frac{\log(2/\delta)}{2n}}.\]
+
+The corollary bounds the generalization error of any particular hypothesis,
+but, in order to bound the error of a learning algorithm, we again need uniform
+bounds over all hypotheses in $\H$, as provided by the following theorem:
+
+{\bf Theorem 2.2 - Learning Bounds in the finite $H$, inconsistent case:}
+Consider a finite hypothesis class $\H$. Then, $\forall \delta > 0$, with
+probability at least $1 - \delta$, $\forall h \in \H$,
+\[R(h) \leq \hat R(h) + \sqrt{\frac{\log|H| + \log(2/\delta)}{2n}}.\]
+
+It is now worth noting that this result suggests that the size of the
+hypothesis class $\H$ is a trade-off between empirical risk (which may be
+smaller for a larger hypothesis class) and the error of $\hat R(h)$
+approximating $R(h)$. Furthermore, for two hypothesis classes of equal
+empirical risk, the smaller class has better generalization error; this can be
+compared to Occam's Razor.
+
+The remainder of the chapter generalizes to the agnostic case, which is
+analyzed in terms of the Bayes error rate, and then discusses model selection,
+in terms of empirical risk minimization (ERM), which performs poorly due to
+overfitting, and structural risk minimization (SRM), which performs better by
+considering a sequence of hypothesis classes of increasing complexity, but
+is computationally very expensive, and finally briefly mentions regularization.
+
+\section{Rademacher Complexity and VC Dimension}
+\label{sec:Rademacher}
+The discussion of the previous chapter was restricted to the case of finite
+hypothesis classes $H$. The goal of this chapter is to generalize to the case
+of an infinite hypothesis class. In particular, the main idea is to reduce the
+infinite case to the analysis of a finite case. One approach uses the notion of
+\emph{Rademacher complexity}, which leads to high-quality (sometimes
+data-dependent) guarantees with simple proofs based on McDiarmid's Inequality.
+Since computing Rademacher complexity is often NP-hard, we will also introduce
+two purely combinatorial notions, the \emph{growth function} and the
+\emph{VC-dimension}, the latter of which is often easier to bound or estimate.
+We also present lower bounds based on VC-dimension.
+
+\subsection{Rademacher Complexity}
+Rademacher complexity measures the richness of a function class in terms of how
+well it can fit random noise. \\
+
+A \emph{Rademacher random variable} is $\sigma = (\sigma_1,\dots,\sigma_n)^T$
+with $\sigma_i$'s independent and uniform over $\{-1,1\}$. The \emph{Empirical
+Rademacher complexity} of a family $G$ of functions $f : Z \to [a,b]$ with
+respect to a sample $S = (z_1,\dots,z_n) \subseteq Z$ is
+\[\hat\Rc_S(G)
+    := \E_\sigma\left[ \sup_G \frac1n \sum_{i = 1}^m \sigma_i g(z_i)\right]
+    = \E_\sigma\left[ \sup_{g \in G} \frac{\sigma \cdot g_S}{m} \right],
+\]
+where $g_S = (g(z_1),\dots,g(z_n))^T$; i.e., $\hat\Rc_S(G)$ measures
+how well $G$ can correlate $S$ to random noise. If $D$ is the distribution from
+which $S$ is drawn, then the \emph{Rademacher complexity} of $G$ is the
+expected empirical Rademacher complexity
+\[\Rc_n(G) := \E_{S \sim D^n}\left[ \hat\Rc_S(G) \right].\]
+
+We now present a generalization bound in terms of Rademacher complexity: \\
+
+{\bf Theorem 3.1 (Rademacher Complexity Generalization Bound):} Consider a
+family $G$ of functions mapping $Z$ to $[0,1]$. For any $\delta > 0$, with
+probability at least $1 - \delta$,
+$\forall g \in G$,
+\[\E[g(z)]
+    \leq \frac1n \sum_{i = 1}^n g(z_i)
+    + 2\Rc_m(G)
+    + \sqrt{\frac{\log(1/\delta)}{2n}}.\]
+and
+\[\E[g(z)]
+    \leq \frac1n \sum_{i = 1}^n g(z_i)
+    + 2\Rc_S(G)
+    + 3\sqrt{\frac{\log(1/\delta)}{2n}}.\]
+
+Another generalization bound, this one potentially data-dependent, in terms of
+Rademacher complexity is then provided for the case of binary classification.
+However, computing this bound for real data is computationally hard for many
+hypothesis sets. The next subsections will relate Rademacher complexity to
+complexity measures that are easier to compute.
+
+\subsection{Growth Functions}
+The \emph{growth function} $\Pi_H : \N \to \N$ of a hypothesis class $H$
+defined by
+\[\Pi_H(m) = \max_{\{x_1,\dots,x_m\} \subseteq \X}
+    \left| \left\{
+        \left( h(x_1),\dots,h(x_m) \right) : h \in H
+    \right\} \right|, \quad \forall m \in \N\]
+is the number of distinct ways in $H$ can classify $m$ points. Note that this
+notion of complexity is distribution-free. Massart's Lemma upper bounds
+$\Rc_m(H)$ in terms of $\Pi_H(m)$. \\
+
+{\bf Theorem 3.3 (Massart's Lemma):} For $A \subseteq \R^m$ finite,
+$r := \max \{\|x\|_2 : x \in A\}$,
+\[\E_\sigma \left[ \sup_{x \in A} \frac{\sigma \cdot x}{m} \right]
+    \leq \frac{r\sqrt{2 \log |A|}}{m},\]
+where $\sigma \in \R^m$ is a Rademacher random variable.
+
+By definition of the Rademacher complexity and the growth function, Massart's
+Lemma implies
+\begin{equation}
+\Rc_m(H) \leq \sqrt{\frac{2 \log \Pi_H(m)}{m}}
+\label{ineq:rademacher_and_growth}
+\end{equation}
+for any set of classifiers $H$. Combining (\ref{ineq:rademacher_and_growth})
+with the Rademacher generalization bound (Theorem 3.1) gives
+\begin{equation}
+R(h) \leq \hat R(h) + \sqrt{\frac{2 \log \Pi_H(m)}{m}}
+                    + \sqrt{\frac{\log (1/\delta)}{2m}},
+\label{ineq:growth_gen_bound}
+\end{equation}
+for any classifier $h \in H$, with probability at least $1 - \delta$
+($\delta > 0$).
+
+\subsection{VC-Dimension}
+The chapter then continues to define VC-dimension $CVdim(H)$ in the usual
+manner, and presents some basic examples (intervals and sine functions on $\R$,
+and hyperplanes axis-aligned rectangles, and convex polygons on $\R^2$).
+VC-dimension is also distribution free and can be much easier to calculate for
+important hypothesis classes than Rademacher complexity or the growth function,
+though it sometimes results in looser bounds.
+
+Sauer's Lemma presents an important relationship between the two combinatorial
+notions of complexity (the growth function and VC-dimension): \\
+
+{\bf Theorem 3.5 (Sauer's Lemma):} For a hypothesis class $H$ with
+$VCdim(H) = d$ and all $m \in \N$,
+\[\Pi_H(n) \leq \sum_{i = 0}^d \binom{m}{i}.\]
+The proof proceeds by induction on $m + d$ and carefully counting the growth
+function of a union of hypothesis classes. Sauer's lemma is important in part
+because of the following corollary: \\
+
+{\bf Corollary 3.3 (VC-Dimension Generalization Bound):} For a hypothesis class
+$H$ with $VCdim(H) = d$ and all $m \geq d$,
+\[\Pi_H(m) \leq \left( \frac{em}{d}^d \right) = O(m^d).\]
+Combining this with the growth function generalization bound
+(\ref{ineq:rademacher_and_growth}) gives
+\begin{equation}
+R(h) \leq \hat R(h) + \sqrt{\frac{2 d \log \frac{em}{d}}{m}}
+                    + \sqrt{\frac{\log (1/\delta)}{2m}},
+\label{ineq:growth_gen_bound2}
+\end{equation}
+for any classifier $h \in H$, with probability at least $1 - \delta$
+($\delta > 0$). \\
+
+The final section of this chapter proves lower bounds on generalization error
+in terms of the VC-dimension of the hypothesis class (regardless of the
+algorithm used), in both the realizable and non-realizable cases.
+
+\subsection{Kernel Methods}
+The book then discusses kernel methods, which give a standard, almost
+formulaic, way of extending many algorithms for $\R^n$-valued predictors (in
+particular, those depending only on the matrix of inner products between
+predictor samples) to arbitrary data types or other, more complicated measures
+of similarity between the predictor samples (to extract non-linear behavior,
+for example).
+
+The chapter discusses PSD kernels, RKHSs, empirical kernel maps (embeddings),
+and the representer theorem. It then gives a bound on the Rademacher complexity
+of kernel-based hypothesis classes in terms of the distances between points,
+and, as a corollary, bounds the generalization error of large-margin
+kernel-based hypotheses.
+
+Finally, the chapter explores a variety of kernels for different settings and
+data formats, such as sequence kernels and weighted transducers for text (or
+otherwise sequential, data, and rational kernels.
+
+\section{Regression}
+\label{sec:reg}
+
+This chapter first discusses extending VC theory from classification to
+regression. To do this, we essentially reduce regression (i.e., the case of
+$\R$-valued labels) to classification (i.e., the case of $\{-1,1\}$-valued
+labels) via the signum function. Equivalently, we consider a threshold $T$
+below which points are considered to be labeled $-1$ and above which points are
+considered to be labeled $1$. We then consider hypothesis classes whose
+decision boundaries are the graphs of functions of the predictor variables. In
+place of the VC-dimension, we use the pseudo-dimension, defined for a family of
+regression hypothesis as the VC-dimension of the corresponding family of
+graphs.
+Using this definition, it is straightforward to prove generalization bounds
+similar to Theorem 3.1, as well as to compute the pseudo-dimension of some
+simple parametric families, such as hyperplanes.
+
+The chapter then goes on to discuss several algorithms for regression,
+including linear regression, kernel ridge regression (KRR), support vector
+regression (SVR), and the lasso. Linear regression, while simple, typically
+performs poorly. KRR, as the name suggests, kernelizes ridge regression,
+allowing one to fit nonlinear regression functions. Its main downside is
+computational; evaluating the kernel function for all pairs of data points is
+tremendously slow for large data sets. SVR is more efficient and encourages
+data-sparsity (i.e., as solution depending only on the most informative (or
+erroneous) data points. Finally, the lasso cannot be kernelized, and can hence
+fit only linear regression functions, but can be computed efficiently (via LAR)
+and encourages feature-sparsity. Rademacher-type generalization bounds are
+proven for KRR, SVR, and lasso.
+
+Finally, group-norm regression algorithms (an extension of the lasso
+encouraging joint sparsity of predefined groups of variables) are mentioned and
+two algorithms (the Widrow-Hoff algorithm and online dual SVR) for online
+regression are discussed. Both the Widrow-Hoff algorithm and online dual SVR
+essentially amount to running online gradient descent to minimize some
+objective function.
+
+\section{Discriminative vs. Generative Classifiers}
+Finally, we discussed a classic paper, \citet{ng02discVsGen}. The gist of this
+paper is that, while generative classifiers (e.g., naive Bayes), tend to have
+higher asymptotic error than similar discriminative classifiers (e.g., logistic
+regression), generative classifiers tend to approach their asymptotic error
+more quickly. Thus, there is a windows of small sample sizes for which
+generative classifiers generally out perform discriminative classifiers, which
+perform better asymptotically. Intuitively, this occurs because generative
+classifiers make stronger assumptions about the data-generating process,
+allowing them to fit their models more quickly, but preventing their model from
+being able to fit certain populations as well.
+
+In addition to displaying this phenomenon in several UCI data sets,
+\citet{ng02discVsGen} give several theoretical results. In particular, suppose
+$(h_{Gen},h_{Dis})$ is a generative-discriminative pair of classifiers with
+asymptotic (population) versions $h_{Gen,\infty}$ and $h_{Dis,\infty}$. Then,
+when classifying $m$ samples in $\R^n$, letting $\e(h)$ denote the error rate
+of any hypothesis $h$,
+\begin{enumerate}
+\item if the family of hypotheses under consideration has finite VC dimension,
+$\e(h_{Dis,\infty}) \leq \e(h_{Gen,\infty})$
+\item if $h_{Dis}$ is logistic regression, then, with high probability,
+\[\e(h_{Dis})
+    \leq \e(h_{Dis,\infty})
+        + O\left( \sqrt{\frac{n}{m} \log\left( \frac{m}{n} \right)} \right).\]
+\item under mild assumptions on the data, then, with high probability,
+\[\e(h_{Gen})
+    \leq \e(h_{Gen,\infty})
+        + G\left( O\left( \sqrt{\frac{1}{m} \log(n)} \right) \right),\]
+where $G$ denotes a sort of margin probability.
+\end{enumerate}
+Thus, generative classifiers can guarantee superior performance in the
+high-dimensional, small data (large $n$, small $m$) regime.
+
+\subsubsection*{References}
+\setlength{\bibsep}{0.0pt}
+{
+%\small
+\bibliographystyle{plainnat}
+\bibliography{biblio}
+}
+
+\end{document}

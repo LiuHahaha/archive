@@ -1,0 +1,291 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10/36-702 Statistical Machine Learning}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Friday, January 23, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+\newcommand{\MSE}{\operatorname{MSE}} % mean squared error
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item Note that
+\[S_n^2
+    = \frac1n \sum_{i = 1}^n (X_i - \ol X)^2
+    = \frac1n \sum_{i = 1}^n X_i^2 - 2X_i \ol X + \ol X^2
+    = \left( \frac1n \sum_{i = 1}^n X_i^2 \right) - \ol X^2.
+\]
+By the Weak Law of Large Numbers, $\frac1n \sum_{i = 1}^n X_i^2 \to \E[X^2]$
+and $\ol X \to \E[X]$ in probability, so that, by the Continuous Mapping
+Theorem, $\ol X^2 \to \E^2[X]$ in probability. Hence,
+$S_n^2 \to \E[X^2] - \E^2[X] = \Var[X]$ in probability. \qed
+
+\item By the previous result, $S_n^2 \to \sigma$ in distribution, and hence
+(assuming $\sigma^2 \neq 0$), by the Continuous Mapping Theorem,
+$\sigma/S_n \to 1$ in distribution. Consequently, by Slutzky's Theorem and
+the Central Limit Theorem,
+\[\frac{\sqrt{n}(\ol X - \mu)}{S_n}
+    = \frac{\sqrt{n}(\ol X - \mu)}{S_n}
+    = \frac{\sqrt{n}(\ol X - \mu)}{\sigma} \cdot \frac{\sigma}{S_n}
+    \to \mathcal{N}(0,1)
+\]
+in distribution. \qed
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Let $\e, \delta > 0$. Then, $\exists C > 0$ such that
+$\sup_{n \in \N} \pr[|X_n| > C] \leq \delta/2$. Furthermore,
+$\exists n_0 \in \N$ such that $n > n_0$ implies
+$\pr[|Y_n| > \e/C] \leq \delta/2$. Since $|X_n| \leq C$ and $|Y_n| \leq \e/C$
+together imply $|X_nY_n| \leq \e$, for $n > n_0$, 
+\[\pr[|X_nY_n| > \e] \leq \delta/2 + \delta/2 = \delta. \qed\]
+
+\item Let $\e > 0$. Since $Y_n = o_p(1)$, $\exists n_0 \in \N$ such that
+$n > n_0$ implies $\pr[|Y_n| > 1] \leq \e/2$. For each $n \leq n_0$, there
+exists $C_n$ such that $\pr[|Y_n| > C_n] \leq \e/2$. Also, $\exists D > 0$ such
+that $\sup_{n \in \N} \pr[|X_n| > D] \leq \e/2$. Hence, for
+$C := 2\max\{C_1,\dots,C_n,D\}$, since $|X_n + Y_n| > C$ implies $|X_n| > C/2$
+or $|Y_n| > C/2$,
+\[\sup_{n \in \N} \pr[|X_n + Y_n| > C]
+    \leq \sup_{n \in \N} \pr[|X_n| > C/2] + \pr[|Y_n| > C/2]
+    \leq \e/2 + \e/2
+    = \e. \qed
+\]
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Suppose $X_n = 0$ with probability $1 - 1/n$ and $X_n = n^2$ with
+probability $1/n$. Then, $\forall \e > 0$, as $n \to \infty$,
+$\pr[X_n > \e] \leq 1/n \to 0$ (so $X_n \in o_p(1)$), but
+$\E[X_n] = n^2/n = n \to \infty$.
+
+\item We prove the statement. Suppose $f$ is continuous and some $B \in \R$
+bounds $|f|$. Let $\e > 0$. Since $f$ is continuous, there exists $\delta > 0$
+such that $|x| < \delta$ implies $|f(x) - f(0)| < \e/2$. Also, since
+$X_n = o_P(1)$, there exists $n_0 \in \N$ such that, $\forall n > n_0$,
+$\pr[|X_n| \geq \delta] \leq \frac{\e}{4B}$. Thus, letting $P_n$ denote the
+measure underlying $X_n$,
+\begin{align*}
+|\E[f(X_n)] - f(0)|
+ &  \leq \int_\R |f(x) - f(0)| \, dP_n  \\
+ &  \leq \int_{\{|x| < \delta\}} |f(x) - f(0)| \, dP_n
+    + \int_{\{|x| \geq \delta\}} |f(x) - f(0)| \, dP_n \\
+ &  \leq \int_{\{|x| < \delta\}} \frac{\e}{2} \, dP_n
+    + \int_{\{|x| \geq \delta\}} 2B \, dP_n
+    \leq \e/2 + \left( \frac{\e}{4B} \right) (2B)
+    = \e. \qed
+\end{align*}
+
+\item Suppose, for all $n \in \N$, $X_n, X, Y \sim \mathcal{N}(0,1)$, and let
+$Y_n = -X_n$. Then, trivially, $X_n \to X$ in distribution, and, since
+$\mathcal{N}(0,1)$ is symmetric, $Y_n \to Y$ in distribution. However,
+$X_n + Y_n = 0$ and $X + Y \sim \mathcal{N}(0,2)$, so that
+$X_n + Y_n \not\to X + Y$ in distribution.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Since the likelihood function is
+\[L(\theta)
+    = \prod_{i = 1}^n 1_{[0,\theta]}(X_i)/\theta
+    = \theta^{-n} 1_{[0,\theta]}(\max_i X_i),
+\]
+which strictly decreases with $\theta$ for $\theta \in [0,\max_i X_i]$,
+the likelihood is clearly maximized by \fbox{$\hat\theta := \max_i X_i$.}
+
+\item Since $\hat\theta = \max_i X_i$, $\hat\theta \leq \theta$, and so
+$\sqrt{n}(\hat\theta - \theta) < 0$ and hence does not converge to a Normal
+distribution. \qed
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Perhaps assuming some weak regularity conditions on $X$ and $Y$, if
+\begin{align*}
+0
+    = \frac{d}{dm(X)} \E[(Y - m(X))^2]
+ &  = \E\left[ \frac{d}{dm(X)} (Y - m(X))^2 \right] \\
+ &  = \E\left[ 2(m(X) - Y) \right]  \\
+ &  = 2\E\left[ \E[m(X) - Y | X] \right]
+    = 2\E\left[ m(X) - \E[Y | X] \right],
+\end{align*}
+and hence, $\forall x \in \R^d$, $m(x) = \E[Y | X = x]$. \qed
+
+\item Again, assuming some weak regularity conditions on $X$ and $Y$, if
+\[0
+    = \frac{d}{d\beta} \E[(X^T\beta - Y)^2]
+    = \E[\frac{d}{d\beta} (X^T\beta - Y)^2]
+    = \E[X(X^T\beta - Y)],\]
+and hence $\E[XX^T]\beta = \E[XY] = \E[YX]$. Thus,
+$\beta = (\E[XX^T])\inv \E[YX] = B\inv \alpha$. \qed
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item
+\[\MSE(a)
+    = \E^2[a\ol X - \mu] + \Var[a\ol X]
+    = (\mu a - \mu)^2 + \frac{a^2}{n}
+    = \mbox{\fbox{$\displaystyle \frac{n\mu^2 + 1}{n}a^2 - 2\mu^2 a + \mu^2$.}}
+\]
+
+\item Since $\MSE(a)$ is smooth and convex,
+\[0
+    = \frac{d}{da} \MSE(a) \bigg|_{a = a_*}
+    = 2\frac{n\mu^2 + 1}{n}a_* - 2\mu^2
+    = \frac{n\mu^2 + 1}{n}a_* - \mu^2
+\]
+and hence \fbox{$a_* = \frac{n\mu^2}{n\mu^2 + 1}$.} Then,
+\begin{align*}
+\MSE(a_*)
+ &  = \frac{n\mu^2 + 1}{n}\left( \frac{n\mu^2}{n\mu^2 + 1} \right)^2
+    - 2\mu^2 \frac{n\mu^2}{n\mu^2 + 1} + \mu^2  \\
+ &  = \frac{n\mu^4 - 2n\mu^4 + n\mu^4 + \mu^2}{n\mu^2 + 1}
+    = \mbox{\fbox{$\displaystyle \frac{\mu^2}{n\mu^2 + 1}$.}}
+\end{align*}
+
+\item Since $\MSE(a)$ is a continuous function of $\mu$ and $\ol X$ is a
+consistent estimator for $\mu$, the plug-in estimator
+\[\mbox{\fbox{$\displaystyle
+    \widehat{\MSE}(a) := \frac{n\ol X^2 + 1}{n}a^2 - 2\ol X^2 a + \ol X^2$}}\]
+is consistent. The same work as in part (b) shows that
+\[\mbox{\fbox{$\displaystyle \widehat a = \frac{n\ol X^2}{n\ol X^2 + 1}$.}}\]
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item It follows immediately from the definitions of $\mu$, of ridge
+regression ($\hat f(x) = x\hat\beta$), and of the $2$-norm that the left-hand
+sides of (1) and (2) are equal. Note that
+\begin{align*}
+\E[\hat f(x_i)]
+    = \E[x_i^T(X^TX + \lambda I)\inv X^Ty]
+ &  = x_i^T(X^TX + \lambda I)\inv X^T\E[y]  \\
+ &  = x_i^T(X^TX + \lambda I)\inv X^Tf(x_i)
+    = S_i \mu_i,
+\end{align*}
+where $S_i$ denotes the $i^{th}$ row of $S$. Hence,
+\begin{align*}
+\sum_{i = 1}^n \text{Bias}^2(\hat f(x_i))
+    = \sum_{i = 1}^n \E^2[f(x_i) - \hat f(x_i)]
+ &  = \sum_{i = 1}^n \left( f(x_i) - \E[\hat f(x_i)] \right)^2  \\
+ &  = \sum_{i = 1}^n \left( \mu_i - S_i\mu_i \right)^2
+    = \|(I - S)\mu\|_2^2,
+\end{align*}
+by definition of the $2$-norm. Finally,
+\begin{align*}
+\sum_{i = 1}^n \Var[\hat f(x_i)]
+    = \sum_{i = 1}^n \E[(\hat f(x_i) - \E[\hat f(x_i)])^2]
+    = \E\left[ \sum_{i = 1}^n (S_iy - S_i\mu_i)^2 \right]
+    = \E\left[ \|S(y - \mu)\|_2^2 \right].
+\end{align*}
+
+
+\item
+Expanding $S$, $X$, and $\mu$, and using the fact that $U$ and $V$ are unitary,
+\begin{align*}
+\|(I - S)\mu\|_2^2
+ &  = \|(I - UDV^T(VDU^TUDV^T + \lambda I)\inv VDU^T)UDV^T\beta\|_2^2   \\
+ &  = \|(I - D(D^2 + \lambda I)\inv D)UD\theta\|_2^2    \\
+ &  = \|((D^2 + \lambda I)(D^2 + \lambda I)\inv - D(D^2 + \lambda I)\inv D)UD\theta\|_2^2    \\
+ &  = \|(D^2 + \lambda I - D^2)D\theta(D^2 + \lambda I)\inv\|_2^2    \\
+ &  = \|\lambda D\theta(D^2 + \lambda I)\inv\|_2^2
+    = \sum_{j = 1}^p \left(\frac{\theta_jd_j\lambda}{d_j^2 + \lambda}\right)^2
+    = \sum_{j = 1}^p \frac{\theta_j^2d_j^2\lambda^2}{(d_j^2 + \lambda)^2},
+\end{align*}
+where the $d_j$ term in the numerator comes from the $D$ term and the
+denominator comes from the $(D^2 + \lambda I)\inv$. Similarly,
+\begin{align*}
+\E\left[\|S(y - \mu)\|_2^2\right]
+ &  = \E\left[\|UDV^T(VD^2V^T + \lambda I)\inv VDU^T(y - \mu)\|_2^2\right] \\
+ &  = \E\left[\|D(D^2 + \lambda I)\inv D(y - \mu)\|_2^2\right]  \\
+ &  = \sum_{j = 1}^p \left( \frac{d_j^2}{d_j^2 + \lambda} \right)^2
+                                                \E\left[(y - \mu)^2\right]
+    = \sigma^2 \sum_{j = 1}^p \frac{d_j^4}{(d_j^2 + \lambda)^2}. \qed
+\end{align*}
+
+\item
+\begin{align*}
+F'(0)
+ &  = \sum_{j = 1}^p \frac{d}{d\lambda}
+        \theta_j^2d_j^2 \frac{\lambda^2}{(d_j^2 + \lambda)^2}
+        + \frac{\sigma^2d_j^4}{(d_j^2 + \lambda)^2} \bigg|_{\lambda = 0}    \\
+ &  = \sum_{j = 1}^p
+        \theta_j^2d_j^2 \frac{2\lambda d_j^2}{(d^2 + \lambda)^4}
+        - \frac{d_j^4}{(d_j^2 + \lambda)^4} \bigg|_{\lambda = 0}
+    = \sum_{j = 1}^p -d_j^{-4} < 0.
+\end{align*}
+
+Since ridge regression reduces to the least squares estimator when
+$\lambda = 0$, the MSE of least squares is $F(0)$. Thus, $F'(0) \leq 0$ implies
+that, at least for small $\lambda$, the MSE of ridge regression is strictly
+less than the MSE of least squares (particularly when some $d_j$'s are small).
+
+\end{enumerate}
+
+\end{enumerate}
+\end{document}

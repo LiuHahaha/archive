@@ -1,0 +1,210 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10-704 Information Processing and Learning}
+\newcommand{\myhwnum}{4}
+\newcommand{\duedate}{Thursday, April 23, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathop{\mathbb{E}}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\Pds}{\mathcal{P}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\renewcommand{\hat}{\widehat}
+\newcommand{\ol}{\overline}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item For $D \geq 0$, let $\Pds_D := \{p(t|x) : \E[d(X;T)] \leq D\}$.
+Since $\Pds_D$ is nondecreasing (with respect to inclusion) in $D$,
+\[R(D) = \min_{p \in \Pds_D} I(X;T)\]
+is non-increasing in $D$. \qed
+
+\item Let $\alpha \in [0,1]$, and let $D_1,D_2 \geq 0$. Let
+\[p_1 := \argmin_{p \in \Pds_{D_1}} I(X;T)
+    \quad \mbox{ and } \quad
+    p_2 := \argmin_{p \in \Pds_{D_2}} I(X;T),\]
+and let $p_\alpha = \alpha p_1 + (1 - \alpha) p_2$. Then, since
+$p_1 \in \Pds_{D_1}$ and $p_2 \in \Pds_{D_2}$,
+\footnote{Since the marginal distribution of $X$ is fixed, we abuse notation
+by using $p_\alpha,p_1$, and $p_2$ to denote conditional distributions of
+$T |X $, as well as the corresponding joint distributions of $(T,X)$ and
+marginal distributions of $T$.}
+\[\E_{(T,X) \sim p_\alpha}\left[ d(X;T) \right]
+    = \alpha \E_{(T,X) \sim p_1}\left[ d(X;T) \right]
+    + (1 - \alpha) \E_{(T,X) \sim p_2}\left[ d(X;T) \right]
+    \leq D\]
+for $D = \alpha D_1 + (1 - \alpha) D_2$, and so $p_\alpha \in \Pds_D$. Also,
+\begin{align*}
+I(X;T)|_{T \sim p_\alpha}
+ &  = D_{KL}(p_\alpha(x,t) || p(x)p_\alpha(t))  \\
+ &  = D_{KL}(\alpha p_1(x,t) + (1 - \alpha) p_2(x,t)
+                            || p(x)(\alpha p_1(t) + (1 - \alpha) p_2(t))    \\
+ &  \leq \alpha D_{KL}(p_1(x,t) || p(x)p_1(t))
+                            + (1 - \alpha) D_{KL}(p_2(x,t) || p(x)p_2(t))   \\
+ &  = \alpha I(X;T)|_{T \sim p_1} + (1 - \alpha) I(X;T)|_{T \sim p_2},
+\end{align*}
+where we used the (joint) convexity of KL-divergence. Thus,
+\begin{align*}
+R(\alpha D_1 + (1 - \alpha) D_2)
+ &  = \min_{p(t|x) \in \Pds_D} I(X;T) \\
+ &  \leq I(X;T) |_{T \sim p_\alpha}     \\
+ &  \leq \alpha I(X;T) |_{T \sim p_1} + (1 - \alpha) I(X;T) |_{T \sim p_2}  \\
+ &  = \alpha \left( \min_{p(t|x) \in \Pds_{D_1}} I(X;T) \right)
+    + (1 - \alpha) \left( \min_{p(t|x) \in \Pds_{D_2}} I(X;T) \right)   \\
+ &  = \alpha R(D_1) + (1 - \alpha) R(D_2). \qed
+\end{align*}
+
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Let $X$ denote the message we wish to encode, let $Z$ denote the channel
+we use, and let $Y$ denote the message received through the channel. Also, for
+each $i \in \{1,\dots,M\}$, let $z_i = \pr[Z = i]$. Since the sender and
+receiver both know $Z$, $H(Z|X) = 0$ and $H(X|Y) = H(X|Y,Z)$. Thus,
+\begin{align}
+I(X;Y)
+\notag
+    = H(X) - H(X | Y)
+ &  = H(X) - H(X|Y,Z)   \\
+\notag
+ &  = H(X) - H(X|Z) + H(X|Z) - H(X|Y,Z) \\
+\notag
+ &  = I(X;Z) + I(X;Y|Z) \\
+\notag
+ &  = H(Z) - H(Z|X) + I(X;Y|Z)  \\
+\notag
+ &  = \sum_{i = 1}^M z_i \log_2 \frac{1}{z_i} + \sum_{i = 1}^M z_i I(X;Y|Z = i)\\
+\notag
+ &  = \sum_{i = 1}^M z_i \log_2 \frac{1}{z_i} + \sum_{i = 1}^M z_i C_i \\
+\label{eq:sum_MI}
+ &  = \sum_{i = 1}^M z_i \left( \log_2 \frac{1}{z_i} + C_i \right).
+\end{align}
+If we wish to use $z = z^* \in \R^M$ which maximizes $I(X;Y)$, noting the
+implicit constraint $\sum_{i = 1}^M z_i = 1$, the Lagrangian becomes
+\[\mathcal{L}(z,\lambda)
+    = \sum_{i = 1}^M z_i \left( \log_2 \frac{1}{z_i} + C_i \right)
+        + \lambda \left( \sum_{i = 1}^M z_i - 1 \right)
+    = \sum_{i = 1}^M z_i \left( \log_2 \frac{1}{z_i} + C_i + \lambda \right)
+                                                                    - \lambda,
+\]
+and so
+\[0
+    = \frac{\partial}{\partial z_i} \mathcal{L}(z,\lambda) \bigg|_{z = z^*}
+    = - \log_2 z_i^* - 1 + C_i + \lambda.
+\]
+Solving for $z_i^*$ gives $z_i^* = 2^{C_i - 1 + \lambda}$, and plugging this
+into the constraint $1 = \sum_{i = 1}^M z_i$ gives
+$2^{\lambda - 1} = \sum_{i = 1}^M 2^{C_i}$, so that
+\[z_i^* = \frac{2^{C_i}}{\sum_{j = 1}^M 2^{C_i}}.\]
+Finally, plugging this into (\ref{eq:sum_MI}) and canceling terms gives
+\[I(X;Y)
+    = \sum_{i = 1}^M \frac{2^{C_i}}{\sum_{j = 1}^M 2^{C_j}}
+      \log_2\left( \sum_{j = 1}^M 2^{C_j} \right)
+    = \frac{\sum_{i = 1}^M 2^{C_i}}{\sum_{j = 1}^M 2^{C_j}}
+      \log_2\left( \sum_{j = 1}^M 2^{C_j} \right)
+    = \log_2\left( \sum_{j = 1}^M 2^{C_j} \right)
+\]
+
+\item As described in part (a), the sender can choose a channel $Z$ at
+random, with $\pr[Z = i]$ proportional to $2^{C_i}$.
+
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Let $\eta_0, \eta_1 : [0,1] \to [0,1]$ such that, $\forall x \in [0,1]$,
+\[\eta_0(x) = \frac{1}{2} + \e
+    \quad \mbox{ and } \quad
+    \eta_1(x) = \frac{1}{2} - \e,\]
+for some $\e > 0$ to be chosen later. Let
+$P_0,P_1 : [0,1] \times\{0,1\} \to [0,\infty)$ denote the probability density
+functions under the regression functions $\eta_0$ and $\eta_1$, respectively.
+Using the inequality $\log(x) \leq x - 1$,
+\begin{align*}
+D_{KL}(P_0||P_1)
+ &  = \sum_{y = 0}^1 \int_0^1 P_0(x,y) \log \frac{P_0(x,y)}{P_1(x,y)} \, dx \\
+ &  = \left( \frac12 - \e \right)
+                        \log \left( \frac{\frac12 - \e}{\frac12 + \e} \right)
+    + \left( \frac12 + \e \right)
+                    \log \left( \frac{\frac12 + \e}{\frac12 - \e} \right)   \\
+ &  = 2\e \log \left( \frac{\frac12 + \e}{\frac12 - \e} \right)
+    \leq 2\e \left( \frac{\frac12 + \e}{\frac12 - \e} - 1 \right)
+    = \frac{8\e^2}{1 - 2\e},
+\end{align*}
+Letting $\e = \frac{1}{4}n^{-1/2}$,
+\begin{align*}
+D_{KL}(P_0^n||P_1^n)
+    \leq nD_{KL}(P_0||P_1)
+    \leq n\frac{\frac12n^{-1}}{1 - \frac12n^{-1/2}}
+    = \frac{\frac12}{1 - \frac12n^{-1/2}}
+    \leq \frac23
+\end{align*}
+for $n \geq 4$. On the other hand, our loss function is equivalent to
+$\|\eta_0 - \eta_1\|_1 = 2\e = \frac{1}{2\sqrt n}$, and so we have the lower
+bound
+\[\inf_{\hat f_n} \sup_{P_{XY} \in \Pds}
+    \E_{X_i,Y_i) \sim P_{XY}}\left[ R(\hat f_n) - R^* \right]
+    \geq \frac{1}{2\sqrt n} \left( 1 - \sqrt{\frac{1}{2}D_{KL}(P_0^n||P_1^n)} \right)
+    \geq \frac{1}{2\sqrt n} \left( 1 - \sqrt{\frac13} \right). \qed
+\]
+
+\item I didn't have time to finish this problem.
+
+\end{enumerate}
+\end{enumerate}
+\end{document}

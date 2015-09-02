@@ -1,0 +1,359 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10/36-702 Statistical Machine Learning}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Friday, February 13, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\boldeta}{\boldsymbol{\eta}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Z}{\mathbb{Z}} % integers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+\newcommand{\MSE}{\operatorname{MSE}} % mean squared error
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+% What's left: 1/2 of 4, 1/2 of 5
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item Let $\Omega$ denote the sample space, and, $\forall A \subseteq \Omega$,
+\footnote{We only discuss $P$- and $Q$-measurable $A$.}
+define $V_A(P,Q) := P(A) - Q(A)$. Let $E_P := \{x : p(x) \geq q(x)\}$. Then,
+$\forall A \subseteq \Omega$,
+\[V_A(P,Q)
+    = \int_A p(x) - q(x) \, dx
+    \leq \int_A (p(x) - q(x))^+ \, dx
+    = \int_{E_P} p(x) - q(x) \, dx
+    = V_{E_P}(P,Q).
+\]
+Similarly, $V_A(Q,P) \leq V_{\Omega \sminus E_P}(Q,P)$. Furthermore, since we
+can pick $A = E_P$, taking the supremum over $A$ makes both these inequalities
+into equalities.
+
+However, since
+$P(\Omega) = 1 = Q(\Omega)$, $V_{E_p}(P,Q) = V_{\Omega \sminus E_P}(Q,P)$, by
+additivity. Hence,
+\begin{align*}
+\operatorname{TV}(P,Q)
+    = \sup_{A \subseteq \Omega} |V_A(P,Q)|
+ &  = \frac{1}{2} \left( V_{E_p}(P,Q) + V_{\Omega \sminus E_P}(Q,P) \right) \\
+ &  = \frac{1}{2} \left( \int_{E_p} p(x) - q(x) \, dx
+                    + \int_{\Omega \sminus E_P} q(x) - p(x) \, dx \right)   \\
+ &  = \frac{1}{2} \left( \int_\Omega (p(x) - q(x))^+
+                                + \int_\Omega (p(x) - q(x))^- \, dx \right) \\
+ &  = \frac{1}{2} \int_\Omega |p(x) - q(x)| \, dx. \qed
+\end{align*}
+
+\item In class, we showed the pointwise $L_2$ risk bound
+\[\int_0^1 \E\left[ \left( \hat p_h(x) - p(x) \right)^2 \right] \, dx
+    \leq L^2h^2 + \frac{C}{nh}.\]
+Applying Jensen's Inequality (to the integral over $[0,1]$) gives
+\[\E\left[ \left(
+        \frac{1}{2} \int_0^1 |\hat p_h(x) - p(x)| \, dx
+    \right)^2 \right]
+    \leq \frac{1}{4}
+            \int_0^1 \E\left[ \left( \hat p_h(x) - p(x) \right)^2 \right] \, dx
+    \leq \frac{1}{4} \left( L^2h^2 + \frac{C}{nh} \right)
+    \to 0\]
+as $n \to \infty$, if $h_n \to 0, nh_n \to \infty$.
+TV$(\hat p_h,p)$ thus vanishes in $L_2$ and in probability. \qed
+\end{enumerate}
+
+\newpage
+\item Since the kernel density estimate is an empirical mean, $\forall x$, each
+\[\E_{X_j : j \neq i} \left[ \hat p_{(-i)}(x) \right]
+    = \frac{1}{h} \E_{y \sim p}\left[  K\left( \frac{y - x}{h} \right) \right]
+    = \E_{X_1,\dots,X_n} \left[ \hat p(x) \right].\]
+Thus, by the Law of Iterated Expecation and Fubini's Theorem,
+\begin{align*}
+\E_{X_1,\dots,X_n} \left[ \hat p_{(-i)}(X_i) \right]
+    = \E_{X_i} \left[ \E_{X_j : j \neq i} \left[ \hat p_{(-i)}(X_i) | X_i \right] \right]
+ &  = \int \E_{X_1,\dots,X_n} \left[ \hat p(x) \right] p(x) \, dx   \\
+ &  = \E_{X_1,\dots,X_n} \left[ \int \hat p(x) p(x) \, dx \right],
+\end{align*}
+and so
+\begin{align*}
+\E_{X_1,\dots,X_n} \left[ \hat R(h) \right]
+ &  = \int \hat p^2(x) \, dx - 2 \E_{X_1,\dots,X_n} \left[ \hat p_{(-i)}(X_i) \right]   \\
+ &  = \int \hat p^2(x) \, dx - 2 \E_{X_1,\dots,X_n} \left[ \int \hat p(x) p(x) \, dx \right]
+    = \E[L(h)]. \qed \\
+\end{align*}
+
+\item Let $n_j$ denote the number of samples falling in $B_j$. Since the
+$\hat p_{-i}(X_i)$ is identically $\frac{n_j - 1}{(n - 1)h}$ for each
+$X_i \in B_j$,
+\[\sum_{i = 1}^n \hat p_{-i}(X_i)
+    = \sum_{j = 1}^{1/h} n_j \frac{n_j - 1}{(n - 1)h}
+    = \sum_{j = 1}^{1/h} \frac{n_j^2 - n_j}{(n - 1)h}
+    = \sum_{j = 1}^{1/h} \frac{n^2\theta_j^2 - n_j}{(n - 1)h}
+    = \frac{-n}{(n - 1)h} + \sum_{j = 1}^{1/h} \frac{n^2\theta_j^2}{(n - 1)h}
+,\]
+where we used the facts that $\sum_{j = 1}^{1/h} n_j = n$ and
+$\theta_j = n_j/n$. Also,
+\[\int_0^1 \hat p^2(x) \, dx
+    = \sum_{j = 1}^{1/h} \int_{B_j} \hat p^2(x) \, dx
+    = \sum_{j = 1}^{1/h} h \left( \frac{\theta_j}{h} \right)^2
+    = \sum_{j = 1}^{1/h} \frac{n\theta_j^2 - \theta_j^2}{(n - 1)h}.\]
+Plugging into the leave-one-out cross validation estimator of risk and
+simplifying gives
+\begin{align}
+\notag
+\hat R(h)
+    = \int_0^1 \hat p^2(x) \, dx
+        - \frac{2}{n} \sum_{i = 1}^n \hat p_{(i-)}(X_i)
+ &  = \frac{2}{(n - 1)h}
+    - \frac{n + 1}{(n - 1)h} \sum_{j = 1}^{1/h} \theta_j^2. \qed
+\end{align}
+
+
+%TODO
+\newpage
+\item Note first that, since $\{X_i\}_{i = 1}^n$ are IID and
+$\{\phi_j\}_{j = 1}^\infty$ is orthonormal,
+\[\E \left[ \hat \beta_j \right]
+    = \E_{X \sim p} \left[ \phi_j(X) \right]
+    = \int \phi_j(x) p(x) \, dx
+    = \beta_j.\]
+Thus, $\forall x$,
+\[\E[p(x) - \hat p(x)] = \sum_{j = k + 1}^\infty \beta_j \phi_j(x).\]
+Therefore, since $\{\phi_j\}_{j = 1}^\infty$ is orthonormal,
+\begin{align}
+\notag
+\int \E^2\left[ p(x) - \hat p(x) \right] \, dx
+ &  = \int \left( \sum_{j = k + 1}^\infty \beta_j \phi_j(x) \right)^2 \, dx \\
+\label{eq:carefully}
+ &  = \int \sum_{j = k + 1}^\infty \beta_j^2 \phi_j^2(x)
+                + 2\sum_{j = k + 1}^\infty \sum_{\ell = j + 1}^\infty
+                        \beta_j\beta_\ell \phi_j(x)\phi_\ell(x) \, dx   \\
+\notag
+ &  = \sum_{j = k + 1}^\infty \beta_j^2.
+\end{align}
+where we can verify line (\ref{eq:carefully}) via the equivalent formula for
+the square of a finite summation and continuity of the function
+$x \mapsto x^2$, and we assume sufficient conditions to switch the integral and
+infinite series.
+
+Also that, for $i \neq j$, while $\hat\beta_i \not\perp \hat\beta_j$,
+$\operatorname{Cov}(\hat\beta_i,\hat\beta_j) = 0$, and hence
+\[\Var[\hat p(x)]
+    = \Var \left[ \sum_{j = 1}^k \hat\beta_j \phi_j(x) \right]
+    = \sum_{j = 1}^k \Var \left[ \hat\beta_j \right] \phi_j^2(x)
+    = \sum_{j = 1}^k \Var \left[ \hat\beta_j \right] \phi_j^2(x),
+\]
+and so $\int \Var[\hat p(x)] = \sum_{j = 1}^k \Var \left[ \hat\beta_j \right]$.
+
+\newpage
+\item
+\begin{enumerate}
+\item Note that, $\forall x \in \R$,
+\[p_h(x)
+    = \E_{X_1,\dots,X_n} \left[ \frac{1}{nh} \sum_{i = 1}^n
+                                    K\left( \frac{X_i - x}{h} \right) \right]
+    = \E_{y \sim p} \left[ \frac{1}{h} K\left( \frac{y - x}{h} \right) \right].
+\]
+Since $\hat p_h(x)$ is a sample mean of the quantity in the above expectation,
+and $s_n^2(x)$ is the variance of this sample mean, by the Central Limit
+Theorem, $\forall x \in \R$,
+\[\frac{\hat p_h(x) - p_h(x)}{s_n(x)} \to \mathcal{N}(0,1)\]
+in distribution. \qed
+
+\item First note that, $\forall x \in \R$, via the change of variables
+$u = \frac{y - x}{h}$, and a second order Taylor bound (since $\beta = 2$),
+\begin{align*}
+\E[\hat p_h(x)]
+    = \E_{y \sim p}\left[ \frac{1}{h} K\left( \frac{y - x}{h} \right) \right]
+ &  = \int_\R \frac{1}{h} K\left( \frac{y - x}{h} \right) p(y) \, dy    \\
+ &  = \int_\R K(u) p(x + hu) \, du    \\
+ &  = \int_\R K(u) p(x) + p'(x)hu + p''(x)(hu)^2 + o(h^2) \, du \\
+ &  = p(x) + \int_\R K(u) p''(x)(hu)^2 \, du + o(h^2) \\
+\end{align*}
+since $\int_\R K(u) \, du = 1$ and $\int_\R u K(u) \, du = 0$. Similarly,
+\begin{align*}
+\E[\hat p_{\sqrt 2 h}(x)]
+ &  = \E_{y \sim p}\left[ \frac{1}{\sqrt 2 h} K\left( \frac{y - x}{\sqrt 2 h} \right) \right] \\
+ &  = \int_\R \frac{1}{\sqrt 2 h} K\left( \frac{y - x}{\sqrt 2 h} \right) p(y) \, dy    \\
+ &  = \int_\R K(u) p(x + \sqrt 2 hu) \, du    \\
+ &  = \int_\R K(u) p(x) + p'(x)\sqrt 2 hu + 2p''(x)(hu)^2 + o(h^2) \, du \\
+ &  = p(x) + 2\int_\R K(u) p''(x)(hu)^2 \, du + o(h^2). \\
+\end{align*}
+Thus, $\E[2\hat p_h(x) - \hat p_{\sqrt 2 h}(x)] = p(x) + o(h^2)$. \qed
+
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Note that, for any $k \in \N$, for a mixture density
+$f = \sum_i \pi_i f_i$ on $\R$,
+\[\E_{X \sim f}\left[ X^k \right]
+    = \int_\R x^k f(x) \, dx
+    = \int_\R x^k \sum_i \pi_i f_i(x) \, dx
+    = \sum_i\pi_i \int_\R x^k f_i(x) \, dx
+    = \sum_i\pi_i \E_{X \sim f_i}\left[ X^k \right].
+\]
+It follows that
+\begin{align*}
+\sigma^2
+    = \E[X_i^2] - \E^2[X_i]
+ &  = \pi(1 + \mu_1^2) + (1 - \pi)(1 + \mu_2^2)
+                                            - (\pi\mu_1 + (1 - \pi)\mu_2)^2 \\
+ &  = \mbox{\fbox{$\displaystyle
+        1 + \pi\mu_1^2 + (1 - \pi)\mu_2^2 - (\pi\mu_1 + (1 - \pi)\mu_2)^2$.}}
+\end{align*}
+
+\item Notice that, the part (a), $\sigma^2 > 1$ if and only if
+\[\pi\mu_1^2 + (1 - \pi)\mu_2^2 - (\pi\mu_1 + (1 - \pi)\mu_2)^2 > 0.\]
+This is precisely the variance of a random variable $Y$ with
+$\pr[Y = \mu_1] = \pi$ and $\pr[Y = \mu_2] = 1 - \pi$, and hence is nonzero if
+and only if $Y$ is not degenerate. This happens precisely when
+$\pi \notin \{0,1\}$ and $\mu_1 \neq \mu_2$. \qed
+
+\item A standard result tells us that, for
+$X_1,\dots,X_n \sim \mathcal{N}(\mu,\sigma)$, with probability $1 - \alpha$,
+\[s^2 \leq \sigma\frac{\chi_{n - 1,1 - \alpha}^2}{n - 1},\]
+where $s^2$ denotes the sample variance and $\chi^2_{n - 1,1 - \alpha}$ denotes
+the $1 - \alpha$ quantile of the $\chi^2$ distribution with $n - 1$ degrees of
+freedom. Thus, using the indicator variable
+$\phi = 1\left( s^2 > \frac{\chi_{n - 1,1 - \alpha}^2}{n - 1} \right)$ as our
+test statistic, under the null hypothesis ($\sigma^2 = 1$),
+$\pr(\phi = 1) = \alpha$.
+
+On the other hand, $s^2$ is a consistent estimator for $\sigma^2$ and
+$\frac{\chi_{n - 1,1 - \alpha}}{n - 1} \to 1$ as $n \to \infty$, and so,
+under the alternative $\sigma^2 > 1$, $\pr\left( \phi = 1 \right) \to 1$. \qed
+
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Intuitively, it suffices to observe that the highest-order non-zero
+coefficient of a polynomial dictates its limiting behavior as $|x| \to \infty$.
+A more precise argument follows.
+
+$\forall x \leq t_1$, since each $(x - t_j)_+ = 0$,
+$f(x) = \sum_{j = 0}^k \alpha_j x^j$. On the other hand, the left natural
+boundary condition implies $\exists c_0,\dots,c_{r - 1} \in \R$ such that,
+$\forall x \leq t_1$, $f(x) = \sum_{j = 0}^{r - 1} c_j x^j$. If, for some
+$j \in \{r,\dots,k\}$, $\alpha_j \neq 0$, define
+$j_{max} := \max \{j \in \{r,\dots,k\} : \alpha_j \neq 0\}$. Then,
+\[|\alpha_{j_{max}}|
+    = \lim_{x \to -\infty}
+                \left| \frac{\sum_{j = 1}^k \alpha_j x^j}{x^{j_{max}}} \right|
+    = \lim_{x \to -\infty}
+                \left| \frac{\sum_{j = 0}^{r - 1} c_j x^j}{x^{j_{max}}} \right|
+    = 0\]
+(since $j_{max} > r - 1$), contradicting the definition of $j_{max}$. Thus,
+$\alpha_r = \cdots = \alpha_k = 0$. Similarly, $\forall x \geq t_m$, since each
+$(x - t_j)_+ = x - t_j$, by the binomial theorem,
+\begin{equation}
+f(x)
+    = \sum_{j = 0}^{r - 1} \alpha_j x^j + \sum_{j = 1}^m \beta_j(x - t_j)^k
+    = \sum_{j = 0}^{r - 1} \alpha_j x^j
+        + \sum_{i = 0}^k
+        \left( \sum_{j = 1}^m \beta_j t_j^{k - i} \right) \binom{k}{i} x^i.
+\label{eq:binom}
+\end{equation}
+On the other hand, the right natural condition implies
+$\exists c_0,\dots,c_{r - 1} \in \R$ such that, $\forall x \geq t_m$,
+$f(x) = \sum_{j = 0}^{r - 1} c_j x^j$. If, for some
+$i \in \{r,\dots,k\}$,
+$\left( \sum_{j = 1}^m \beta_j t_j^{k - i} \right) \neq 0$, define
+\[i_{max}
+    := \max \left\{i \in \{r,\dots,k\}
+        : \left( \sum_{j = 1}^m \beta_j t_j^{k - i} \right) \neq 0 \right\}.\]
+Then, since $i_{max} > r - 1$,
+\[\left( \sum_{j = 1}^m \beta_j t_j^{k - i} \right) \binom{k}{i}
+    = \lim_{x \to \infty} \frac{\sum_{j = 0}^{r - 1} \alpha_j x^j
+        + \sum_{i = 0}^k \sum_{j = 1}^m \beta_j t_j^{k - i} \binom{k}{i} x^i}
+        {x^{i_{max}}}
+    = \lim_{x \to \infty} \frac{\sum_{j = 0}^{r - 1} c_j x^j}{x^{i_{max}}}
+    = 0,
+\]
+contradicting the definition of $i_{max}$ (since $\binom{k}{i} \neq 0$). \qed
+
+\item Define the matrix $T \in \R^{(k - r + 1) \times m} = \R^{r \times m}$ by
+$T_{i,j} = t_j^{i - 1}$ and the function space $X$ by
+\[X
+    := \left\{ x \mapsto
+        \sum_{j = 0}^{r - 1} \alpha_j x^j + \sum_{j = 1}^m \beta_j(x - t_j)_+^k
+        \mbox{ s.t. }
+        \alpha \in \R^{r - 1}, \beta \in \R^m,
+        T\beta = 0
+    \right\}.\]
+Part (a) showed that any $k^{th}$ order natural spline with knots
+$t_1,\dots,t_m$ is in $X$, and it is also easy to see from (\ref{eq:binom})
+that any function in $X$ is such a natural spline. $X$ is the span of the
+$r + m$ functions $\B := \{1,\dots,x^{r - 1},(x - t_1)^k,\dots,(x - t_m)^k\}$
+constrained by $r$ linear constraints $T\beta = 0$. Thus, it suffices to show
+that $\B$ is linearly independent and that $T$ has rank $r$. The latter follows
+from a well-known formula for the determinant of a Vandermonde matrix, which
+can in turn be proven via induction, and so we now show, by induction on $m$
+that $\B$ is linearly independent.
+
+Clearly, $\{1,\dots,x^{r - 1}\}$ is linearly independent. Suppose now that, for
+some $\ell \in \{0,\dots,m - 1\}$,
+$\B_\ell := \{1,\dots,x^{r - 1},(x - t_1)^k,\dots,(x - t_\ell)^k\}$ is linearly
+independent. Since $t_1 < \dots < t_\ell$, any linear combination of $\B_\ell$
+is infinitely differentiable at $x = t_{\ell + 1}$. However, the $k^{th}$
+derivative of $(x - t_{\ell + 1})^k$ at $x = t_{\ell + 1}$, does not exist.
+Thus, $(x - t_{\ell + 1})^k$ is not a linear combination of $\B_\ell$, and so
+$\B_{\ell + 1}$ is linearly independent. \qed
+\end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,369 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10-704 Information Processing and Learning}
+\newcommand{\myhwnum}{3}
+\newcommand{\duedate}{Tuesday, April 14, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathop{\mathbb{E}}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\Pds}{\mathcal{P}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\renewcommand{\hat}{\widehat}
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item If $f$ is constant over the support of some wavelet, then the projection
+of $f$ onto that wavelet, as well as any child of that wavelet, is clearly $0$.
+Since $f$ changes values only at its (at most $s$) discontinuities, it is
+non-constant on the supports of at most $s$ of the wavelets at any scale. Since
+$\Pi_l f$ includes projections onto only the top $l$ scales, it has at most
+$sl + 1 \leq $ \fbox{\!$2sl$} non-zero coefficients (adding one for the projection
+onto $\psi_{0,0}$).
+
+\item Linear combinations of wavelets of scale at most $l$ can exactly fit $f$
+except on the at most $s$ intervals of lengths $2^{-l}$ on which $f$ is
+discontinuous. That is, the measure of the set $E \subseteq [0,1] $ on which
+the wavelet approximation is not exactly equal to $f$ is at most $s 2^{-l}$.
+Since $\|f\|_\infty \leq M$, if the wavelet approximation is $0$ whenever it is
+not exactly $f$, the error of the approximation for any $x \in E$ is at most
+$M$. Since the wavelet basis is orthonormal, $\Pi_l f$ as defined minimizes the
+error of approximating $f$ by wavelets of scale at most $l$, and thus,
+\fbox{$\|f - \Pi_l f\|_2^2 \leq M^2 s 2^{-l}$.}
+
+\item Since $0$ is a multiple of $\e$, any non-zero coefficient in
+$\Pi_{l,\e}$ corresponds to a non-zero coefficient of $\Pi_l$, and so, by part
+(a), at most \fbox{$2sl$} coefficients of $\Pi_{l,\e}$ are non-zero.
+
+\item Note, for any $j,k$, $a \in \R$, if $a_\e$ denotes $a$ rounded to the
+nearest multiple of $\e$, then
+\[\|a\psi_{j,k} - a_\e\psi_{j,k}\|_2^2 = |a - a_\e|^2 (2^{j/2})^2 \cdot 2^{-j}
+    \leq \e^2.\]
+(since $a\psi_{j,k}$ and $a_\e\psi_{j,k}$ disagree by at most $\e2^{j/2}$ on an
+interval of length at most $2^{-j}$). Thus,
+$\|\Pi_l f - \Pi_{l,\e} \Pi_l f\|_2^2 \leq 2sl \e^2$, where $k$ is the number of
+nonzero coefficients of $\Pi_l f$. Using the definition of $\Pi_{l,\e}$,
+the Pythagorean Theorem, and parts (a) and (b),
+\[\|f - \Pi_{l,\e}f\|_2^2
+    \leq \|f - \Pi_{l,e} \Pi_l f\|_2^2
+    \leq \|f - \Pi_l f\|_2^2
+    + \|\Pi_l f - \Pi_{l,e} \Pi_l f\|_2^2
+    \leq \mbox{\fbox{$M^2s2^{-l} + 2sl\e^2$.}}
+\]
+by part (b).
+
+\item Since each coefficient of $\Pi_{l,\e} f$ has $2M/\e$ possible nonzero
+values, any given non-zero coefficient can be specified with at most
+$\log_2 (2M/\e)$. Since there are at most $2sl$ nonzero coefficients, we can
+encode $\Pi_{l,\e} f$ using \fbox{$C(\Pi_{l,\e} f) \leq 2sl \log_2(2M/\e)$}
+bits.
+
+
+\item Since $\Pi_{l,\e} f^* \in \G_\e$, the CRM bound and part (d) give
+\begin{align*}
+\|\hat g - f^*\|_2^2
+ &  \leq \min_{g \in \G_\e} \left\{ \|g - f^*\|_2^2
+                    + \frac{c(g) + \ln (1/\delta)}{n} \right\} + \delta     \\
+ &  \leq \|\Pi_{l,\e} f^* - f^*\|_2^2
+                    + \frac{c(\Pi_{l,\e} f^*) + \ln(1/\delta)}{n} + \delta  \\
+ &  \leq M^2s2^{-l} + 2sl\e^2
+                    + \frac{2sl \log_2(2M/\e) + \ln(1/\delta)}{n} + \delta  \\
+ &  \leq \frac{s(2 \log_2 n + M)}{n}
+                        + \frac{s \log_2^2(2Mn) + \ln n}{n} + \frac{1}{n}
+    \in O\left( \frac{s \log^2 n}{n} \right),
+\end{align*}
+for $\e = n^{-1/2}, l = \log_2 n, \delta = 1/n$. \qed
+
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Since the $\max$ of non-negative elements is at most their sum,
+\begin{align*}
+\ln W_T
+ &  = \ln \left( \sum_i e^{\ln \pi_i - \eta L_t^i} \right)  \\
+ &  \geq \ln \left( \max_i e^{\ln \pi_i - \eta L_t^i} \right)
+    = \max_i \left[ \ln \pi_i - \eta L_t^i \right]
+    = -\min_i \ln\left( \frac{1}{\pi_i} \right) + \eta L_t^i. \qed
+\end{align*}
+
+\item Since each $q_1(i) = \pi_i$ and each
+$q_{t + 1}(i) = q_t(i) e^{-\eta l(f_i(x_t), y_t)}$, it is easy to see by
+induction on $t$ that each
+\[q_t(i)
+    = \frac{\pi_i e^{-\eta \sum_{s = 1}^{t - 1} l(t_i(x_s), y_s)}}
+                                                                {\sum_i q_t(i)}
+    = \frac{\pi_i e^{-\eta L_{t - 1}^i}}{\sum_j \pi_j e^{-\eta L_{t - 1}^j}}.\]
+
+\begin{align*}
+\frac{W_t}{W_{t - 1}}
+    = \sum_i \frac{\pi_i e^{-\eta L_t^i}}{\sum_j \pi_j e^{-\eta L_{t - 1}^j}}
+ &  = \sum_i e^{-\eta l(f_i(x_t), y_t)} \frac{\pi_i e^{-\eta L_{t - 1}^i}}
+                                    {\sum_j \pi_j e^{-\eta L_{t - 1}^j}}    \\
+ &  = \sum_i e^{-\eta l(f_i(x_t), y_t)} q_t(i)
+    = \E_{i_t \sim q_t} \left[ e^{-\eta l(f_{i_t}(x_t), y_t)} \right]. \qed
+\end{align*}
+
+\item Expanding $\ln(W_T)$ as a telescoping sum, applying part (b), and using
+the given bound (with $a = 0, b = 1, X = l(f_{i_t}(x_t), y_t), s = -\eta$),
+\begin{align*}
+\ln(W_T)
+    = \ln(W_0) + \sum_{i = 1}^T \ln(W_T) - \ln(W_{T - 1})
+ &  \leq \sum_{i = 1}^T \ln
+            \E_{i_t \sim q_t} \left[ e^{-\eta l(f_{i_t}(x_t, y_t)} \right]  \\
+ &  \leq \sum_{i = 1}^T -\eta \E\left[ l(f_{i_t}(x_t), y_t) \right]
+                                                        + \frac{\eta^2}{8}  \\
+ &  \leq -\eta
+        \left( \sum_{i = 1}^T \E\left[ l(f_{i_t}(x_t), y_t) \right] \right)
+                                                    + \frac{\eta^2T}{8},
+\end{align*}
+since $\ln(W_0) = 0$. \qed
+
+\item By parts (a) and (c),
+\[-\min_i \eta L_t^i + \log \frac{1}{\pi_i}
+    \leq -\eta \sum_{t = 1}^T \E_{i_t \sim q_t} l(f_{i_t}(x_t), y_t) +
+                                                            \frac{\eta^2 T}{8}.
+\]
+Dividing through by $T$ and solving for
+$\frac{1}{T} \E\left[ \sum_{i = 1}^T l(\hat y_t, y_t) \right]$ (recalling that
+$\hat y_t$ is $f_{i_t}(x_t)$ sampled with $i_t \sim q_t$), gives
+\begin{align*}
+\frac{1}{T} \sum_{t = 1}^T l(\hat y_t, y_t)
+ &  \leq \inf_{f \in \mathcal{F}} \left\{
+        \frac{1}{T} \sum_{t = 1}^T l(f(x_t), y_t)
+        + \frac{\eta}{8} + \frac{\ln\left( 1/\pi(f) \right)}{\eta T} \right\}\\
+ &  \leq \inf_{f \in \mathcal{F}} \left\{
+        \frac{1}{T} \sum_{t = 1}^T l(f(x_t), y_t)
+        + \frac{1 + \ln\left( 1/\pi(f) \right)}{\sqrt{8T}} \right\}
+\end{align*}
+for $\eta = \sqrt{\frac{8}{T}}$. \qed
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item The output of \texttt{q3.m} is below:
+\begin{verbatim}
+>> q3
+
+ans =
+
+     1     0     1     1     1     0     1     0     1     1     0
+ 0     0     1     1     1
+
+
+ans =
+
+     4     4     3     3     4     1
+
+
+ans =
+
+     4     4     3     3     4     1
+
+
+ans =
+
+     0     1     1     1     0     0
+
+
+ans =
+
+     3     4     4     3     2     3
+     3     4     4     3     2     3
+
+
+ans =
+
+     1
+
+\end{verbatim}
+
+\item See appended code (last two pages of this document).
+
+\end{enumerate}
+
+\newpage
+\item
+\begin{enumerate}
+\item Since any of the $X_i$'s is equally likely to be
+$\max_{i \in \{1,\dots,n\}} X_i$, for each $i \in \{1,\dots,n\}$,
+\[P(X_i = T(X^n) | T(X^n)) = \frac{1}{n}
+    \quad \mbox{ and } \quad
+    P(X \neq T(X^n) | T(X^n)) = \frac{n - 1}{n}.\]
+
+Furthermore, for $x \in [0,\infty)$, if $X_i = T(X^n)$, then
+$X_i \leq x$ if and only if $x \geq T(X^n)$, and, if $X_i \neq T(X^n)$, then,
+given $T(X^n)$, $X$ is uniformly distributed on $[0,T(X^n))$. Thus,
+\begin{align*}
+ &  P(X_i \leq x | X_i = T(X^n), T(X^n)) = 1_{\{x \geq T(X^n)\}}(x) \\
+    \quad \mbox{ and } \quad
+ &  P(X_i \leq x | X_i \neq T(X^n), T(X^n))
+                                        = \frac{\min\{x,T(X^n)\}}{T(X^n)},
+\end{align*}
+and so the cumulative distribution function of $X_i$ given $T(X^n)$ evaluated
+at $x$ is
+\begin{align}
+\notag
+P(X_i \leq x| T(X^n))
+ &  = P(X = T(X^n) | T(X^n)) \cdot P(X_i \leq x | T(X^n), X = T(X^n))       \\
+\notag
+ &  + P(X \neq T(X^n) | T(X^n)) \cdot P(X_i \leq x| T(X^n), X \neq T(X^n))  \\
+\label{eq:dist_given_suff_stat}
+ &  = \mbox{\fbox{$\displaystyle \frac{1_{\{x \geq T(X^n)\}}}{n}
+                                + \frac{(n - 1)\min\{x,T(X^n)\}}{nT(X^n)}$.}}
+\end{align}
+
+\item Since, given $T(X^n)$, (\ref{eq:dist_given_suff_stat}) does not depend on
+$\theta$, drawing samples from it clearly does not provide additional
+information about $\theta$. \qed
+\end{enumerate}
+\end{enumerate}
+
+\newpage
+\subsection*{Code}
+The encoding function is as follows:
+\begin{verbatim}
+function encoded = arithmeticEncode(p, raw)
+
+  encoded = zeros(0, 1);
+  lower = 0;
+  upper = 1;
+
+  for char = raw'
+
+    % rescale and shift cdf to [lower, upper] interval
+    cdf_shifted = ([0; cumsum(p)]*(upper - lower)) + lower;
+    lower = cdf_shifted(char);
+    upper = cdf_shifted(char + 1);
+
+    % encode any symbols that can be unambiguously encoded
+    [lower, upper, new_encoded] = encodePrefix(lower, upper);
+    encoded = [encoded; new_encoded];
+  end
+
+  % encoded any number in the interval we've found
+  encoded = [encoded; 0];
+  while lower < 0.5;
+    lower = (lower + upper)/2;
+    encoded = [encoded; 1];
+  end
+
+end
+
+function [lower, upper, new_encoded] = encodePrefix(lower, upper)
+
+  new_encoded = zeros(0, 1);
+
+  while (lower - 0.5)*(upper - 0.5) >= 0
+    bit = lower >= 0.5; % new bit is 0 or 1
+    new_encoded = [new_encoded; bit];
+
+    % left shift lower and upper
+    lower = 2*lower - bit;
+    upper = 2*upper - bit;
+  end
+end
+\end{verbatim}
+
+\newpage
+The decoding function is as follows:
+\begin{verbatim}
+function decoded = arithmeticDecode(p, encoded)
+
+  decoded = zeros(0, 1);
+  cdf = [0; cumsum(p)];
+
+  % lower and upper bounds on encoded based on bits read so far
+  min_val = 0;
+  max_val = 1;
+  i = 1;
+  while ~any(decoded == 1)
+
+    if i <= length(encoded)
+      new_bit = encoded(i);
+      i = i + 1;
+    else
+      new_bit = 1;
+    end
+
+    if new_bit == 0 % left half
+      max_val = (min_val + max_val)/2;
+    else % right half
+      min_val = (min_val + max_val)/2;
+    end
+
+    % while both lower and upper bounds are in the same interval
+    while sum(cdf <= min_val) == sum(cdf < max_val)
+
+      % output the symbol for that interval
+      new_decoded = sum(cdf <= min_val);
+      decoded = [decoded; new_decoded];
+      if(new_decoded == 1)
+        break;
+      end
+
+      % rescale bounds to that interval
+      lower = cdf(new_decoded);
+      upper = cdf(new_decoded + 1);
+      min_val = (min_val - lower)/(upper - lower);
+      max_val = (max_val - lower)/(upper - lower);
+    end
+  end
+end
+\end{verbatim}
+
+\end{document}

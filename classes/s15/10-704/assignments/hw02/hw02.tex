@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10-704 Information Processing and Learning}
+\newcommand{\myhwnum}{2}
+\newcommand{\duedate}{Thursday, February 26, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathop{\mathbb{E}}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\Pds}{\mathcal{P}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item We showed in class that the maximum entropy distribution $p^*$ has the
+form
+\[p^*_i
+    = \exp\left( -1 - \lambda_0 - \lambda_1 i \right)
+    = a b^i,
+                                                    \quad \forall i \in \N,\]
+for some $\lambda_0,\lambda_1 \in \R, a,b > 0$. Letting
+$a = \frac{1}{1 + \alpha}$ and letting $b = 1 - a$, we see that
+\[\sum_{i = 0}^\infty p^*_i
+    = a \sum_{i = 0}^\infty (1 - a)^i
+    = a \frac{1}{1 - (1 - a)}
+    = \frac{a}{a}
+    = 1,\]
+and
+\begin{align*}
+\sum_{i = 0}^\infty i p^*_i
+    = a (1 - a) \sum_{i = 0}^\infty i (1 - a)^{i - 1}
+ &  = -a (1 - a) \frac{d}{da} \sum_{i = 0}^\infty (1 - a)^i \\
+ &  = -a (1 - a) \frac{d}{da} \frac{1}{a}
+    = \frac{(1 - a)}{a}
+    = \alpha,
+\end{align*}
+so that $p^*_i = ab^i = \lambda (1 - \lambda)^i$ (for
+$\lambda = \frac{1}{1 + \alpha}$) satisfies the constraints. \qed
+
+\item Since $H(X_1,\dots,X_d) \leq \sum_{i = 1}^d H(X_i)$, with equality if and
+only if $X_1,\dots,X_n$ are independent, $H(p)$ is maximized when
+$p^*({\bf x}) = \prod_i f_i(x_i)$ is the product density of the given
+marginals. \qed
+\end{enumerate}
+
+% TODO
+\item
+\begin{enumerate}
+\item Note that, for any $c > 0$, the function $f_c : [0,\infty) \to \R$
+defined by $f_c(x) = x \log \left( \frac{x}{c} \right)$ is convex (since
+$f_c''(x) = \frac{1}{x} \geq 0$). Thus, $\forall \alpha \in [0,1]$ and
+probability densities $p_1,p_2,q$ on $\X$,
+\begin{align*}
+D(\alpha p_1 + (1 - \alpha) p_2 || q)
+ &  = \int_\X f_{q(x)}(\alpha p_1(x) + (1 - \alpha) p_2(x)) \, dx   \\
+ &  \leq \int_\X \alpha f_{q(x)}(p_1(x)) + (1 - \alpha) f_{q(x)}(p_2(x)) \, dx \\
+ &  = \alpha D(p_1 || q) + (1 - \alpha) D(p_2 || q)
+\end{align*}
+(noting $\alpha p_1(x) + (1 - \alpha) p_2(x) = 0$ implies $p_1(x) = 0$ or
+$p_2(x) = 0$, so that the inequality applied to $f_{q(x)}$ holds trivially when
+$q(x) = 0$). \qed
+
+\newpage
+\item Let $\Pds$ denote the set of probability densities on the sample space
+$\X$, and let
+\[f_q(r)
+    := \sup_{p \in \Pds} \; \langle p, r \rangle - D(p || q)
+    = \sup_{p \in \Pds} \; \E_{X \sim p}\left[
+                        r(X) - \log\left( \frac{p(X)}{q(X)} \right)
+        \right].\]
+denote the conjugate of the function $p \mapsto D(p || q)$. For $p^*$
+maximizing the above (assuming $p^*$ exists), stationarity implies that, for
+some $\lambda \in \R$, $\forall x \in \X$,
+\[0 = \frac{d}{dp(x)} p(x) \left( r(x) - \log \left( \frac{p(x)}{q(x)} \right)
+        + \lambda \right) \bigg|_{p(x) = p^*(x)}
+    = r(x) - \log \left( \frac{p^*(x)}{q(x)} \right) - 1 + \lambda,
+\]
+noting the constraint $\int_\X p = 1$.
+Thus, $p^*(x) = q(x) \exp\left( r(x) - 1 + \lambda \right)$. Solving for
+$\lambda$ in the constraint $\int_\X p(x) \, dx = 1$ gives
+$\lambda = 1 - \log \left( \int_\X q(x) e^{r(x)} \, dx \right)$, and so
+$p^*(x) = C q(x)e^{r(x)}$, where
+$C = \frac{1}{\int_\X q(y) e^{r(y)} \, dy}
+    = \frac{1}{\E_{X \sim q}\left[ e^{r(X)} \right]}$.
+Thus,
+\begin{align*}
+f_q(r)
+ &  = \E_{X \sim p^*} \left[ r(X) - \log \left( \frac{p^*(X)}{q(X)} \right) \right] \\
+ &  = C \E_{X \sim q} \left[ e^{r(x)} \left( r(x) - \log \left( C e^{r(x)} \right) \right) \right]
+    = C \E_{X \sim q} \left[ e^{r(x)} \left( r(x) - \log C - r(x) \right) \right]    \\
+ &  = -C \E_{X \sim q} \left[ e^{r(x)} \log C \right]
+    = - \log C
+    = \mbox{\fbox{$ \displaystyle \log \E_{X \sim q} \left[ e^{r(x)} \right]$.}}
+\end{align*}
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Note that
+\[\E_{X \sim p}\left[ \frac{1}{q(X)} \right]
+    = \E_{X \sim p}\left[ \log \frac{p(X)}{q(X)} - \log p(X) \right]
+    = D(p||q) + H(p).
+\]
+Thus, applying the bound $x \leq \lceil x \rceil \leq x + 1$ to
+$\ell(x) = \left\lceil \frac{1}{q(x)} \right\rceil$,
+\[D(p||q) + H(p)
+    = \E_{X \sim p}\left[ \frac{1}{q(X)} \right]
+    \leq \E_{X \sim p}\left[ \ell(X) \right]
+    \leq \E_{X \sim p}\left[ \frac{1}{q(X)} + 1 \right]
+    = D(p||q) + H(p) + 1. \qed
+\]
+
+\item
+\begin{enumerate}
+\item Let $i,j \in \{1,\dots,m\}$ with $i < j$. Then,
+\[F_j
+    \geq F_i + p_i
+    = F_i + 2^{-\log \left( \frac{1}{p_i} \right)}
+    \geq F_i + 2^{-\ell_i}.\]
+This implies that one of the first $\ell_i$ bits of the codeword $c(j)$ is
+different from the corresponding bit of the codeword $c(i)$, and so $c(i)$ is
+not a prefix of $c(j)$. On the other hand, since $\ell_j \geq \ell_i$, $c(j)$
+cannot be a prefix of $c(i)$ unless $c(j) = c(i)$, in which case $c(i)$ is also
+a prefix of $c(j)$. \qed
+
+\item This code has the form described in part (a), with $q = p$ (and hence
+$D(p||q) = 0$). Thus, the result follows from part (a). \qed
+
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{document}

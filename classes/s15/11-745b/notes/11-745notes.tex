@@ -1,0 +1,359 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+
+% For figures
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+\usepackage{amsmath,amssymb}
+
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\renewcommand{\H}{\mathcal{H}}                      % hypothesis class
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\D}{\mathcal{D}}                        % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\renewcommand{\d}{\delta}                           % \delta
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\Rc}{\mathfrak{R}}                      % Rademacher complexity
+\newcommand{\A}{\mathcal{A}}                        % algorithm
+\newcommand{\E}{\mathop{\mathbb{E}}}                % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\hP}{{\hat P}}                          % 
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+\newcommand{\ol}{\overline}
+\renewcommand{\hat}{\widehat}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{natbib}
+\usepackage[disable]{todonotes}
+
+\begin{document}
+\begin{center}
+{\bf\Large 11-745 Advanced Statistical Learning Seminar\\
+Spring 2015 Special Topic: Foundations of Machine Learning}\\
+Shashank Singh\\
+sss1@andrew.cmu.edu\\
+\today\\
+\end{center}
+
+
+
+These notes are largely on selections from the 2012 textbook ``Foundations of
+Machine Learning'' by Mohri, Rostamizadeh, and Talwalkar, along with a few
+selected papers.\\
+
+\section{The PAC Learning Framework}
+\subsection{The PAC learning model}
+Let $h$ be a hypothesis and let $c$ be a target concept. Then, for an
+underlying distribution $D$ the \emph{generalization error} or \emph{risk} of
+$h$ is
+\[R(h)
+    = \pr_{x \sim D}\left[ h(x) \neq c(x) \right]
+    = \E_{x \sim D}\left[ 1_{h(x) \neq c(x)} \right],\]
+where $1_E$ denotes the indicator function of an event $E$.
+Given a sample $x_1,\dots,x_n$, the \emph{empirical error} is
+\[\hat R(h) = \frac1n \sum_{i = 1}^n 1_{h(x_i) \neq c(x_i)}.\]
+Note that
+\begin{equation}
+\E[\hat R(h)] = R(h)
+\label{eq:exp_emp_risk}
+\end{equation}
+Moreover, we will show finite-sample guarantees for the convergence
+$\hat R(h) \to R(h)$ as $x \to \infty$. \\
+
+A concept class $C$ is \emph{PAC-learnable} if $\exists$ and algorithm $\A$ and
+a polynomial function $poly(\cdot,\cdot,\cdot,\cdot)$ such that,
+$\forall \e, \delta > 0$, distributions $D$ on $\X$, and $c \in C$,
+\[\pr_{S = (x_1,\dots,x_n) \sim D^n}\left[ R(h_S) \leq \e \right]
+    \geq 1 - \delta\]
+whenever the sample size $n \geq poly(1/\e,1/\delta,n,size(c))$
+\footnote{$size(c)$ denotes the computational memory overhead of $c$.}
+If $\A$ runs in $poly(1/\e,1/\delta,n,size(c))$, then $C$ is \emph{efficiently
+PAC-learnable}, and $\A$ is a PAC-learning algorithm for $C$. \\
+
+It is now worth noting the following three points:
+\begin{itemize}
+\item The PAC framework is distribution-free: no assumption is made about $D$.
+\item The training and test samples are drawn from identical distributions;
+this is typically necessary for generalization to occur.
+\item PAC deals with learnability for a concept class $C$, not a single
+(unknown) concept $c$.
+\end{itemize}
+The subsection concludes with an example of a PAC-learnable class $C$, the set
+of axis-parallel rectangles in $\R^2$, providing and algorithm and analysis to
+show that $C$ is efficiently PAC-learnable.
+
+\subsection{Guarantees for finite hypothesis sets: the consistent case}
+A hypothesis is \emph{consistent} with a sample $S$ if $\hat R(h_S) = 0$
+We begin with guarantees in the case of a finite hypothesis class $H$ and an
+algorithm that returns consistent hypothesis:\\
+
+{\bf Theorem 2.1 - Learning Bounds in the finite $H$, consistent case:}
+Consider a finite hypothesis class $H$ and let $\A$ be an algorithm such that,
+for any concept $c \in H$ and i.i.d. sample $S$, $\A$ returns a consistent
+hypothesis $h_S$. Then, $\forall \e, \delta > 0$,
+\[\pr_{S = (x_1,\dots,x_n) \sim D^n}\left[ R(h_S) \leq \e \right]
+    \geq 1 - \delta\]
+whenever
+\[n \geq \frac1\e \left( \log|H| + \log \delta \right).\]
+Said another way, $\forall \e, \delta > 0$, with probability at least
+$1 - \delta$,
+\[R(h_S) \leq \frac1m \left( \log|H| + \log \delta \right).\]
+
+\emph{Proof:} Let $\e,\delta > 0$. We wish to bound the probability that $H$
+contains any hypothesis $h$ consistent with $S$ and having risk $R(h) > \e$.
+Note that, hypotheses with high risk are unlikely to be consistent with a large
+sample, since
+\[\pr\left[ \hat R(h) = 0 \right] \leq (1 - \e)^n.\]
+Hence, applying a union bound,
+\[\pr\left[ \exists h \in H, R(h) > \e \right]
+    \leq \sum_{h \in H} \pr\left[ \hat R(h) = 0, R(h) > \e \right]
+    \leq \sum_{h \in H} \pr\left[ \hat R(h) = 0 | R(h) > \e \right]
+    \leq |H|(1 - \e)^m.
+\]
+Finally, it suffices to observe that, for
+$n \geq \frac1\e \left( \log|H| + \log \delta \right)$,
+$|H|(1 - \e)^n \leq \delta$.
+\footnote{Maybe I'm being silly, but I seem to be having an issue with this
+last step.} \qed \\
+
+This subsection concludes with two examples concerning PAC-learnability of
+boolean formulae and a brief discussion of the fact that a universal concept
+class is not PAC-learnable.
+
+\subsection{Guarantees for finite hypothesis sets: the inconsistent case}
+In general, there may be no hypothesis in $H$ consistent with the training
+sample; this is in fact common in practice, when the concept class may be far
+larger than the hypothesis class. However, we can provide guarantees even when
+$\hat R(h)$ is small but nonzero. To do so, we recall a corollary of
+Hoeffding's Inequality (and observation (\ref{eq:exp_emp_risk})):\\
+
+{\bf Corollary 2.1 - Corollary of Hoeffding's Inequality:} Let $\e > 0$, and
+let $S$ denote an i.i.d. size $n$ sample. Then, $\forall h : \X \to \{0,1\}$,
+\[\pr_{S \sim D^n}\left[ |\hat R(h) - R(h)| \geq \e \right]
+    \leq 2\exp(-2n\e^2).\]
+Said another way, with probability at least $1 - \delta$,
+\[R(h) \leq \hat R(h) + \sqrt{\frac{\log(2/\delta)}{2n}}.\]
+
+The corollary bounds the generalization error of any particular hypothesis,
+but, in order to bound the error of a learning algorithm, we again need uniform
+bounds over all hypotheses in $\H$, as provided by the following theorem:
+
+{\bf Theorem 2.2 - Learning Bounds in the finite $H$, inconsistent case:}
+Consider a finite hypothesis class $\H$. Then, $\forall \delta > 0$, with
+probability at least $1 - \delta$, $\forall h \in \H$,
+\[R(h) \leq \hat R(h) + \sqrt{\frac{\log|H| + \log(2/\delta)}{2n}}.\]
+
+\emph{Proof:} Applying a union bound and Corollary 2.1,
+\[\pr\left[ \exists h \in \H, |\hat R(h) - R(h)| > \e \right]
+    \leq \sum_{h \in \H} \pr\left[ |\hat R(h) - R(h)| > \e \right]
+    \leq 2|H|\exp(-2n\e^2)
+\]
+and the result follows immediately. \qed \\
+
+It is now worth noting that this result suggests that the size of the
+hypothesis class $\H$ is a tradeoff between empirical risk (which may be
+smaller for a larger hypothesis class) and the error of $\hat R(h)$
+approximating $R(h)$. Furthermore, for two hypothesis classes of equal
+empirical risk, the smaller class has better generalization error; this can be
+compared to Occam's Razor.
+
+The remainder of the chapter generalizes to the agnostic case, which is
+analyzed in terms of the Bayes error rate, and then discusses model selection,
+in terms of empirical risk minimization (ERM), which performs poorly due to
+overfitting, and structural risk minimization (SRM), which performs better by
+considering a sequence of hypothesis classes of increasing complexity, but
+is computationally very expensive, and finally briefly mentions regularization.
+
+\newpage
+\section{Rademacher Complexity and VC Dimension}
+The discussion of the previous chapter was restricted to the case of finite
+hypothesis classes $H$. The goal of this chapter is to generalize to the case
+of an infinite hypothesis class. In particular, the main idea is to reduce the
+infinite case to the analysis of a finite case. One approach uses the notion of
+\emph{Rademacher complexity}, which leads to high-quality (sometimes
+data-dependent) guarantees with simple proofs based on McDiarmid's Inequality.
+Since computing Rademacher complexity is often NP-hard, we will also introduce
+two purely combinatorial notions, the \emph{growth function} and the
+\emph{VC-dimension}, the latter of which is often easier to bound or estimate.
+We also present lower bounds based on VC-dimension.
+
+\subsection{Rademacher Complexity}
+Rademacher complexity measures the richness of a function class in terms of how
+well it can fit random noise. \\
+
+A \emph{Rademacher random variable} is $\sigma = (\sigma_1,\dots,\sigma_n)^T$
+with $\sigma_i$'s independent and uniform over $\{-1,1\}$. The \emph{Empirical
+Rademacher complexity} of a family $G$ of functions $f : Z \to [a,b]$ with
+respect to a sample $S = (z_1,\dots,z_n) \subseteq Z$ is
+\[\hat\Rc_S(G)
+    := \E_\sigma\left[ \sup_G \frac1n \sum_{i = 1}^m \sigma_i g(z_i)\right]
+    = \E_\sigma\left[ \sup_{g \in G} \frac{\sigma \cdot g_S}{m} \right],
+\]
+where $g_S = (g(z_1),\dots,g(z_n))^T$; i.e., $\hat\Rc_S(G)$ measures
+how well $G$ can correlate $S$ to random noise. If $D$ is the distribution from
+which $S$ is drawn, then the \emph{Rademacher complexity} of $G$ is the
+expected empirical Rademacher complexity
+\[\Rc_n(G) := \E_{S \sim D^n}\left[ \hat\Rc_S(G) \right].\]
+
+We now present a generalization bound in terms of Rademacher complexity: \\
+
+{\bf Theorem 3.1 (Rademacher Complexity Generalization Bound):} Consider a
+family $G$ of functions mapping $Z$ to $[0,1]$. For any $\delta > 0$, with
+probability at least $1 - \delta$,
+$\forall g \in G$,
+\[\E[g(z)]
+    \leq \frac1n \sum_{i = 1}^n g(z_i)
+    + 2\Rc_m(G)
+    + \sqrt{\frac{\log(1/\delta)}{2n}}.\]
+and
+\[\E[g(z)]
+    \leq \frac1n \sum_{i = 1}^n g(z_i)
+    + 2\Rc_S(G)
+    + 3\sqrt{\frac{\log(1/\delta)}{2n}}.\]
+\emph{Proof:} For a sample $S = (z_1,\dots,z_n)$ and $g \in G$, let
+$\hat \E_S[g] := \frac1n \sum_{i = 1}^n g(z_i)$. To McDiarmid's inequality to
+\[\Phi(S) := \sup_{g \in G} \E[g] - \hat \E_S[g],\]
+let $S'$ denote $S$ with one point resampled, say $z_n$ replaced by
+$z_n'$. Then,
+\[\Phi(S') - \Phi(S)
+    \leq \sup_{g \in G} \hat \E_S[g] - \hat \E_{S'}[g]
+    = \sup_{g \in G} \frac{g(z_n) - g(z_n')}{n} \leq \frac1n.\]
+We can similarly show $\Phi(S) - \Phi(S') \leq 1/n$. By McDiarmid's Inequality,
+$\forall \delta > 0$, with probability at least $1 - \delta/2$,
+\[\Phi(S) \leq \E_S[\Phi(S)] + \sqrt{\frac{\log(2/\delta)}{2n}}.\]
+Some further analysis based on the definition of Rademacher complexity, an
+application of Jensen's inequality, and some clever re-writing shows
+\[\E_S[\Phi(S)] \leq 2\Rc_n(G),\]
+which immediately implies the first result. Another application of McDiarmid's
+Inequality shows that, with probability at least $1 - \delta/2$,
+\[\Rc_n(G) \leq \hat\Rc_S(G) + \sqrt{\frac{\log(2/\delta)}{2n}},\]
+which similarly implies the second result.
+
+Another generalization bound, this one potentially data-dependent, in terms of
+Rademacher complexity is then provided for the case of binary classification.
+However, computing this bound for real data is computationally hard for many
+hypothesis sets. The next subsections will relate Rademacher complexity to
+complexity measures that are easier to compute.
+
+\subsection{Growth Functions}
+The \emph{growth function} $\Pi_H : \N \to \N$ of a hypothesis class $H$
+defined by
+\[\Pi_H(m) = \max_{\{x_1,\dots,x_m\} \subseteq \X}
+    \left| \left\{
+        \left( h(x_1),\dots,h(x_m) \right) : h \in H
+    \right\} \right|, \quad \forall m \in \N\]
+is the number of distinct ways in $H$ can classify $m$ points. Note that this
+notion of complexity is distribution-free. Massart's Lemma upper bounds
+$\Rc_m(H)$ in terms of $\Pi_H(m)$. \\
+
+{\bf Theorem 3.3 (Massart's Lemma):} For $A \subseteq \R^m$ finite,
+$r := \max \{\|x\|_2 : x \in A\}$,
+\[\E_\sigma \left[ \sup_{x \in A} \frac{\sigma \cdot x}{m} \right]
+    \leq \frac{r\sqrt{2 \log |A|}}{m},\]
+where $\sigma \in \R^m$ is a Rademacher random variable.
+
+\emph{Proof:} For $t > 0$, applying Jensen's Inequality to the exponential
+function,
+\begin{align*}
+\exp\left( t \E_\sigma \left[ \sup_{x \in A} \sigma \cdot x \right] \right)
+ &  \leq \sum_{x \in A} \E_\sigma e^{t \sigma \cdot x}
+    & \mbox{(Jensen's Inequality, $\sup \leq \sum$)}    \\
+ &  = \sum_{x \in A} \prod_{i = 1}^m \E_{\sigma_i} e^{t \sigma_i x_i}
+    & \mbox{(independence of $\sigma_i$'s)}    \\
+ &  = \sum_{x \in A} \prod_{i = 1}^m e^{\frac{t^2}{2}x_i^2}
+    & \mbox{(Hoeffding's bound on $\E\left[ e^{tX} \right]$)}    \\
+ &  = \sum_{x \in A} e^{\frac{t^2}{2} \|x\|^2}
+    \leq |A| e^{\frac{t^2}{2} r^2}.
+    & \mbox{(Definition of $r$)}
+\end{align*}
+Picking $t = \frac{\sqrt{2 \log |A|}}{r}$ minimizes the bound and dividing by
+$m$ gives the desired result. \qed \\
+
+By definition of the Rademacher complexity and the growth function, Massart's
+Lemma implies
+\begin{equation}
+\Rc_m(H) \leq \sqrt{\frac{2 \log \Pi_H(m)}{m}}
+\label{ineq:rademacher_and_growth}
+\end{equation}
+for any set of classifiers $H$. Combining (\ref{ineq:rademacher_and_growth})
+with the Rademacher generalization bound (Theorem 3.1) gives
+\begin{equation}
+R(h) \leq \hat R(h) + \sqrt{\frac{2 \log \Pi_H(m)}{m}}
+                    + \sqrt{\frac{\log (1/\delta)}{2m}},
+\label{ineq:growth_gen_bound}
+\end{equation}
+for any classifier $h \in H$, with probability at least $1 - \delta$
+($\delta > 0$).
+
+\subsection{VC-Dimension}
+The chapter then continues to define VC-dimension $CVdim(H)$ in the usual
+manner, and presents some basic examples (intervals and sine functions on $\R$,
+and hyperplanes axis-aligned rectangles, and convex polygons on $\R^2$).
+VC-dimension is also distribution free and can be much easier to calculate for
+important hypothesis classes than Rademacher complexity or the growth function,
+though it sometimes results in looser bounds.
+
+Sauer's Lemma presents an important relationship between the two combinatorial
+notions of complexity (the growth function and and VC-dimension): \\
+
+{\bf Theorem 3.5 (Sauer's Lemma):} For a hypothesis class $H$ with
+$VCdim(H) = d$ and all $m \in \N$,
+\[\Pi_H(n) \leq \sum_{i = 0}^d \binom{m}{i}.\]
+The proof proceeds by induction on $m + d$ and carefully counting the growth
+function of a union of hypothesis classes. Sauer's lemma is important in part
+because of the following corollary: \\
+
+{\bf Corollary 3.3 (VC-Dimension Generalization Bound):} For a hypothesis class
+$H$ with $VCdim(H) = d$ and all $m \geq d$,
+\[\Pi_H(m) \leq \left( \frac{em}{d}^d \right) = O(m^d).\]
+Combining this with the growth function generalization bound
+(\ref{ineq:rademacher_and_growth}) gives
+\begin{equation}
+R(h) \leq \hat R(h) + \sqrt{\frac{2 d \log \frac{em}{d}}{m}}
+                    + \sqrt{\frac{\log (1/\delta)}{2m}},
+\label{ineq:growth_gen_bound}
+\end{equation}
+for any classifier $h \in H$, with probability at least $1 - \delta$
+($\delta > 0$). \\
+
+The final section of this chapter proves lower bounds on generalization error
+in terms of the VC-dimension of the hypothesis class (regardless of the
+algorithm used), in both the realizable and non-realizable cases.
+
+\newpage
+\section{Support Vector Machines}
+
+\section{Kernel Methods}
+
+\section{Boosting}
+
+\section{On-Line Learning}
+
+\section{Multi-Class Classification}
+
+\section{Regression}
+
+\section{On Discriminative vs. Generative classifiers: a comparison of logistic
+regression and naive Bayes}
+This section contains notes on the 2002 NIPS paper of the above name by Ng and
+Jordan.
+
+\end{document}

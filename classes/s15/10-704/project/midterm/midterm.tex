@@ -1,0 +1,352 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{nips14submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+
+% For bibliography
+\usepackage{natbib}
+\renewcommand{\bibsection}{}
+
+\title{Information Theoretical Estimators for Time Series}
+
+\author{
+Shashank Singh \\
+Statistics \& Machine Learning Departments \\
+Carnegie Mellon University \\
+Pittsburgh, PA 15213 \\
+\texttt{sss1@andrew.cmu.edu}
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\ind{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Information Theoretical Functionals (ITFs) such as entropy, mutual information,
+divergence, and their conditional versions, are important nonparametric
+measures of variation, dependence, and distance between random variables. Over
+the past few years, much work as gone into designing and characterizing
+estimators for ITFs, using IID samples from each of the relevant variables.
+
+However, many data sources, such as neurophysiological, economic, and
+environmental data, consist of time series, where samples of each variable are
+not independent. Often we would like to perform analyses for time series
+similar to those for IID data. For example, to study functional connectivity in
+fMRI data, it might be desirable to learn a graphical model over voxels via the
+PC algorithm. Thus, the broad goal of our project is to understand how methods
+using ITFs and their estimators can be adapted for time series data.
+
+We focus here on ITFs used for measuring dependence, though the methods used
+apply to general ITFs. One example of such an ITF that has been studied
+previously is the notion of transfer entropy (actually a case of conditional
+mutual information), defined for general time series
+$\{X_i\}_{i = 1}^n, \{Y_i\}_{i = 1}^n$ as
+\[T_{X \to Y}
+    = H(Y_n | \{Y_i\}_{i = 1}^{n - 1}) - H(Y_n | \{X_i\}_{i = 1}^{n - 1}, \{Y_i\}_{i = 1}^{n - 1})
+    = I(Y_n; \{X_i\}_{i = 1}^{n - 1} | \{Y_i\}_{i = 1}^{n - 1}).
+\]
+Transfer entropy, the mutual information between the last point of $Y$ and the
+previous values of $X$ given the previous values of $X$, roughly measures the
+predictive power of $X$ on $Y$ after accounting for autocorrelation. Thus,
+this can be used as a dependence measure among time series. On the other hand,
+the dimension of variables involved in transfer entropy increases with the
+length of the time series, making estimation difficult without some sort of
+independence (e.g., Markov or mixing) assumptions. In this work, thusfar, the
+two ITFs we discuss are transfer entropy and the mutual information rate, which
+measure slightly different notions of dependence between time series.
+
+For estimation, we considered the von Mises expansion approach described in
+\cite{kandasamy2014influence}, although we may consider some other approaches
+as discussed in our future work section.
+
+\section{Problem Setup}
+Suppose we observe two finite time series $\{X_i\}_{i = 1}^n$ and
+$\{Y_i\}_{i = 1}^n$ (which can be written as a joint time series
+$\{(X_i,Y_i)\}_{i = 1}^n$). We assume that the observations come from a
+stationary time series (i.e., that their joint densities are invariant to time
+shifts). In general, the $2n$ variables in $\{(X_i,Y_i)\}_{i = 1}^n$ can have
+any dependence structure, but, in order to estimate quantities of interest, we
+will have to assume some independence in the form of Markov or mixing
+assumptions.
+
+\section{Transfer Entropy Estimation}
+The transfer entropy $T_{X \to Y}$ of $\{X_1\}_{i = 1}^n$ on
+$\{Y_1\}_{i = 1}^n$ is a mutual information between the $1$-dimensional
+variable $Y_n$ and the $(n - 1)$-dimensional variable $X_{1:(n - 1)}$
+conditioned on the $(n - 1)$-dimensional variable $Y_{1:(n - 1)}$ (a $2n - 1$
+dimensional conditional mutual information). Without making parametric or
+independence assumptions, this makes estimating transfer entropy, very
+difficult for all but very small $n$ (even when given several samples of the
+entire time series). To make estimation more tractable, we reduce the dimension
+of the problem by making a $\beta$-Markov assumption. Specifically, for some
+$\beta \geq 1$, we assume, for each $i \in \{\beta + 1,\dots,n\}$,
+\begin{equation}
+(X,Y)_i \ind \{(X_j,Y_j)\}_{j = 1}^{i - (\beta + 1)}
+                                    | \{(X_j,Y_j)\}_{j = i - \beta}^{i - 1},
+\label{joint_markov}
+\end{equation}
+\begin{equation}
+(X,Y)_i \ind \{X_j\}_{j = 1}^{i - (\beta + 1)}
+                                            | \{X_j\}_{j = i - \beta}^{i - 1}
+    \quad \mbox{ and } \quad
+(X,Y)_i \ind \{Y_i\}_{j = 1}^{i - (\beta + 1)}
+                                        | \{Y_j\}_{j = i - \beta}^{i - 1}.
+\label{marginal_markov}
+\end{equation}
+Transfer entropy then reduces to
+\begin{align*}
+T_{X \to Y}
+ &  = H(Y_n | \{Y_i\}_{i = 1}^{n - 1})
+        - H(Y_n | \{X_i\}_{i = 1}^{n - 1}, \{Y_i\}_{i = 1}^{n - 1}) \\
+ &  = H(Y_n | \{Y_i\}_{i = n - \beta}^{n - 1})
+        - H(Y_n | \{X_i\}_{j = i - \beta}^{i - 1}, \{Y_i\}_{j = i - \beta}^{i - 1}) \\
+ &  = I(Y_n; \{X_i\}_{i = i - \beta}^{n - 1}
+                                            | \{Y_i\}_{i = i - \beta}^{n - 1}).
+\end{align*}
+which now involves at most $\beta$-dimensional variables (a $2\beta + 1$
+dimensional conditional mutual information). When $\beta \ll n$, this makes
+estimation tractable.
+
+\section{Mutual Information Rate}
+Yet another information theoretic measure of dependence between two time series
+is the mutual information rate (MIR), defined for a joint time series
+$(\X,\Y) = \{(X_i,Y_i)\}_{i = 1}^\infty$ by
+\[I_R(\X,\Y)= \lim_{n \to \infty} \frac{I(X_1,\dots,X_n;Y_1,\dots,Y_n)}{n},\]
+when this limit exists. Like transfer entropy, high dimensionality makes
+estimation difficult, except for short time series of many samples, and so, to
+make estimation tractable, we will assume $\beta$-Markov conditions
+(\ref{joint_markov}) and (\ref{marginal_markov}) as above. We first discuss
+some results for the simpler case of estimating the entropy rate of a single
+time series, and then build up to estimating the MIR.
+
+\subsection{Estimating the Entropy Rate}
+Under $\beta$-Markov assumptions, then entropy rate $H_R(\X)$ reduces to
+\begin{equation}
+H_R(\X)
+    = \lim_{n \to \infty} H(X_n | \{X_i\}_{i = 1}^{n - 1})
+    = \lim_{n \to \infty} H(X_n | \{X_i\}_{i = n - \beta}^{n - 1}).
+\label{eq:reduced_HR}
+\end{equation}
+Thus, if we can estimate the conditional distribution of
+$X_n | \{X_i\}_{i = n - \beta}^{n - 1}$, then we can attempt to use a plugin
+estimator. For an ergodic Markov chain with finite state space $S$ (e.g., if
+$\beta = 1$
+\footnote{Recall that the condition $\beta = 1$ is not restrictive, because any
+ergodic $\beta$-order Markov chain is equivalent to an ergodic first-order
+Markov chain with $\beta$-dimensional states.}
+and the conditional distribution
+$\pr\left[ X_{i + 1} = x_\ell \middle| X_i = x_j \right]$ is bounded below),
+the usual maximum likelihood estimate
+\footnote{For any event $A$, $1_A$ denotes the indicator function of $A$.}
+\[\hat \pi_{x,\{y_i\}_{i = 1}^\beta}
+    =   \frac{\sum_{i = \beta + 1}^n 1_{\{X_i = x,
+            \{X_i\}_{i = n - \beta}^{n - 1} = \{y_i\}_{i = 1}^{\beta}\}}}
+        {\sum_{i = \beta + 1}^n
+        1_{\{\{X_i\}_{i = n - \beta}^{n - 1} = \{y_i\}_{i = 1}^{\beta}\}}}
+\]
+of $\pr\left[ X_n = x
+    \middle| \{X_i\}_{i = n - \beta}^{n - 1} = \{y_i\}_{i = 1}^{\beta} \right]$
+(for each combination $x,y_1,\dots,y_\beta \in S$) used for IID data is
+consistent (and, in fact, asymptotically). \cite{ciuperca05entropyRate} show
+that, in case of an ergodic Markov chain with finite state space, this plugin
+estimator is strongly consistent and asymptotically normal as $n \to \infty$.
+Theorems 5.3 of \cite{fan03timeSeries} show that, under certain mixing
+conditions on the time series, the standard kernel density estimator is
+uniformly (weakly) consistent (with a particular rate). Using this, we may be
+able to show that the plugin estimator of the entropy rate is also consistent,
+but I haven't yet had a chance to do so.
+
+\subsection{Estimating the MIR}
+One might conjecture the most obvious analogue of (\ref{eq:reduced_HR}) for
+MIR:
+\begin{equation}
+I_R(\X,\Y)
+    \stackrel{?}{=}
+    \lim_{n \to \infty} I(X_n; Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1}).
+\label{conj:incorrect_IR}
+\end{equation}
+However, (\ref{conj:incorrect_IR}) does not hold due to the more complicated
+effects of conditioning on mutual information (than on entropy). In particular,
+we have
+\begin{align}
+I_R(\X;\Y)
+ &  = \lim_{n \to \infty} \frac{I(X_1,\dots,X_n;Y_1,\dots,Y_n)}{n}          \\
+ &  = \lim_{n \to \infty} \frac{H(X_1,\dots,X_n) + H(Y_1,\dots,Y_n)
+                                    - H(x_1,\dots,X_n,Y_1,\dots,Y_n)}{n}    \\
+\label{eq:MIR_est_form}
+ &  = H_R(\X) + H_R(\Y) - H_R(\X,\Y)                                        \\
+ &  = \lim_{n \to \infty} H(X_n | \{X_i\}_{i = n - \beta}^{n - 1})
+                    + H(Y_n | \{Y_i\}_{i = n - \beta}^{n - 1})
+                    - H(X_n,Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})    \\
+\notag
+ &  = \lim_{n \to \infty} H(X_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})
+                        + H(Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})
+                        + T_{Y \to X} + T_{X \to Y}    \\
+\label{ineq:tr_entropy}
+ &      \hspace{48.5mm} - H(X_n,Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1}) \\
+\notag
+ &  \geq \lim_{n \to \infty} H(X_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})
+                    + H(Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})    \\
+\label{ineq:cond_bnd}
+ &      \hspace{48.5mm} - H(X_n,Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1}) \\
+ & = \lim_{n \to \infty} I(X_n; Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})
+\end{align}
+where the inequality in (\ref{ineq:cond_bnd}) is due to the fact that the
+transfer entropy is non-negative, with equality precisely when
+$X_n \ind \{Y_i\}_{i = n - \beta}^{n - 1} | \{X_i\}_{i = n - \beta}^{n - 1}$
+and
+$Y_n \ind \{X_i\}_{i = n - \beta}^{n - 1} | \{Y_i\}_{i = n - \beta}^{n - 1}$
+(i.e., when $T_{Y \to X} = T_{X \to Y} = 0$, or, equivalently, when information
+is exchanged between $\X$ and $\Y$ only during simultaneous observations, with
+not lag effect). Fortunately, we can use the estimators derived above for the
+entropy rate to estimate $H_R(\X),H_R(\Y)$, and $H_R(\X,\Y)$ in
+(\ref{eq:MIR_est_form}), giving the estimator
+\[\hat I_R(\X,\Y) = \hat H_R(\X) + \hat H_R(\Y) - \hat H_R(\X,\Y).\]
+
+\subsection{Information Rate and Transfer Entropy}
+Notice that line (\ref{ineq:tr_entropy}) of the above included the transfer
+entropies $T_{Y \to X}$ and $T_{X \to Y}$. In particular, we see that MIR
+decomposes into
+\[I_R(\X;\Y)
+    = \lim_{n \to \infty} T_{Y \to X} + T_{X \to Y}
+                    + I(X_n; Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1}).\]
+Intuitively, the average information shared between $\X$ and $\Y$ can be
+decomposed into the (directed) lag effects of $Y$ on $X$ ($T_{Y \to X}$), the
+(directed) lag effects of $Y$ on $X$ ($T_{X \to Y}$), and the (undirected)
+simultaneous shared information of $X$ and $Y$ after accounting for history
+($I(X_n; Y_n | \{(X_i,Y_i)\}_{i = n - \beta}^{n - 1})$). Contrasted from
+transfer entropy, MIR is thus a coarser, more holistic (undirected) measure of
+shared information between two time series.
+
+\section{Derivation of the first-order von Mises Estimator for Transfer
+Entropy}
+As noted in (\ref{eq:MIR_est_form}), we can write the MIR in terms of
+conditional entropies, and, similarly, we can write transfer entropy as
+\begin{align*}
+T_{X \to Y}
+ &  = I(Y_n; \{X_i\}_{i = i - \beta}^{n - 1}
+                                        | \{Y_i\}_{i = i - \beta}^{n - 1}) \\
+ &  = H(Y_n | \{Y_i\}_{i = i - \beta}^{n - 1})
+    + H(\{X_i\}_{i = i - \beta}^{n - 1} | \{Y_i\}_{i = i - \beta}^{n - 1})
+    - H(Y_n,\{X_i\}_{i = i - \beta}^{n - 1} | \{Y_i\}_{i = i - \beta}^{n - 1})
+\end{align*}
+
+\subsection{Derivation of the first-order von Mises Estimator for Conditional
+Entropy}
+Consider a random pair $(X,Y)$ distributed on $\X \times \Y$ with joint density
+$p$, and let $q(y) = \int_\X p(x,y), dx$ denotes the marginal distribution of
+$Y$. Then,
+\[H(X | Y)
+    = -\int_\Y q(y) \int_\X \frac{p(x,y)}{q(y)} \log\frac{p(x,y)}{q(y)}\,dx\,dy
+    = \int_{\X \times \Y} p(x,y) \log \frac{q(y)}{p(x,y)} \, d(x,y).\]
+Let $\hat p$ and $\hat q$ be estimates of $p$ and $q$, respectively. Note that
+\begin{align*}
+ & \int_{\X \times \Y} \left( \frac{d}{d\hat p(x,y)} p(x,y)
+                                    \log \frac{\hat q(y)}{\hat p(x,y)} \right)
+                                            (p(x,y) - \hat p(x,y))\, d(x,y) \\
+ &  = \int_{\X \times \Y} \left( \log \frac{\hat q(y)}{\hat p(x,y)} - 1 \right)
+    \left( p(x,y) - \hat p(x,y) \right) \, d(x,y) \\
+ &  = \int_{\X \times \Y} \left( p(x,y) - \hat p(x,y) \right)
+                            \log \frac{\hat q(y)}{\hat p(x,y)} \, d(x,y)
+    = \E\left[ \log \frac{\hat q(y)}{\hat p(x,y)} \right] - H(\hat p, \hat q),
+\end{align*}
+and that
+\begin{align*}
+\int_{\X \times \Y} \left( \frac{d}{dq(y)} \hat p(x,y)
+                                    \log \frac{\hat q(y)}{\hat p(x,y)} \right)
+                                            (q(y) - \hat q(y)) \, d(x,y)
+ &  = \int_{\X \times \Y} \frac{\hat p(x,y)}{\hat q(y)}
+                                            (q(y) - \hat q(y)) \, d(x,y)    \\
+ &  = \int_\Y q(y) - \hat q(y) \, dy
+    = 0.
+\end{align*}
+Thus, von Mises expansion gives
+\begin{align*}
+H(p,q)
+ &  = H(\hat p, \hat q)
+    + \int_{\X \times \Y} \left( \frac{d}{dp(x,y)} \hat p(x,y)
+        \log \frac{\hat q(y)}{\hat p(x,y)} \right) (p(x,y) - \hat p(x,y)) \\
+ &  + \left( \frac{d}{dq(y)} \hat p(x,y)
+            \log \frac{\hat q(y)}{\hat p(x,y)} \right) (q(y) - \hat q(y)) \, d(x,y)
+    + O(\|p - \hat p\|_2^2 + \|q - \hat q\|_2^2)    \\
+ &  = \E_{(X,Y) \sim p} \left[ \log \frac{\hat q(Y)}{\hat p(X,Y)} \right]
+    + O(\|p - \hat p\|_2^2 + \|q - \hat q\|_2^2).
+\end{align*}
+Thus, using data points $\{(X_i,Y_i)\}_{i = 1}^{2n}$, the first-order von Mises
+estimator for $H(X | Y)$ is thus
+\[\hat H(X | Y)
+    = \frac{1}{n} \sum_{i = n + 1}^{2n}
+                                \log \frac{\hat q(Y_i)}{\hat p(X_i,Y_i)}\]
+where $\hat p$ and $\hat q$ are estimated using $\{(X_i,Y_i)\}_{i = 1}^{2n}$.
+
+\section{Future Work}
+\begin{enumerate}
+\item Use error bounds in \cite{fan03timeSeries} for kernel density estimators
+under mixing assumptions to derive bounds for plugin and/or von Mises
+estimators
+\item Implement and test the estimators discussed above.
+\begin{enumerate}
+\item Test on synthetic data where the true interactions between time series
+are known. Compare the estimators to estimators designed for IID data.
+\item Test on an fMRI dataset used in \cite{clute14OHBM}, for which we have an
+expert reference on which sets of voxels should be related.
+\end{enumerate}
+\item Other possible approaches to consider:
+\begin{enumerate}
+\item A mutual information based bootstrap test for independenece of
+time-series described in \cite{wu09bootstrapMI}.
+\item Time series adaptations of the several independence tests described in
+\citep{gretton10nonparametricIndependence}.
+\item Other conditional dependence measures (in principle, any conditional
+dependence measure can play the role of conditional mutual information in
+transfer entropy), e.g., \citep{bergsma10nonparametric} and
+\citep{zhang12kernel}.
+\end{enumerate}
+\item Consider other estimation approaches for information theoretical
+functionals such as those in \cite{moon14ensemble} and
+\cite{singh14densityfunc}.
+\item Thomas and Cover page 111 suggests a way of estimating the entropy rate
+of non-stationary distributions by estimating converging upper and lower
+bounds.
+\end{enumerate}
+
+\subsubsection*{References}
+\setlength{\bibsep}{0.0pt}
+{
+%\small
+\bibliographystyle{plain}
+\bibliography{biblio}
+}
+
+\end{document}

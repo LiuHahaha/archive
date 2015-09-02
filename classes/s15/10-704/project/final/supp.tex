@@ -1,0 +1,206 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{nips14submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+
+% For bibliography
+\usepackage[round]{natbib}
+\renewcommand{\bibsection}{}
+
+\title{Supplementary Materials:
+Information Theoretic Estimators for Dependence in Time Series}
+
+\author{
+Shashank Singh \\
+Statistics \& Machine Learning Departments \\
+Carnegie Mellon University \\
+Pittsburgh, PA 15213 \\
+\texttt{sss1@andrew.cmu.edu}
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\tilde}{\widetilde}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\ind{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+% \nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+\section{Convergence Rates}
+\label{sec:theory}
+\subsection{Density estimation for non-IID data}
+Most of the estimators discussed above rely on first estimating certain
+stationary probability densities functions of the variables involved. A natural
+first question to ask when studying these quantities is how well we can
+estimate the stationary distributions of time series data. In fact, under
+sufficient mixing conditions and boundedness assumptions on the domain of the
+time series, we can show uniform convergence rates as follows:
+
+{\bf Theorem 5.3 of \citet{fan03timeSeries}:} Suppose the
+$\alpha$-mixing coefficient of $\X = \{X_i\}_{i = 1}^\infty$ satisfies
+$\alpha(\ell) \leq c\ell^{-\beta}$ for some $c > 0, \beta > 15/4$ and suppose
+the stationary density $p$ of $\X$ has support in the interval $[a,b]$, then,
+for $h \asymp \left( \frac{\log T}{T} \right)^{\frac{6}{2\beta + 5}}$ and a
+Lipschitz continuous kernel $K$,
+\[\|\hat p_h - p\|_\infty
+    \in O_P\left( \left( \frac{\log T}{T} \right)^{\frac{2\beta - 1}{4\beta + 10}} \right),\]
+where $\hat p_h : \mathscr{X} \to [0,\infty)$ denotes the kernel density
+estimate trained on $T$ samples, with kernel $K$ and bandwidth $h$. Matching
+lower bounds are also known.
+
+For continuous data, the $\alpha$-mixing condition above is fairly weak and
+holds for many standard time series models (including, e.g., ARMA models). The
+boundedness of the domain is typically a necessary assumption for estimating
+information theoretic functionals of continuous data, and so it is not
+problematic either.
+
+\subsection{Consequences for estimating information theoretic functionals}
+
+An easy corollary relevant for our problem is the following:
+
+{\bf Corollary:} Suppose $\X, K$, and $h$ satisfy the conditions of Theorem 5.3
+above, and suppose, in addition, that the density $f$ is lower bounded (i.e.,
+$0 < \kappa := \inf_{x \in [a,b]} f(x)$). Then,
+\[|\hat H(\X) - H(\X)|
+    \in O_P\left( \left( \frac{\log T}{T} \right)^{\frac{2\beta - 1}{4\beta + 10}} \right),\]
+where $\hat H(\X)$ is the plug-in estimator
+$\hat H(\X) = -\int_a^b \tilde p_h(x) \log \tilde p_h(x) \, dx$ using the
+clipped density estimate $\tilde p_h(x) = \max\{\kappa, \hat p_h(x)\}$.
+\footnote{Note that we can avoid having to compute the integral here by
+splitting the data, using part to estimate the density and the remainder to
+compute the sample mean of the logarithm of the density estimate, without
+negatively affecting the convergence rates.}
+
+\emph{Proof:} By Theorem 5.3 and the definition of $O_P$, it suffices to bound
+$|\hat H(\X) - H(\X)|$ by some constant multiple of $\|\hat p_h - p\|_\infty$.
+Note that, for $x > \kappa$,
+\[\left| \frac{d}{dx} x \log x \right|
+                                = |1 + \log x| \leq 1 + |\log \kappa|,\]
+and so, by the Mean Value Theorem,
+\begin{align*}
+|H(\X) - \hat H(\X)|
+ &  = \left| \int_a^b p(x) \log p(x) - \tilde p_h(x) \log \tilde p_h(x) \, dx \right|   \\
+ &  \leq \int_a^b |\|p - \tilde p_h(x)\|_\infty (1 + |\log \kappa|)| \, dx  \\
+ &  = \|p - \tilde p_h(x)\|_\infty (1 + |\log \kappa|) (b - a)  \\
+ &  = \|p - \hat p_h(x)\|_\infty (1 + |\log \kappa|) (b - a),
+\end{align*}
+since clipping improves the estimator point-wise. \qed
+
+A slight generalization of Theorem 5.3 above to multivariate time series (with,
+presumably, a slower rate depending exponentially on the number of variables)
+likely also holds. This would be sufficient to derive convergence rates for
+plug-in or von Mises estimators of information theoretic functionals involving
+multiple variables, such as conditional entropies. Since estimating both
+transfer entropy and the mutual information rate can be reduced to estimating
+conditional entropies, following this line of thought, it should be possible to
+derive convergence rates for plug-in (and von Mises) estimators of these
+quantities.
+
+
+\section{Derivation of the first-order von Mises estimators}
+\label{sec:von_mises}
+We use estimators based on the von Mises expansion as described in
+\cite{kandasamy2014influence}, although other approaches are also possible.
+
+As noted in equation (7), we can write the MIR in terms of
+conditional entropies, and, similarly, we can write transfer entropy as
+\begin{align*}
+T_{\X \to \Y}^n
+ &  = I(Y_n; \{X_i\}_{i = i - \beta}^{n - 1}
+                                        | \{Y_i\}_{i = i - \beta}^{n - 1}) \\
+ &  = H(Y_n | \{Y_i\}_{i = i - \beta}^{n - 1})
+    + H(\{X_i\}_{i = i - \beta}^{n - 1} | \{Y_i\}_{i = i - \beta}^{n - 1})
+    - H(Y_n,\{X_i\}_{i = i - \beta}^{n - 1} | \{Y_i\}_{i = i - \beta}^{n - 1})
+\end{align*}
+
+Thus, estimation of both transfer entropy and MIR reduces to estimating
+conditional entropies, for which we derive an estimator below.
+
+\subsection{Derivation of the first-order von Mises Estimator for Conditional
+Entropy}
+Consider a random pair $(X,Y)$ distributed on $\X \times \Y$ with joint density
+$p$, and let $q(y) = \int_\X p(x,y), dx$ denotes the marginal distribution of
+$Y$. Then,
+\[H(X | Y)
+    = -\int_\Y q(y) \int_\X \frac{p(x,y)}{q(y)} \log\frac{p(x,y)}{q(y)}\,dx\,dy
+    = \int_{\X \times \Y} p(x,y) \log \frac{q(y)}{p(x,y)} \, d(x,y).\]
+Let $\hat p$ and $\hat q$ be estimates of $p$ and $q$, respectively. Note that
+\begin{align*}
+ & \int_{\X \times \Y} \left( \frac{d}{d\hat p(x,y)} p(x,y)
+                                    \log \frac{\hat q(y)}{\hat p(x,y)} \right)
+                                            (p(x,y) - \hat p(x,y))\, d(x,y) \\
+ &  = \int_{\X \times \Y} \left( \log \frac{\hat q(y)}{\hat p(x,y)} - 1 \right)
+    \left( p(x,y) - \hat p(x,y) \right) \, d(x,y) \\
+ &  = \int_{\X \times \Y} \left( p(x,y) - \hat p(x,y) \right)
+                            \log \frac{\hat q(y)}{\hat p(x,y)} \, d(x,y)
+    = \E\left[ \log \frac{\hat q(y)}{\hat p(x,y)} \right] - H(\hat p, \hat q),
+\end{align*}
+and that
+\begin{align*}
+\int_{\X \times \Y} \left( \frac{d}{dq(y)} \hat p(x,y)
+                                    \log \frac{\hat q(y)}{\hat p(x,y)} \right)
+                                            (q(y) - \hat q(y)) \, d(x,y)
+ &  = \int_{\X \times \Y} \frac{\hat p(x,y)}{\hat q(y)}
+                                            (q(y) - \hat q(y)) \, d(x,y)    \\
+ &  = \int_\Y q(y) - \hat q(y) \, dy
+    = 0.
+\end{align*}
+Thus, von Mises expansion gives
+\begin{align*}
+H(p,q)
+ &  = H(\hat p, \hat q)
+    + \int_{\X \times \Y} \left( \frac{d}{dp(x,y)} \hat p(x,y)
+        \log \frac{\hat q(y)}{\hat p(x,y)} \right) (p(x,y) - \hat p(x,y)) \\
+ &  + \left( \frac{d}{dq(y)} \hat p(x,y)
+            \log \frac{\hat q(y)}{\hat p(x,y)} \right) (q(y) - \hat q(y)) \, d(x,y)
+    + O(\|p - \hat p\|_2^2 + \|q - \hat q\|_2^2)    \\
+ &  = \E_{(X,Y) \sim p} \left[ \log \frac{\hat q(Y)}{\hat p(X,Y)} \right]
+    + O(\|p - \hat p\|_2^2 + \|q - \hat q\|_2^2).
+\end{align*}
+Thus, using data points $\{(X_i,Y_i)\}_{i = 1}^{2n}$, the first-order von Mises
+estimator for $H(X | Y)$ is thus
+\[\hat H(X | Y)
+    = \frac{1}{n} \sum_{i = n + 1}^{2n}
+                                \log \frac{\hat q(Y_i)}{\hat p(X_i,Y_i)}\]
+where $\hat p$ and $\hat q$ are estimated using $\{(X_i,Y_i)\}_{i = 1}^{2n}$.
+
+
+\subsubsection*{References}
+\setlength{\bibsep}{0.0pt}
+{
+%\small
+\bibliographystyle{plainnat}
+\bibliography{biblio}
+}
+
+\end{document}

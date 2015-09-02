@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{color}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+\newcommand{\myclass}{10-704 Information Processing and Learning}
+\newcommand{\myhwnum}{1}
+\newcommand{\duedate}{Thursday, February 5, 2015}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\area}{\operatorname{area}}
+\newcommand{\vspan}{\operatorname{span}}
+\newcommand{\Gr}{\operatorname{Gr}} % graph of a function
+\renewcommand{\sp}{\operatorname{span}} % span of a set
+\newcommand{\sminus}{\backslash}
+\newcommand{\E}{\mathbb{E}} % expected value
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pr}{\mathbb{P}} % probability
+% \newcommand{\Var}{\operatorname{Var}} % variance
+\newcommand{\Var}{\mathbb{V}} % variance
+\newcommand{\Cov}{\operatorname{Cov}} % covariance
+\newcommand{\N}{\mathbb{N}} % natural numbers
+\newcommand{\Q}{\mathbb{Q}} % rational numbers
+\newcommand{\R}{\mathbb{R}} % real numbers
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}} % compact functions
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\K}{\mathbb{K}} % underlying field of a linear space
+\newcommand{\Ran}{\mathcal{R}} % range of a linear operator
+\newcommand{\Nul}{\mathcal{N}} % null-space of a linear operator
+\renewcommand{\L}{\mathcal{L}} % bounded linear functions
+\newcommand{\pow}[1]{\mathcal{P}\left(#1\right)} % power set of #1
+\newcommand{\e}{\varepsilon} % \varepsilon
+\newcommand{\wto}{\rightharpoonup} % weak convergence
+\newcommand{\wsto}{\stackrel{*}{\rightharpoonup}} % weak-* convergence
+\renewcommand{\P}{\mathbb{P}}   % probability
+\newcommand{\ol}{\overline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+{\Large Homework \myhwnum} \\
+Name: \myname \\
+\myclass \\
+Due: \duedate
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item We first characterize the probability distribution of the deck, and then
+plug this into the definition of entropy.
+\begin{itemize}
+\item With probability $1/n$ the deck does not change (the card is inserted
+into its original position).
+\item There are $(n - 1)$ arrangements of the deck in which two adjacent cards
+in the deck are switched; each of these happens with probability
+$1/n^2 + 1/n^2 = 2/n^2$ (card $(i - 1)$ moves to position $i$ or vice versa).
+\item There are $2(n - 2)$ arrangements from which it can be determined that
+either $1$ or $n$ was the card moved; each occurs with probability $1/n^2$
+(i.e., card $1$ was placed in positions $3,\dots,n$ or card $n$ was placed in
+positions $1,\dots,(n - 2)$).
+\item Finally, there are $(n - 2)(n - 3)$ arrangements from which it can be 
+determined which one of the cards $2,3,\dots,(n - 1)$ was moved; each occurs
+with probability $\frac{1}{n^2}$ (card $i$ was inserted into a position of
+distance at least $2$ from $i$).
+\end{itemize}
+
+Thus, the entropy is
+\begin{align*}
+ & \sum p(x) \log_2 \frac{1}{p(x)}  \\
+ &  = \frac{1}{n} \log_2 n + \frac{2(n - 1)}{n^2} \log_2 (n^2/2)
+    + \frac{2(n - 2)}{n^2} \log_2 n^2 + \frac{(n - 2)(n - 3)}{n^2} \log_2 n^2\\
+ &  = \frac{1}{n^2} \left(
+                        \left(
+                            n + 4(n - 1) + 4(n - 2) + 2(n - 2)(n - 3)
+                        \right) \log_2 n + 2(n - 1) \log_2 2
+                    \right) \\
+ &  = \mbox{\fbox{$\displaystyle
+        \frac{2n - 1}{n} \log_2 n + \frac{2n - 2}{n^2}$.}}
+\end{align*}
+
+\item
+\begin{enumerate}
+\item Because entropy is nonnegative, by the chain rule,
+\[H(X,Y|Z)
+    = H(X|Z) + H(Y|X,Z)
+    \geq H(X|Z),
+\]
+with equality if and only if $Y$ is a function of $(X,Z)$. \qed
+
+\item Because conditioning cannot increase entropy, $H(Z|X,Y) \leq H(Z|X)$, and
+so
+\[I(X,Y;Z)
+    = H(Z) - H(Z|X,Y)
+    \geq H(Z) - H(Z|X)
+    = I(X;Z),
+\]
+with equality if and only if $Z$ is conditionally independent of $Y$ given $X$.
+\qed
+
+\item Because conditioning cannot increase entropy, $H(Z|X,Y) \leq H(Z|X)$, and
+so
+\[H(X,Y,Z) - H(X,Y)
+    = H(Z|X,Y)
+    \leq H(Z|X)
+    = H(X,Z) - H(X),
+\]
+with equality if and only if $Z$ is conditionally independent of $Y$ given $X$.
+\qed
+\end{enumerate}
+
+\item Define $Z := 1_{\{X \geq \}}$. Since $Z$ is a function of $X$ and
+$Z \sim \text{Bernoulli}(P_e)$,
+\[H(X) = H(X,Z) = H(Z) + H(X|Z) \leq H(\text{Bernoulli}(P_e)) + P_e \log(m - 1)
+\]
+because $H(X|Z)$ is maximized when $p_2 = \cdots = p_m$. Since the binary
+entropy satisfies $H(\text{Bernoulli}(P_e)) \leq 1$, this can be weakened to
+give the simpler bound:
+\[\frac{H(X) - 1}{\log_2(m - 1)} \leq P_e.\]
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Suppose $X$ and $Y$ are independently uniformly distributed on $\{-1,1\}$
+and let $Z := XY$. It is easy to see that $X$ and $Z$ are independent, and
+hence $I(X;Y) = I(X;Z) = 0 = I(X;\emptyset)$. On the other hand, $X$ is a
+function of $Y,Z$ and hence $I(X;Y,Z) = H(X) = 1$. Since
+$I(X;Y,Z) - I(X;Y) = 1 \geq 0 = I(X;Z) - I(X;\emptyset)$ the function in
+question is not submodular. \qed
+
+\item Note that a set function $F$ is submodular if and only if
+$F(A \cup \{x\}) - F(A)$ is non-decreasing in $A$ for all $x \notin A$. Under
+the Naive Bayes assumption, for any subset $S \subseteq [p] := \{1,\dots,p\}$
+and any $i \in [p] \sminus S$,
+\begin{align*}
+f(S \cup \{i\}) - f(S)
+ &  = H(X_s, s \in S \cup \{i\}) - H(X_s, s \in S \cup \{i\} | Z)   \\
+ &  \qquad - \left( H(X_s, s \in S) - H(X_s, s \in S | Z) \right)   \\
+ &  = H(X_s, s \in S \cup \{i\}) - \sum_{s \in S \cup \{i\}} H(X_s | Z) \\
+ &  \qquad - \left( H(X_s, s \in S) - \sum_{s \in S} H(X_s | Z) \right) \\
+ &  = H(X_s, s \in S \cup \{i\}) - H(X_s, s \in S) + H(X_i | Z).
+\end{align*}
+Thus, because entropy is submodular, $f$ is also submodular. This justifies
+maximizing it greedily over $[p]$.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item Since each $N_i \sim \text{Geometric}(p_i)$, expanding the expecation as
+a summation,
+\begin{align*}
+\E \left[ \hat H_1 \right]
+    = \sum_{i = 1}^k \E\left[ \frac{1_{\{N_i \geq 2\}}}{N_i - 1} \right]
+ &  = \sum_{i = 1}^k \sum_{\ell = 2}^\infty \frac{1}{\ell - 1}\pr[N_i = \ell]\\
+ &  = \sum_{i = 1}^k \sum_{\ell = 2}^\infty
+                                    \frac{(1 - p_i)^{\ell - 1}p_i}{\ell - 1} \\
+ &  = \sum_{i = 1}^k p_i \sum_{\ell = 1}^\infty \frac{(1 - p_i)^{\ell}}{\ell}
+    = -\sum_{i = 1}^k p_i \log p_i
+    = H(p),
+\end{align*}
+where we used the Taylor series of the natural logarithm:
+$\log(x) = -\sum_{j = 1}^\infty (1 - x)^j/j$. \qed
+
+\item Let $N$ denote the smallest $j \geq 2$ for which $X_j = X_1$, and
+define $\hat H_2 := h_N$. Then, since $N_i \sim \text{Geometric}(p_i)$,
+expanding the expecation as a summation,
+\begin{align*}
+\E\left[ \hat H_2 \right]
+    = \sum_{i = 1}^k \E\left[ h_N | X_1 = C_i \right] \pr[X_1 = C_i]
+ &  = \sum_{i = 1}^k p_i \sum_{\ell = 1}^\infty
+                                            h_\ell \pr[N = \ell | X_1 = C_i]\\
+ &  = \sum_{i = 1}^k p_i^2 \sum_{\ell = 1}^\infty h_\ell (1 - p_i)^\ell
+    = -\sum_{i = 1}^k p_i \log p_i
+    = H(p),
+\end{align*}
+where we used the identity $-\log(x) = x\sum_{i = 1}^\infty h_i (1 - x)^i$.
+\qed
+
+\end{enumerate}
+
+\item Suppose we first estimate $p$ and $q$ by density estimates $\hat p$ and
+$\hat q$, using the second halves of each sample ($\{X_i\}_{i = n + 1}^{2n}$
+and $\{Y_i\}_{i = n + 1}^{2n}$, respectively). Von-Mises expansion gives
+\begin{align*}
+D(p||q)
+ &  = D(\hat p||\hat q)
+    + \int_\X \left( \log\left( \frac{\hat p(x)}{\hat q(x)} \right) + 1 \right)
+            \left( p(x) - \hat p(x) \right) \, dx
+    + \int_\X \left( -\frac{\hat p(x)}{\hat q(x)} \right)
+                \left( q(x) - \hat q(x) \right) \, dx \\
+ &  + O\left( \|p - \hat p\|_2^2
+                + \|q - \hat q\|_2^2
+                + \langle p - \hat p, q - \hat q \rangle
+        \right) \\
+ &  = D(\hat p||\hat q)
+    + \E_{X \sim p}\left[
+            \log \left( \frac{\hat p(x)}{\hat q(x)} \right)
+      \right]
+    - D(\hat p||\hat q) \, dx
+    + 1 - \E_{X \sim q}\left[ \frac{\hat p(x)}{\hat q(x)} \right] \\
+ &  + O\left( \|p - \hat p\|_2^2
+                + \|q - \hat q\|_2^2
+                + \|p - \hat p\|_2\|q - \hat q\|_2
+        \right) \\
+ &  = \E_{X \sim p}\left[
+            \log \left( \frac{\hat p(x)}{\hat q(x)} \right)
+      \right]
+    + 1 - \E_{X \sim q}\left[ \frac{\hat p(x)}{\hat q(x)} \right] \\
+ &  + O\left( \|p - \hat p\|_2^2
+                + \|q - \hat q\|_2^2
+                + \|p - \hat p\|_2\|q - \hat q\|_2
+        \right).
+\end{align*}
+We estimate then use the first half of the sample to estimate
+\[\E_{X \sim p}\left[ \log \left( \frac{\hat p(x)}{\hat q(x)} \right) \right]
+    \quad \mbox{ by } \quad
+    \frac{1}{n} \sum_{i = 1}^n
+                        \log \left( \frac{\hat p(X_i)}{\hat q(X_i)} \right)
+\quad \mbox{ and } \quad
+\E_{X \sim q}\left[ \frac{\hat p(x)}{\hat q(x)} \right]
+    \quad \mbox{ by } \quad
+    \frac{1}{n} \sum_{i = 1}^n \frac{\hat p(Y_i)}{\hat q(Y_i)},\]
+giving our final estimator:
+\[\mbox{\fbox{$\displaystyle \hat D(p||q)
+    = 1
+    + \frac{1}{n} \sum_{i = 1}^n
+            \log \left( \frac{\hat p(X_i)}{\hat q(X_i)} \right)
+            - \frac{\hat p(Y_i)}{\hat q(Y_i)}$.}}
+\]
+\end{enumerate}
+\end{document}

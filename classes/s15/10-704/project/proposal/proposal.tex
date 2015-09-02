@@ -1,0 +1,130 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{nips14submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+
+% For bibliography
+\usepackage{natbib}
+\renewcommand{\bibsection}{}
+
+\title{Information Theoretical Estimators for Time Series}
+
+\author{
+Shashank Singh \\
+Statistics \& Machine Learning Departments \\
+Carnegie Mellon University \\
+Pittsburgh, PA 15213 \\
+\texttt{sss1@andrew.cmu.edu}
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\vx}{\vec{x}}                           % vector x
+\newcommand{\vy}{\vec{y}}                           % vector y
+\newcommand{\vz}{\vec{z}}                           % vector z
+\newcommand{\vv}{\vec{v}}                           % vector v
+\newcommand{\vu}{\vec{u}}                           % vector u
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\C}{\mathcal{C}}                        % center region of [0,1]^d
+\newcommand{\B}{\mathcal{B}}                        % border region of [0,1]^d
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\vspace{-5mm}
+
+\maketitle
+
+\vspace{-5mm}
+
+Information Theoretical Functionals (ITFs) such as entropy, mutual information,
+divergence, and their conditional versions, are important nonparametric
+measures of variation, dependence, and distance between random variables. Over
+the past few years, much work as gone into designing and characterizing
+estimators for ITFs, using IID samples from each of the relevant variables.
+
+However, many data sources, such as neurophysiological, economic, and
+environmental data, consist of time series, where samples of each variable are
+not independent. Often we would like to perform analyses for time series
+similar to those for IID data. For example, to study functional connectivity in
+fMRI data, it might be desirable to learn a graphical model over voxels via the
+PC algorithm. Thus, the broad {\bf goal of our project} is to understand how
+methods using ITFs and their estimators can be adapted for time series data.
+A few obvious approaches might be to:
+\begin{enumerate}
+\item model the time series data as IID, and use ITFs and their estimators as
+usual.
+\item attempt to decorrelate the time series, and then use ITFs and their
+estimators as usual.
+\item propose new ITFs accounting for time series dependence to capture
+properties we want.
+\end{enumerate}
+
+Approach 1 will likely perform poorly; for example, mutual information
+estimators designed for IID data will be heavily biased when applied to time
+series because they fail to account for autocorrelation. Approach 2 attempts to
+correct for this, and is {\bf one the ideas we propose} to explore.
+
+An example of Approach 3 that has been studied previously is the notion of 
+transfer entropy (actually a case of conditional mutual information), defined
+for general time series $\{Y_i\}_{i = 1}^n, \{Y_i\}_{i = 1}^n$ as
+\[T_{X \to Y}
+    = H(Y_n | \{Y_i\}_{i = 1}^{n - 1}) - H(Y_n | \{X_i\}_{i = 1}^{n - 1}, \{Y_i\}_{i = 1}^{n - 1})
+    = I(Y_t; \{X_i\}_{i = 1}^{n - 1} | \{Y_i\}_{i = 1}^{n - 1}).
+\]
+Transfer entropy, the mutual information between the last point of $Y$ and the
+previous values of $X$ given the previous values of $X$, roughly measures the
+predictive power of $X$ on $Y$ after accounting for autocorrelation. Thus,
+this can be used as a dependence measure among time series. On the other hand,
+the dimension of variables involved in transfer entropy increases with the
+length of the time series, making estimation difficult without some sort of
+independence (e.g., Markov or mixing) assumptions. Thus, {\bf we also propose}
+to study the problem of estimating transfer entropy, and perhaps other similar
+ITFs designed for time series, under such assumptions 
+
+We intend to study these approaches both {\bf theoretically}, using techniques
+such as those in \cite{kandasamy2014influence}, \cite{moon14ensemble}, and
+\cite{singh14densityfunc}, and {\bf empirically}, using synthetic data as well 
+as an fMRI dataset used in \cite{Clute14OHBM}.
+
+\section{Ideas}
+
+Another possibility might be to generalize the notion of cross-correlation to a
+notion of cross-information, which would\dots This wouldn't share the
+computational benefits of cross-correlation, but\dots
+
+\subsubsection*{References}
+\setlength{\bibsep}{0.0pt}
+{
+%\small
+\bibliographystyle{plain}
+\bibliography{biblio}
+}
+
+\end{document}

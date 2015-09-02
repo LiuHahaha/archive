@@ -1,0 +1,403 @@
+\documentclass{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+
+% For figures
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+\usepackage{amsmath,amssymb}
+
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\D}{\mathcal{D}}                        % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\renewcommand{\d}{\delta}                           % \delta
+\newcommand{\X}{\mathcal{X}}                        % X domain
+\newcommand{\Y}{\mathcal{Y}}                        % Y domain
+\newcommand{\Z}{\mathcal{Z}}                        % Z domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\V}{\mathbb{V}}                         % variance
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\supp}{\operatorname{supp}}             % support operator
+\newcommand{\tr}{\operatorname{tr}}                 % trace operator
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}
+\newcommand{\Pds}{\mathcal{P}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}   % argmin
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}   % argmax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{natbib}
+\usepackage[disable]{todonotes}
+
+\begin{document}
+\begin{center}
+{\bf\Large Notes on 10-704}\\
+Shashank Singh\\
+sss1@andrew.cmu.edu\\
+\end{center}
+
+\section{Lecture 1: Introduction to Information Theory I}
+I missed this lecture.
+
+\section{Lecture 2: Introduction to Information Theory II: Basic Inequalities
+and Submodularity}
+\subsection{Inequalities}
+\begin{itemize}
+\item Chain Rule: $H(X,Y) = H(X) + H(Y|X)$
+\item $H(X), D(p||q), I(X;Y) \geq 0$. (Prove for $D(p||q)$ by Jensen's)
+\item Data Processing Inequality: If $X \perp Z | Y$ (i.e., $X \to Y \to Z$ is
+a Markov chain), then $I(X;Y) \geq I(X;Z)$. (\emph{Proof:} Since
+$I(X;Z|Y) = 0$, by the Chain Rule, $I(X;Y) = I(X;Z) + I(X;Y|Z) \geq I(X;Z)$.)
+\item Fano's Inequality: Suppose we use a function $g$ to estimate $X$ taking
+values in $\X$ from $Y$ as $\hat X = g(Y)$. Then, if
+$p_e := \pr[\hat X \neq X]$ is the error proability of the estimator,
+
+\[p_e
+    \geq \frac{H(X|Y) - h(p_e)}{\log|\X|}
+    \geq \frac{H(X|Y) - 1}{\log|\X|}.\]
+\end{itemize}
+\subsection{Submodularity}
+\begin{itemize}
+\item Submodularity: $f : 2^\Omega \to \R$ is \emph{submodular} iff, for all
+$X \subseteq Y \subseteq \Omega$, $x \in \Omega \sminus Y$,
+\[f(X \cup \{x\}) - f(X) \geq f(Y \cup \{x\}) - f(Y).\]
+\begin{itemize}
+\item Suppose $X$ is an R.V. with values in $\X$. Then, $f : 2^\X \to \R$
+defined by $f(S) = H(X | X \in S)$ is submodular.
+\item If $f$ is submodular, then the greedy algorithm for optimizing $f$ is
+a $(1 - 1/e)$-approximation.
+\end{itemize}
+\end{itemize}
+
+\section{Lecture 3: Submodularity in Information Theory}
+\subsection{Submodularity Cont.}
+\begin{itemize}
+\item Entropy is submodular:
+\begin{itemize}
+\item If $X \subseteq Y \subseteq \Omega$, then
+\[H(X,y) - H(X) = H(y|X) \geq H(y|Y) = H(Y,y) - H(Y).\]
+\end{itemize}
+\item Since $I(X,\Omega) = H(X)$, the function $X \mapsto I(X, \Omega)$ is
+submodular.
+\item Similarly, the function $X \mapsto I(X,\Omega \sminus X)$ is submodular.
+\item {\bf Theorem (Approximately Maximizing Submodular Functions):} Suppose
+$f : \Omega \to \R$ is submodular and non-decreasing, and that
+$f(\emptyset) = 0$. Consider a greedy algorithm, which, in each iteration $i$
+chooses a subset $A_i = A_{i - 1} \cup \{a_i\}$ with $|A_i| = i$ such that
+$a_i = \arg\!\max_x f(A_{i - 1} \cup \{a_i\})$. Then, $\forall k \in \N$,
+\[f(A_k) \geq (1 - 1/e) f(A_{opt}) \quad \mbox{ where }
+A_{opt} := \arg\!\max_{X \subseteq \Omega, |X| = k} f(X).\]
+That is, the greedy algorithm is a $(1 - 1/e)$-approximation algorithm. \\
+
+\emph{Proof:} Since $(1 - 1/k)^k \uparrow 1 - 1/e$, show (by induction) that
+each
+\[f(A_{opt}) - f(A_i) \leq (1 - 1/k)^i f(A_{opt}).\]
+By monotonicity, expanding the telescoping sum, and then applying submodularity
+and the definition of the greedy algorithm,
+\begin{align*}
+f(A_{opt}) - f(A_i)
+    \leq f(A_{opt} \cup \{a_i\}) - f(A_{i - 1})
+ &  = \sum_{j = 1}^m f(A_{i - 1} \cup \{x_1,\dots,x_j\})
+                                - f(A_{i - 1} \cup \{x_1,\dots,x_{j - 1}\}) \\
+ &  = \sum_{j = 1}^m f(A_{i - 1} \cup \{x_j\})
+                                - f(A_{i - 1}\}) \\
+ &  \leq m(f(A_i) - f(A_{i - 1}))
+    \leq k(f(A_i) - f(A_{i - 1})).
+\end{align*}
+where $\{x_1,\dots,x_m\} := A_{opt} \sminus A_{i - 1}$ (and noting $m \leq k$).
+Combining this with the inductive hypothesis gives the desired result. \qed
+\end{itemize}
+\subsection{Applications to ML}
+\begin{itemize}
+\item Sensor Placement Problem: place a set $X$ of sensors in a space $\Omega$
+to maximize the information received
+\begin{itemize}
+\item A simple approach is to maximize $I(X, \Omega) = H(X)$. However, this
+tends to push sensors to the edge of a bounded domain.
+\item A possible fix (due to Guestrin et al.) is to maximize
+$I(X, \Omega \sminus X)$.
+\end{itemize}
+\item Clustering: if $C : \X \to \N$ is the cluster assignment function, then a
+reasonable objective to maximize is $I(X, C)$. Assuming Gaussian cluster
+distributions, this results in a similar, but more robust, clustering objective
+as $k$-means.
+\footnote{In this case, the variables are typically continuous and hence we
+need to introduce the differential entropy, $H(X) = \int p(x) \log p(x) \, dx$,
+where $p$ is the density function of $X$. This is similar to the discrete
+entropy, but has important differences; for example, it can be negative.}
+\begin{itemize}
+\item A possible project idea might be to explore connections between the
+sensor placement problem and $k$-medians clustering.
+\end{itemize}
+\end{itemize}
+
+\section{Estimating Information Theoretical Quantities}
+\begin{itemize}
+\item Applications to to sensor placement and clustering (see previous
+lecture), learning graphical models (e.g., Chow-Liu algorithm), etc.
+\item Discrete Plug-in Estimator:
+\begin{itemize}
+\item For $\hat p_j := \frac1n \sum_{i = 1}^n 1_{X_i = j}$,
+$\hat H_n(X) := -\sum_{j \in \Omega} \hat p_j \log \hat p_j$.
+\item Theorem 1:
+$\E\left[ (\hat H_n(X) - H(X))^2 \right] \in O(n\inv + \ell n^{-2})$, where
+$d := |\supp(p)|$ is the number of possible values of $X$.
+\emph{Proof:} Decompose bias and variance and bound each via a Taylor
+expansion.
+\item A possible project idea might be to find conditions for reducing the
+dependence on dimension pfor estimating multivariate entropy.
+\item Theorem 2: $\sqrt{n}(\hat H(X) - H(X)) \to \mathcal{N}(0,\sigma^2)$ in
+distribution. \emph{Remark:} It should be quite easy to give finite-sample
+confidence intervals via McDiarmid's Inequality (depending on
+$\min_{x \in \Omega} p(x)$).
+\end{itemize}
+\item Also discussed Liu, Lafferty, and Wasserman estimator and von Mises
+estimator.
+\end{itemize}
+
+
+\section{Exam Review}
+\begin{itemize}
+\item Information quantities, properties, and relationships
+\begin{itemize}
+\item Information content, entropy, relative entropy, mutual information,
+joint, conditional, and differential versions
+\item Chain Rule, Gibbs Inequality, Data Processing Inequality, Fano's
+Inequality
+\end{itemize}
+\item Submodularity and Applications
+\begin{itemize}
+\item $(1 - 1/e)$-maximization of submodular set functions via greedy algorithm
+\item Sensor placement ($\max_{X_k \subseteq X,|X_k| = k} H(X_k),
+\max_{X_k \subseteq X,|X_k| = k} I(X_k;X \sminus X_k)$)
+\item Clustering $\max_C I(X;C)$.
+\end{itemize}
+\item Estimating information theoretic quantities and applications
+\begin{itemize}
+\item KDE or KNN plug-in estimators, data-splitting estimators
+\item LP estimator
+\item von Mises estimators
+\item Struture learning in graphical models (Chow-Liu, PC-algorithm)
+\end{itemize}
+\item Maximum entropy and generalized MaxEnt problems
+\begin{itemize}
+\item exponential family and Gibbs distributions (for nonuniform base
+distributions)
+\item Prmal MaxEnt ($\max_p D(p||q) + U(p)$) and Dual MaxEnt (regularized
+MLE in exponential family)
+\item MaxEnt stochastic process (GPs for mean and autocorrelation constraints)
+\end{itemize}
+\item Source coding
+\begin{itemize}
+\item nonsingular, (block) uniquely decodable, and prefix/instantaneous codes
+\item Shannon code
+\item Kraft-McMillan inequality (for all prefix code lengths $\ell$,
+$\sum_i D^{-\ell_i} \leq 1$)
+\item Optimality of Huffman encoding
+\end{itemize}
+\item ERM and complexity penalized ERM using prefix codes
+\begin{itemize}
+\item By Kraft's inequality,
+$\pr\left[ R(f) \leq \hat R(f) + \e(\delta,f) \right] \geq 1 - \delta$, for all
+$f \in \mathcal{F}$ ($\delta(f) = D^{-\ell(f)} \delta$
+\item $\e(\delta,f) = \sqrt{\frac{c(f) + \log(1/\delta)}{2n}}$
+\end{itemize}
+\item
+Universal/Sequential prediction
+\begin{itemize}
+\item Normalized MLE distribution is minimax optimal for regret
+\item Exponentially-weighted mixture model optimal for redundancy
+\item Redundancy and Capacity
+\end{itemize}
+\end{itemize}
+
+\section{Information Projection, Information Geometry, and MaxEnt Duality}
+\subsection{Information Projection and Information Geometry}
+\begin{itemize}
+\item The information projection of a distribution $p_0$ over $\X$ on a set
+$\Pds$ of distributions over $\X$, is $p^*$:
+\[p^* := \arg\min_{p \in \Pds} D(p || p_0).\]
+\item If $\X = \R$ and all distributions in $\Pds$ have bounded support and
+$p_0 = u$ is the uniform distribution, then $p^*$ is the maximum entropy
+distribution in $\Pds$.
+\item {\bf Theorem (Pythagoras' theorem for KL-divergence):} If $\Pds$ is a
+closed and convex family of distributions on $\X$ and $p^*$ is the information
+projection of a distribution $p_0$ over $\X$ on $\Pds$, then
+$\forall p \in \Pds$
+\[D(p || p_0) \geq D(p || p^*) + D(p^* || p_0).\]
+In some sense, this compares $D(\cdot || \cdot)$ to the square of the Euclidean
+metric.
+\end{itemize}
+
+\subsection{MaxEnt Duality}
+\begin{itemize}
+\item Consider trying to maximze a likelihood function $L$ in terms a parameter
+$\lambda$:
+\[\arg\!\max_{\lambda} L(\lambda)
+    = \arg\!\max_{\lambda} \prod_{i = 1}^n p_\lambda(x_i)
+    = \arg\!\min_{\lambda} - \sum_{i = 1}^n \log p_\lambda(x_i)
+    = \arg\!\min_{\lambda} D(\hat p || p_\lambda)
+\]
+for any distribution $\hat p$. Thus, likelihood maximization can be thought of
+as the information projection of the empirical distribution onto the
+exponential family.
+\item More generally, for a base distribution $p_0$, we can consider the
+problem
+\[\min_{p \in \Pds} D(p || p_0) + U(\E_{X \sim p}[r(X)]),\]
+where $U$ is some regularizer and . The dual problem is
+\[\max_{\lambda \in \R^d} - \log Z_\lambda - U^*(\lambda),
+\quad \mbox{ where } \quad
+Z_\lambda = \int_\X p_0(x) e^{\lambda^T r(x)} \, dx\]
+is the partition function of the Gibbs distribution and
+$U^*(\lambda)
+    = \sup_{\lambda'} \langle \lambda, \lambda' \rangle - U(\lambda')$ is the
+Fenchel conjugate of $U$.
+\item Since $Z_\lambda$ is proportional to the likelihood function times a
+constant, this can be thought of as regularized maximum likelihood estimation.
+In particular, this is equivalent to
+\[\min_{\lambda \in R^d} D(\hat p || p_\lambda) + U^*(\lambda)\]
+\item Recall that the Fenchel conjugate of an indicator function $1_A$ is
+$1_A^*(\lambda) = \sup_{u \in A} \langle \lambda, u \rangle$.
+\end{itemize}
+\subsection{Entropy Rates of Stochastic Processes}
+\begin{itemize}
+\item The \emph{entropy rate} of a stochastic process
+$\X = \{X_i\}_{i = 1}^\infty$ is
+\[H(\X) := \lim_{n \to \infty} \frac{H(X_1,\dots,X_n)}{n}.\]
+\item A stochastic process $\{X_i\}_{i = 1}^\infty$ is \emph{stationary}
+if, $\forall n, \ell \in \N$,
+\[p(X_1,\dots,X_n) = p(X_{1 + \ell},\dots,X_{n + \ell}).\]
+\item {\bf Theorem:} If $\X = \{X_i\}_{i = 1}^\infty$ is a stationary
+stochastic process, then
+\[H(\X) = \lim_{n \to \infty} H(X_n | X_{n - 1},\dots,X_1).\]
+\item {\bf Theorem (Burg's Maximum Entropy):} Suppose
+$\X = \{X_i\}_{i = 1}^\infty$ is the maximum entropy rate stochastic process
+\footnote{$\X$ is not assumed to be stationary.}
+satisfying the constraints
+\[\E[X_iX_{i + k}] = \alpha_k \forall k \in \{1,\dots,m\}, i \in \N.\]
+Then, $\X$ is the $p^{th}$-order Gauss-Markov process, of the form
+\[X_i = - \sum_{k = 1}^m \alpha_k X_{i - k} + Z_i,\]
+where $Z_i \sim \mathcal{N}(0,\sigma^2)$ and $\alpha_k$ and $\sigma^2$ are
+chosen to satisfy the constraints (the \emph{Yule-Walker} equations). The proof
+follows from the maximum entropy properties of the Gaussian distribution and
+the Chain Rule.
+\end{itemize}
+\section{Source Coding}
+\subsection{Basics}
+\begin{itemize}
+\item Given a source alphabet $\X = \{X_1,\dots,X_k\}$ and an encoding alphabet
+$\mathcal{D} = \{0,\dots,D - 1\}$, a \emph{code} is a map
+$C : \X \to \mathcal{D}^*$ \footnote{$^*$ denotes the Kleene star.}. A
+\emph{length-$n$ block code} is a map $C : \X^n \to \mathcal{D}^*$.
+\item The extension $C : \X^* \to \mathcal{D}^*$ of a code $C$ is simply the
+concatenation $C(X^n) = C(X_1) \cdots C(X_n)$.
+\item A code $C$ is
+\begin{itemize}
+\item \emph{non-singular} iff it is injective.
+\item \emph{uniquely-decodable} iff its extension is injective.
+\item \emph{prefix/prefix-free/self-punctuating/instantaneous} iff
+$X_1 \neq X_2$ implies $C(X_1) \notin \text{Prefix}(C(X_2))$.
+\end{itemize}
+\item For $X \in \X^*$, $\ell_C(X)$ denotes the length of $C(X)$.
+\item {\bf Theorem (Shannon's Source Coding Upper Bound):} There exists a code
+$C$ such that, $\forall \e > 0$, $\exists n_0$ such that $n \geq n_0$ implies
+\[\E\left[ \frac{\ell_C(X^n)}{n} \right] \leq H(p) + \e,\]
+where $X_1,\dots,X_n \sim p$ are i.i.d.
+\end{itemize}
+\subsection{Optimality and Kraft-McMillan Inequalities}
+\begin{itemize}
+\item {\bf Lemma (Kraft-McMillan Inequality):} If $C$ is uniquely-decodable,
+then
+\[\sum_{X \in \X} D^{-\ell_C(X)} \leq 1.\]
+\item {\bf Theorem (Shannon's Source Coding Lower Bound):} Any
+uniquely-decodable code $C$ has $\E_{X \sim p}[\ell_C(X)] \geq H(p)$.
+\end{itemize}
+
+\section{Rate-Distortion Theory}
+\subsection{Rate-Distortion Function}
+For any pseudometric $d$ the rate distortion function
+$R_d : [0,\infty] \to [0,H(X)]$ is defined for $D \geq 0$ by
+\[R_d(D)
+    := \min_{T \sim p(t|x)} I(X;T)
+    \quad \mbox{ subject to } \quad
+    \E[d(X;T)] \leq D.
+\]
+$R_d$ is non-increasing and convex, and $R(D) \to 0$ as $D \to \infty$.
+
+\subsection{Information Bottleneck Problem}
+For any $\beta \geq 0$, the information bottleneck problem is
+\[\min_{T \sim p(t|x)} I(X;T) - \beta I(T;Y).\]
+
+\subsection{Blhaut-Arimoto Algorithm}
+The Blhaut-Arimoto Algorithm allows us to compute $R(D)$ (but not to find the
+optimal $T$). Note that, for some $\beta \geq 0$, the rate-distortion problem
+is equivalent to minimizing
+\[\min_{T \sim p(t|x)} I(X;T) + \beta \E[d(X;T)].\]
+From this, we can derive the iterative updates
+\[p(t|x) \gets p(t) e^{-\beta d(x;t)}
+    \quad \mbox{ and } \quad
+    p(t) \gets \sum_x p(t|x) p(x),\]
+where we assume $p(x)$ is known. We can also jointly optimize over $p(x)$ and
+$p(t|x)$ (like in EM). For the information bottleneck problem, we can derive
+the updates
+\[p(t|x) \gets p(t) e^{-\beta D_{KL}(p(y|x)||p(y|t))}
+    \quad \mbox{ and } \quad
+    p(t) \gets \sum_x p(t|x) p(x).\]
+
+\section{Context Tree Weighting (CTW) Compression}
+See page 15-2 of notes.
+
+\section{Sanov's Theorem}
+Let $X_1,\dots,x_N \stackrel{i.i.d.}{\sim} Q$ over a finite domain $\X$,
+and let $E \subseteq \Pds$ be a set of probability distributions. Then,
+\[Q^n(E) = Q^n(E \cap P_n) \leq (n + 1)^{|\X|}2^{-nD(P_E^*||Q)},\]
+where $P_E^* = \argmin_{P \in E} D(P||Q)$. Furthermore, if
+$\overline{E^\circ} = E$, then
+$\frac1n \log Q^n(E) \to D(P_E^*||Q)$ as $n \to \infty$.
+
+Suppose, for example, that we want to compute
+\[\pr\left[ \bigcap_{i \in \{1,\dots,k} \{P_n g_i \geq \alpha_i\} \right].\]
+Define $E := \bigcap_{i \in \{1,\dots,k} \{P g_i \geq \alpha_i\}$. Previous
+calculations imply, $\forall x \in \X$,
+\[P_E^*(x) = \frac{Q(x)e^{\sum_i \lambda_i g_i(x)}}
+                            {\sum_{a \in \X}Q(x)e^{\sum_i \lambda_i g_i(x)}},\]
+where $\lambda$ is chosen as per the constraints. Then,
+$Q^n(E) \leq (n + 1)^{|\X|}2^{-n D(P_E^*||Q)}$.
+
+\section{Miscellaneous}
+\emph{KL-divergence of Gaussians:}
+For $P_1 = \mathcal{N}(\mu_1, \Sigma_1)$, $P_2 = \mathcal{N}(\mu_2, \Sigma_2)$
+in $\R^d$,
+\[D_{KL}(P_1||P_2)
+    = \frac{1}{2} \left[ \log \frac{|\Sigma_2|}{|\Sigma_1|}
+        - d + \tr(\Sigma_2\inv\Sigma_1)
+            + (\mu_2 - \mu_1)^T\Sigma_2\inv(\mu_2 - \mu_1)\right],\]
+which reduces to
+\[D_{KL}(P_1||P_2)
+    = \frac{1}{2} \left[ (\mu_2 - \mu_1)^T\Sigma\inv(\mu_2 - \mu_1)\right]\]
+when $\Sigma_1 = \Sigma_2 = \Sigma$ and
+$D_{KL}(P_1||P_2) = \frac{1}{2} \|\mu_2 - \mu_1\|_2^2$ when $\Sigma = I_d$.
+
+Still need to review:
+\begin{enumerate}
+\item Capacity of Gaussian Channels (Water-filling; Lecture 18)
+\item Minimax Theory
+\begin{enumerate}
+\item Testing (Lecture 19)
+\item Estimation, Le Cam's and Fano's (Lecture 20)
+\item Minimax Examples and Assouad's (Lecture 21)
+\end{enumerate}
+\item CRLB, Fisher Information, and Jeffrey and Reference Priors (Lecture 22)
+\end{enumerate}
+\end{document}

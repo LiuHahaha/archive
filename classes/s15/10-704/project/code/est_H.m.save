@@ -1,0 +1,28 @@
+% estimates the entropy H of a (potentially multivariate) variable X using
+% samples Xs and estimator specified by type
+%
+% Inputs:
+%   Xs - n-by-d data matrix of n samples in R^d
+%   type - identifier of entropy estimator to use; valid options include:
+%          'KDE' - plugged in kernel density estimate (using KDE toolbox);
+%          'KNN' - k-nearest neighbors estimate (using ITE toolbox);
+%          any other identifier recognized by the ITE toolbox;
+%
+% Outputs:
+%   H - estimated entropy
+
+function H = est_H(Xs, type, bw)
+
+  if nargin < 3
+    bw = 'rot';
+  end
+
+  switch type
+
+  case 'KDE'
+    H = entropy(kde(Xs', bw));
+  otherwise
+    % use ITE estimator
+  end
+
+end
