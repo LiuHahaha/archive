@@ -1,0 +1,9 @@
+- mention isolated communication and blind experiments
+- clarify velocity/direction
+- try more random obstacles
+- clarify how thresholding fixes issues
+- address parameter selection
+- practice for time
+- add references
+- add motivation (?)
+- figure out videos and display (in Windows, to be safe)
