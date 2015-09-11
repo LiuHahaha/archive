@@ -1,0 +1,87 @@
+<<<Three major issues pointed out by reviewers:>>>
+<<1. Regarding the derivation of the Variance Bound (Eq. 8):>>
+
+The kernel $K_{d_j}$ indeed denotes the $d_j$ dimensional product kernel.
+[25] showed that the integral of the mirrored kernel over the unit cube X_j is
+precisely the 1-norm of the kernel, because the reflected components precisely
+account for the mass of the kernel that lies outside X_j. Hence, we can replace
+the integral over X_j of the sum (over reflections) of kernels with the
+integral of the original (product) kernel over R^{d_j}. There is a mistake in
+the second and third lines that might be the cause of confusion - the integral
+should be over R^{d_j} rather than over X_j. We fixed this and added an
+intermediate step after the first line which includes the sum of the
+reflected kernels (this step was omitted initially, because it required
+defining notation used in [25] that we had not wanted to introduce explicitly,
+but the reviewers fairly point out that this is confusing).
+
+<<2. Regarding the application to Renyi CMI:>>
+
+a) The 1/|1 - alpha| is missing from the definition of Renyi CMI (Eqs. 9, 10,
+11).
+
+b) The combination of the triangle inequality and the mean value theorem
+understandably also caused confusion. The triangle inequality is used here in
+the following form:
+
+|ab - a'b'| = |ab - ab' + ab' - a'b'|
+            <= |ab - ab'| + |ab' - a'b'|
+            = |a||b - b'| + |a - a'||b'|
+
+Here, a = P(z), a' = P'(z), and b and b' are the log(...) terms. Hence, we
+bound |a| <= kappa_2 and |b'| <= |log(kappa_*)|. We then apply the mean value
+theorem to the |b - b'| and |a - a'| terms (the former results in the kappa^*
+constant).
+
+We initially refrained from including the intermediate step because, using the
+notation in the paper, each step above took 4 complete lines to write out.
+However, we agree that too many steps are being skipped here, and have inserted
+some notation similar to the above to express the these steps more compactly
+and clearly.
+
+<<3. Regarding the Renyi and KL divergence as Density Functionals>>
+The reviewer correctly points out that divergences require a joint integral,
+not a product integral, of the two distributions, and hence are not of the form
+(3). This has been clarified in the beginning of the paper and in Section 6.
+
+<<<Two points regarding originality:>>>
+
+1. While it is true that several of the key steps of the proofs are suggested
+by [25], our paper is about adapting these steps to a broad class of density
+functionals characterized by (a corrected version of) equation (3), and
+showing, how this in turn leads to interesting results for complex quantities
+such as Renyi CMI. Such quantities are relevant to many in the NIPS community,
+as they are among the few measures that can characterize the relationship
+between three or more variables in nonparametric way. However, There has been
+relatively little theoretical work on measuring or testing for conditional
+(in)dependence in a continuous setting, due largely to the sheer mathematical
+complexity of the quantities involved. We hope that, by studying more general
+quantities such as density functionals, we can devise theoretical approaches
+suited to analyzing these quantities (?).
+
+2. While the beta-Holder assumption is indeed a standard one for bounding the
+bias of KDEs via a fairly standard derivation, our paper simply cites this part
+of the derivation (the ``Bias Lemma'') from [25] and focuses instead on how
+this translates into a bound on the bias of the plug-in estimate, and on
+deriving the variance bounds in the general case and the Renyi CMI case.
+Furthermore, the Holder assumption is relevent only to the bias bound, and not
+to the variance bound or the application to Renyi CMI estimation. Indeed, one
+unmentioned development in our paper (compared to [25]) is that we segregate
+the assumptions for the Bias Bound (including the Holder and Boundary
+conditions) from those needed for the Variance Bound. Hence, we suggest a way
+of proving an exponential concentration inequality not only for our
+mirrored-KDE-based plug-in estimator, but perhaps for a wide range of plug-in
+estimators based on variants of KDEs.
+
+<<<Other minor corrections/clarifications>>>
+
+1. The end of paragraph 2 on page 2 (lines 69-71) had errors; it now reads:
+
+For example, [14] shows how this can be applied to optimally analyze forest
+density estimation algorithms. We can also bound the distribution of the CMI
+estimator when the true CMI is 0. Consequently, we can use this estimator to
+devise a hypothesis test for conditional independence with bounded type I error
+probabilty.
+
+2. Thanks to the reviewers for pointing out several minor errors in the paper,
+and for suggesting some additional related work. We have corrected these errors
+and mentioned these references in the Related Work section.

@@ -1,0 +1,462 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+%\usepackage[margin=0.8in]{geometry}
+\usepackage[]{graphicx}
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mytitle}{Generalizing to $[0,1]^d$}
+\newcommand{\myname}{Shashank Singh\footnote{sss1@andrew.cmu.edu}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\vx}{\vec{x}}                           % vector x
+\newcommand{\vy}{\vec{y}}                           % vector y
+\newcommand{\vz}{\vec{z}}                           % vector z
+\newcommand{\vv}{\vec{v}}                           % vector v
+\newcommand{\vu}{\vec{u}}                           % vector u
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\C}{\mathcal{C}}                        % center region of [0,1]^d
+\newcommand{\B}{\mathcal{B}}                        % border region of [0,1]^d
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+\begin{center}
+{\Large \mytitle} \\
+\myname \\
+\today
+\end{center}
+
+\section{Introduction}
+We generalize the original estimator in several respects.
+\begin{enumerate}
+\item The original estimator operated in the unit square $[0,1]^2$. Our
+estimator operates on the $d$-dimensional unit hypercube $[0,1]^d$.
+\item The original exponential concentration inequality was proven for
+densities in the H\"{o}lder class $\Sigma_\kappa(2,L,2)$, whereas our inequality
+applies for densities in the H\"{o}lder class $\Sigma_\kappa(\beta,L,r)$ for
+any fixed $\beta \geq 0, r \geq 1$ (the estimator converges as
+$O\left( n^{-\frac{\beta}{d + \beta}} \right)$).
+\item While the orignial estimator estimated Shannon entropy, ours
+estimates Renyi $\alpha$-divergence, a generalization of Kullback-Leibler
+divergence. It can be shown that many information theoretic quantities
+(including entropy, conditional entropy, mutual information, and divergence)
+can be computed as special cases of Renyi $\alpha$-divergence with an at most
+constant-factor increase in error.
+\end{enumerate}
+
+\section{Notation}
+We use the notation of multi-indices common in multivariable calculus to index
+several expressions. $\N^d$ is the set of $d$-tuples of natural numbers. For
+example, for analytic functions $f$ in $d$ variables,
+\[f(x + h) = \sum_{\vi \in \N^d} \frac{D^\vi f(x)}{\vi!} h^\vi,\]
+where
+\[\vi! := \prod_{k = 1}^d i_k!, \quad \quad
+    h^\vi = \prod_{k = 1}^d h_k^{i_k} \quad \quad
+    \mbox{and} \quad \quad
+    D^\vi f = \frac{\partial^{|\vi|} f}
+                   {\partial^{i_1}x_1\cdots\partial^{\alpha_d}x_d}, \quad \quad
+    \mbox{for} \quad \quad
+    |\vi| = \sum_{k = 1}^d i_k.
+\]
+
+\section{Assumptions}
+For a given $d \geq 1$, consider random $d$-dimensional real vectors $X$ and
+$Y$ in the unit cube $\X := [0,1]^d$, distributed according to densities
+$p,q : \X \to \R$, respectively. For a given
+$\alpha \in (0,1) \cup (1,\infty)$, we are interested in estimating the Renyi
+$\alpha$-divergence
+\[D_\alpha(p,q)
+    = \frac{1}{\alpha - 1}
+        \log \left(
+          \int_\X
+            p^\alpha(\vx)q^{1 - \alpha}(\vx)
+          \, d\vx
+        \right)
+\]
+from a random sample of $n$ points from $p$ and $n$ points from $q$. \\
+
+{\bf Density Assumptions:}\\
+We assume that $p$ and $q$ are in the H\"{o}lder class
+$\Sigma_\kappa(\beta,L,r)$. That is, for some $\beta \in (0,\infty)$,
+if $\ell = \lfloor \beta \rfloor$ is the greatest integer with
+$\ell < \beta$, $\forall \vi \in \N^d$ with $|\vi| = \ell$,
+the densities $p$ and $q$ each satisfy the H\"{o}lder condition in the
+$r$-norm ($r \in [1,\infty)$
+\[|D^\vi p(\vx + \vv) - D^\vi p(\vx)|
+ \leq L\|\vv\|_r^{\beta - \ell}
+ = L\left( \sum_{i = 1}^d |v_i|^r \right)^{(\beta-\ell)/r},\]
+and, furthermore, there exist $\kappa = (\kappa_1,\kappa_2) \in (0,\infty)^2$
+with $\kappa_1 \leq p,q \leq \kappa_2$. We could take $p$ and $q$ to be in
+different H\"{o}lder classes $\Sigma_{\kappa_p}(\beta_p,L_p,r_p)$
+and $\Sigma_{\kappa_q}(\beta_q,L_q,r_q)$, but the bounds we show will depend,
+up to constants, only on the looser of the restrictions on $p$ and $q$
+(i.e., $\min\{\beta_p,\beta_q\}, \max\{L_p,L_q\}$, etc.).
+
+As explained later, we also desire
+$p,q$ to be nearly constant near the boundary $\partial \X$ of $\X$. Thus, we
+assume that, for any sequence $\{\vx_n\}_{n = 1}^\infty \in \X$ with
+$\dist(\vx_n,\partial \X) \to 0$ as $n \to \infty$,
+\[\forall \vi \in \N^d \mbox{ with } 1 \leq |\alpha| \leq \ell, \quad
+\lim_{n \to \infty} D^\vi p(\vx_n) \to 0.\]
+
+{\bf Kernel Assumptions:}\\
+We $K : \R \to \R$ is a non-negative kernel with bounded support $[-1,1]$ and
+the following properties:
+\[\int_{-1}^1 K(u) \, du = 1, \quad
+    \int_{-1}^1 uK(u) \, du = 0, \quad
+    \mbox{ and } \quad
+    \int_{-1}^1 K^2(u) \, du = C_K < \infty.
+\]
+
+\section{Estimator}
+Let $[d] := \{1,2,\ldots,d\}$, and let
+\[\Se := \left\{ (S_1,S_2,S_3) : S_1 \cup S_2 \cup S_3 = [d],
+S_i \cap S_j = \emptyset \mbox{ for } i \neq j \right\}\]
+denote the set of partitions of $[d]$ into $3$ distinguishable
+parts. For each $S \in \Se$, define the region
+\[C_S = \left\{x \in \X :
+          \forall i \in S_1, 0 \leq x_i \leq h,
+          \forall j \in S_2, h < x_j < 1 - h,
+          \forall k \in S_3, 1 - h \leq x_k \leq 1
+        \right\}
+\]
+and the regional kernel
+\[K_S(\vx,\vx^i) :=
+    \left(\prod_{s \in S_1} K \left(\frac{x_s + x_s^i}{h}\right)\right)
+    \left(\prod_{t \in S_2} K \left(\frac{x_t - x_t^i}{h}\right)\right)
+    \left(\prod_{u \in S_3} K \left(\frac{x_u - 2 + x_u^i}{h}\right)\right)
+\]
+where $x_s^i$ denotes the $s^{th}$ coordinate of the $i^{th}$ sample.
+Note that $\{C_S : S \in \Se\}$ partitions $\X$ (as illustrated in
+Figure~\ref{fig:cube})
+%%%BEGIN FIGURE%%%
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{cube_diagram_9_21_2013_divergence_estimation.pdf}
+\end{center}
+%TODO: write caption!!
+\caption{WRITE CAPTION}
+\label{fig:cube}
+\end{figure}
+%%%%%END FIGURE%%%
+up to intersections of measure zero, and that $K_S$ is
+supported only on $C_S$. We define the ``mirror image'' kernel density
+estimator
+\[\pest(\vx) = \frac{1}{nh^d} \sum_{i = 1}^n \sum_{S\in \Se} K_S(\vx,\vx^i),\]
+Since the derivatives of $p,q$ vanish near $\partial \X$, $p,q$ are
+approximately constant near $\partial \X$, and so the mirror image estimator
+reduces boundary bias by mirroring data across $\partial \X$ before
+kernel-smoothing. We then clip the estimator at $\kappa_1$ and $\kappa_2$:
+\[\cpest(x) = \min(\kappa_2,\max(\kappa_1,\pest(x))).\]
+
+Finally, we plug our density estimate into the following plug-in estimator for
+Renyi $\alpha$-divergence:
+\begin{equation}
+\label{def:pluginest}
+D_\alpha(p \| q)
+    := \frac{1}{\alpha - 1}
+        \log\left( \int_\X p^\alpha(\vx)q^{1 - \alpha}(\vx) \, d\vx \right)
+    = \frac{1}{\alpha - 1}
+        \log\left( \int_\X f(p(\vx),q(\vx)) \, d\vx \right)
+\end{equation}
+for $f : [\kappa_1,\kappa_2]^2 \to \R$ defined by
+$f(x_1,x_2) := x_1^\alpha x_2^{1 - \alpha}$.
+Our $\alpha$-divergence estimate is then $D_\alpha(\cpest \| \cqest)$.
+
+\section{Main Result}
+We decompose the estimate's error
+$|D_\alpha(\cpest\|\cqest) - D_\alpha(p\| q)|$ into a bias term and a
+variance-like term:
+\[|D_\alpha(\cpest\|\cqest) - D_\alpha(p\| q)|
+    \leq |D_\alpha(\cpest\|\cqest) - \E D_\alpha(\cpest\|\cqest)|
+    +    |\E D_\alpha(\cpest\|\cqest) - D_\alpha(p\| q)|.
+\]
+We will prove the bounds
+\[\sup_{p,q \in \Sigma_\kappa(\beta,L,r)}
+    \pr \left( |D_\alpha(\cpest,\cqest) - \E D_\alpha(\pest,\qest)| > \e \right)
+    \leq 2\exp \left(
+            -\frac{k_1^2\e^2n}{2^{2d + 4}}
+         \right),
+\]
+and
+\begin{equation}
+\label{ineq:bias_bound}
+\sup_{p,q \in \Sigma_\kappa(\beta,L,r)}
+|\E D_\alpha(\cpest\|\cqest) - D_\alpha(p\| q)|
+    \leq k_2 \left(h^\beta + h^{2\beta} + \frac{1}{nh^d}\right),
+\end{equation}
+where $k_1,k_2$ are constant in $n$ and $h$. (\ref{ineq:bias_bound}) is
+minimized by $h \asymp n^{-\frac{1}{d + \beta}}$, giving the convergence rate
+\[|\E D_\alpha(\cpest \| \cqest) - D_\alpha(p \| q)|
+    \in O \left( n^{-\frac{\beta}{d + \beta}} \right).\]
+
+\section{Lemmas}
+{\bf Bounds on Derivative of $f$:}
+Let $f$ be as in (\ref{def:pluginest}). Since $f$ is analytic on the compact
+domain $[\kappa_1,\kappa_2]^2$, there is a constant $C_f \in \R$, depending
+only on $\kappa$, and $\alpha$, such that,
+$\forall \xi \in (\kappa_1,\kappa_2)^2$,
+\begin{align}
+\label{ineq:parts}
+\left| \frac{\partial f}{\partial x_1} (\xi) \right|,
+\left| \frac{\partial f}{\partial x_2} (\xi) \right|,
+\left| \frac{\partial^2 f}{\partial x_1^2} (\xi) \right|,
+\left| \frac{\partial^2 f}{\partial x_2^2} (\xi) \right|,
+\left| \frac{\partial^2 f}{\partial x_1x_2} (\xi) \right|
+ \leq C_f.
+\end{align}
+$C_f$ can be computed by differentiating explicitly and observing that the
+derivatives of $f$ are monotone in each input. We will use this bound later to
+apply the Mean Value and Taylor's theorems. \\
+
+{\bf Logarithm Lemma:} FINISH THIS %TODO: make this fit better, `remove' kappa
+If $f,\hat f : \X \to \R$ with
+$0 < \kappa_1 \leq \hat f,f$ for some $\kappa_1 \in \R$, by the Mean Value
+Theorem, there exists $\xi \geq \kappa_1$ such that
+\begin{align}
+\label{ineq:log}
+\left| \log \left( \int_\X \hat f(\vx) \, d\vx \right)
+        - \log \left( \int_\X f(\vx) \, d\vx \right) \right|
+  = \frac{1}{\xi} \left| \int_\X \hat f(\vx) \, d\vx
+        - \int_\X f(\vx) \, d\vx \right|   
+  \leq \frac{1}{\kappa_1} \int_\X \left| \hat f(\vx) - f(\vx) \right| \, d\vx.
+\end{align}
+We will use this bound to eliminate logarithms from our calculations. \\
+
+{\bf Bounds on Derivatives of $p$:}
+Combining the assumption that the derivatives of $p$ vanish on $\partial \X$
+and the H\"{o}lder condition on $p$, we bound the derivatives of $p$
+\emph{near} $\partial \X$. In particular, we show that, if $\vi \in \N^d$
+has $|\vi| = l - k$, then, $\forall x \in \X$ with
+$\dist(x,\partial \X) \leq h$,
+\[|D^\vi p(x)|
+    \leq \frac{Lh^{\beta - l + k}}{k!}.
+\]
+\emph{Proof:} Suppose $x \in \partial \X$, and let
+$\vu = (0,\dots,0,1,0,\dots,0) \in \R^d$, where $u_i = 1$. Suppose that, for
+some $k \in \{0,1,\dots,\ell - 1\}$, we have the desired bound. Then,
+\begin{align*}
+|D^\alpha p(\vx + \vu)|
+ & = \left|\int_0^h \frac{\partial}{\partial x_i}
+                    D^\alpha p(\vx + t\vu) \, dt \right|    \\
+ & \leq \int_0^h \left| \frac{\partial}{\partial x_i}
+                    D^\alpha p(\vx + t\vu) \right| \, dt    \\
+ & \leq \int_0^h \frac{Lt^{\beta - 1 + (k - 1)}}{(k - 1)!} \, dt
+   = \frac{Lh^{\beta - 1 + k}}{(\beta - 1 + k)(k - 1)!}
+   \leq \frac{Lh^{\beta - 1 + k}}{k!}.
+\end{align*}
+The same proof works in the case $u_i = -h$. The desired result follows by
+induction on $k$. \qed
+
+
+\section{Proof of Main Result}
+
+\subsection{Bias Bound}
+We write the bias of $\pest$ and $\qest$ at $\vx \in \X$ as
+\[  B_p(x) = \E\pest(\vx) - p(\vx)
+\quad \mbox{and} \quad
+    B_q(x) = \E\qest(\vx) - q(\vx).\]
+
+{\bf Bias Lemma:} There exists a constant $C > 0$ such that
+\[\sup_{p \in \Sigma_\kappa(\beta,L,r)}
+    \int_\X B_p^2(x) \, d\vx \leq Ch^{2\beta}.\]
+
+We consider separately the interior $\mathcal{I} := (h,1 - h)^d$ and
+boundary $\mathcal{B} := \{x \in \X : \dist(x,\partial \X) \leq h\}$
+(noting $\X = \mathcal{I} \cup \mathcal{B}$). In particular, by a standard
+result for kernel density estimates of H\"{o}lder continuous functions
+(NEEDS CITATION),
+\[\int_{\mathcal{I}} B_p^2(x) \, d\vx \leq C_2h^{2\beta}.\]
+
+We now show that
+\[\int_{\mathcal{B}} B_p^2(x) \, d\vx \leq C_3^2h^{2\beta}.\]
+
+Suppose $S = (S_1,S_2,S_3) \in \Se \sminus\{(\emptyset,[d],\emptyset)\}$
+(as $C_{(\emptyset,[d],\emptyset)} = \mathcal{I}$). We wish to bound
+$|\E\pest(x) - p(x)|$ on $C_S$. To simplify notation, by geometric symmetry, we
+may assume $S_3 = \emptyset$. Define $\vy_S \in \X$ by
+$(y_S)_i = hu_i - x_i, \forall i \in S_1$ and
+$(y_S)_i = x_i - hu_i, \forall i \in S_2$ (this choice arises from the change
+of variables we will need in (\ref{eq:CoV})). Then, we have
+\begin{align*}
+\left|p(\vy_S) - \sum_{|\alpha| \leq \ell}
+        \frac{D^\alpha p(x)}{\alpha!} (\vy_S - \vx)^\alpha \right|
+    & \leq L\|\vy_S - \vx\|_r^\beta & \mbox{(H\"{o}lder condition)} \\
+    & = L \left( \sum_{i \in S_1} (2x_i + hu_i)^r
+                    + \sum_{i \in S_2} (hu_i)^r \right)^{\beta/r} \\
+    & = L \left( \sum_{i \in S_1} (3h)^r
+                    + \sum_{i \in S_2} h^r \right)^{\beta/r}
+        & \mbox{($|x_i| \leq h, |u_i| \leq 1$)}\\
+    & \leq L \left(d\left(3h\right)^r\right)^{\beta/r}
+        & \mbox{($|S_1 \cup S_2| = d$)} \\
+    & = L \left(3d^{1/r} h\right)^\beta.
+\end{align*}
+
+Thus, by the H\"{o}lder bound on the derivatives of $p$ near $\partial \X$,
+\begin{align*}
+|p(\vy_S) - p(\vx)|
+  & \leq L \left(3d^{1/r} h\right)^\beta
+    + \left| \sum_{1 \leq |\alpha| \leq \ell} \frac{D^\alpha p(x)}{\alpha!} (\vy_S - \vx)^\alpha \right|
+    & \mbox{(triangle inequality)} \\
+  & \leq L \left(3d^{1/r} h\right)^\beta
+    + \left| \sum_{1 \leq |\alpha| \leq \ell} \frac{Lh^{\beta - |\alpha|}}{\alpha!} (3h)^{|\alpha|} \right|
+    & \mbox{(boundary lemma)} \\
+  & = L \left(3d^{1/r} h\right)^\beta
+    + \left| Lh^\beta \sum_{1 \leq |\alpha| \leq \ell} \frac{3^{|\alpha|}}{\alpha!} \right| \\
+  & \leq L \left(3d^{1/r} h\right)^\beta
+    + \left| Lh^\beta \sum_{|\alpha| \in \N^d} \frac{3^{|\alpha|}}{\alpha!} \right| \\
+  & = L h^\beta \left( \left( 3d^{1/r} \right)^\beta + e^{3d} \right)
+    = C_3 h^\beta,
+    & \mbox{(exponential Taylor series)}
+\end{align*}
+where $C_3$ is the constant (in $n$ and $h$)
+\begin{align}
+\label{eq:biasC}
+C_3 := L \left( \left( 3d^{1/r} \right)^\beta + e^{3d} \right).
+\end{align}
+
+For $x \in C_S$, we have
+\[\pest(\vx)  = \frac{1}{nh^d} \sum_{i = 1}^n K_S(\vx).\]
+and thus by a change of variables, if
+$\displaystyle K^d(\vx) := \prod_{i = 1}^d K(x_i)$ denotes the product kernel,
+\begin{align}
+\label{eq:CoV}
+\E\pest(\vx)
+ = \frac{1}{h^d} \sum_{S \in \Se} \int_\X K_S(\vx) p(\vu) \, d\vu
+ = \sum_{S \in \Se} \int_{[-1,1]^d} K^d(\vu) p(\vy_S) \, d\vu,
+\end{align}
+Thus,
+\begin{align*}
+|B_p(x)| = |\E\pest(x) - p(x)|
+ & = \left| \int_{[-1,1]^d} K^d(\vu) p(\vy_S) \, d\vu
+   - \int_{[-1,1]^d} K^d(\vu) p(\vx) \, d\vu \right| \\
+ & \leq \int_{[-1,1]^d} K^d(\vu) |p(\vy_S) - p(\vx)| \, d\vu
+    & \mbox{(by (\ref{eq:CoV}))} \\
+ & \leq \int_{[-1,1]^d} K^d(\vu) C_3 h^\beta \, d\vu
+   = C_3h^\beta.
+\end{align*}
+
+Since the measure of $\mathcal{B}$ is less than $1$, this proves the Bias
+Lemma:
+\[
+\int_{\mathcal{B}} B_p^2(x) \, d\vx
+ \leq C_3^2 h^{2\beta},
+\]
+proving the Bias Lemma, with $C_3$ as in (\ref{eq:biasC}). \qed
+
+By Taylor's Theorem, $\forall \vx \in \X$, for some $\xi : \X \to \R^2$ on the
+line segment between $(\cpest,\cqest)$ and $(p,q)$,
+\begin{align*}
+\left| \E f(\cpest(\vx), \cqest(\vx)) - f(p(\vx),q(\vx)) \right|
+    & = \left|
+        \E\frac{\partial f}{\partial x_1}(p(\vx),q(\vx))(\cpest(\vx) - p(\vx)) \right.
+      + \frac{\partial f}{\partial x_2}(p(\vx),q(\vx))(\cqest(\vx) - q(\vx))  \\
+    & + \frac12 \left[
+            \frac{\partial^2 f}{\partial x_1^2}(\xi(\vx))(\cpest(\vx) - p(\vx))^2
+        \right.
+      + \frac{\partial^2 f}{\partial x_2^2}(\xi(\vx))(\cqest(\vx) - q(\vx))^2 \\
+    & \quad\quad\quad + \left. \left.
+            \frac{\partial^2 f}{\partial x_1 \partial x_2}(\xi(\vx))
+                    (\cpest(\vx) - p(\vx))(\cqest(\vx) - q(\vx))
+        \right] \right| \\
+    & \leq C_F \left(
+        \left| \E\cpest(\vx) - p(\vx) \right|
+      + \left| \E\cqest(\vx) - q(\vx) \right| \right.    \\
+    & + \E \left[ \cpest(\vx) - p(\vx) \right]^2
+      + \E \left[ \cqest(\vx) - q(\vx) \right]^2         \\
+    & + \left. \left| \E(\cpest(\vx) - p(\vx))(\cqest(\vx) - q(\vx)) \right|
+    \right).
+    & \mbox{by (\ref{ineq:parts})}
+\end{align*}
+
+Thus, using (\ref{ineq:log}),
+\begin{align*}
+|\E D_\alpha(\cpest \| \cqest) - D_\alpha(p \| q)|
+ &  = \left| \frac{1}{\alpha - 1} \left(
+        \E \log  \int_\X f(\cpest(\vx),\cqest(\vx)) \, d\vx
+        - \log \int_\X f(p(\vx),q(\vx)) \, d\vx
+      \right) \right| \\
+ &  \leq \frac{C_L}{|\alpha - 1|}
+    \int_\X \left| \E f(\cpest(\vx),\qest(\vx)) - f(p(\vx),q(\vx)) \, d\vx
+\right| \\
+ &  \leq \frac{C_FC_L}{|\alpha - 1|}
+    \int_\X \left| \E\cpest(\vx) - p(\vx) \right|
+    + \left| \E\cqest(\vx) - q(\vx) \right|          \\
+ &  + \E \left[ \cpest(\vx) - p(\vx) \right]^2
+    + \E \left[ \cqest(\vx) - q(\vx) \right]^2       \\
+ &  + \left| \E(\cpest(\vx) - p(\vx))(\cqest(\vx) - q(\vx)) \right| \, d\vx \\
+\end{align*}
+Then, H\"{o}lder's Inequality, Lemma 3.1, and a
+standard kernel density estimation result (CITATION NEEDED),
+\begin{align*}
+|\E D_\alpha(\cpest \| \cqest) - D_\alpha(p \| q)|
+ &  \leq \frac{C_FC_L}{|\alpha - 1|\kappa_1} \left(
+    \sqrt{\int_\X \left( \E\cpest(\vx) - p(\vx) \right)^2 \, d\vx} \right.
+    + \sqrt{\int_\X \left( \E\cqest(\vx) - q(\vx) \right)^2 \, d\vx} & \mbox{(H\"{o}lder Inequality)} \\
+ &  + \int_\X \E \left[ \cpest(\vx) - p(\vx) \right]^2
+    + \E \left[ \cqest(\vx) - q(\vx) \right]^2 \, d\vx       \\
+ &  + \left. \sqrt{\int_\X (\E\cpest(\vx) - p(\vx))^2
+            \int_\X (\E\cqest(\vx) - q(\vx))^2 \, d\vx} \right) \\
+ &  \leq \left( C_2 + C_3 \right)h^\beta
+    + k_2 h^{2\beta}
+    + k_3 \frac{\left( 2C_K \right)^d}{nh^d} & \mbox{(Bias Lemma)} \\
+ & \leq C\left(h^\beta + h^{2\beta} + \frac{1}{nh^d}\right), & \qed
+\end{align*}
+for some $C > 0$ not depending on $n$ or $h$.
+
+\subsection{Variance Bound}
+Let $\cpest'(\vx)$ and $\cqest'(\vx)$ denote the kernel density estimates with
+$\vx^j$ replaced by $(\vx^j)'$. By (\ref{ineq:log}),
+(\ref{ineq:parts}), and the Mean Value Theorem, $\exists \xi : \X \to \R^2$ on
+the line segment between $(\cpest,\cqest)$ and $(p,q)$,
+\begin{align*}
+|D_\alpha(\cpest\|\cqest) - D_\alpha(\pest'\|\qest')|
+ &  = \frac{1}{|\alpha - 1|}
+        \left| \log\left(\int_\X f(\cpest(\vx), \cqest(\vx)) \, d\vx\right)
+    - \log\left(\int_\X f(\cpest'(\vx),\cqest'(\vx)) \, d\vx\right) \right| \\
+ &  \leq \frac{C_L}{|\alpha - 1|} \int_\X
+        \left| f(\cpest(\vx),\cqest(\vx)) - f(\cpest'(\vx),\cqest'(\vx)) \right| \, d\vx  \\
+ &  \leq \frac{C_L}{|\alpha - 1|}
+    \int_\X \left| \frac{\partial f}{\partial x_1} (\xi(\vx))
+            (\cpest(\vx) - \cpest'(\vx))
+    + \frac{\partial f}{\partial x_2} (\xi(\vx))
+            (\cqest(\vx) - \cqest'(\vx)) \right| \, d\vx \\
+ &  \leq \frac{C_LC_f}{|\alpha - 1|} \left(
+    \int_\X \left| \cpest(\vx) - \cpest'(\vx) \right| \, d\vx
+    + \int_\X \left| \cqest(\vx) - \cqest'(\vx) \right| \, d\vx \right) \\
+ &  \leq \frac{4\cdot2^dC_LC_f}{|\alpha - 1|n}.
+\end{align*}
+By McDiarmid's Inequality, this gives the bound,
+\[\sup_{p \in \Sigma_{\kappa_1,\kappa_2}(\beta,L)}
+    \pr \left( |D_\alpha(\cpest,\cqest) - \E D_\alpha(\pest,\qest)| > \e \right)
+    \leq 2\exp \left(
+            -\frac{C^2\e^2n}{2^{2d + 4}}
+         \right),
+\]    
+\[\mbox{where } \quad
+  C = \frac{|\alpha - 1|}{C_LC_f}. \qed
+\]
+
+\section{Experiment}
+\end{document}

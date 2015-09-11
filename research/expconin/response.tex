@@ -1,0 +1,118 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{fullpage}
+%\usepackage[margin=0.8in]{geometry}
+\usepackage[]{graphicx}
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%HEADER%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mytitle}{Author Response}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%CONTENT MACROS%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\qed}{\quad \ensuremath{\blacksquare}}    % QED blacksquare
+\newcommand{\inv}{^{-1}}                            % inverse operator
+\newcommand{\sminus}{\backslash}                    % set minus
+\newcommand{\N}{\mathbb{N}}                         % natural numbers
+\newcommand{\R}{\mathbb{R}}                         % real numbers
+\newcommand{\pow}{\mathcal{P}}                      % power set
+\newcommand{\Se}{\mathcal{S}}                       % partition
+\newcommand{\e}{\varepsilon}                        % \varepsilon
+\newcommand{\X}{\mathcal{X}}                        % domain
+\newcommand{\A}{\mathcal{A}}                        % sub-domain
+\newcommand{\E}{\mathbb{E}}                         % expected value
+\newcommand{\pr}{\mathbb{P}}                        % probability
+\newcommand{\cpest}{\widehat{p}_h}                  % clipped estimated p_n
+\newcommand{\cqest}{\widehat{q}_h}                  % clipped estimated q_n
+\newcommand{\pest}{\widetilde{p}_h}                 % estimated p_n
+\newcommand{\qest}{\widetilde{q}_h}                 % estimated q_n
+\newcommand{\vx}{\vec{x}}                           % vector x
+\newcommand{\vy}{\vec{y}}                           % vector y
+\newcommand{\vz}{\vec{z}}                           % vector z
+\newcommand{\vv}{\vec{v}}                           % vector v
+\newcommand{\vu}{\vec{u}}                           % vector u
+\newcommand{\vi}{{\vec{i}}}                         % multi-index vector i
+\newcommand{\dist}{\operatorname{dist}}             % distance operator
+\newcommand{\C}{\mathcal{C}}                        % center region of [0,1]^d
+\newcommand{\B}{\mathcal{B}}                        % border region of [0,1]^d
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+\begin{center}
+{\Large \mytitle} \\
+\end{center}
+
+Where the points below (except 1 and 4) apply to both $p$ and $q$, for
+simplicity, we refer only to $p$.
+
+\paragraph{H\"older and Boundary assumptions:}
+If $\beta \in \N$ ($\beta \geq 1$) and $p \in C^\beta(\X;\R)$, then, since each
+$\frac{\partial p}{\partial x_i}$ is continuous and $\X$ is compact, each
+$\frac{\partial p}{\partial x_i}$ is bounded, and hence, since $\X$ is convex,
+$p$ is Lipschitz. Also, since $\X$ is compact, $p$ is bounded. Thus, for any
+$r \in [1,\infty)$, $\exists L, \kappa_1,\kappa_2 \in (0,\infty)$ such that
+$C^\beta(\X;\R) \subseteq \Sigma_\kappa(\beta,L,r)$; i.e. any degree of
+continuous differentiability implies the H\"older condition.
+
+\paragraph{Behavior as $\alpha \to 1$:}
+The problem of choosing $\alpha_n$ as a function of sample size $n$ to
+estimate behavior as $\alpha \to 1$ (the case of KL-divergence) is presently an
+open problem, for both divergence and entropy. In practice $\alpha$ is simply
+set close to $1$ (e.g., $\alpha = 0.999$).
+
+\paragraph{Boundary assumption:}
+The boundary assumption (that all derivatives of $p$ and $q$ vanish on
+$\partial \X$) is necessary for the mirror image kernel to effectively reduce
+boundary bias.
+
+However, this assumption is somewhat less restrictive than it may initially
+seem, because our result naturally extends from the unit cube $\X$ to any
+rectangular domain, with only a constant factor increase in error.
+Consequently, the boundary assumption can be generalized to any distribution on
+$\R^n$ with bounded support if it satisfies the H\"older assumption on an open
+set containing its support.
+
+Nevertheless, our result would be improved if we were to consider the case that
+the derivatives of $p$ and $q$ near the boundary are \emph{small} rather than
+zero, as this includes any probability distribution on a sufficiently large
+domain. This is a good direction for future work.
+
+\paragraph{Boundedness Assumptions:}
+The assumption of $\kappa_1$ (i.e., $p$ and $q$ are bounded above) is trivial,
+since $p$ and $q$ are continuous on $\X$, which is compact.
+
+The assumption that $q$ is bounded away from $0$ by $\kappa_2$ is fairly
+natural, since, if there is any region with positive Lebesgue measure on which
+$q$ is $0$ and $p$ is positive, then $D_\alpha(p\|q) = \infty$.
+
+The assumption of $\kappa_2$ as used in the paper (i.e., that $p$ and $q$ are
+bounded away from $0$) is in fact unnecessarily strong. The reason for this
+assumption is the use of the Mean Value Theorem to bound the difference
+\[\log\left( \int_\X f(p(\vx),q(\vx)) \right)
+    - \log\left( \int_\X f(\cpest(\vx),\cqest(\vx)) \right)
+\]
+in terms of the derivatives of $\log$ and the difference
+\[f(p(\vx),q(\vx)) - f(\cpest(\vx),\cqest(\vx))\]
+(where $f(x,y) = x^\alpha y^{1 - \alpha}$) in terms of the derivatives of $f$.
+
+For the first expression, we simply require a lower bound for
+$\int_\X f(p(\vx),q(\vx))$ and $\int_\X f(\cpest(\vx),\cqest(\vx))$. For the
+latter expression, we only need $q$ bounded below.
+
+Thus, in the important special case of R\'enyi-$\alpha$ entropy (i.e., $q$ is
+the uniform distribution), when $\alpha \geq 1$,
+\[1
+    = \left( \int_\X p(\vx) \, d\vx \right)^\alpha
+    \leq \int_\X p^\alpha(\vx) \, d\vx,
+\]
+by Jensen's inequality, and hence we no longer need $\kappa_2$ at all.
+
+\paragraph{Computational Complexity:}
+The number of terms in the mirror image kernel is $3^d$ and is computed based
+on $n$ data points, computing $\cpest$ and $\cqest$ \emph{at any point} takes
+$O(3^dn)$ time. The remaining task is to estimate the integral
+$\int_\X f(\cpest(\vx),\cqest(\vx))$. Using Monte Carlo estimation (necessary
+for large $d$) with $k$ samples, this would take $O(3^dnk)$ time.
+\end{document}

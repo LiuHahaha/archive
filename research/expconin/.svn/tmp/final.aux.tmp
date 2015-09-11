@@ -1,0 +1,225 @@
+<<<<<<< .mine
+\relax 
+\ifx\hyper@anchor\@undefined
+\global \let \oldcontentsline\contentsline
+\gdef \contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global \let \oldnewlabel\newlabel
+\gdef \newlabel#1#2{\newlabelxx{#1}#2}
+\gdef \newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\let \contentsline\oldcontentsline
+\let \newlabel\oldnewlabel}
+\else
+\global \let \hyper@last\relax 
+\fi
+
+\providecommand*\HyPL@Entry[1]{}
+\citation{renyi61measures,renyi70probability}
+\citation{villmann10mathematical}
+\citation{csiszar67information}
+\citation{vasicek76test,goria05new}
+\citation{Wolsztynski85minimum}
+\citation{Alemany94fractal}
+\citation{hero2002aes,hero02alpha}
+\citation{peng05feature}
+\citation{aghagolzadeh07hierarchical}
+\citation{Hlavackova07causality}
+\citation{lewi07realtime,poczos09identification}
+\citation{chai09exploring}
+\citation{adami04information}
+\citation{Shan05conditionalmutual}
+\citation{radical03,poczos05geodesic,Hulle08constrained,szabo07undercomplete_TCC}
+\citation{kybic06incremental,hero2002aes,hero02alpha}
+\citation{Leonenko-Pronzato-Savani2008,WKV2009Survey}
+\HyPL@Entry{0<</S/D>>}
+\citation{Wang-Kulkarni-Verdu2009}
+\citation{hero02alpha,hero2002aes}
+\citation{gupta12parametric}
+\citation{nguyen09surrogate,nguyen10estimating}
+\citation{2010arXiv1012.4188S}
+\citation{Leonenko-Pronzato-Savani2008}
+\citation{goria05new}
+\citation{leonenko10correction}
+\citation{Poczos-Kirshner-Szepesvari2010,pal10estimation}
+\citation{villmann10mathematical}
+\citation{cichocki09nonnegative}
+\citation{WKV2009Survey}
+\newlabel{sec:Problem}{{3}{2}{Organization\relax }{section.3}{}}
+\newlabel{eq:multinom}{{1}{2}{Organization\relax }{equation.3.1}{}}
+\newlabel{ineq:holder_cond}{{2}{3}{Organization\relax }{equation.3.2}{}}
+\newlabel{eq:k_int}{{3}{3}{Organization\relax }{equation.3.3}{}}
+\newlabel{sec:estimator}{{4}{3}{Organization\relax }{section.4}{}}
+\newlabel{fig:cube}{{1}{3}{Illustration of regions $C_{(S_1,S_2,S_3)}$ with $3 \in S_1$. The region labeled $R$ corresponds to $S_1 = \{3\},S_2 = \{1\},S_3 = \{2\}$}{figure.1}{}}
+\newlabel{def:pluginest}{{4}{3}{Organization\relax }{equation.4.4}{}}
+\newlabel{sec:main-result}{{5}{4}{Organization\relax }{section.5}{}}
+\newlabel{sec:Proofs}{{6}{4}{Organization\relax }{section.6}{}}
+\newlabel{ineq:parts}{{5}{4}{Organization\relax }{equation.6.5}{}}
+\newlabel{ineq:log}{{6}{4}{Organization\relax }{equation.6.6}{}}
+\newlabel{ineq:p_boundary_parts}{{7}{4}{Organization\relax }{equation.6.7}{}}
+\newlabel{eq:mkmass}{{8}{5}{Organization\relax }{equation.6.8}{}}
+\newlabel{ineq:tribnd}{{9}{5}{Organization\relax }{equation.6.9}{}}
+\newlabel{eq:biasC}{{10}{6}{Organization\relax }{equation.6.10}{}}
+\newlabel{eq:CoV}{{11}{6}{Organization\relax }{equation.6.11}{}}
+\bibdata{biblio}
+\bibcite{adami04information}{{1}{2004}{{Adami}}{{}}}
+\bibcite{aghagolzadeh07hierarchical}{{2}{2007}{{Aghagolzadeh et~al.}}{{Aghagolzadeh, Soltanian-Zadeh, Araabi, and Aghagolzadeh}}}
+\bibcite{Alemany94fractal}{{3}{1994}{{Alemany \& Zanette}}{{Alemany and Zanette}}}
+\bibcite{chai09exploring}{{4}{2009}{{Chai et~al.}}{{Chai, Walther, Beck, and Fei-Fei}}}
+\bibcite{cichocki09nonnegative}{{5}{2009}{{Cichocki et~al.}}{{Cichocki, Zdunek, Phan, and Amari}}}
+\bibcite{csiszar67information}{{6}{1967}{{Csisz\'ar}}{{}}}
+\bibcite{goria05new}{{7}{2005}{{Goria et~al.}}{{Goria, Leonenko, Mergel, and Inverardi}}}
+\bibcite{gupta12parametric}{{8}{2010}{{Gupta \& Srivastava}}{{Gupta and Srivastava}}}
+\bibcite{hero02alpha}{{9}{2002{a}}{{Hero et~al.}}{{Hero, Ma, Michel, and Gorman}}}
+\bibcite{hero2002aes}{{10}{2002{b}}{{Hero et~al.}}{{Hero, Ma, Michel, and Gorman}}}
+\bibcite{Hlavackova07causality}{{11}{2007}{{Hlav\'{a}ckova-Schindler et~al.}}{{Hlav\'{a}ckova-Schindler, Palu\^{s}b, Vejmelkab, and Bhattacharya}}}
+\bibcite{Hulle08constrained}{{12}{2008}{{Hulle}}{{}}}
+\bibcite{kybic06incremental}{{13}{2006}{{Kybic}}{{}}}
+\newlabel{sec:numerical}{{7}{7}{Organization\relax }{section.7}{}}
+\bibcite{radical03}{{14}{2003}{{Learned-Miller \& Fisher}}{{Learned-Miller and Fisher}}}
+\bibcite{leonenko10correction}{{15}{2010}{{Leonenko \& Pronzato}}{{Leonenko and Pronzato}}}
+\bibcite{Leonenko-Pronzato-Savani2008}{{16}{2008}{{Leonenko et~al.}}{{Leonenko, Pronzato, and Savani}}}
+\bibcite{lewi07realtime}{{17}{2007}{{Lewi et~al.}}{{Lewi, Butera, and Paninski}}}
+\bibcite{nguyen09surrogate}{{18}{2009}{{Nguyen et~al.}}{{Nguyen, Wainwright, and Jordan.}}}
+\bibcite{nguyen10estimating}{{19}{2010}{{Nguyen et~al.}}{{Nguyen, Wainwright, and Jordan.}}}
+\bibcite{pal10estimation}{{20}{2010}{{P\'al et~al.}}{{P\'al, P\'oczos, and Szepesv\'ari}}}
+\bibcite{peng05feature}{{21}{2005}{{Peng \& Dind}}{{Peng and Dind}}}
+\bibcite{poczos09identification}{{22}{2009}{{P\'{o}czos \& L\H {o}rincz}}{{P\'{o}czos and L\H {o}rincz}}}
+\bibcite{poczos05geodesic}{{23}{2005}{{P\'oczos \& L\H {o}rincz}}{{P\'oczos and L\H {o}rincz}}}
+\bibcite{Poczos-Kirshner-Szepesvari2010}{{24}{2010}{{P\'oczos et~al.}}{{P\'oczos, Kirshner, and Szepesv\'ari}}}
+\bibcite{renyi61measures}{{25}{1961}{{R\'enyi}}{{}}}
+\bibcite{renyi70probability}{{26}{1970}{{R\'enyi}}{{}}}
+\bibcite{Shan05conditionalmutual}{{27}{2005}{{Shan et~al.}}{{Shan, Gong, and Mcowan}}}
+\bibcite{2010arXiv1012.4188S}{{28}{2010}{{{Sricharan} et~al.}}{{{Sricharan}, {Raich}, and {Hero}}}}
+\bibcite{szabo07undercomplete_TCC}{{29}{2007}{{Szab{\'o} et~al.}}{{Szab{\'o}, P{\'o}czos, and L{\H {o}}rincz}}}
+\bibcite{vasicek76test}{{30}{1976}{{Vasicek}}{{}}}
+\bibcite{villmann10mathematical}{{31}{2010}{{Villmann \& Haase}}{{Villmann and Haase}}}
+\bibcite{WKV2009Survey}{{32}{2009{a}}{{Wang et~al.}}{{Wang, Kulkarni, and Verd{\'u}}}}
+\bibcite{Wang-Kulkarni-Verdu2009}{{33}{2009{b}}{{Wang et~al.}}{{Wang, Kulkarni, and Verd{\'u}}}}
+\bibcite{Wolsztynski85minimum}{{34}{2005}{{Wolsztynski et~al.}}{{Wolsztynski, Thierry, and Pronzato}}}
+\bibstyle{icml2014}
+=======
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{kullback51KL}
+\citation{renyi61measures,renyi70probability}
+\citation{villmann10mathematical}
+\citation{bregman67divergence}
+\citation{lin91divergence}
+\citation{Borgwardt06MMD}
+\citation{csiszar67information}
+\citation{poczos12kernelimages,oliva13ICML}
+\citation{vasicek76test,goria05new}
+\citation{Wolsztynski85minimum}
+\citation{Alemany94fractal}
+\citation{hero2002aes,hero02alpha}
+\citation{peng05feature}
+\citation{aghagolzadeh07hierarchical}
+\citation{Hlavackova07causality}
+\citation{lewi07realtime}
+\citation{chai09exploring}
+\citation{adami04information}
+\citation{Shan05conditionalmutual}
+\citation{radical03,Hulle08constrained,szabo07undercomplete_TCC}
+\citation{kybic06incremental,hero2002aes,hero02alpha}
+\citation{Leonenko-Pronzato-Savani2008,WKV2009Survey}
+\citation{liu12exponential}
+\citation{liu12exponential}
+\citation{liu12exponential}
+\citation{liu12exponential}
+\citation{poczos11AISTATS}
+\citation{Wang-Kulkarni-Verdu2009}
+\citation{kozachenko87statistical}
+\citation{perez08estimation}
+\citation{hero02alpha,hero2002aes}
+\citation{gupta12parametric}
+\citation{nguyen09surrogate,nguyen10estimating}
+\citation{2010arXiv1012.4188S,Laurent96Efficient,birge95estimation}
+\citation{sricharan12ensemble}
+\citation{Leonenko-Pronzato-Savani2008}
+\citation{goria05new}
+\citation{leonenko10correction}
+\citation{Poczos-Kirshner-Szepesvari2010,pal10estimation}
+\citation{villmann10mathematical}
+\citation{cichocki09nonnegative}
+\citation{WKV2009Survey}
+\newlabel{sec:related}{{2}{2}{Organization}{section.2}{}}
+\newlabel{sec:Problem}{{3}{2}{Organization}{section.3}{}}
+\newlabel{eq:multinom}{{1}{3}{Organization}{equation.3.1}{}}
+\newlabel{ineq:holder_cond}{{2}{3}{Organization}{equation.3.2}{}}
+\newlabel{eq:k_int}{{3}{3}{Organization}{equation.3.3}{}}
+\newlabel{sec:estimator}{{4}{3}{Organization}{section.4}{}}
+\newlabel{fig:cube}{{1}{4}{Illustration of regions $C_{(S_1,S_2,S_3)}$ with $3 \in S_1$. The region labeled $R$ corresponds to $S_1 = \{3\},S_2 = \{1\},S_3 = \{2\}$}{figure.1}{}}
+\newlabel{def:pluginest}{{4}{4}{Organization}{equation.4.4}{}}
+\newlabel{sec:main-result}{{5}{4}{Organization}{section.5}{}}
+\newlabel{sec:Proofs}{{6}{4}{Organization}{section.6}{}}
+\newlabel{ineq:parts}{{5}{4}{Organization}{equation.6.5}{}}
+\newlabel{ineq:log}{{6}{5}{Organization}{equation.6.6}{}}
+\newlabel{ineq:p_boundary_parts}{{7}{5}{Organization}{equation.6.7}{}}
+\newlabel{eq:mkmass}{{8}{5}{Organization}{equation.6.8}{}}
+\newlabel{ineq:tribnd}{{9}{6}{Organization}{equation.6.9}{}}
+\newlabel{eq:biasC}{{10}{6}{Organization}{equation.6.10}{}}
+\newlabel{eq:CoV}{{11}{6}{Organization}{equation.6.11}{}}
+\bibdata{biblio}
+\bibcite{adami04information}{{1}{2004}{{Adami}}{{}}}
+\bibcite{aghagolzadeh07hierarchical}{{2}{2007}{{Aghagolzadeh et~al.}}{{Aghagolzadeh, Soltanian-Zadeh, Araabi, and Aghagolzadeh}}}
+\newlabel{sec:numerical}{{7}{7}{Organization}{section.7}{}}
+\bibcite{Alemany94fractal}{{3}{1994}{{Alemany \& Zanette}}{{Alemany and Zanette}}}
+\bibcite{birge95estimation}{{4}{1995}{{Birge \& Massart}}{{Birge and Massart}}}
+\bibcite{Borgwardt06MMD}{{5}{2006}{{Borgwardt et~al.}}{{Borgwardt, Gretton, Rasch, Kriegel, Schölkopf, and Smola}}}
+\bibcite{bregman67divergence}{{6}{1967}{{Bregman}}{{}}}
+\bibcite{chai09exploring}{{7}{2009}{{Chai et~al.}}{{Chai, Walther, Beck, and Fei-Fei}}}
+\bibcite{cichocki09nonnegative}{{8}{2009}{{Cichocki et~al.}}{{Cichocki, Zdunek, Phan, and Amari}}}
+\bibcite{csiszar67information}{{9}{1967}{{Csisz\'ar}}{{}}}
+\bibcite{goria05new}{{10}{2005}{{Goria et~al.}}{{Goria, Leonenko, Mergel, and Inverardi}}}
+\bibcite{gupta12parametric}{{11}{2010}{{Gupta \& Srivastava}}{{Gupta and Srivastava}}}
+\bibcite{hero02alpha}{{12}{2002{a}}{{Hero et~al.}}{{Hero, Ma, Michel, and Gorman}}}
+\bibcite{hero2002aes}{{13}{2002{b}}{{Hero et~al.}}{{Hero, Ma, Michel, and Gorman}}}
+\bibcite{Hlavackova07causality}{{14}{2007}{{Hlav\'{a}ckova-Schindler et~al.}}{{Hlav\'{a}ckova-Schindler, Palu\^{s}b, Vejmelkab, and Bhattacharya}}}
+\bibcite{Hulle08constrained}{{15}{2008}{{Hulle}}{{}}}
+\bibcite{kozachenko87statistical}{{16}{1987}{{Kozachenko \& Leonenko}}{{Kozachenko and Leonenko}}}
+\bibcite{kullback51KL}{{17}{1951}{{Kullback \& Leibler}}{{Kullback and Leibler}}}
+\bibcite{kybic06incremental}{{18}{2006}{{Kybic}}{{}}}
+\bibcite{Laurent96Efficient}{{19}{1996}{{Laurent}}{{}}}
+\bibcite{radical03}{{20}{2003}{{Learned-Miller \& Fisher}}{{Learned-Miller and Fisher}}}
+\bibcite{leonenko10correction}{{21}{2010}{{Leonenko \& Pronzato}}{{Leonenko and Pronzato}}}
+\bibcite{Leonenko-Pronzato-Savani2008}{{22}{2008}{{Leonenko et~al.}}{{Leonenko, Pronzato, and Savani}}}
+\bibcite{lewi07realtime}{{23}{2007}{{Lewi et~al.}}{{Lewi, Butera, and Paninski}}}
+\bibcite{lin91divergence}{{24}{1991}{{Lin}}{{}}}
+\bibcite{liu12exponential}{{25}{2012}{{Liu et~al.}}{{Liu, Lafferty, and Wasserman}}}
+\bibcite{nguyen09surrogate}{{26}{2009}{{Nguyen et~al.}}{{Nguyen, Wainwright, and Jordan.}}}
+\bibcite{nguyen10estimating}{{27}{2010}{{Nguyen et~al.}}{{Nguyen, Wainwright, and Jordan.}}}
+\bibcite{oliva13ICML}{{28}{2013}{{Oliva et~al.}}{{Oliva, Poczos, and Schneider}}}
+\bibcite{pal10estimation}{{29}{2010}{{P\'al et~al.}}{{P\'al, P\'oczos, and Szepesv\'ari}}}
+\bibcite{peng05feature}{{30}{2005}{{Peng \& Dind}}{{Peng and Dind}}}
+\bibcite{perez08estimation}{{31}{2008}{{P\'erez-Cruz}}{{}}}
+\bibcite{poczos11AISTATS}{{32}{2011}{{Poczos \& Schneider}}{{Poczos and Schneider}}}
+\bibcite{poczos12kernelimages}{{33}{2012}{{Poczos et~al.}}{{Poczos, Xiong, Sutherland, and Schneider}}}
+\bibcite{Poczos-Kirshner-Szepesvari2010}{{34}{2010}{{P\'oczos et~al.}}{{P\'oczos, Kirshner, and Szepesv\'ari}}}
+\bibcite{renyi61measures}{{35}{1961}{{R\'enyi}}{{}}}
+\bibcite{renyi70probability}{{36}{1970}{{R\'enyi}}{{}}}
+\bibcite{Shan05conditionalmutual}{{37}{2005}{{Shan et~al.}}{{Shan, Gong, and Mcowan}}}
+\bibcite{2010arXiv1012.4188S}{{38}{2010}{{{Sricharan} et~al.}}{{{Sricharan}, {Raich}, and {Hero}}}}
+\bibcite{sricharan12ensemble}{{39}{2012}{{Sricharan et~al.}}{{Sricharan, Wei, and Hero}}}
+\bibcite{szabo07undercomplete_TCC}{{40}{2007}{{Szab{\'o} et~al.}}{{Szab{\'o}, P{\'o}czos, and L{\H {o}}rincz}}}
+\bibcite{vasicek76test}{{41}{1976}{{Vasicek}}{{}}}
+\bibcite{villmann10mathematical}{{42}{2010}{{Villmann \& Haase}}{{Villmann and Haase}}}
+\bibcite{WKV2009Survey}{{43}{2009{a}}{{Wang et~al.}}{{Wang, Kulkarni, and Verd{\'u}}}}
+\bibcite{Wang-Kulkarni-Verdu2009}{{44}{2009{b}}{{Wang et~al.}}{{Wang, Kulkarni, and Verd{\'u}}}}
+\bibcite{Wolsztynski85minimum}{{45}{2005}{{Wolsztynski et~al.}}{{Wolsztynski, Thierry, and Pronzato}}}
+\bibstyle{icml2014}
+>>>>>>> .r15

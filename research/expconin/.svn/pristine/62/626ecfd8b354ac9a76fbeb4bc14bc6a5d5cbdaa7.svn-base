@@ -1,0 +1,42 @@
+Holder Assumption:
+If, for a positive integer beta, p is beta times continuously differentiable,
+then, since X is compact and convex, the (beta - 1) derivative of p is
+Lipschitz by the Mean Value Theorem. Thus, any degree of continuous
+differentiability is sufficient to satisfy the Holder Condition.
+
+Behavior as alpha -> 1:
+The problem of choosing alpha_n as a function of sample size n so as to
+estimate KL-divergence or Shannon entropy (alpha -> 1) is presently an open
+problem. In practice alpha near 1 (e.g., alpha = 0.999) is used.
+
+Boundary Assumptions:
+The derivatives of p and q must vanish at the boundary of X for the mirror
+image kernel to effectively reduce boundary bias. However, this assumption is
+less restrictive than it may seem, because our result naturally extends via an
+affine change of variables from the unit cube to any rectangular domain with
+only a constant factor increase in error. Consequently, the boundary conditions
+can be generalized to any distribution on R^n with bounded support if it obeys
+the Holder condition on an open set containing the closure of its domain.
+
+Nevertheless, a good direction for future work would be considering the case
+that the derivatives of p and q are small, rather than zero, on X as this case
+includes any probability distribution on a sufficiently large domain.
+
+Boundedness Assumptions:
+The upper bound kappa_2 is trivial, since p and q are continuous on X, which is
+compact. The lower bound kappa_2 > 0 for q is somewhat natural, since, if q = 0
+on any region of positive measure where p is positive, then
+D_alpha(p||q) = infinity. The case where q is 0 on a set of measure zero should
+still be considered, but requires more elaborate measure-theoretic analysis.
+
+The lower bound kappa_1 > 0 is a technical assumption needed to apply the mean
+value theorem in the Logarithm Bound (Line 440). It would be sufficient to
+lower bound the integral of f(p(x),q(x)). In the important case of Renyi
+entropy (i.e., q is the uniform distribution), we can drop this assumption
+using Jensen's Inequality and (in the case alpha < 1) the upper bound kappa_2,
+since the integral of p over X is 1.
+
+Computational Complexity:
+The number of terms in the mirror image kernel is 3^d, and hence computing the
+density estimate at a point takes O(n3^d) time. Then, computing the integral
+via Monte Carlo integration wiht k samples would take O(kn3^d) time.

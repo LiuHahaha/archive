@@ -1,0 +1,170 @@
+\begin{abstract}
+Estimating divergences in a consistent way is of great importance in many
+machine learning tasks. Although this is a fundamental problem in nonparametric
+statistics, to the best of our knowledge there has been no finite sample
+exponential inequality convergence bound derived for any divergence estimators.
+The main contribution of our work is to provide such a bound for an estimator
+of R\'enyi-$\alpha$ divergence for a smooth H\"older class of densities on the
+$d$-dimensional unit cube $[0,1]^d$.
+%We also demonstrate the applicability of the estimator in mutual information estimation and
+We also illustrate our theoretical results with a numerical experiment.
+\end{abstract}
+
+\section{Introduction}
+There are several important problems in machine learning and statistics that
+require the estimation of the distance or divergence between distributions. In
+the past few decades many different kinds of divergences have been defined to
+measure the discrepancy between distributions. They include the
+Kullback--Leibler (\acro{KL}) \citep{kullback51KL},
+R\'enyi-$\alpha$ \citep{renyi61measures,renyi70probability},
+Tsallis-$\alpha$ \citep{villmann10mathematical},
+Bregman \citep{bregman67divergence},
+%Jensen--Shannon \citep{lin91divergence},
+$L_p$,
+maximum mean discrepancy \citep{Borgwardt06MMD},
+Csisz\'ar's-$f$ divergence \citep{csiszar67information}
+and many others.
+
+Most machine learning algorithms operate on finite dimensional feature vectors.
+Using divergence estimators one can develop machine learning algorithms (such
+as regression, classification, clustering, and  others) that can operate on
+sets and distributions \citep{poczos12kernelimages,oliva13ICML}. Under certain
+conditions, divergences can estimate entropy and mutual information. Entropy
+estimators are important in
+goodness-of-fit testing \citep{goria05new},
+parameter estimation in semi-parametric models \citep{Wolsztynski85minimum},
+studying fractal random walks \citep{Alemany94fractal},
+and texture classification \citep{hero02alpha,hero2002aes}.
+Mutual information estimators have been used
+in feature selection \citep{peng05feature},
+clustering \citep{aghagolzadeh07hierarchical},
+%causality detection \citep{Hlavackova07causality},
+optimal experimental design \citep{lewi07realtime}, %poczos09identification
+f\acro{MRI} data processing \citep{chai09exploring},
+prediction of protein structures \citep{adami04information},
+boosting and facial expression recognition \citep{Shan05conditionalmutual}.
+Both entropy estimators and mutual information estimators have been used for
+independent component and subspace analysis
+\citep{radical03,szabo07undercomplete_TCC}, %poczos05geodesic %Hulle08constrained
+as well as for image registration
+\citep{kybic06incremental,hero02alpha,hero2002aes}.
+For further applications, see
+\citet{Leonenko-Pronzato-Savani2008}.
+
+In this paper we will focus on the estimation of R\'enyi-$\alpha$ divergences.
+This important class contains the Kullback--Leibler divergence as the
+$\alpha\to 1$ limit case and can also be related to the Tsallis-$\alpha$,
+Jensen-Shannon, and Hellinger divergences.\footnote{Some of the divergences
+mentioned in the paper are distances as well. To simplify the treatment we will
+call all of them divergences.}
+It can be shown that many information theoretic quantities
+(including entropy, conditional entropy, and mutual information)
+can be computed as special cases of R\'enyi-$\alpha$ divergence.
+
+In our framework, we assume that the underlying distributions are not given
+explicitly. Only two finite, independent and identically distributed (i.i.d.)
+samples are given from some unknown, continuous, nonparametric distributions.
+
+Although many of the above mentioned divergences were
+defined a couple of decades ago, interestingly there are still many open
+questions left to be answered about the properties of their estimators. In
+particular, even simple questions, such as rates are unknown for many
+estimators, and to the best of our knowledge no finite sample exponential
+concentration bounds have ever been derived for divergence estimators.
+
+\textbf{Our main contribution} is to derive an exponential concentration bound
+for a particular consistent, nonparametric, R\'enyi-$\alpha$ divergence
+estimator. We illustrate the behaviour of the estimator with a numerical
+experiment.
+
+\subsection*{Organization}
+In the next section we discuss related work (Section~\ref{sec:related}).
+In Section~\ref{sec:Problem} we formally
+define the R\'enyi-$\alpha$ divergence estimation problem, and
+introduce the notation and the assumptions used in the paper.
+Section~\ref{sec:estimator} presents the divergence estimator that we study in
+the paper.
+Section~\ref{sec:main-result} contains our main theoretical contibutions
+concerning the exponential concentration bound of the divergence estimator.
+Section~\ref{sec:Proofs} contains the proofs of our theorems.
+To illustrate the behaviour of the estimator, we provide a simple numerical
+experiment in Section~\ref{sec:numerical}.
+We draw conclusions in Section~\ref{sec:Conclusion}.
+
+\section{Related Work} \label{sec:related}
+
+Probably the closest work to our contribution is \citet{liu12exponential}, who
+derived exponential-concentration bound for an estimator of the two-dimensional
+Shannon entropy. We generalize these results in several aspects:
+\begin{enumerate}
+\item The estimator of \citet{liu12exponential} operates in the unit square $[0,1]^2$. Our
+estimator operates on the $d$-dimensional unit hypercube $[0,1]^d$.
+\item In \citet{liu12exponential} the exponential concentration inequality was proven for
+densities in the H\"{o}lder class $\Sigma_\kappa(2,L,2)$, whereas our inequality
+applies for densities in the H\"{o}lder class $\Sigma_\kappa(\beta,L,r)$ for
+any fixed $\beta \geq 0, r \geq 1$ (see Section~\ref{sec:Assumptions} for definitions of these
+H\"older classes).
+% (the estimator converges as $O\left( n^{-\frac{\beta}{d + \beta}} \right)$).
+\item While \citet{liu12exponential} estimated the Shannon entropy using one i.i.d. sample set, in this paper
+we estimate the R\'enyi-$\alpha$ divergence using two i.i.d. sample sets.
+\end{enumerate}
+
+To the best of our knowledge, only very few consistent nonparametric
+estimators exist for R\'enyi-$\alpha$ divergences: \citet{poczos11AISTATS}
+proposed a $k$-nearest neighbour based estimator and proved the weak
+consistency of the estimator, but they did not study the convergence rate of
+the estimator.
+
+\citet{Wang-Kulkarni-Verdu2009} provided an estimator for
+the $\alpha \to 1$ limit case only, i.e., for the
+\acro{KL}-divergence. They did not study the convergence rate either, and
+there is also an apparent error in this work; they applied the reverse Fatou
+lemma under conditions when it does not hold. This error originates in the work
+ \citet{kozachenko87statistical} and can also be found in other works.
+Recently, \citet{perez08estimation} has proposed another consistency proof for
+this estimator, but it also contains some errors: he applies the strong law of
+large numbers under conditions when it does not hold and also assumes that
+convergence in probability implies almost sure convergence.
+
+\citet{hero02alpha,hero2002aes} also investigated the
+R\'enyi divergence estimation problem but assumed that one of the two
+density functions is known. \citet{gupta12parametric} developed
+algorithms for estimating the Shannon entropy and the \acro{KL}
+divergence for certain parametric
+families.
+
+Recently, \citet{nguyen10estimating}
+developed methods for estimating $f$-divergences using their
+variational characterization properties. They estimate the likelihood
+ratio of the two underlying densities and plug that into the
+divergence formulas. This approach involves solving a convex
+minimization problem over an infinite-dimensional function space. For
+certain function classes defined by reproducing kernel Hilbert spaces
+(\acro{RKHS}), however, they were able to reduce the computational
+load from solving infinite-dimensional problems to solving
+$n$-dimensional problems, where $n$ denotes the sample size. When $n$
+is large, solving these convex problems can still be very demanding.
+They studied the convergence rate of the estimator, but did not derive
+exponential concentration bounds for the estimator.
+
+\citet{2010arXiv1012.4188S,Laurent96Efficient,birge95estimation} studied the
+estimation of non-linear functionals of density. They, however, did not study
+the R\'enyi divergence estimation and did not derive exponential concentration
+bounds either. Using ensemble estimators, \citet{sricharan12ensemble} derived
+fast rates for entropy estimation, but they did not investigate the divergence
+estimation problem.
+
+\citet{Leonenko-Pronzato-Savani2008} and \citet{goria05new}
+considered Shannon and R\'enyi-$\alpha$ entropy estimation from a
+single sample.\footnote{The original presentations of these works
+contained some errors; \citet{leonenko10correction} provide
+corrections for some of these theorems.} In this work, we study
+divergence estimators using two independent samples.   Recently,
+\citet{pal10estimation} 
+proposed a method for consistent R\'enyi information estimation, but
+this estimator also uses one sample only and cannot be used for estimating
+R\'enyi divergences.
+
+Further information and useful reviews of several
+different divergences can be found, e.g.,
+in \citet{villmann10mathematical}. %\citet{cichocki09nonnegative}
