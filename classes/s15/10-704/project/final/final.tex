@@ -61,13 +61,10 @@ for information theoretic functionals of probability density functions, under
 the assumption of independent and identically distributed (IID) data. However,
 estimators designed for IID data fail to capture relevant information when
 presented with time series data. We first present information theoretic
-functionals which take into account temporal dependence patterns, and then
-discuss methods for estimating these functionals. We then present an empirical
+functionals which take into account temporal dependence patterns and discuss
+methods for estimating these functionals. We then present an empirical
 evaluation of these estimators, in which we study the abilities of different
-estimators to detect dependencies in different types of synthetic data. This
-reveals novel patterns in the performance of these estimators over varying
-inputs, resulting in new understanding of the regimes in which different
-methods should be used to measure dependence between variables.
+estimators to detect dependencies in different types of synthetic data.
 \end{abstract}
 
 \section{Introduction}
@@ -143,8 +140,8 @@ quantities. Otherwise, there has been much recent work on estimating
 information theoretic functionals in the case of IID continuous data
 (\cite{pal2010estimation,nguyen2010estimating,singh14densityfunc,krishnamurthy14divergences,moon14ensemble,gao2014stronglyDependent}).
 
-TODO: See Hlavackova-Schindler et al (2007) \emph{Causality detection based
-on information-theoretic approaches in time series analysis}. Phys. Rep.
+[TODO: See Hlavackova-Schindler et al (2007) \emph{Causality detection based
+on information-theoretic approaches in time series analysis}. Phys. Rep.]
 
 \section{Transfer Entropy}
 \label{sec:TE}
@@ -189,6 +186,8 @@ estimation tractable. In particular, estimating transfer entropy reduces to
 estimating a low-dimensional conditional entropy. This conditional entropy was
 then estimated using previously derived methods, as discussed in the
 Supplementary Material.
+
+[TODO: Discuss directed information $I_{\X \to \Y}$.]
 
 % TODO: \section{Directed Information}
 % The directed information $I_{\X \to \Y}$ is defined by
@@ -508,8 +507,6 @@ using certain corrections.
 \subsection{Conclusions to draw from the experiments}
 The primary practical lessons to glean from the empirical results are that
 \begin{enumerate}
-% \item The number of permutations needed in the permutation test not be
-% extremely large
 \item MIR is highly reliable without prior knowledge about the dependence
 structure.
 \item Transfer entropy and mutual information can have higher power
@@ -524,10 +521,11 @@ on the number of samples needed for power.
 \end{enumerate}
 
 \section{Summary and Future Work}
-In this paper, we
+In this project, we
 \begin{enumerate}
-\item discussed the intuition behind and relationships between some quantities
-that measure dependence between time series.
+\item discussed intuition behind and relationships between some quantities that
+measure dependence between time series without making distributional
+assumptions.
 \item designed estimators for these quantities.
 \item empirically compared the abilities of these estimators to detect
 different dependence structures under noise.
