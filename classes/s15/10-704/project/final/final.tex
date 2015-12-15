@@ -6,9 +6,9 @@
 \usepackage{graphicx}
 \usepackage{mathrsfs}
 
-% For bibliography
-\usepackage[round]{natbib}
-\renewcommand{\bibsection}{}
+% % For bibliography
+% \usepackage[round]{natbib}
+% \renewcommand{\bibsection}{}
 
 \title{Information Theoretic Estimators for Dependence in Time Series}
 
@@ -49,7 +49,7 @@ Pittsburgh, PA 15213 \\
 \newcommand\ind{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
 
-% \nipsfinalcopy % Uncomment for camera-ready version
+\nipsfinalcopy % Uncomment for camera-ready version
 
 \begin{document}
 
@@ -129,31 +129,32 @@ for each $i \in \{\beta + 1,\dots,n\}$,
 \label{marginal_markov}
 \end{equation}
 Mixing assumptions come in several forms and are generally more complicated,
-both to define and to verify for real data. Thus, we discuss them only where
-necessary in our theoretical work in the Supplementary Material, where they
-determine the rate of convergence of ours estimators.
+both to define and to verify for real data. [TODO: Mention Cosma's paper in
+estimating $\beta$-mixing rates.] Thus, we discuss them only where necessary
+in our theoretical work in the Supplementary Material, where they determine the
+rate of convergence of ours estimators.
 
 \section{Related Work}
-\citet{amblard2012relation} review the histories of and theoretical
+\cite{amblard2012relation} reviews the histories of and theoretical
 relationships between direction information, Granger causality, and the mutual
 information rate. However, they do not give empirical evaluation of the these
 quantities, and do not discuss estimation of the relevant information theoretic
 quantities. Otherwise, there has been much recent work on estimating
-information theoretic functionals in the case of IID data
-\citep{pal2010estimation,nguyen2010estimating,singh14densityfunc,krishnamurthy14divergences,moon14ensemble,gao2014stronglyDependent}.
+information theoretic functionals in the case of IID continuous data
+(\cite{pal2010estimation,nguyen2010estimating,singh14densityfunc,krishnamurthy14divergences,moon14ensemble,gao2014stronglyDependent}).
 
-% TODO: See Hlavackova-Schindler et al (2007) \emph{Causality detection based
-% on information-theoretic approaches in time series analysis}. Phys. Rep.
+TODO: See Hlavackova-Schindler et al (2007) \emph{Causality detection based
+on information-theoretic approaches in time series analysis}. Phys. Rep.
 
 \section{Transfer Entropy}
 \label{sec:TE}
-One information theoretic functional that has been studied previously is the
-notion of transfer entropy (actually a case of conditional mutual information),
-defined for general time series $\X$ and $\Y$ as
+One information theoretic functional designed specifically for time series
+is the transfer entropy (actually a case of conditional mutual information).
+Introduced by \cite{schreiber00transferEntropy}, the transfer entropy
+$T_{\X \to \Y}^n$ is defined for general time series $\X$ and $\Y$ by
 \[T_{\X \to \Y}^n
     = H(Y_n | \{Y_i\}_{i = 1}^{n - 1}) - H(Y_n | \{X_i\}_{i = 1}^{n - 1}, \{Y_i\}_{i = 1}^{n - 1})
-    = I(Y_n; \{X_i\}_{i = 1}^{n - 1} | \{Y_i\}_{i = 1}^{n - 1}).
-\]
+    = I(Y_n; \{X_i\}_{i = 1}^{n - 1} | \{Y_i\}_{i = 1}^{n - 1}).\]
 Thus, transfer entropy can be equivalently thought of as the reduction in
 uncertainty of $Y_n$ upon learning $\{X_i\}_{i = 1}^n$ when one already knows
 $\{Y_i\}_{i = 1}^n$, or the mutual information between the last point of $Y$
@@ -322,8 +323,7 @@ as well as the behaviors of two approaches to estimating these quantities,
 $k$-nearest neighbor (KNN) estimators and those based on kernel density
 estimates (KDE estimators).
 Most previous empirical studies of information theoretic estimators
-\citep{singh14densityfunc,krishnamurthy14divergences,pal2010estimation,
-			  moon14ensemble,gao2014stronglyDependent}
+(\cite{singh14densityfunc, krishnamurthy14divergences, pal2010estimation,moon14ensemble,gao2014stronglyDependent})
 have compared the absolute errors of estimators for distributions where the
 true quantity can be computed analytically. In our experiments, we instead
 compare the power of using different estimators to detect dependencies at a
@@ -342,20 +342,20 @@ estimated mutual information between two variables is itself not interpretable
 or informative; rather, we are interested only how this quantity compares
 across different pairs of variables, through, for example, the ranking of the
 mutual information estimates over variables. Furthermore, for example,
-\citet{gao2014stronglyDependent} showed that classical KNN estimators tend
+\cite{gao2014stronglyDependent} showed that classical KNN estimators tend
 severely underestimate the mutual information between variables which are
 strongly dependent.
-\footnote{\citet{gao2014stronglyDependent} also show that this can be corrected
+\footnote{\cite{gao2014stronglyDependent} also show that this can be corrected
 by performing local dimension reduction before applying the estimators.
 Intuitively, KDE estimators are also subject to this problem and can be likely
-corrected using locally adaptive kernels, but this has not yet been shown.}
-On the other hand, the estimated mutual information still tends, on average, to
-monotonically increase with the true mutual information, and hence, given
+corrected using locally adaptive kernels, but this has not yet been studied.}
+On the other hand, the estimated mutual information still tends, in expectation,
+to monotonically increase with the true mutual information, and hence, given
 sufficient data, we can still reliably estimate the ranking of mutual
 information. As explained in the next section, out experiments rely only on the
 ranking of the mutual information estimates, and are thus more robust to issues
 of precise estimation such as that discussed in
-\citet{gao2014stronglyDependent}. As a consequence of this robustness, we are
+\cite{gao2014stronglyDependent}. As a consequence of this robustness, we are
 also able to obtain good results with in our experiments with samples that are
 far smaller (by at least an order of magnitude) than previous experiments on
 estimating information theoretic quantities.
@@ -480,26 +480,28 @@ more powerful test can be devised otherwise.
 \subsection{Comparing estimators of entropy}
 
 \subsubsection{KNN estimators scale better with dimensions}
+[TODO: Add figures supporting these assertions.]
 For $\beta = 1$, across all conditions, the kernel-based entropy estimator
 resulted in an average $20\%$ more power than did the KNN estimator. However,
 as the lag $\beta$ increased, the performance of KDE estimators dropped
 sharply, due to the strong effect of the curse of dimensionality on KDEs. On
 the other hand, the performance of KNN estimators was fairly consistent as
-$\beta$ increased. This phenomenon was also observed in \citet{moon14ensemble}
+$\beta$ increased. This phenomenon was also observed in \cite{moon14ensemble}
 as the dimension of the data increases, and the performance of both KDE and KNN
 approaches would likely benefit from the optimal ensemble modifications
 discussed in therein.
 
 \subsection{KDE estimators are more noise-tolerant}
-On the other hand, the performance of KNN estimators degraded more quickly than
-that of KDE estimators as independent Gaussian noise was added to each $Y_i$.
-That is, KDE estimators appear be more tolerant to noise interfering in the
-relationship between the two variables.
+Our results suggest that KDE estimators appear be more tolerant to noise
+interfering in the relationship between the two variables of interest.
+Specifically, the performance of KNN estimators degraded more quickly than
+that of KDE estimators as the variance of the independent additive Gaussian
+noise increased.
 
 Notably, for small $\beta$, our estimators actually performed \emph{better} in
 the presence of some noise ($\sigma = 1$) than in the noiseless case
 ($\sigma = 0$). This is likely a reflection of the phenomenon mentioned above
-and discussed in detail in \citet{gao2014stronglyDependent}, where the mutual
+and discussed in detail in \cite{gao2014stronglyDependent}, where the mutual
 information of strongly dependent variables is difficult to estimate without
 using certain corrections.
 
@@ -546,7 +548,7 @@ ordinary or anomalous. Since many machine learning algorithms can operate on
 distances between samples (rather than the original data points), one way to
 perform such tasks is to estimate distances or divergences between the
 distributions of the time series, which are often much more informative than
-the original time series (see, e.g., \citet{poczos12learningOnDists}). The
+the original time series (see, e.g., \cite{poczos12learningOnDists}). The
 convergence bounds developed in the Supplementary Material extends quite
 naturally to estimating arbitrary smooth functionals of probability densities,
 and so this should be developed, along with appropriate empirical evaluation.
@@ -571,18 +573,18 @@ Finally, many other tests of independence and conditional independence of
 variables have been developed by others, for both time series and IID data.
 These include, a mutual information based bootstrap test for independence of
 time-series described in \cite{wu09bootstrapMI}, several independence tests
-described in \citep{gretton10nonparametricIndependence}, and conditional
+described in (\cite{gretton10nonparametricIndependence}), and conditional
 dependence measures (noting that, in principle, any conditional dependence
 measure can play the role of conditional mutual information in transfer
-entropy), e.g., \citep{bergsma10nonparametric} and \citep{zhang12kernel}. The
+entropy), e.g., (\cite{bergsma10nonparametric}) and (\cite{zhang12kernel}). The
 estimators and resulting permutation tests described here should be compared
 empirically and theoretically to these alternatives.
 
+\newpage
 \subsubsection*{References}
-\setlength{\bibsep}{0.0pt}
 {
 %\small
-\bibliographystyle{plainnat}
+\bibliographystyle{plain}
 \bibliography{biblio}
 }
 
